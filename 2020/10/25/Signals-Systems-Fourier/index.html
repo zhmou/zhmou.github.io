@@ -22,19 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="不断学习 关注技术 热爱生活">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="http://example.com/categories/index.html">
+  <meta name="description" content="对于在时域上满足一定条件的信号f(t)，我们可以通过傅里叶变换的公式将其转化为频域上的信号F(jω)：$$F(j\omega)&#x3D;\int_{-\infty}^{+\infty}f(t)e^{-j\omega t}dt$$同时也可以通过傅里叶反变换的公式将其还原为时域上的信号：$$f(t)&#x3D;\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^{j\ome">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信号与系统——傅里叶变换公式的推导">
+<meta property="og:url" content="http://example.com/2020/10/25/Signals-Systems-Fourier/index.html">
 <meta property="og:site_name" content="Zh某的备忘录">
-<meta property="og:description" content="不断学习 关注技术 热爱生活">
+<meta property="og:description" content="对于在时域上满足一定条件的信号f(t)，我们可以通过傅里叶变换的公式将其转化为频域上的信号F(jω)：$$F(j\omega)&#x3D;\int_{-\infty}^{+\infty}f(t)e^{-j\omega t}dt$$同时也可以通过傅里叶反变换的公式将其还原为时域上的信号：$$f(t)&#x3D;\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^{j\ome">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-10-24T15:57:08.000Z">
-<meta property="article:modified_time" content="2020-10-25T01:43:42.168Z">
+<meta property="article:published_time" content="2020-10-25T01:25:24.000Z">
+<meta property="article:modified_time" content="2020-10-25T02:58:23.076Z">
 <meta property="article:author" content="Zhmou">
+<meta property="article:tag" content="信号与系统">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/categories/">
+<link rel="canonical" href="http://example.com/2020/10/25/Signals-Systems-Fourier/">
 
 
 <script id="page-configurations">
@@ -42,13 +43,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类 | Zh某的备忘录
-</title>
+  <title>信号与系统——傅里叶变换公式的推导 | Zh某的备忘录</title>
   
 
 
@@ -163,51 +163,93 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/25/Signals-Systems-Fourier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Zhmou">
+      <meta itemprop="description" content="不断学习 关注技术 热爱生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zh某的备忘录">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          信号与系统——傅里叶变换公式的推导
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">分类
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-<div class="post-meta">
+              <time title="创建时间：2020-10-25 09:25:24 / 修改时间：10:58:23" itemprop="dateCreated datePublished" datetime="2020-10-25T09:25:24+08:00">2020-10-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>对于在时域上满足<strong>一定条件</strong>的信号f(t)，我们可以通过傅里叶变换的公式将其转化为频域上的信号F(jω)：<br>$$<br>F(j\omega)=\int_{-\infty}^{+\infty}f(t)e^{-j\omega t}dt<br>$$<br>同时也可以通过傅里叶反变换的公式将其还原为时域上的信号：<br>$$<br>f(t)=\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^{j\omega t}dt<br>$$<br>通过这个数学工具，我们建立起了两个不同的角度间描述信号的桥梁。而笔者在复习《信号与系统》的过程中，深刻认识到了它的重要性，因此有必要记录下它的推导过程。</p>
+<h2 id="01-时域？频域？"><a href="#01-时域？频域？" class="headerlink" title="01 时域？频域？"></a>01 时域？频域？</h2><p><strong>时域</strong>是描述一个数学函数或者物理信号对时间的关系。在中学时代，我们就知道声音是物体振动所产生的波</p>
+<h2 id="02-正交又是啥玩意儿？"><a href="#02-正交又是啥玩意儿？" class="headerlink" title="02 正交又是啥玩意儿？"></a>02 正交又是啥玩意儿？</h2><h2 id="03-三角傅里叶级数"><a href="#03-三角傅里叶级数" class="headerlink" title="03 三角傅里叶级数"></a>03 三角傅里叶级数</h2><h2 id="04-欧拉公式与指数傅里叶级数"><a href="#04-欧拉公式与指数傅里叶级数" class="headerlink" title="04 欧拉公式与指数傅里叶级数"></a>04 欧拉公式与指数傅里叶级数</h2><h2 id="05-从周期到非周期——T→∞"><a href="#05-从周期到非周期——T→∞" class="headerlink" title="05 从周期到非周期——T→∞"></a>05 从周期到非周期——T→∞</h2><h2 id="06-总结"><a href="#06-总结" class="headerlink" title="06 总结"></a>06 总结</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F/" rel="tag"># 信号与系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/24/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              目前共计 1 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
-      
-      
-      
-    </div>
-    
-
-    
-    
-    
 
 
           </div>
@@ -258,6 +300,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-%E6%97%B6%E5%9F%9F%EF%BC%9F%E9%A2%91%E5%9F%9F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">01 时域？频域？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#02-%E6%AD%A3%E4%BA%A4%E5%8F%88%E6%98%AF%E5%95%A5%E7%8E%A9%E6%84%8F%E5%84%BF%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">02 正交又是啥玩意儿？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#03-%E4%B8%89%E8%A7%92%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">03 三角傅里叶级数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#04-%E6%AC%A7%E6%8B%89%E5%85%AC%E5%BC%8F%E4%B8%8E%E6%8C%87%E6%95%B0%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">04 欧拉公式与指数傅里叶级数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#05-%E4%BB%8E%E5%91%A8%E6%9C%9F%E5%88%B0%E9%9D%9E%E5%91%A8%E6%9C%9F%E2%80%94%E2%80%94T%E2%86%92%E2%88%9E"><span class="nav-number">5.</span> <span class="nav-text">05 从周期到非周期——T→∞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#06-%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">06 总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
