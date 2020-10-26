@@ -30,7 +30,7 @@
 <meta property="og:description" content="对于在时域上满足一定条件的信号f(t)，我们可以通过傅里叶变换的公式将其转化为频域上的信号F(jω)： $$ F(j\omega)&#x3D;\int_{-\infty}^{+\infty}f(t)e^{-j\omega t}dt $$ 同时也可以通过傅里叶反变换的公式将其还原为时域上的信号： $$ f(t)&#x3D;\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-25T01:25:24.000Z">
-<meta property="article:modified_time" content="2020-10-25T10:30:32.612Z">
+<meta property="article:modified_time" content="2020-10-26T14:48:49.038Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="信号与系统">
 <meta name="twitter:card" content="summary">
@@ -193,10 +193,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-25 09:25:24 / 修改时间：18:30:32" itemprop="dateCreated datePublished" datetime="2020-10-25T09:25:24+08:00">2020-10-25</time>
+              <time title="创建时间：2020-10-25 09:25:24" itemprop="dateCreated datePublished" datetime="2020-10-25T09:25:24+08:00">2020-10-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-26 22:48:49" itemprop="dateModified" datetime="2020-10-26T22:48:49+08:00">2020-10-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -227,21 +233,87 @@ $$<br>
 f(t)=\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^{j\omega t}dt<br>
 $$<br>
 通过这个数学工具，我们建立起了两个不同的角度间描述同一个信号的桥梁。而笔者在复习《信号与系统》的过程中，深刻认识到了它的重要性，因此决定记录下它的推导过程以加深理解。</p>
-<h2 id="01-时域？频域？">01 时域？频域？</h2>
+<a id="more"></a>
+<h2 id="01-时域？频域？"><a class="header-anchor" href="#01-时域？频域？"></a>01 时域？频域？</h2>
 <p><strong>时域</strong>是描述一个数学函数或者物理信号对时间的关系。在中学物理中，我们就知道声音的本质是物体振动所产生的波，就如同正弦波$f(x)=Asin(x+\phi)$那样，不过这里的自变量变成了时间$t$。在给定任意一个时间$t$的情况下，你都可以函数表达式计算得到它的幅度与相位信息，即$f(t)$。</p>
-<p><s>此处应有一张图，时间关系，暂且忽略，日后补上</s></p>
+<p><s>此处应有一张图，暂且忽略，日后补上</s></p>
 <p>在时域波形中，我们很容易进行两种基础的操作：通过改变$A$的值以改变振幅——换一个说法，你改变了音量的大小；或者改变$x$前的系数以改变频率，这样就改变了音乐的播放速度。</p>
 <p>然而，如果音频中出现了我们不需要的噪声、又或者一首歌曲中，我们想要加强低音部分的人声又该如何处理呢？仅仅依靠时域的繁复波形图难以解决这些问题——因此我们需要引入另一个视角：<strong>频域</strong>。</p>
-<p>世间千变万化的物质，其分子的组成都能在一张元素周期表上找到；红黄蓝三种色彩，却能绘出五彩斑斓的世界；而一首优美动人的歌曲，在简谱上呈现出来的只是几个数字。这种记谱符号正是我们从频域看待音乐的角度，例如音阶A4（即中央C上的A，唱名“la”（啦））就是440Hz的标准音高。</p>
+<p>世间千变万化的物质，其分子的组成都能在一张元素周期表上找到；红黄蓝三种色彩，却能绘出五彩斑斓的世界；而一首优美动人的歌曲，在简谱上呈现出来的只是几个数字。这种记谱符号正是我们从频域看待音乐的角度，例如音阶A4（即中央C上的A，唱名“la”（啦））就是440Hz的标准音高。同时域类似，<strong>频域</strong>是描述一个信号在不同频率上的关系，它改变了我们看待问题的视角：</p>
 <p><s>节省流量小助手再次略去一张图</s></p>
 <p>一个在时间轴上显得“混乱不堪”的信号，在频域里则清晰明了。而上文所述的一些操作在频域中也是随手拈来：滤除噪声？去掉噪声所在频率的分量，加强低音？提升音乐的低频分量就好了，不是吗？</p>
-<h2 id="02-正交又是啥玩意儿？">02 正交又是啥玩意儿？</h2>
-<p>同样是中学时代，我们学会了将力这一矢量（向量）进行<strong>正交</strong>分解，分解到两个相互<strong>正交</strong>的方向上。在这个时候，正交就是（向量的）垂直。</p>
-<h2 id="03-三角傅里叶级数">03 三角傅里叶级数</h2>
-<h2 id="04-欧拉公式与指数傅里叶级数">04 欧拉公式与指数傅里叶级数</h2>
-<p>借助伟大的欧拉公式：</p>
-<h2 id="05-从周期到非周期——T→∞">05 从周期到非周期——T→∞</h2>
-<h2 id="06-总结">06 总结</h2>
+<h2 id="02-正交又是啥玩意儿？"><a class="header-anchor" href="#02-正交又是啥玩意儿？"></a>02 正交又是啥玩意儿？</h2>
+<p>同样是中学时代，我们学会了将力这一矢量（向量）进行<strong>正交</strong>分解，分解到两个<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>相互<strong>正交</strong>的方向上。在这个时候，正交就是（向量的）垂直。在三维空间中，正交依然意味着垂直的关系，但处在更高维度中，“垂直”的几何关系我们没有直接手段观测测量，我们又是如何理解的呢？</p>
+<p>好在数学家们能够用数学手段去描述这种垂直——那就是内积（点积）。<br>
+$$<br>
+\begin{gathered}<br>
+\vec v_1 = \left[ \begin{matrix} x_1 \ y_1 \end{matrix} \right]<br>
+\quad<br>
+\vec v_2 = \left[ \begin{matrix} x_2 \ y_2 \end{matrix} \right]<br>
+\end{gathered}<br>
+$$<br>
+对于$\vec v_1$和$\vec v_2$这两个二维向量而言，内积的代数表达式为$\vec v_1\cdot\vec v_2 = x_1x_2 + y_1y_2$，而从几何的角度来看，内积的表达式为$\vec v_1\cdot\vec v_2 = \mid\vec v_1\mid\mid\vec v_2\mid\cos\theta$，这个运算可以理解为一个向量的模乘以另一个向量投影的模。当两向量垂直时，$cos\theta=cos90^\circ=0$，因此内积为0。啊哈，垂直就是两向量内积为0的特殊情况！</p>
+<p>而正交就是对这种内积为0情形的抽象概括。一般地，对于任意两个n维实向量$\vec a$、$\vec b$，<br>
+$$<br>
+\begin{gathered}<br>
+\vec a = \left[ \begin{matrix} a_1 \ a_2 \ \vdots \ a_n \end{matrix} \right]<br>
+\quad<br>
+\vec b = \left[ \begin{matrix} b_1 \ b_2 \ \vdots \ b_n \end{matrix} \right]<br>
+\end{gathered}<br>
+$$<br>
+有$\vec a\cdot\vec b = a_1b_1 + a_2b_2 + \cdots + a_nb_n = \sum_{i=1}^{\infty}a_ib_i$，若其内积为0，则称这两个向量是正交的。</p>
+<p>现在，我们再对<strong>内积</strong>这个概念进行推广。对于两个在区间$[a,b]$上的实变函数$f(x)$和$g(x)$，假设将其分割成宽度为$\Delta x$的若干子区间。考虑存在这样两个向量：<br>
+$$<br>
+\begin{gathered}<br>
+\vec f = \left[ \begin{matrix} f(a) \ f(\Delta x) \ \vdots \ f(a+k\Delta x) \end{matrix} \right]<br>
+\quad<br>
+\vec g = \left[ \begin{matrix} g(a) \ g(\Delta x) \ \vdots \ g(a+k\Delta x) \end{matrix} \right]<br>
+\end{gathered}<br>
+$$<br>
+则其内积$\vec f\cdot\vec g = f(a)g(a)\Delta x + f(\Delta x)g(\Delta x)\Delta x + \cdots + f(a+k\Delta x)g(a+k\Delta x)\Delta x = \sum_{i=1}^{k}f(a+i\Delta x)g(a+i\Delta x)\Delta x$<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<p>当$\Delta x\rarr0$时，就得到了函数内积的表达式$f(x){\cdot}g(x) = \int_a^bf(x)g(x)dx$。类比向量的正交，当积分的结果为0时，我们可以说这两个函数<strong>在区间$[a,b]$上正交</strong>。</p>
+<p>实际上，函数同样具有向量的性质：</p>
+<p>函数相加类比向量的加法：<br>
+$$<br>
+f+g=\left[ \begin{matrix} f(x_1) \ f(x_2) \ \vdots \ f(x_n)  \end{matrix} \right]+<br>
+\left[ \begin{matrix} g(x_1) \ g(x_2) \ \vdots \ g(x_n)  \end{matrix} \right] = \left[ \begin{matrix} f(x_1)+g(x_1) \ f(x_2)+g(x_2) \ \vdots \ f(x_n)+g(x_n)  \end{matrix} \right]<br>
+$$<br>
+函数与实数相乘对应向量的数乘：<br>
+$$<br>
+af=a\left[ \begin{matrix} f(x_1) \ f(x_2) \ \vdots \ f(x_n)  \end{matrix} \right] = \left[ \begin{matrix} af(x_1) \ af(x_2) \ \vdots \ af(x_n)  \end{matrix} \right]<br>
+$$<br>
+从某种意义上说，函数也可以抽象为向量看待。在此，我推荐3Blue1Brown的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ps41147Z5">这个视频</a>来更直观的展现向量与函数的相似性以及对*向量是什么？*这个问题的回答。</p>
+<p>但是还没完呢！我们还能将<strong>正交、内积</strong>的概念继续向复平面里的向量与复函数推广，在复平面中，我们把内积<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>定义为：<br>
+$$<br>
+&lt;\vec x,\vec y&gt;=\sum_{i=1}^n x_i{y_i}^*<br>
+$$<br>
+即前者向量中的各元素乘以后者向量中各元素的共轭（即虚部取反）<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></p>
+<p>同样的，复向量的内积同样可以推广到复函数上：<br>
+$$<br>
+&lt;f,g&gt;=\int_a^bf(t)\overline{g(t)}dt<br>
+$$<br>
+而正交，同样是这些内积为0的特殊情况。至此，我们已经详细介绍了内积与正交的基础知识，它们很快就将应用到下一节的学习中。</p>
+<h2 id="03-三角傅里叶级数"><a class="header-anchor" href="#03-三角傅里叶级数"></a>03 三角傅里叶级数</h2>
+<p>施工中，敬请期待</p>
+<h2 id="04-欧拉公式与指数傅里叶级数"><a class="header-anchor" href="#04-欧拉公式与指数傅里叶级数"></a>04 欧拉公式与指数傅里叶级数</h2>
+<p>施工中，敬请期待</p>
+<h2 id="05-从周期到非周期——T→∞"><a class="header-anchor" href="#05-从周期到非周期——T→∞"></a>05 从周期到非周期——T→∞</h2>
+<p>施工中，敬请期待</p>
+<h2 id="06-总结"><a class="header-anchor" href="#06-总结"></a>06 总结</h2>
+<p>施工中，敬请期待</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>中学物理一般只考察力在二维平面的分解 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>$\Delta x$可看作子区间的<strong>权重</strong>，实际上$f(a)$与$g(a)$代表了$[a,a+\Delta x]$这段子区间上所有函数的值，因此在每一项后面乘以$\Delta x$ <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>此处指Hermitian inner product，厄米特内积。 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>这样定义的一大目的是使得一个向量与自己的内积——几何意义上是向量模的平方是个正<strong>实数</strong>（正定性）。 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
 
     </div>
 

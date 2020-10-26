@@ -190,10 +190,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-25 09:25:24 / 修改时间：18:30:32" itemprop="dateCreated datePublished" datetime="2020-10-25T09:25:24+08:00">2020-10-25</time>
+              <time title="创建时间：2020-10-25 09:25:24" itemprop="dateCreated datePublished" datetime="2020-10-25T09:25:24+08:00">2020-10-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-26 22:48:49" itemprop="dateModified" datetime="2020-10-26T22:48:49+08:00">2020-10-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -224,22 +230,14 @@ $$<br>
 f(t)=\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^{j\omega t}dt<br>
 $$<br>
 通过这个数学工具，我们建立起了两个不同的角度间描述同一个信号的桥梁。而笔者在复习《信号与系统》的过程中，深刻认识到了它的重要性，因此决定记录下它的推导过程以加深理解。</p>
-<h2 id="01-时域？频域？">01 时域？频域？</h2>
-<p><strong>时域</strong>是描述一个数学函数或者物理信号对时间的关系。在中学物理中，我们就知道声音的本质是物体振动所产生的波，就如同正弦波$f(x)=Asin(x+\phi)$那样，不过这里的自变量变成了时间$t$。在给定任意一个时间$t$的情况下，你都可以函数表达式计算得到它的幅度与相位信息，即$f(t)$。</p>
-<p><s>此处应有一张图，时间关系，暂且忽略，日后补上</s></p>
-<p>在时域波形中，我们很容易进行两种基础的操作：通过改变$A$的值以改变振幅——换一个说法，你改变了音量的大小；或者改变$x$前的系数以改变频率，这样就改变了音乐的播放速度。</p>
-<p>然而，如果音频中出现了我们不需要的噪声、又或者一首歌曲中，我们想要加强低音部分的人声又该如何处理呢？仅仅依靠时域的繁复波形图难以解决这些问题——因此我们需要引入另一个视角：<strong>频域</strong>。</p>
-<p>世间千变万化的物质，其分子的组成都能在一张元素周期表上找到；红黄蓝三种色彩，却能绘出五彩斑斓的世界；而一首优美动人的歌曲，在简谱上呈现出来的只是几个数字。这种记谱符号正是我们从频域看待音乐的角度，例如音阶A4（即中央C上的A，唱名“la”（啦））就是440Hz的标准音高。</p>
-<p><s>节省流量小助手再次略去一张图</s></p>
-<p>一个在时间轴上显得“混乱不堪”的信号，在频域里则清晰明了。而上文所述的一些操作在频域中也是随手拈来：滤除噪声？去掉噪声所在频率的分量，加强低音？提升音乐的低频分量就好了，不是吗？</p>
-<h2 id="02-正交又是啥玩意儿？">02 正交又是啥玩意儿？</h2>
-<p>同样是中学时代，我们学会了将力这一矢量（向量）进行<strong>正交</strong>分解，分解到两个相互<strong>正交</strong>的方向上。在这个时候，正交就是（向量的）垂直。</p>
-<h2 id="03-三角傅里叶级数">03 三角傅里叶级数</h2>
-<h2 id="04-欧拉公式与指数傅里叶级数">04 欧拉公式与指数傅里叶级数</h2>
-<p>借助伟大的欧拉公式：</p>
-<h2 id="05-从周期到非周期——T→∞">05 从周期到非周期——T→∞</h2>
-<h2 id="06-总结">06 总结</h2>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/25/Signals-Systems-Fourier/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
