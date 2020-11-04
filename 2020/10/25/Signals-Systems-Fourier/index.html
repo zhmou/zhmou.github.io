@@ -29,16 +29,18 @@
 <meta property="og:site_name" content="Zh某的备忘录">
 <meta property="og:description" content="对于在时域上满足一定条件的信号f(t)，我们可以通过傅里叶变换的公式将其转化为频域上的信号F(jω)： $$ F(j\omega)&#x3D;\int_{-\infty}^{+\infty}f(t)e^{-j\omega t}dt $$ 同时也可以通过傅里叶反变换的公式将其还原为时域上的信号： $$ f(t)&#x3D;\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/frq.jpg">
+<meta property="og:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/Time_vs_Frequency_domain.jpg">
 <meta property="og:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/1.jpg">
 <meta property="og:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/image-20201027103319559.png">
 <meta property="og:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/image-20201027124837778.png">
 <meta property="og:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/untitled.jpg">
 <meta property="article:published_time" content="2020-10-25T01:25:24.000Z">
-<meta property="article:modified_time" content="2020-10-27T13:10:19.566Z">
+<meta property="article:modified_time" content="2020-11-04T13:20:16.470Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="信号与系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/1.jpg">
+<meta name="twitter:image" content="http://example.com/img/2020-10-25-Signals-Systems-Fourier/frq.jpg">
 
 <link rel="canonical" href="http://example.com/2020/10/25/Signals-Systems-Fourier/">
 
@@ -206,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-27 21:10:19" itemprop="dateModified" datetime="2020-10-27T21:10:19+08:00">2020-10-27</time>
+                <time title="修改时间：2020-11-04 21:20:16" itemprop="dateModified" datetime="2020-11-04T21:20:16+08:00">2020-11-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,11 +243,11 @@ $$<br>
 <a id="more"></a>
 <h2 id="01-时域？频域？"><a class="header-anchor" href="#01-时域？频域？"></a>01 时域？频域？</h2>
 <p><strong>时域</strong>是描述一个数学函数或者物理信号对时间的关系。在中学物理中，我们就知道声音的本质是物体振动所产生的波，就如同正弦波$f(x)=Asin(x+\phi)$那样，不过这里的自变量变成了时间$t$。在给定任意一个时间$t$的情况下，你都可以用函数表达式计算得到它的幅度与相位信息，即$f(t)$。</p>
-<p><s>此处应有一张图，暂且忽略，日后补上</s></p>
+<p><img src="/img/2020-10-25-Signals-Systems-Fourier/frq.jpg" alt="frq"></p>
 <p>在时域波形中，我们很容易进行两种基础的操作：通过改变$A$的值以改变振幅——换一个说法，你改变了音量的大小；或者改变$x$前的系数以改变频率，这样就改变了音乐的播放速度。</p>
 <p>然而，如果音频中出现了不需要的噪声、又或者一首歌曲中，我们想要加强低音部分的人声又该如何处理呢？仅仅依靠时域繁复的波形图难以解决这些问题——因此我们需要引入另一个视角：<strong>频域</strong>。</p>
 <p>世间千变万化的物质，其分子的组成都能在一张元素周期表上找到；红黄蓝三种色彩，却能绘出五彩斑斓的世界；而一首优美动人的歌曲，在简谱上呈现出来的只是几个数字。这种记谱符号正是我们从频域看待音乐的角度，例如音阶A4（即中央C上的A，唱名“la”（啦））就是440Hz的标准音高。同时域类似，<strong>频域</strong>是描述一个信号在不同频率上的关系，它改变了我们看待问题的视角：</p>
-<p><s>节省流量小助手再次略去一张图</s></p>
+<img src="/img/2020-10-25-Signals-Systems-Fourier/Time_vs_Frequency_domain.jpg" alt="tvf" style="zoom:50%;" />
 <p>一个在时间轴上显得“混乱不堪”的信号，在频域里则清晰明了。而上文所述的一些操作在频域中也是随手拈来：滤除噪声？去掉噪声所在频率的分量，加强低音？提升音乐的低频分量就好了，不是吗？</p>
 <h2 id="02-正交又是啥玩意儿？"><a class="header-anchor" href="#02-正交又是啥玩意儿？"></a>02 正交又是啥玩意儿？</h2>
 <p>同样是中学时代，我们学会了将力这一矢量（向量）进行<strong>正交</strong>分解，分解到两个<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>相互<strong>正交</strong>的方向上。在这个时候，正交就是（向量的）垂直。在三维空间中，正交依然意味着垂直的关系，但处在更高维度中，“垂直”的几何关系我们没有直接手段观测测量，我们又是如何理解的呢？</p>
@@ -288,7 +290,7 @@ $$<br>
 $$<br>
 af=a\left[ \begin{matrix} f(x_1) \\ f(x_2) \\ \vdots \\ f(x_n)  \end{matrix} \right] = \left[ \begin{matrix} af(x_1) \\ af(x_2) \\ \vdots \\ af(x_n)  \end{matrix} \right]<br>
 $$<br>
-因而从某种意义上说，函数也可以抽象为向量看待。在此，我推荐3Blue1Brown的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ps41147Z5">这个视频</a>来更直观的展现向量与函数的相似性以及对*向量是什么？*这个问题的回答。</p>
+因而从某种意义上说，函数也可以抽象为向量看待。在此，我推荐3Blue1Brown的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ps41147Z5">这个视频</a>来更直观地展现向量与函数的相似性以及对<em>向量是什么</em>这个问题的回答。</p>
 <p>但是还没完呢！我们还能将<strong>正交、内积</strong>的概念继续向复平面里的向量与复函数推广，在复平面中，我们把内积<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>定义为：<br>
 $$<br>
 &lt;\vec x,\vec y&gt;=\sum_{i=1}^n x_i{y_i}^*<br>
@@ -413,17 +415,19 @@ $$<br>
 $$<br>
 考虑到$B_0 = 2a_0$，于是傅里叶级数可写作：<br>
 $$<br>
+f(t)={a_0\over2}+\sum_{n=1}^\infty(a_ncos\ n\Omega t+b_nsin\ n\Omega t)<br>
+$$</p>
+<p>继续&amp;合并同频率的三角函数，又可以得到：<br>
+$$<br>
 \begin{align*}<br>
-f(t)&amp;={a_0\over2}+\sum_{n=1}^\infty(a_ncos\ n\Omega t+b_nsin\ n\Omega t)\\<br>
-继续&amp;合并同频率的三角函数，又可以得到：\\<br>
 f(t)&amp;={a_0\over2}+\sum_{n=1}^\infty\sqrt{ {a_n}^2+{b_n}^2}(cos\ n\Omega t\cdot {a_n\over\sqrt{ {a_n}^2+{b_n}^2}}-sin\ n\Omega t\cdot {-b_n\over\sqrt{ {a_n}^2+{b_n}^2}})\\<br>
 &amp;={a_0\over2}+\sum_{n=1}^\infty A_ncos(n\Omega t + \phi_n)\\<br>
 其中A_n&amp;=\sqrt{ {a_n}^2+{b_n}^2}\\<br>
 \phi_n&amp;=-arctan({b_n\over a_n})\\<br>
-(根据a_{-n} &amp;= a_n,b_{-n}=-b_n,可以得知A_{-n}=A_n,\phi_{-n}=-\phi_n,这一结论将帮助我们推导下一小节的内容)<br>
 \end{align*}<br>
 $$<br>
-其中$a_n$、$b_n$被称作<strong>傅里叶系数</strong>现在，我们可以用不同频率、相位、强度的<em>原材料</em>——余弦函数的叠加来逼近定义在$[-{T\over2},{T\over2}]$区间上的一些函数啦！咦？余弦函数具有周期性，那么叠加出来的函数同样具有周期性呢！所以，我们得出了这样一个结论：</p>
+(根据$a_{-n} = a_n,b_{-n}=-b_n$，可以得知$A_{-n}=A_n,\phi_{-n}=-\phi_n$,这一结论将帮助我们推导下一小节的内容)</p>
+<p>其中$a_n$、$b_n$被称作<strong>傅里叶系数</strong>现在，我们可以用不同频率、相位、强度的<em>原材料</em>——余弦函数的叠加来逼近定义在$[-{T\over2},{T\over2}]$区间上的一些函数啦！咦？余弦函数具有周期性，那么叠加出来的函数同样具有周期性呢！所以，我们得出了这样一个结论：</p>
 <div style="text-align:center;"><font color = red size = 5>周期函数可由一个序列的正弦（余弦）型函数叠加得到。</font></div>
 <p>来试试看吧！以下就是用一组正弦函数叠加得到的周期函数$y = x(-\pi&lt;x&lt;\pi)$，其傅里叶展开式为$2\sum_{n=1}^\infty{(-1)}^{n-1}{sin\ nx\over n}$</p>
 <p><img src="/img/2020-10-25-Signals-Systems-Fourier/untitled.jpg" alt="untitled"></p>
@@ -453,7 +457,7 @@ $$<br>
 \end{align*}<br>
 $$<br>
 <strong>注意</strong>那个$e^{-jn\Omega t}$上的负号！从计算内积的方法来看，函数与$e^{jn\Omega t}$的内积恰好是后者取共轭，所以这和三角傅里叶展开的思路是一致的。</p>
-<p>将$e^{j\phi_n}$用欧拉公式展开，这个复矢量的_活动轨迹_就是复平面上的单位圆，因此$\dot F_n$也可写作模与幅角的形式：$\dot F_n=|F_n|e^{j\phi_n}$。</p>
+<p>将$e^{j\phi_n}$用欧拉公式展开，这个复矢量的<em>活动轨迹</em>就是复平面上的单位圆，因此$\dot F_n$也可写作模与幅角的形式：$\dot F_n=|F_n|e^{j\phi_n}$。</p>
 <h2 id="05-从周期到非周期——T→∞"><a class="header-anchor" href="#05-从周期到非周期——T→∞"></a>05 从周期到非周期——T→∞</h2>
 <p>非周期的信号不能用傅里叶级数来表示，但是可以利用相同的思路进行一样的分析。当周期$T$无限增大时，周期信号就能转化成非周期的单脉冲信号。而展开的一组正弦（余弦）信号之间频率的差值$\Omega$就越小——直到离散的频率分量变得连续。对上一节中的$\dot F_n$进行分析，当$T\rightarrow\infty$时，傅里叶系数趋于0，然而将上式两边同乘以$T$，它就变成了$\omega$<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>相关的一个函数——$F(j\omega)$，取极限可得到$\lim_{T\rightarrow\infty}\dot F_nT=\lim_{\Omega\rightarrow0}2\pi\dot {F_n\over \Omega}$，$\dot {F_n\over \Omega}$表示了某个单位频率带宽内信号的强度（频谱值），因此称之为频谱密度函数——简称频谱函数。现在，我们终于推得了开头写下的第一个式子：<br>
 $$<br>
@@ -465,13 +469,15 @@ $$<br>
 f(t)&amp;=\sum_{n=-\infty}^\infty {1\over2}A_ne^{j(n\Omega t + \phi_n)}\\<br>
 &amp;=\sum_{n=-\infty}^\infty \dot F_ne^{jn\Omega t}\\<br>
 &amp;=\sum_{n=-\infty}^\infty \dot {F_n\over\Omega}e^{jn\Omega t}\Omega\\<br>
-当T\rightarrow\infty时，&amp;相邻频率的间隔由\Omega变为d\omega,而离散分立的频率n\Omega变为了\omega,无穷多项求和转化为了积分\\<br>
-于是有f(t)&amp;=\int_{-\infty}^{+\infty}{F(j\omega )\over2\pi}e^{j\omega t}dt=\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^{j\omega t}dt<br>
 \end{align*}<br>
 $$<br>
-以上，就是推出的第二个式子。基于这两个积分，我们可以做出$f(t)\leftrightarrow F(j\omega)$的相互转换，前者就是<strong>傅里叶变换</strong>，而后者我们称为<strong>傅里叶反变换</strong>，从而在时间域的视角与频率域的视角间相互转换，将一些复杂的操作简单化。</p>
+当$T\rightarrow\infty$时，相邻频率的间隔由$\Omega变为d\omega$,而离散分立的频率$n\Omega$变为了$\omega$,无穷多项求和转化为了积分，于是有：<br>
+$$<br>
+f(t)=\int_{-\infty}^{+\infty}{F(j\omega )\over2\pi}e^{j\omega t}dt=\frac1{2\pi}\int_{-\infty}^{+\infty}F(j\omega )e^{j\omega t}dt<br>
+$$</p>
+<p>以上，就是推出的第二个式子。基于这两个积分，我们可以做出$f(t)\leftrightarrow F(j\omega)$的相互转换，前者就是<strong>傅里叶变换</strong>，而后者我们称为<strong>傅里叶反变换</strong>，从而在时间域的视角与频率域的视角间相互转换，将一些复杂的操作简单化。</p>
 <h2 id="06-总结"><a class="header-anchor" href="#06-总结"></a>06 总结</h2>
-<p>施工中，敬请期待</p>
+<p>在傅里叶变换与反变换的基础上，结合其在频域实际的物理意义，在连续时间系统上有着广泛的应用——从简化求解电路的微分方程，到通信基础技术：调制与解调，它是变换域分析法的基石。在下期之中——如果有的话——我们会探讨这一变换的性质，以及给出常见信号的傅里叶变换对，甚至我们还可以研究它的在生活中的实际应用。啊~不知你是否看见了我在第一句话里提到的<strong>一定条件</strong>呢？没错，它也是不是放之四海而皆准、对任意信号都能使用的方法，这为下一个变换域的诞生埋下了伏笔，我们会在更远的将来提到它。</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
