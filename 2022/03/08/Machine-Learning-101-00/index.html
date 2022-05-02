@@ -20,20 +20,25 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="决定对近期学习到的机器学习相关知识进行一次整理。">
+<meta name="description" content="table {     margin: auto; }    决定对近期学习到的机器学习相关知识进行一次整理。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习基础#00：Intro">
 <meta property="og:url" content="http://zhmou.github.io/2022/03/08/Machine-Learning-101-00/index.html">
 <meta property="og:site_name" content="Zh某的备忘录">
-<meta property="og:description" content="决定对近期学习到的机器学习相关知识进行一次整理。">
+<meta property="og:description" content="table {     margin: auto; }    决定对近期学习到的机器学习相关知识进行一次整理。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_1.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_2.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_3.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_4.png">
 <meta property="article:published_time" content="2022-03-08T05:22:21.000Z">
-<meta property="article:modified_time" content="2022-03-09T05:55:29.002Z">
+<meta property="article:modified_time" content="2022-05-02T03:12:56.252Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_1.png">
 
 
 <link rel="canonical" href="http://zhmou.github.io/2022/03/08/Machine-Learning-101-00/">
@@ -124,7 +129,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%9F"><span class="nav-text">01 什么是机器学习？</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%9F"><span class="nav-text">01 什么是机器学习？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#02-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-text">02 一个简单的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#03-%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-text">03 更复杂的例子</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -231,7 +236,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-09 13:55:29" itemprop="dateModified" datetime="2022-03-09T13:55:29+08:00">2022-03-09</time>
+        <time title="修改时间：2022-05-02 11:12:56" itemprop="dateModified" datetime="2022-05-02T11:12:56+08:00">2022-05-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -260,13 +265,107 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
+        <style>
+table
+{
+    margin: auto;
+}
+</style>
+<p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
 <a id="more"></a>
 <p>  免责声明：本人对机器学习领域所知甚少，所写博文为对前期所学知识的回顾，不确保其内容的真实性与准确性，不建议以此为基础进行学习。如有差错纰漏，欢迎指正。</p>
 <h2 id="01-什么是机器学习？"><a class="header-anchor" href="#01-什么是机器学习？"></a>01 什么是机器学习？</h2>
-<p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，</p>
-<blockquote><p>从已有的样本（数据）中发现规律，并能够泛化应用于未知的（或者说：新的）样本上。</p>
-<footer><strong>Zh某</strong></footer></blockquote>
+<p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，那就是：</p>
+<blockquote><p>从已有的样本（数据）中发现规律，并能够将其泛化应用于未知的（或者说：新的）样本上。</p>
+<footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
+<br>
+<p>  譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。</p>
+<p><img src="/img/2022-3-9-Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
+<div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
+<br>
+<h2 id="02-一个简单的例子"><a class="header-anchor" href="#02-一个简单的例子"></a>02 一个简单的例子</h2>
+<p>  现在，我们有一组$x$与$y$如表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">x</th>
+<th style="text-align:center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">?</td>
+</tr>
+</tbody>
+</table>
+<p>  对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。</p>
+<p>  基于此，我们建立一个简单的线性模型：<br>
+<img src="/img/2022-3-9-Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
+<p>  此外，我们还需要一个“打分”的函数来评估模型在当前样本上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。</p>
+<p>$$<br>
+loss={(\hat{y}-y)}^2<br>
+$$</p>
+<p>  大多数情况下，我们的目标是令代价函数的值尽可能的变小，即预测值接近真实值。</p>
+<p>  现在，我们随机地初始化一组$w$和$b$($w=1,b=1$)来计算损失函数loss的值：</p>
+<p>  $x=2$时，$\hat{y}=3$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3-4)}^2=1$</p>
+<p>  $x=3$时，$\hat{y}=4$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(4-6)}^2=4$</p>
+<p>  在全体样本上的均方误差$cost = 5\div2=2.5$</p>
+<p>  我们把这个步骤称作“<strong>前向运算</strong>”/“<strong>前馈运算</strong>”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。</p>
+<p>  在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。</p>
+<img src="/img/2022-3-9-Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
+<p>  将其应用于我们的例子中：当我们将两个参数沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。</p>
+<p>  根据链式求导法则：<br>
+$$<br>
+\frac{\partial{loss}}{\partial{w}}=\frac{\partial{loss}}{\partial{\hat{y}}}\cdot\frac{\partial{\hat{y}}}{\partial{w}}=2(\hat{y}-y)\cdot{x}<br>
+$$<br>
+  (对b的偏导同理)</p>
+<p>  结合前向运算中得到的结果，我们可以知道：</p>
+<p>  在$x=2$时，$\left.{\frac{\partial{loss}}{\partial{w}}}\right|_{x=2}=−4$，$\left.{\frac{\partial{loss}}{\partial{b}}}\right|_{x=2}=−2$</p>
+<p>  在$x=3$时，$\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3}=-12$，$\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3}=−4$</p>
+<p>  接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。</p>
+<img src="/img/2022-3-9-Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
+<p>$$<br>
+\begin{align*}<br>
+w’&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
+&amp;=w- lr\cdot(\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-4-12)\div2\\<br>
+&amp;=1.32<br>
+\end{align*}<br>
+$$</p>
+<p>  同理，$b$的值计算结果为：<br>
+$$<br>
+\begin{align*}<br>
+b’&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
+&amp;=b-lr\cdot(\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-2-4)\div2\\<br>
+&amp;=1.12<br>
+\end{align*}<br>
+$$</p>
+<p>  如上述的这个过程，被称为“反向传播”。这样，我们便走完了神经网络训练的一个轮次（Epoch）。此时，重新计算预测值、loss与cost，更新权重后的结果为：</p>
+<p>  $x=2$时，$\hat{y}=3.76$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3.76-4)}^2=0.0576$</p>
+<p>  $x=3$时，$\hat{y}=5.08$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(5.08-6)}^2=0.8464$</p>
+<p>  在全体样本上的均方误差$cost’ = 0.452$</p>
+<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程， 在经过第二次训练后，得到$w’‘=1.644$，$b’'=1.236$</p>
+<p>  现在，对于例子开头提出来的问题，在经过两轮训练后，神经网络给出的$x=4$时的预测结果为$ŷ = 1.644\times4+1.236 = 7.812$</p>
+<p>  当反复训练后，cost的值趋近于零，在某个区间内呈现波动的时候，我们称这个网络<strong>收敛</strong>，而当cost值不再变小而且和0相去较远时，则可能陷入了局部最优解，或者是学习率过大导致无法收敛于全局最优解。</p>
+<blockquote>
+<p><strong>小结</strong><br><br>
+神经元：网络中负责某种基础运算的单元。例如本例中建模采用的$y=kx+b$就是一个基础的神经元。<br><br>
+神经网络训练的步骤：正向运算求Loss，反向计算求Loss对各个参数的偏导，依赖偏导对参数进行微小的调整。在本例中，反复以样本训练较好地逼近了结果。<br><br><br>
+<strong>问题</strong>：<br><br>
+多个线性神经元简单叠加，如两个神经元：$y = w_1(w_2x+b_2)+b_1 = w_1w_2x+w_1b_2+b_1$ ，仍与单个神经元效果相同，需要引入<em>非线性变换</em>才能较好的拟合非线性函数。</p>
+</blockquote>
+<h2 id="03-更复杂的例子"><a class="header-anchor" href="#03-更复杂的例子"></a>03 更复杂的例子</h2>
+<p>To be continued.</p>
 
     </div>
 
@@ -375,7 +474,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
