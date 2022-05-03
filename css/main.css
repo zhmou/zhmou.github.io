@@ -2924,13 +2924,16 @@ body {
   background-size: cover;
 }
 .sidebar {
-  opacity: 0.5;
+  background: rgba(255,255,255,0);
+}
+.sidebar-inner {
+  background: rgba(255,255,255,0.4);
 }
 .header-inner {
-  background: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.4);
 }
 .main-inner {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .back-to-top {
   border-radius: 0 0 20px 20px;
