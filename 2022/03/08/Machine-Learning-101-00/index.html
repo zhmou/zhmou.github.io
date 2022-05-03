@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_9.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_10.png">
 <meta property="article:published_time" content="2022-03-08T05:22:21.000Z">
-<meta property="article:modified_time" content="2022-05-03T03:41:35.449Z">
+<meta property="article:modified_time" content="2022-05-03T05:34:43.194Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
@@ -241,7 +241,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-05-03 11:41:35" itemprop="dateModified" datetime="2022-05-03T11:41:35+08:00">2022-05-03</time>
+        <time title="修改时间：2022-05-03 13:34:43" itemprop="dateModified" datetime="2022-05-03T13:34:43+08:00">2022-05-03</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -425,7 +425,7 @@ $$</p>
 <p>  图中实线连接的部分就是我们在反向算法过程中需要更新的权重，为简化计算，在这个例子中我们忽略bias项即偏置的影响，只考虑权重w构成的三个矩阵：<br>
   $𝑤_1$为三行两列矩阵，$𝐻_1=𝑥𝑤_1$，$𝑤_2$ 、$𝑤_3$ 为两行两列的矩阵： $𝐻_2=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_1 ) 𝑤_2$，$𝑂𝑢𝑡𝑝𝑢𝑡=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_2)𝑤_3$</p>
 <p>  <strong>正向运算：</strong><br>
-  首先初始化三个矩阵𝑤_1 、𝑤_2 、𝑤_3，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
+  首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
 <img src="/img/2022-3-9-Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
 <p>  <strong>计算Loss：</strong><br>
   在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：<br>
@@ -442,7 +442,7 @@ $$</p>
 损失计算采用了负对数似然损失(能否采用MSE，为什么？)<br>
 对于文本序列而言，其出现的顺序对于理解其含义是至关重要的，简单向量相加丢失了字符出现顺序的信息。(改进：RNN)<br>
 层数越深，由链式法则相乘得到的梯度越来越小，可能出现梯度消失的问题(改进：ResNet)<br>
-文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分都是0）。②（基于前者）大部分句子的向量都分布在坐标轴上。③（基于前者）难以衡量两个句子之间的相似度。</p>
+文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分元素都是0）。②（基于前者）大部分句子的向量都分布在坐标轴附近。③（基于前者）难以衡量两个句子之间的相似度。</p>
 </blockquote>
 <h2 id="04-随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#04-随机梯度下降：引入Mini-Batch"></a>04 随机梯度下降：引入Mini-Batch</h2>
 <p>  对于梯度下降，有几种不同的方法对其进行实现：<br>
