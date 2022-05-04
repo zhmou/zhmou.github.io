@@ -20,25 +20,30 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="不断学习 关注技术 热爱生活">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zh某的备忘录">
-<meta property="og:url" content="http://zhmou.github.io/tags/%E8%BD%AF%E4%BB%B6%E6%B3%A8%E5%86%8C/index.html">
+<meta name="description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021CVPR论文：Coordinate Attention">
+<meta property="og:url" content="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/index.html">
 <meta property="og:site_name" content="Zh某的备忘录">
-<meta property="og:description" content="不断学习 关注技术 热爱生活">
+<meta property="og:description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-04T01:30:58.000Z">
+<meta property="article:modified_time" content="2022-05-04T03:31:13.698Z">
 <meta property="article:author" content="Zhmou">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="论文研读">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://zhmou.github.io/tags/%E8%BD%AF%E4%BB%B6%E6%B3%A8%E5%86%8C/">
+<link rel="canonical" href="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/软件注册/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/","path":"2022/05/04/2021-CVPR-Coordinate-Attention/","title":"2021CVPR论文：Coordinate Attention"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>标签: 软件注册 | Zh某的备忘录</title>
+<title>2021CVPR论文：Coordinate Attention | Zh某的备忘录</title>
   
 
 
@@ -106,7 +111,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -119,6 +124,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%EF%BC%88%E7%BF%BB%E8%AF%91%EF%BC%89"><span class="nav-text">摘要（翻译）</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -183,50 +189,127 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">软件注册
-          <small>标签</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/general/avatar.jpg">
+      <meta itemprop="name" content="Zhmou">
+      <meta itemprop="description" content="不断学习 关注技术 热爱生活">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zh某的备忘录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2021CVPR论文：Coordinate Attention
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2022-05-04 09:30:58 / 修改时间：11:31:13" itemprop="dateCreated datePublished" datetime="2022-05-04T09:30:58+08:00">2022-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>  论文标题：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Hou_Coordinate_Attention_for_Efficient_Mobile_Network_Design_CVPR_2021_paper.pdf">Coordinate Attention for Efficient Mobile Network Design</a></p>
+<p>  <a target="_blank" rel="noopener" href="https://github.com/Andrew-Qibin/CoordAttention">Github链接</a></p>
+<h2 id="摘要（翻译）"><a class="header-anchor" href="#摘要（翻译）"></a>摘要（翻译）</h2>
+<p>  近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1709.01507">SENet, CVPR2018</a>)对于模型性能的提升具有显著效果，但它们通常忽略掉了位置信息——这对于生成空间选择性注意力图(spatially selective attention maps)非常重要。在这篇文章中，我们针对轻量级网络提出了一种新的注意力机制，该机制将位置信息嵌入到通道注意力中。我们称其为 <strong>坐标注意力(Coordinate Attention)</strong> 机制。<br>
+  不同于通道注意力将一个特征张量通过二维全局池化转换为单个特征向量，坐标注意力将通道注意力拆解为两个一维特征提取的过程，分别沿着两个空间方向(译注：宽，高)提取特征。通过这种方法可以提取一个空间方向上的远距离依赖关系，同时又可以在另一个空间方向上保持精确的位置信息。结果产生的特征图然后分别编码为一对方向感知(direction-aware)与位置敏感(position-sensitive)的注意力图，可以增补应用于输入的特征图来增强对感兴趣对象的表示。<br>
+  我们的坐标注意力机制简单，可以灵活插入于经典的轻量级网络，如<em>MobileNetV2</em>, <em>MobileNeXt</em>和<em>EfficientNet</em>并且几乎没有额外的计算开销。大量实验表明，我们的坐标注意力机制在ImageNet分类上存在性能提升，更有趣的是，它在下游任务中表现更好，如目标检测和语义分割。</p>
+<a id="more"></a>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-10-31T15:08:38+08:00"
-              content="2021-10-31">
-          10-31
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/31/A-Register-Toy-Demo/" itemprop="url">
-            <span itemprop="name">一个实现注册、激活的软件Demo</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          
 
-      
-    </header>
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Zhmou
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/" title="2021CVPR论文：Coordinate Attention">http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%A0%94%E8%AF%BB/" rel="tag"># 论文研读</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/08/Machine-Learning-101-00/" rel="prev" title="机器学习基础#00：Intro">
+                  <i class="fa fa-chevron-left"></i> 机器学习基础#00：Intro
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
