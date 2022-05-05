@@ -20,17 +20,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
+    <meta name="description" content=".wrap {display: flex; justify-content: space-between;}     .left {width: 50%;}     .right {width: 50%;}     .comment {text-align:center; color:grey; font-size:0.8em}    论文标题：Coordinate Attention">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2021CVPR论文：Coordinate Attention">
 <meta property="og:url" content="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/index.html">
 <meta property="og:site_name" content="Zh某的备忘录">
-<meta property="og:description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
+<meta property="og:description" content=".wrap {display: flex; justify-content: space-between;}     .left {width: 50%;}     .right {width: 50%;}     .comment {text-align:center; color:grey; font-size:0.8em}    论文标题：Coordinate Attention">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_2.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_3.png">
 <meta property="article:published_time" content="2022-05-04T01:30:58.000Z">
-<meta property="article:modified_time" content="2022-05-05T03:36:44.892Z">
+<meta property="article:modified_time" content="2022-05-05T09:41:20.807Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
@@ -280,7 +282,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>  论文标题：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Hou_Coordinate_Attention_for_Efficient_Mobile_Network_Design_CVPR_2021_paper.pdf">Coordinate Attention for Efficient Mobile Network Design</a></p>
+        <style type="text/css">
+    .wrap {display: flex; justify-content: space-between;}
+    .left {width: 50%;}
+    .right {width: 50%;}
+    .comment {text-align:center; color:grey; font-size:0.8em}
+</style>
+<p>  论文标题：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Hou_Coordinate_Attention_for_Efficient_Mobile_Network_Design_CVPR_2021_paper.pdf">Coordinate Attention for Efficient Mobile Network Design</a></p>
 <p>  <a target="_blank" rel="noopener" href="https://github.com/Andrew-Qibin/CoordAttention">Github链接</a></p>
 <h2 id="摘要（翻译）"><a class="header-anchor" href="#摘要（翻译）"></a>摘要（翻译）</h2>
 <p>  近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1709.01507">SENet, CVPR2018</a>)对于模型性能的提升具有显著效果，但它们通常忽略掉了位置信息——这对于生成空间选择性注意力图(spatially selective attention maps)非常重要。在这篇文章中，我们针对轻量级网络提出了一种新的注意力机制，该机制将位置信息嵌入到通道注意力中。我们称其为 <strong>坐标注意力(Coordinate Attention)</strong> 机制。<br>
@@ -290,15 +298,21 @@
 <h2 id="回顾通道注意力机制"><a class="header-anchor" href="#回顾通道注意力机制"></a>回顾通道注意力机制</h2>
 <h3 id="SENet"><a class="header-anchor" href="#SENet"></a>SENet</h3>
 <img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png" alt="SENet" title="SENet" style="float:center"/>
-<div style="text-align:center; color:grey; font-size:0.8em">SENet的基础结构——压缩激励块</div>
-<div style="text-align:center; color:grey; font-size:0.8em">A Squeeze-and-Excitation block</div>
+<div class="comment">SENet的基础结构——压缩激励块</div>
+<div class="comment">A Squeeze-and-Excitation block</div>
 &emsp;&emsp;SENet所提出的注意力机制基本架构如上图所示：$F_{tr}$是可将输入$X$映射为特征图$U$的变换，其中$U\in\mathbb{R}^{H{\times}W{\times}C}$。例如，$F_{tr}$可以是常见的卷积操作。对于任意一个$F_{tr}$变换，都可以构造一个对应的SE块来进行特征重校准(feature recalibration, 即将特征图的各个通道赋以不同的权重)。
 <p>  特征图$U$首先通过$F_{sq}$压缩(squeeze)为$1\times1{\times}C$的向量，将一个通道内所有的空间特征编码为该通道上的全局特征。在论文中，这一步操作是通过全局均值池化(Global Avarage Pooling, GAP)来实现的，即特征图各个通道上权值之和除以特征图的尺寸(宽×高)：<br>
 <img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg" alt="GAP" title="GAP" style="float:center"/></p>
-<div style="text-align:center; color:grey; font-size:0.8em">全局均值池化</div>
+<div class="comment">全局均值池化</div>
 &emsp;&emsp;然后这个向量再通过两个全连接层，得到各通道真正的权重。这个步骤被作者称作激励(excitation)。两个全连接层都拥有可训练参数，目的是通过所有样本的训练来学习到GAP产生的特征向量到各通道权重之间的关系。这两个全连接层的结构类似瓶颈结构(bottle beck): 第一个全连接层将向量压缩为$1\times1{\times}{C/r}$，随后经ReLU这一非线性变换后送入第二个全连接层，恢复为$1\times1{\times}{C}$，再送入Sigmoid激活函数——由于特征之间并不一定彼此互斥，因此这里没有采用Softmax。最后得到的权重和各个通道相乘得到特征重校准后的$\widetilde{X}$.
-<p>  在激励这一环节中，瓶颈结构能有效降低参数量并提升泛化能力，$r$是一个超参数，称作降维系数(redution ratio)，$r$值的大小决定了SE块的容量(capacity)与计算开销。在论文中，作者采用SE-ResNet-50对$r$值大小进行了实验，在平衡性能与计算开销上，设置$r=16$能在两者之间产生平衡。在实践中，由于不同层承担不同的角色，因此整个网络的$r$值可根据需要调整以达到更好的性能。</p>
-<p>  </p>
+<p>  在激励这一环节中，瓶颈结构能有效降低参数量并提升泛化能力，$r$是一个超参数，称作降维系数(redution ratio)，$r$值的大小决定了SE块的容量(capacity)与计算开销。在论文中，作者采用SE-ResNet-50对$r$值大小进行了实验，在平衡性能与计算开销上，设置$r=16$能在两者之间产生平衡。在实践中，由于不同层承担不同的角色，因此整个网络的$r$值可根据需要调整以达到更好的性能。<br>
+  SE模块的方便之处在于可以直接加入现有的骨干网络之上，例如将SE Block插入ResNet和Inception这两种骨干网络中：</p>
+<div class="wrap">
+<div class="left"><img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_2.png" alt="SENet" title="SENet" style="float:center"/></div>
+<div class="right"><img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_3.png" alt="SENet" title="SENet" style="float:center"/></div>
+</div>
+<div class="comment">左图：SE-Inception； 右图：SE-ResNet</div>
+&emsp;&emsp;卷积训练出来的结果也带有通道的权值，但是实际上，由于卷积核感受野的限制，特征图中各个通道上每一个$H\times{W}$的权重参数，不仅仅有通道上的相关性，还受空间邻域相关性的影响。因此在SE结构中，作者先是采用全局均值池化消去了卷积捕捉到的空间依赖，在排除掉了空间依赖的影响后就剩下了通道的影响。因此可以通过全连接来训练获取各个通道的权重。
 
     </div>
 
