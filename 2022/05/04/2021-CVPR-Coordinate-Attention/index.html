@@ -262,12 +262,12 @@
 <a id="more"></a>
 <h2 id="回顾通道注意力机制"><a class="header-anchor" href="#回顾通道注意力机制"></a>回顾通道注意力机制</h2>
 <h3 id="SENet"><a class="header-anchor" href="#SENet"></a>SENet</h3>
-<img src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png" alt="SENet" title="SENet" style="float:center"/>
+<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png" alt="SENet" title="SENet" style="float:center"/>
 <div style="text-align:center; color:grey; font-size:0.8em">SENet的基础结构——压缩激励块</div>
 <div style="text-align:center; color:grey; font-size:0.8em">A Squeeze-and-Excitation block</div>
 &emsp;&emsp;SENet所提出的注意力机制基本架构如上图所示：$F_{tr}$是可将输入$X$映射为特征图$U$的变换，其中$U\in\mathbb{R}^{H{\times}W{\times}C}$。例如，$F_{tr}$可以是常见的卷积操作。对于任意一个$F_{tr}$变换，都可以构造一个对应的SE块来进行特征重校准(feature recalibration, 即将特征图的各个通道赋以不同的权重)。
 <p>  特征图$U$首先通过$F_{sq}$压缩(squeeze)为$1\times1{\times}C$的向量，将一个通道内所有的空间特征编码为该通道上的全局特征。在论文中，这一步操作是通过全局均值池化(Global Avarage Pooling, GAP)来实现的，即特征图各个通道上权值之和除以特征图的尺寸(宽×高)：<br>
-<img src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg" alt="GAP" title="GAP" style="float:center"/></p>
+<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg" alt="GAP" title="GAP" style="float:center"/></p>
 <div style="text-align:center; color:grey; font-size:0.8em">全局均值池化</div>
 &emsp;&emsp;然后这个向量再通过两个全连接层，得到各通道真正的权重。这个步骤被作者称作激励(excitation)。两个全连接层都拥有可训练参数，目的是通过所有样本的训练来学习到GAP产生的特征向量到各通道权重之间的关系。这两个全连接层的结构类似瓶颈结构(bottle beck): 第一个全连接层将向量压缩为$1\times1{\times}{C/r}$，随后经ReLU这一非线性变换后送入第二个全连接层，恢复为$1\times1{\times}{C}$，再送入Sigmoid激活函数——由于特征之间并不一定彼此互斥，因此这里没有采用Softmax。最后得到的权重和各个通道相乘得到特征重校准后的$\widetilde{X}$.
 <p>  在激励这一环节中，瓶颈结构能有效降低参数量并提升泛化能力，$r$是一个超参数，称作降维系数(redution ratio)，$r$值的大小决定了SE块的容量(capacity)与计算开销。在论文中，作者采用SE-ResNet-50对$r$值大小进行了实验，在平衡性能与计算开销上，设置$r=16$能在两者之间产生平衡。在实践中，由于不同层承担不同的角色，因此整个网络的$r$值可根据需要调整以达到更好的性能。</p>

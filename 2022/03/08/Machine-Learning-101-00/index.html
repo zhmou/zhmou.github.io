@@ -275,7 +275,7 @@ table
 <footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
 <br>
 <p>  譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。</p>
-<p><img src="/img/2022-3-9-Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
+<p><img data-src="/img/2022-3-9-Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
 <div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
 <br>
 <h2 id="02-一个简单的例子"><a class="header-anchor" href="#02-一个简单的例子"></a>02 一个简单的例子</h2>
@@ -304,7 +304,7 @@ table
 </table>
 <p>  对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。</p>
 <p>  基于此，我们建立一个简单的线性模型：<br>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
 <p>  此外，我们还需要一个“打分”的函数来评估模型在当前样本上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。</p>
 <p>$$<br>
 loss={(\hat{y}-y)}^2<br>
@@ -316,7 +316,7 @@ $$</p>
   在全体样本上的均方误差$cost = 5\div2=2.5$</p>
 <p>  我们把这个步骤称作“<strong>前向运算</strong>”/“<strong>前馈运算</strong>”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。<br>
   在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。</p>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
 <p>  将其应用于我们的例子中：当我们将两个参数沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。</p>
 <p>  根据链式求导法则：<br>
 $$<br>
@@ -327,7 +327,7 @@ $$<br>
   在$x=2$时，$\left.{\frac{\partial{loss}}{\partial{w}}}\right|_{x=2}=−4$，$\left.{\frac{\partial{loss}}{\partial{b}}}\right|_{x=2}=−2$<br>
   在$x=3$时，$\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3}=-12$，$\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3}=−4$</p>
 <p>  接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。</p>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
 <p>$$<br>
 \begin{align*}<br>
 w’&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
@@ -407,7 +407,7 @@ $$<br>
 x=\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 1\end{bmatrix} y=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}<br>
 $$</p>
 <p>  类似于第二部分中给出的例子，我们设计出一个相较于前者更为复杂的网络：<br>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/></p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/></p>
 <p>  在两个隐藏层向各个下一层神经元传输相应数字时(箭头所示位置)，需要引入非线性变换的激活函数(Activation function)，这里选用的是Sigmoid函数：$𝑆(𝑥)=\frac{1}{(1+𝑒^{−𝑥})}$，它将实数域R的数字映射至(0, 1)内。网络最后一层的Softmax函数也是一种非线性变换，它将该层所有结果都映射到(0, 1)内，不改变大小的相对位置。对于该层的各个元素$x_i$，经变换后的值计算如下：<br>
 $$<br>
 softmax\ value = \frac{e^{x_i}}{\sum_{j}e^{x_j}{}}<br>
@@ -416,15 +416,15 @@ $$</p>
   $𝑤_1$为三行两列矩阵，$𝐻_1=𝑥𝑤_1$，$𝑤_2$ 、$𝑤_3$ 为两行两列的矩阵： $𝐻_2=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_1 ) 𝑤_2$，$𝑂𝑢𝑡𝑝𝑢𝑡=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_2)𝑤_3$</p>
 <p>  <strong>正向运算：</strong><br>
   首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
 <p>  <strong>计算Loss：</strong><br>
   在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：<br>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/></p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/></p>
 <p>  <strong>反向传播：</strong><br>
   这一部分公式太多，懒得用$\LaTeX$再整理一遍，直接借用之前自己做的PPT里面的推导过程：<br>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/></p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/></p>
 <p>  <strong>更新权重：</strong><br>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/></p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/></p>
 <blockquote>
 <p><strong>小结与反思</strong><br>
 同单层模型一样，多层模型仍采用反向传播算法来进行权重的更新。<br>
@@ -439,7 +439,7 @@ $$</p>
   批量梯度下降：计算所有样本的loss后，再更新权重w与偏置b。<br>
   随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。<br>
   小批量(随机)梯度下降：将全体样本划分为若干个mini-batch，每个batch中存在若干样本，随机抽出一个mini-batch，计算该批次样本中的loss后更新权重w与偏置b，直到跑完所有mini-batch后，记作训练一个轮次。在训练完一个轮次后。对样本进行shuffle处理，即重新划分mini-batch，再次进行训练。</p>
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
 <p>  三种不同方式的对比：<br>
   一般来说，小批量梯度下降通过选取部分样本引入了更大噪声，使得它在解空间的“鞍点”位置更容易受噪声扰动，在一些情况下性能表现比批量梯度下降更好。而随机梯度下降更新权重只关注当前样本的梯度，所以尽管每一步使得当前样本得到最优的表现，但从整体样本考虑则不一定最优，且每一个样本前向计算时都需要依赖上一个样本反向传播后更新的权重，并行化程度不如其它两者高。<br>
   形象化的三种方式如上图所示，红点位置即为所求的最优解，图中带箭头的线则显示了这三种方法在寻找最优解的过程。</p>

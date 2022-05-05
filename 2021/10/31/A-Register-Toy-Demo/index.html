@@ -272,7 +272,7 @@
 <p>  目前，本项目采取的方式是调用命令行显示主板统一规范的smBIOS信息：</p>
 <p>  <code>CURRENT_MACHINE_ID = subprocess.check_output(‘wmic csproduct get uuid’).decode().split(‘\n’)[1].strip().replace(‘-’, ‘’)</code></p>
 <p>  直接调用命令行显示结果如下：<br>
-<img src="/img/2021-10-31-A-Register-Toy-Demo/01.png" alt="命令行"></p>
+<img data-src="/img/2021-10-31-A-Register-Toy-Demo/01.png" alt="命令行"></p>
 <p>  在后面进行了一系列操作如<code>.spilt(‘\n’)[1]</code>（取出以换行符为分割的元素），<code>.strip()</code>（去掉首尾的空格），<code>.replace(‘-’, ‘’)</code>（把连字符-去掉）等，最终生成了一个32位十六进制的字符串作为软件注册时机器的识别编码。</p>
 <h3 id="其他方式获取标识码"><a class="header-anchor" href="#其他方式获取标识码"></a>其他方式获取标识码</h3>
 <p>  上述方法的好处是调用简单，但是也留下了我曾忽视的隐患（当然是我自己的锅= =）：激活码在客户端只会与UUID进行匹配，激活码可能重复激活。之前的屎山代码里不仅根据机器特征，同时会根据时间生成一个序列号，因此避免了同一个激活码重复激活的可能。<br>
