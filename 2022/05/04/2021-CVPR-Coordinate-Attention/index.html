@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/img/general/apple-touch-icon.png">
@@ -16,24 +15,28 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2021CVPR论文：Coordinate Attention">
 <meta property="og:url" content="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/index.html">
 <meta property="og:site_name" content="Zh某的备忘录">
 <meta property="og:description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg">
 <meta property="article:published_time" content="2022-05-04T01:30:58.000Z">
-<meta property="article:modified_time" content="2022-05-04T03:31:13.698Z">
+<meta property="article:modified_time" content="2022-05-05T03:36:44.892Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="论文研读">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png">
 
 
 <link rel="canonical" href="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/">
@@ -45,6 +48,7 @@
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>2021CVPR论文：Coordinate Attention | Zh某的备忘录</title>
   
+
 
 
 
@@ -72,7 +76,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Zh某的备忘录</h1>
+      <p class="site-title">Zh某的备忘录</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">记录生活点滴</p>
@@ -87,13 +91,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
-        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
   </ul>
 </nav>
 
@@ -124,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%EF%BC%88%E7%BF%BB%E8%AF%91%EF%BC%89"><span class="nav-text">摘要（翻译）</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%EF%BC%88%E7%BF%BB%E8%AF%91%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">摘要（翻译）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E9%80%9A%E9%81%93%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">回顾通道注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SENet"><span class="nav-number">2.1.</span> <span class="nav-text">SENet</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -160,9 +158,6 @@
         <a href="mailto:zezhongzhang1999@gmail.com" title="E-Mail → mailto:zezhongzhang1999@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
-  </div>
 
 
 
@@ -182,7 +177,7 @@
     
   <div class="reading-progress-bar"></div>
 
-  <a href="https://github.com/zhmou" class="github-corner" title="在GayHub上关注我吧~" aria-label="在GayHub上关注我吧~" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/zhmou" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -205,11 +200,16 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
       <meta itemprop="name" content="Zhmou">
-      <meta itemprop="description" content="不断学习 关注技术 热爱生活">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Zh某的备忘录">
+      <meta itemprop="description" content="不断学习 关注技术 热爱生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2021CVPR论文：Coordinate Attention | Zh某的备忘录">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -223,9 +223,8 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-05-04 09:30:58 / 修改时间：11:31:13" itemprop="dateCreated datePublished" datetime="2022-05-04T09:30:58+08:00">2022-05-04</time>
+      <time title="创建时间：2022-05-04 09:30:58" itemprop="dateCreated datePublished" datetime="2022-05-04T09:30:58+08:00">2022-05-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -240,7 +239,7 @@
   
     <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
+        <i class="far fa-eye"></i>
       </span>
       <span class="post-meta-item-text">阅读次数：</span>
       <span id="busuanzi_value_page_pv"></span>
@@ -261,30 +260,28 @@
   不同于通道注意力将一个特征张量通过二维全局池化转换为单个特征向量，坐标注意力将通道注意力拆解为两个一维特征提取的过程，分别沿着两个空间方向(译注：宽，高)提取特征。通过这种方法可以提取一个空间方向上的远距离依赖关系，同时又可以在另一个空间方向上保持精确的位置信息。结果产生的特征图然后分别编码为一对方向感知(direction-aware)与位置敏感(position-sensitive)的注意力图，可以增补应用于输入的特征图来增强对感兴趣对象的表示。<br>
   我们的坐标注意力机制简单，可以灵活插入于经典的轻量级网络，如<em>MobileNetV2</em>, <em>MobileNeXt</em>和<em>EfficientNet</em>并且几乎没有额外的计算开销。大量实验表明，我们的坐标注意力机制在ImageNet分类上存在性能提升，更有趣的是，它在下游任务中表现更好，如目标检测和语义分割。</p>
 <a id="more"></a>
+<h2 id="回顾通道注意力机制"><a class="header-anchor" href="#回顾通道注意力机制"></a>回顾通道注意力机制</h2>
+<h3 id="SENet"><a class="header-anchor" href="#SENet"></a>SENet</h3>
+<img src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png" alt="SENet" title="SENet" style="float:center"/>
+<div style="text-align:center; color:grey; font-size:0.8em">SENet的基础结构——压缩激励块</div>
+<div style="text-align:center; color:grey; font-size:0.8em">A Squeeze-and-Excitation block</div>
+&emsp;&emsp;SENet所提出的注意力机制基本架构如上图所示：$F_{tr}$是可将输入$X$映射为特征图$U$的变换，其中$U\in\mathbb{R}^{H{\times}W{\times}C}$。例如，$F_{tr}$可以是常见的卷积操作。对于任意一个$F_{tr}$变换，都可以构造一个对应的SE块来进行特征重校准(feature recalibration, 即将特征图的各个通道赋以不同的权重)。
+<p>  特征图$U$首先通过$F_{sq}$压缩(squeeze)为$1\times1{\times}C$的向量，将一个通道内所有的空间特征编码为该通道上的全局特征。在论文中，这一步操作是通过全局均值池化(Global Avarage Pooling, GAP)来实现的，即特征图各个通道上权值之和除以特征图的尺寸(宽×高)：<br>
+<img src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg" alt="GAP" title="GAP" style="float:center"/></p>
+<div style="text-align:center; color:grey; font-size:0.8em">全局均值池化</div>
+&emsp;&emsp;然后这个向量再通过两个全连接层，得到各通道真正的权重。这个步骤被作者称作激励(excitation)。两个全连接层都拥有可训练参数，目的是通过所有样本的训练来学习到GAP产生的特征向量到各通道权重之间的关系。这两个全连接层的结构类似瓶颈结构(bottle beck): 第一个全连接层将向量压缩为$1\times1{\times}{C/r}$，随后经ReLU这一非线性变换后送入第二个全连接层，恢复为$1\times1{\times}{C}$，再送入Sigmoid激活函数——由于特征之间并不一定彼此互斥，因此这里没有采用Softmax。最后得到的权重和各个通道相乘得到特征重校准后的$\widetilde{X}$.
+<p>  在激励这一环节中，瓶颈结构能有效降低参数量并提升泛化能力，$r$是一个超参数，称作降维系数(redution ratio)，$r$值的大小决定了SE块的容量(capacity)与计算开销。在论文中，作者采用SE-ResNet-50对$r$值大小进行了实验，在平衡性能与计算开销上，设置$r=16$能在两者之间产生平衡。在实践中，由于不同层承担不同的角色，因此整个网络的$r$值可根据需要调整以达到更好的性能。</p>
+<p>  </p>
+
     </div>
 
     
     
     
+      
+
 
     <footer class="post-footer">
-          
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>Zhmou
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/" title="2021CVPR论文：Coordinate Attention">http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
           <div class="post-tags">
               <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
               <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
@@ -352,6 +349,7 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
@@ -368,7 +366,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":false,"js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
