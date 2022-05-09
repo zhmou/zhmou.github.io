@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_9.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_10.png">
 <meta property="article:published_time" content="2022-05-04T01:30:58.000Z">
-<meta property="article:modified_time" content="2022-05-09T02:16:58.020Z">
+<meta property="article:modified_time" content="2022-05-09T03:21:35.721Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
@@ -286,7 +286,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4.3k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -349,7 +349,8 @@
   基于上述原因，作者一方面为了避免CBAM中首先进行通道注意力时采用GAP、GMP导致位置信息损失，同时考虑长距离依赖，提出了这种新颖的，将位置信息嵌入到通道注意力中的坐标注意力机制。其结构如下：<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_9.png" alt="CA Overview" title="CA Overview" style="float:center" width="500px"/><div class="comment">CA结构总览。注意，本文对特征图尺寸的描述是${H{\times}W{\times}C}$，与图片中把通道数放在第一位的表示略有不同。</div>   在H(Y)和W(X)方向上，分别进行一次均值池化。对于和我一样缺乏直觉的朋友可以建立左手坐标系，想象一个${H{\times}W{\times}C}$的立方体，沿Y方向投影，得到的结果自然是${1{\times}W{\times}C}$的图；沿X方向投影，得到的结果是${H{\times}1{\times}C}$的图。在这两个图上，为了使其能够顺利地在一个平面上拼接，需要将其中一张变化到另一个平面上。以下是我用鼠标绘制的一张更直观的图：<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_10.png" alt="CA Overview" title="CA Overview" style="float:center" width="600px"/><div class="comment">鼠标绘制</div>  拼接得到的结果是$1\times{(H+W)}\times{C}$或者${(H+W)}\times1\times{C}$。这取决于把X Avg Pool横过来还是Y Avg Pool竖起来，但是<strong>注意</strong>：这里的通道数始终都是C，不要将这张图看作${(H+W)}\times{C}\times{1}$的情况，因此我在右侧的上方画了一只眼睛，代表从这个方向看。这对于下一步理解卷积的过程很有必要。<br>
   下一步是采用$1\times1$的卷积压缩通道数为$C/r$，接下来进行批归一化(Batch Normalization)，随后进行非线性变换——在这一步中，作者用的非线性变换似乎是自己改进的Swish激活函数：对于每个元素$x$，其经过激活值后的结果为$x\times{ReLU6(x+3)\ /\ 6}$，其中ReLU6是ReLU函数将最大值限制为6之后的结果：$ReLU6(x)=min(max(0,x),6)$。至于为什么用这个激活函数，作者在文章里面压根一点没提，只在3.2.2的公式(6)下方做了说明: δ is a non-linear activation function.<br>
   压缩完通道维度之后，作者又将拼接而来的两者进行Spilt分开了。在知乎上，我看到有人提到$x$和$y$两方向信息交互的问题，在进行思考之后，我个人认为上一步的拼接与卷积压缩维度的操作不能说是实现信息的融合，只能说是两者共用了同一组卷积核参数。行文至此，我觉得有必要动手试试，<strong>如果整个过程中不进行拼接操作会有什么样的效果。</strong>（不过最近有点懒也有些忙，或许有空了再试试。）<br>
-  分开-恢复维度-Sigmoid激活函数，这样就得到了两组不同方向上的注意力权重</p>
+  分开-恢复维度-Sigmoid激活函数，这样就得到了两组不同方向上的注意力权重。最后将这些权重与输入的特征图相乘（具体操作应该是这两个平面上的权重通过广播机制膨胀为三维矩阵，再进行点乘操作）就得到了经特征重校准后的特征图。<br>
+  在消融实验中，作者在一些常见的轻量级网络上将原有的SE注意力机制替换为CA注意力机制，其结果都存在1%左右的提升。</p>
 
     </div>
 
