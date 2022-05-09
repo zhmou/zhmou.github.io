@@ -31,8 +31,15 @@
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_2.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_3.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_4.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_5.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_6.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_7.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_8.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_9.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_10.png">
 <meta property="article:published_time" content="2022-05-04T01:30:58.000Z">
-<meta property="article:modified_time" content="2022-05-05T09:41:20.807Z">
+<meta property="article:modified_time" content="2022-05-09T02:16:58.020Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
@@ -151,7 +158,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%EF%BC%88%E7%BF%BB%E8%AF%91%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">摘要（翻译）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E9%80%9A%E9%81%93%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">回顾通道注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SENet"><span class="nav-number">2.1.</span> <span class="nav-text">SENet</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%EF%BC%88%E7%BF%BB%E8%AF%91%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">摘要（翻译）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E5%87%A0%E7%A7%8D%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">回顾几种注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SENet"><span class="nav-number">2.1.</span> <span class="nav-text">SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CBAM-Convolutional-Block-Attention-Module-ECCV-2018"><span class="nav-number">2.2.</span> <span class="nav-text">CBAM: Convolutional Block Attention Module (ECCV 2018)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">CA注意力机制</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -273,6 +280,21 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span id="busuanzi_value_page_pv"></span>
     </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -295,7 +317,7 @@
   不同于通道注意力将一个特征张量通过二维全局池化转换为单个特征向量，坐标注意力将通道注意力拆解为两个一维特征提取的过程，分别沿着两个空间方向(译注：宽，高)提取特征。通过这种方法可以提取一个空间方向上的远距离依赖关系，同时又可以在另一个空间方向上保持精确的位置信息。结果产生的特征图然后分别编码为一对方向感知(direction-aware)与位置敏感(position-sensitive)的注意力图，可以增补应用于输入的特征图来增强对感兴趣对象的表示。<br>
   我们的坐标注意力机制简单，可以灵活插入于经典的轻量级网络，如<em>MobileNetV2</em>, <em>MobileNeXt</em>和<em>EfficientNet</em>并且几乎没有额外的计算开销。大量实验表明，我们的坐标注意力机制在ImageNet分类上存在性能提升，更有趣的是，它在下游任务中表现更好，如目标检测和语义分割。</p>
 <a id="more"></a>
-<h2 id="回顾通道注意力机制"><a class="header-anchor" href="#回顾通道注意力机制"></a>回顾通道注意力机制</h2>
+<h2 id="回顾几种注意力机制"><a class="header-anchor" href="#回顾几种注意力机制"></a>回顾几种注意力机制</h2>
 <h3 id="SENet"><a class="header-anchor" href="#SENet"></a>SENet</h3>
 <img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png" alt="SENet" title="SENet" style="float:center"/>
 <div class="comment">SENet的基础结构——压缩激励块</div>
@@ -312,7 +334,22 @@
 <div class="right"><img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_3.png" alt="SENet" title="SENet" style="float:center"/></div>
 </div>
 <div class="comment">左图：SE-Inception； 右图：SE-ResNet</div>
-&emsp;&emsp;卷积训练出来的结果也带有通道的权值，但是实际上，由于卷积核感受野的限制，特征图中各个通道上每一个$H\times{W}$的权重参数，不仅仅有通道上的相关性，还受空间邻域相关性的影响。因此在SE结构中，作者先是采用全局均值池化消去了卷积捕捉到的空间依赖，在排除掉了空间依赖的影响后就剩下了通道的影响。因此可以通过全连接来训练获取各个通道的权重。
+&emsp;&emsp;卷积训练出来的结果也带有通道的权值，但是实际上，由于卷积核感受野的限制，特征图中各个通道上每一个$H\times{W}$的权重参数，不仅仅有通道上的相关性，还受空间邻域相关性的影响。因此在SE结构中，作者先是采用全局均值池化消去了卷积捕捉到的空间依赖，在排除掉了空间依赖的影响后剩下了通道的影响。因此可以通过全连接来训练获取各个通道的权重。
+<h3 id="CBAM-Convolutional-Block-Attention-Module-ECCV-2018"><a class="header-anchor" href="#CBAM-Convolutional-Block-Attention-Module-ECCV-2018"></a><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_ECCV_2018/papers/Sanghyun_Woo_Convolutional_Block_Attention_ECCV_2018_paper.pdf">CBAM: Convolutional Block Attention Module (ECCV 2018)</a></h3>
+<p>  在SENet中，作者只考虑了通道维度上的权重。而卷积操作本身是通过跨通道信息和空间信息混合在一起来提取信息特征的。因此，在CBAM的模块中；作者考虑在空间和通道两个维度上分别应用注意力机制，来使模型学习到在通道维度上“注意什么”和空间维度上“注意哪里”。<br>
+<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_4.png" alt="CBAM Overview" title="CBAM Overview" style="float:center" width="800px"/><div class="comment">CBAM总体结构</div>  上图是CBAM的总体概览，该部分存在两个子模块：通道注意力模块和空间注意力模块。输入的特征图同SE模块类似，经通道注意力模块进行重校准后送入空间注意力模块。再次得到空间上的权重后同特征图相乘得到最终的结果。<br>
+  CBAM对于两个模块的安排是经过实验验证的结果。在4.1节的消融实验中，作者发现：顺序（串行）安排两个子模块所生成的注意力图比并行安排两个子模块的注意力图更加精细；优先通过通道注意力模块的性能比优先通过空间注意力模块更好；此外同时使用两种注意力模块在任何情况下都比单独使用通道注意力机制的结果更好（因此证明该结构的设计是有效的）。<br>
+  对于更具体的模块结构，如下图所示：<br>
+<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_5.png" alt="CBAM" title="CBAM" style="float:center" width="800px"/><div class="comment">CBAM具体结构</div>  同SE模块类似，但SENet的通道注意力机制不仅采用GAP，而且采用了全局极值池化(Global Max Pooling, GMP)来得到两个$1\times1{\times}C$的向量。这两个向量通过<strong>同一个</strong>两个全连接层构成的(同样是瓶颈结构的)MLP(作者称之为&quot;shared MLP&quot;)。在此之后两个向量通过逐元素求和得到单个向量，最后同样通过Sigmoid函数得到通道上的权重。算法公式如下：<br>
+<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_6.png" alt="channel attention" title="channel attention" style="float:center" width="500px"/><div class="comment">通道注意力</div>  通过沿通道方向上做均值池化、极值池化，我们可以得到两个二维的特征图：$F_{avg}^s,\ F_{max}^s\in\mathbb{R}^{H\times{W}\times1}$。对这两个特征图，将其沿通道方向拼接得到${H\times{W}\times2}$的特征图，然后用$7\times7$大小的卷积核(周围一圈先进行padding操作以保持卷积后尺寸不变)卷积得到${H\times{W}\times1}$，最后经Sigmoid产生空间特征权重值。算法公式如下：<br>
+<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_7.png" alt="spatial attention" title="spatial attention" width="500px" style="float:center"/><div class="comment">空间注意力</div>  在ResNet的基本结构：ResBlock中，应用CBAM机制如下：<br>
+<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_8.png" alt="CBAM in ResNet" title="CBAM in ResNet" style="float:center"/><div class="comment">CBAM integrated with a ResBlock in ResNet</div></p>
+<h2 id="CA注意力机制"><a class="header-anchor" href="#CA注意力机制"></a>CA注意力机制</h2>
+<p>  由于轻量级网络的计算能力有限，任何带来巨大开销的注意力机制都是难以应用到现实的，因此目前最流行的轻量级网络的注意力机制仍然是SE。但是SE只考虑对通道信息计算权重，因此后来的注意力机制考虑通过压缩特征图的通道维度来利用位置信息，再通过卷积来计算空间注意力，然而卷积本身只捕获局部关系，不能对视觉任务必不可少的远程依赖关系(long-range dependencies)进行建模。<br>
+  基于上述原因，作者一方面为了避免CBAM中首先进行通道注意力时采用GAP、GMP导致位置信息损失，同时考虑长距离依赖，提出了这种新颖的，将位置信息嵌入到通道注意力中的坐标注意力机制。其结构如下：<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_9.png" alt="CA Overview" title="CA Overview" style="float:center" width="500px"/><div class="comment">CA结构总览。注意，本文对特征图尺寸的描述是${H{\times}W{\times}C}$，与图片中把通道数放在第一位的表示略有不同。</div>   在H(Y)和W(X)方向上，分别进行一次均值池化。对于和我一样缺乏直觉的朋友可以建立左手坐标系，想象一个${H{\times}W{\times}C}$的立方体，沿Y方向投影，得到的结果自然是${1{\times}W{\times}C}$的图；沿X方向投影，得到的结果是${H{\times}1{\times}C}$的图。在这两个图上，为了使其能够顺利地在一个平面上拼接，需要将其中一张变化到另一个平面上。以下是我用鼠标绘制的一张更直观的图：<img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_10.png" alt="CA Overview" title="CA Overview" style="float:center" width="600px"/><div class="comment">鼠标绘制</div>  拼接得到的结果是$1\times{(H+W)}\times{C}$或者${(H+W)}\times1\times{C}$。这取决于把X Avg Pool横过来还是Y Avg Pool竖起来，但是<strong>注意</strong>：这里的通道数始终都是C，不要将这张图看作${(H+W)}\times{C}\times{1}$的情况，因此我在右侧的上方画了一只眼睛，代表从这个方向看。这对于下一步理解卷积的过程很有必要。<br>
+  下一步是采用$1\times1$的卷积压缩通道数为$C/r$，接下来进行批归一化(Batch Normalization)，随后进行非线性变换——在这一步中，作者用的非线性变换似乎是自己改进的Swish激活函数：对于每个元素$x$，其经过激活值后的结果为$x\times{ReLU6(x+3)\ /\ 6}$，其中ReLU6是ReLU函数将最大值限制为6之后的结果：$ReLU6(x)=min(max(0,x),6)$。至于为什么用这个激活函数，作者在文章里面压根一点没提，只在3.2.2的公式(6)下方做了说明: δ is a non-linear activation function.<br>
+  压缩完通道维度之后，作者又将拼接而来的两者进行Spilt分开了。在知乎上，我看到有人提到$x$和$y$两方向信息交互的问题，在进行思考之后，我个人认为上一步的拼接与卷积压缩维度的操作不能说是实现信息的融合，只能说是两者共用了同一组卷积核参数。行文至此，我觉得有必要动手试试，<strong>如果整个过程中不进行拼接操作会有什么样的效果。</strong>（不过最近有点懒也有些忙，或许有空了再试试。）<br>
+  分开-恢复维度-Sigmoid激活函数，这样就得到了两组不同方向上的注意力权重</p>
 
     </div>
 
@@ -363,6 +400,20 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Zhmou</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">49k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:03</span>
+  </span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">

@@ -3066,3 +3066,6 @@ body {
 .site-brand-container {
   border-radius: 20px 20px 0 0;
 }
+.post-body img {
+  margin-bottom: 10px;
+}
