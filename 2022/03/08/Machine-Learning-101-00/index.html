@@ -172,7 +172,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -373,7 +373,7 @@ $$<br>
 <img data-src="/img/2022-3-9-Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
 <p>$$<br>
 \begin{align*}<br>
-w’&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
+w'&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
 &amp;=w- lr\cdot(\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3})\div2\\<br>
 &amp;=1-0.04\times(-4-12)\div2\\<br>
 &amp;=1.32<br>
@@ -382,7 +382,7 @@ $$</p>
 <p>  同理，$b$的值计算结果为：<br>
 $$<br>
 \begin{align*}<br>
-b’&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
+b'&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
 &amp;=b-lr\cdot(\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3})\div2\\<br>
 &amp;=1-0.04\times(-2-4)\div2\\<br>
 &amp;=1.12<br>
@@ -391,8 +391,8 @@ $$</p>
 <p>  如上述的这个过程，被称为“反向传播”。这样，我们便走完了神经网络训练的一个轮次（Epoch）。此时，重新计算预测值、loss与cost，更新权重后的结果为：</p>
 <p>  $x=2$时，$\hat{y}=3.76$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3.76-4)}^2=0.0576$<br>
   $x=3$时，$\hat{y}=5.08$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(5.08-6)}^2=0.8464$<br>
-  在全体样本上的均方误差$cost’ = 0.452$</p>
-<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程，在经过第二次训练后，得到$w’=1.644$，$b’=1.236$</p>
+  在全体样本上的均方误差$cost' = 0.452$</p>
+<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程，在经过第二次训练后，得到$w'=1.644$，$b'=1.236$</p>
 <p>  现在，对于例子开头提出来的问题，在经过两轮训练后，神经网络给出的$x=4$时的预测结果为:<br>
 $$<br>
 ŷ = 1.644\times4+1.236 = 7.812<br>

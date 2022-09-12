@@ -165,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -313,10 +313,10 @@
 <p>  总之，这些东西的难度并不是很大，接下来将每一个提到的需求分别在客户端和服务端实现就好。</p>
 <h2 id="02-唯一设备标识码UUID"><a class="header-anchor" href="#02-唯一设备标识码UUID"></a>02 唯一设备标识码UUID</h2>
 <p>  目前，本项目采取的方式是调用命令行显示主板统一规范的smBIOS信息：</p>
-<p>  <code>CURRENT_MACHINE_ID = subprocess.check_output(‘wmic csproduct get uuid’).decode().split(‘\n’)[1].strip().replace(‘-’, ‘’)</code></p>
+<p>  <code>CURRENT_MACHINE_ID = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip().replace('-', '')</code></p>
 <p>  直接调用命令行显示结果如下：<br>
 <img data-src="/img/2021-10-31-A-Register-Toy-Demo/01.png" alt="命令行"></p>
-<p>  在后面进行了一系列操作如<code>.spilt(‘\n’)[1]</code>（取出以换行符为分割的元素），<code>.strip()</code>（去掉首尾的空格），<code>.replace(‘-’, ‘’)</code>（把连字符-去掉）等，最终生成了一个32位十六进制的字符串作为软件注册时机器的识别编码。</p>
+<p>  在后面进行了一系列操作如<code>.spilt('\n')[1]</code>（取出以换行符为分割的元素），<code>.strip()</code>（去掉首尾的空格），<code>.replace('-', '')</code>（把连字符-去掉）等，最终生成了一个32位十六进制的字符串作为软件注册时机器的识别编码。</p>
 <h3 id="其他方式获取标识码"><a class="header-anchor" href="#其他方式获取标识码"></a>其他方式获取标识码</h3>
 <p>  上述方法的好处是调用简单，但是也留下了我曾忽视的隐患（当然是我自己的锅= =）：激活码在客户端只会与UUID进行匹配，激活码可能重复激活。之前的屎山代码里不仅根据机器特征，同时会根据时间生成一个序列号，因此避免了同一个激活码重复激活的可能。<br>
   根据我的检索，Python中<code>uuid.getnodes()</code>或许可以满足我的要求，当然效果具体如何得等到我的实验验证啦。</p>

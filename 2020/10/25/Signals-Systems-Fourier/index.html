@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -371,7 +371,7 @@ $$<br>
 而正交，同样是这些内积为0的特殊情况。至此，我们已经详细介绍了内积与正交的基础知识，它们很快就将应用到下一节的学习中。</p>
 <h2 id="03-三角傅里叶级数"><a class="header-anchor" href="#03-三角傅里叶级数"></a>03 三角傅里叶级数</h2>
 <h3 id="引入"><a class="header-anchor" href="#引入"></a>引入</h3>
-<p>对于任意一个多项式函数，我们可以发现<em>堆砌组成</em>它的<em>原材料</em>是$\mathbb \{1,x,x^2,…,x^n\}$。譬如多项式$y=x^3+3x^2+2x$，它由1个$x^3$，3个$x^2$和2个$x$构成。<br>
+<p>对于任意一个多项式函数，我们可以发现<em>堆砌组成</em>它的<em>原材料</em>是$\mathbb \{1,x,x^2,...,x^n\}$。譬如多项式$y=x^3+3x^2+2x$，它由1个$x^3$，3个$x^2$和2个$x$构成。<br>
 <img data-src="/img/2020-10-25-Signals-Systems-Fourier/03.jpg" alt="多项式函数的组成"><br>
 就如同厨师烧菜一样，在知道了配方中每一项<em>原材料</em>系数的情况下，就可以还原出一道美味来。甚至借助于这些幂函数，在满足一定条件的前提下，我们可以在某点邻域内无限逼近另一些非多项式函数。<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup></p>
 <p>向量中也有如出一辙的想法。选定两个正交<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>的向量，通过线性组合可以构成整个平面（二维）空间中的任意一个向量。如图所示，选定x、y坐标轴方向上的彼此正交的两个单位向量$\vec u$、$\vec v$来表示$\vec w$：</p>
@@ -383,7 +383,7 @@ $$<br>
 <p>答案是肯定的，如同二维平面空间中的任意一个向量可由两个正交向量表示，三维空间中的向量由三个两两正交的向量一样。类比为无穷多维向量的函数自然需要无穷个彼此正交的函数表示。这些构建起复杂函数的基石被我们称作<strong>正交函数族（集）</strong>。</p>
 <p>不难证明，以下这些函数在区间$[-\pi,\pi]$上是彼此正交的：<br>
 $$<br>
-\mathbb \{1,sin\ x,sin\ 2x,…,sin\ nx,…, cos\ x,cos\ 2x,…,cos\ nx\}<br>
+\mathbb \{1,sin\ x,sin\ 2x,...,sin\ nx,..., cos\ x,cos\ 2x,...,cos\ nx\}<br>
 $$<br>
 证明如下：</p>
 <p>对于1与余弦或正弦函数之间的正交性：<br>
@@ -403,7 +403,7 @@ $$<br>
 $$</p>
 <p>经过压缩或者拉伸，上述函数在区间$[-{T\over2},{T\over2}]$同样是彼此正交的：<br>
 $$<br>
-\mathbb \{1,sin\ \Omega x,sin\ 2\Omega x,…,sin\ n\Omega x,…, cos\ \Omega x,cos\ 2\Omega x,…,cos\ n\Omega x\},\ 其中\Omega ={2\pi\over T}<br>
+\mathbb \{1,sin\ \Omega x,sin\ 2\Omega x,...,sin\ n\Omega x,..., cos\ \Omega x,cos\ 2\Omega x,...,cos\ n\Omega x\},\ 其中\Omega ={2\pi\over T}<br>
 $$<br>
 因此，对于同样定义在区间$[-{T\over2},{T\over2}]$上的函数$f(x)$，我们便可以考虑写作以上这些正交函数的线性组合。而这种展开形式的猜想，即<strong>任何连续周期信号可以由一组适当的正弦曲线组合而成</strong>，最早由法国科学家<strong>傅里叶</strong>提出，因此我们将这种展开式称作<strong>三角傅里叶级数</strong>。<br>
 $$<br>
@@ -514,7 +514,7 @@ f(t)&amp;={a_0\over2}+\sum_{n=1}^\infty A_ncos(n\Omega t + \phi_n)\\<br>
 &amp;=\sum_{n=-\infty}^\infty {1\over2}A_ne^{j(n\Omega t + \phi_n)}\cdots A_0 = a_0, \phi_0 = 0<br>
 \end{align*}<br>
 $$<br>
-这样，我们又得到了一个以${1,e^{j\Omega t},e^{2j\Omega t},…e^{nj\Omega t},…}$为正交函数集的傅里叶级数，我们把它叫做<strong>指数傅里叶级数</strong>。</p>
+这样，我们又得到了一个以${1,e^{j\Omega t},e^{2j\Omega t},...e^{nj\Omega t},...}$为正交函数集的傅里叶级数，我们把它叫做<strong>指数傅里叶级数</strong>。</p>
 <p>它的<strong>傅里叶系数</strong>$\dot F_n$为复函数的形式，表达式为：<br>
 $$<br>
 \begin{align*}<br>

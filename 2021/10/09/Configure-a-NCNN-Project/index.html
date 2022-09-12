@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -353,7 +353,7 @@
 <figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DayBreak-u/SOLOV2_ncnn.git</span><br></pre></td></tr></table></figure>
 <p>  根据<a target="_blank" rel="noopener" href="https://github.com/DayBreak-u/SOLOV2_ncnn">项目主页</a><a target="_blank" rel="noopener" href="http://xn--README-ow6o.md">的README.md</a>，执行前三行代码：</p>
 <figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line">mkdir build</span><br><span class="line"><span class="built_in">cd</span> build </span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
-<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>– Configuring done</code>、<code>– Generating done</code>时即意味着项目解决方案的成功生成。</p>
+<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>-- Configuring done</code>、<code>-- Generating done</code>时即意味着项目解决方案的成功生成。</p>
 <p>  下载模型权重：</p>
 <blockquote>
 <p>链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng">https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng</a> 密码: phh8</p>
@@ -379,12 +379,12 @@
 <p>  注释并重写main函数：</p>
 <figure class="highlight c++"><figcaption><span>solov2.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* imagepath = <span class="string">&quot;E:/Project/SOLOV2_ncnn/imgs/horses.jpg&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cv::Mat m = cv::<span class="built_in">imread</span>(imagepath, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (m.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;cv::imread %s failed\n&quot;</span>, imagepath);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::vector &lt;Object&gt; objects;</span><br><span class="line">    <span class="built_in">detect_solov2</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_objects</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>  程序生成的结果result.png默认放在项目build文件夹下，如果您想要直观地看见程序运行的效果，可以将main函数上方原作者注释掉的两行代码取消注释：<br>
-  <code>//    cv::imshow(“image”, image);</code><br>
+  <code>//    cv::imshow(&quot;image&quot;, image);</code><br>
   <code>//    cv::waitKey(0);</code></p>
 <h3 id="运行代码"><a class="header-anchor" href="#运行代码"></a>运行代码</h3>
 <p>  做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：</p>
 <p><img data-src="/img/2021-10-09-Configure-a-NCNN-Project/4.png" alt="修改代码"></p>
-<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>…/opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>…/SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
+<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
 <p>  运行窗口如图：</p>
 <p><img data-src="/img/2021-10-09-Configure-a-NCNN-Project/5.png" alt="运行窗口"></p>
 <p>  运行效果如图：</p>
