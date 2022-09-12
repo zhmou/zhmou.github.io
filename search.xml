@@ -785,6 +785,101 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>力扣刷题小录</title>
+    <url>/2022/09/11/Leetcode-log/</url>
+    <content><![CDATA[<style type='text/css'>
+    .left {
+        width: 49.5%;
+        float: left;
+    }
+
+    .right {
+        width: 49.5%;
+        float: right;
+    }
+
+    .center {
+        float: left;
+        width: 50%;
+        margin-left: 25%;
+    }
+
+    .clear {
+        clear: both;
+    }
+</style>
+<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
+<h2 id="01-只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#01-只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a>01.<a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
+<p><strong>简述：</strong><br>
+  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
+  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
+<strong>思路：</strong><br>
+  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
+  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
+<a id="more"></a>
+<p><strong>题解：</strong><br></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.length ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.length;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.length; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<hr>
+<h2 id="02-汉明重量-汉明距离"><a class="header-anchor" href="#02-汉明重量-汉明距离"></a>02.<a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
+<p><strong>简述：</strong><br>
+  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为汉明重量）。<br>
+  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
+<strong>思路：</strong><br>
+  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
+  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
+<strong>题解：</strong></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">n</span></span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">n</span></span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<div class="note warning"><p>题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充。<br>
+具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a><br>
+否则在范例中，32位有符号数的最高位为1时，循环不会终止。</p>
+</div>
+<hr>
+<h1 id="进制转换-K进制表示下的各位数字总和-数字转换为16进制数"><a class="header-anchor" href="#进制转换-K进制表示下的各位数字总和-数字转换为16进制数"></a>进制转换 / <a href="https://leetcode.cn/problems/sum-of-digits-in-base-k/">K进制表示下的各位数字总和</a> / <a href="https://leetcode.cn/problems/convert-a-number-to-hexadecimal/">数字转换为16进制数</a></h1>
+<p><strong>简述：</strong><br>
+  ①给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。（K进制表示下的各位数字总和）<br>
+  ②给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 <i>补码运算</i> 方法。</p>
+<div class="note info"><p>注意:<br>
+十六进制中所有字母(a-f)都必须是小写。<br>
+十六进制字符串中不能包含多余的前导零。如果要转化的数为0，那么以单个字符’0’来表示；对于其他情况，十六进制字符串中的第一个字符将不会是0字符。 <br>
+给定的数确保在32位有符号整数范围内。<br>
+不能使用任何由库提供的将数字直接转换或格式化为十六进制的方法。</p>
+</div>
+<p><strong>思路：</strong><br>
+  10进制转 k 进制：10进制的数字 除以 k，得到的余数就是目标待转换的数字的最后一位，再拿刚刚所得到的商继续除以k，如此循环，直到所得的商为0。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> BaseChange = <span class="function"><span class="keyword">function</span> (<span class="params">n, k</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        arr.push(n % k);</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.length) &#123;</span><br><span class="line">        ret += arr.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> k = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(n.toString(k) == BaseChange(n, k));</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>Javascript</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2021CVPR论文：Coordinate Attention</title>
     <url>/2022/05/04/2021-CVPR-Coordinate-Attention/</url>
     <content><![CDATA[<style type="text/css">
@@ -845,77 +940,13 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>力扣刷题小录</title>
-    <url>/2022/09/11/Leetcode-log/</url>
-    <content><![CDATA[<style type='text/css'>
-    .left {
-        width: 49.5%;
-        float: left;
-    }
-
-    .right {
-        width: 49.5%;
-        float: right;
-    }
-
-    .center {
-        float: left;
-        width: 50%;
-        margin-left: 25%;
-    }
-
-    .clear {
-        clear: both;
-    }
-</style>
-<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
-<h2 id="01-只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#01-只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a>01.<a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
-<p><strong>简述：</strong><br>
-  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
-  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
-<strong>思路：</strong><br>
-  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
-  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
-<a id="more"></a>
-<p><strong>题解：</strong><br></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.length ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.length;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.length; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
-</div>
-<hr>
-<h2 id="02-汉明重量-汉明距离"><a class="header-anchor" href="#02-汉明重量-汉明距离"></a>02.<a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
-<p><strong>简述：</strong><br>
-  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为汉明重量）。<br>
-  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
-<strong>思路：</strong><br>
-  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
-  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
-<strong>题解：</strong><br></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">n</span></span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">n</span></span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
-</div>
-<div class="note warning"><p>提示：题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充<br>
-具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a></p>
-</div>
+    <title>only_for_test</title>
+    <url>/2022/09/12/only-for-test/</url>
+    <content><![CDATA[<p>这是英文单引号 —&gt; ’<br>
+这是英文双引号 —&gt; &quot;<br>
+英文单引号加上其它符号 —&gt; '()<br>
+英文单引号（以HTML代码 <i><b>&amp;#39;</b></i> 输入） —&gt; ’<br>
+英文单引号（以转义字符的形式 <i><b>&amp;apos;</b></i> 输入） —&gt; ’</p>
 ]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>算法</tag>
-      </tags>
   </entry>
 </search>
