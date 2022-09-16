@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/img/general/apple-touch-icon.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_9.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_10.png">
 <meta property="article:published_time" content="2022-03-08T05:22:21.000Z">
-<meta property="article:modified_time" content="2022-05-09T03:12:50.000Z">
+<meta property="article:modified_time" content="2022-09-15T11:49:37.332Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
@@ -157,7 +157,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">01 什么是机器学习？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#02-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">02 一个简单的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#03-%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">03 更复杂的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#04-%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9A%E5%BC%95%E5%85%A5Mini-Batch"><span class="nav-number">4.</span> <span class="nav-text">04 随机梯度下降：引入Mini-Batch</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是机器学习？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">一个简单的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">更复杂的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9A%E5%BC%95%E5%85%A5Mini-Batch"><span class="nav-number">4.</span> <span class="nav-text">随机梯度下降：引入Mini-Batch</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -172,7 +172,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -183,7 +183,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -312,7 +312,7 @@ table
 <p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
 <a id="more"></a>
 <p>  免责声明：本人对机器学习领域所知甚少，所写博文为对前期所学知识的回顾，不确保其内容的真实性与准确性，不建议以此为基础进行学习。如有差错纰漏，欢迎指正。</p>
-<h2 id="01-什么是机器学习？"><a class="header-anchor" href="#01-什么是机器学习？"></a>01 什么是机器学习？</h2>
+<h2 id="什么是机器学习？"><a class="header-anchor" href="#什么是机器学习？"></a>什么是机器学习？</h2>
 <p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，那就是：</p>
 <blockquote><p>从已有的样本（数据）中发现规律，并能够将其泛化应用于未知的（或者说：新的）样本上。</p>
 <footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
@@ -321,7 +321,7 @@ table
 <p><img data-src="/img/2022-3-9-Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
 <div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
 <br>
-<h2 id="02-一个简单的例子"><a class="header-anchor" href="#02-一个简单的例子"></a>02 一个简单的例子</h2>
+<h2 id="一个简单的例子"><a class="header-anchor" href="#一个简单的例子"></a>一个简单的例子</h2>
 <p>  现在，我们有一组$x$与$y$如表所示：</p>
 <table>
 <thead>
@@ -405,7 +405,7 @@ $$</p>
 <strong>问题</strong>：<br>
 多个线性神经元简单叠加，如两个神经元：$y = w_1(w_2x+b_2)+b_1 = w_1w_2x+w_1b_2+b_1$ ，仍与单个神经元效果相同，需要引入<em>非线性变换</em>才能较好的拟合非线性函数。</p>
 </blockquote>
-<h2 id="03-更复杂的例子"><a class="header-anchor" href="#03-更复杂的例子"></a>03 更复杂的例子</h2>
+<h2 id="更复杂的例子"><a class="header-anchor" href="#更复杂的例子"></a>更复杂的例子</h2>
 <p>  下方是某商品的评价及其人工标注的情感标签，试建立模型分析其中关系。</p>
 <table>
 <thead>
@@ -477,7 +477,7 @@ $$</p>
 层数越深，由链式法则相乘得到的梯度越来越小，可能出现梯度消失的问题(改进：ResNet)<br>
 文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分元素都是0）。②（基于前者）大部分句子的向量都分布在坐标轴附近。③（基于前者）难以衡量两个句子之间的相似度。</p>
 </blockquote>
-<h2 id="04-随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#04-随机梯度下降：引入Mini-Batch"></a>04 随机梯度下降：引入Mini-Batch</h2>
+<h2 id="随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#随机梯度下降：引入Mini-Batch"></a>随机梯度下降：引入Mini-Batch</h2>
 <p>  对于梯度下降，有几种不同的方法对其进行实现：<br>
   批量梯度下降：计算所有样本的loss后，再更新权重w与偏置b。<br>
   随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。<br>
@@ -546,13 +546,13 @@ $$</p>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">53k</span>
+    <span title="站点总字数">57k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:12</span>
+    <span title="站点阅读时长">2:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

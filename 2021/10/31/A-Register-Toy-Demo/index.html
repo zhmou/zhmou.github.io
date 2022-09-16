@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/img/general/apple-touch-icon.png">
@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://zhmou.github.io/img/2021-10-31-A-Register-Toy-Demo/01.png">
 <meta property="article:published_time" content="2021-10-31T07:08:38.000Z">
-<meta property="article:modified_time" content="2021-10-31T12:11:06.000Z">
+<meta property="article:modified_time" content="2022-09-15T11:48:32.683Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="Python">
@@ -150,7 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">01 构建模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#02-%E5%94%AF%E4%B8%80%E8%AE%BE%E5%A4%87%E6%A0%87%E8%AF%86%E7%A0%81UUID"><span class="nav-number">2.</span> <span class="nav-text">02 唯一设备标识码UUID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%BC%8F%E8%8E%B7%E5%8F%96%E6%A0%87%E8%AF%86%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">其他方式获取标识码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#03-%E6%A0%B8%E5%BF%83%EF%BC%9ARSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">03 核心：RSA加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%8F%8D%E5%85%83%E7%B4%A0d%E7%9A%84%E8%AE%A1%E7%AE%97%E2%80%94%E2%80%94%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">模反元素d的计算——扩展欧几里得算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%B9%82%E5%8F%96%E6%A8%A1%E7%AE%97%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">快速幂取模算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#04-%E5%85%B6%E5%AE%83tricks"><span class="nav-number">4.</span> <span class="nav-text">04 其它tricks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%EF%BC%9A%E5%8E%8B%E7%BC%A9%E6%BF%80%E6%B4%BB%E7%A0%81%E9%95%BF%E5%BA%A6"><span class="nav-number">4.1.</span> <span class="nav-text">进制转换：压缩激活码长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%97%B6%E9%97%B4%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">添加时间信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PyQt5%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%84%E7%90%86"><span class="nav-number">4.3.</span> <span class="nav-text">PyQt5的可视化与多线程处理</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">构建模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E8%AE%BE%E5%A4%87%E6%A0%87%E8%AF%86%E7%A0%81UUID"><span class="nav-number">2.</span> <span class="nav-text">唯一设备标识码UUID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%BC%8F%E8%8E%B7%E5%8F%96%E6%A0%87%E8%AF%86%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">其他方式获取标识码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%EF%BC%9ARSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">核心：RSA加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%8F%8D%E5%85%83%E7%B4%A0d%E7%9A%84%E8%AE%A1%E7%AE%97%E2%80%94%E2%80%94%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">模反元素d的计算——扩展欧几里得算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%B9%82%E5%8F%96%E6%A8%A1%E7%AE%97%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">快速幂取模算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83tricks"><span class="nav-number">4.</span> <span class="nav-text">其它tricks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%EF%BC%9A%E5%8E%8B%E7%BC%A9%E6%BF%80%E6%B4%BB%E7%A0%81%E9%95%BF%E5%BA%A6"><span class="nav-number">4.1.</span> <span class="nav-text">进制转换：压缩激活码长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%97%B6%E9%97%B4%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">添加时间信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PyQt5%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%84%E7%90%86"><span class="nav-number">4.3.</span> <span class="nav-text">PyQt5的可视化与多线程处理</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -165,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -176,7 +176,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -299,7 +299,7 @@
         <p>  一般而言，我的需求大多来自实验室，这次也不例外。由于实验室经常承接某些外包的横向项目，因此实验室需要一个能对项目软件进行加密注册的功能以期实现售卖激活码的方式收费盈利。实验室里之前本来就有这玩意儿，但其由C++实现得即为复杂，加之多年来删改维护，让我第一次直观体会到了“屎山”的威力。于是我觉得还不如自己写个Python的Demo玩玩，所谓“功在当代，利在千秋”是也。</p>
 <p>  GitHub项目地址：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo">https://github.com/zhmou/RegisterDemo</a></p>
 <a id="more"></a>
-<h2 id="01-构建模型"><a class="header-anchor" href="#01-构建模型"></a>01 构建模型</h2>
+<h2 id="构建模型"><a class="header-anchor" href="#构建模型"></a>构建模型</h2>
 <p>  <del>稍有常识的人就能看出</del>……反正对于有经验的网友而言，尽管软件注册有着本地注册、网络激活、激活码等等不同的形式，但本质上大多都万变不离其宗：软件读取一段指定的加密信息用于激活（授权），并确保该信息不能（或者几乎不能）被伪造（用于重复激活多台设备或者是伪装激活）。序列号+激活码就是这样一种常见的模式：</p>
 <p>图片待补，反正是一张描述软件注册流程的图片。</p>
 <p>  由图可知，我们要实现的需求有以下几条：<br>
@@ -311,7 +311,7 @@
 <p>  <strong>服务器端Client</strong><br>
   输入序列号，自动生成对应的激活码</p>
 <p>  总之，这些东西的难度并不是很大，接下来将每一个提到的需求分别在客户端和服务端实现就好。</p>
-<h2 id="02-唯一设备标识码UUID"><a class="header-anchor" href="#02-唯一设备标识码UUID"></a>02 唯一设备标识码UUID</h2>
+<h2 id="唯一设备标识码UUID"><a class="header-anchor" href="#唯一设备标识码UUID"></a>唯一设备标识码UUID</h2>
 <p>  目前，本项目采取的方式是调用命令行显示主板统一规范的smBIOS信息：</p>
 <p>  <code>CURRENT_MACHINE_ID = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip().replace('-', '')</code></p>
 <p>  直接调用命令行显示结果如下：<br>
@@ -320,7 +320,7 @@
 <h3 id="其他方式获取标识码"><a class="header-anchor" href="#其他方式获取标识码"></a>其他方式获取标识码</h3>
 <p>  上述方法的好处是调用简单，但是也留下了我曾忽视的隐患（当然是我自己的锅= =）：激活码在客户端只会与UUID进行匹配，激活码可能重复激活。之前的屎山代码里不仅根据机器特征，同时会根据时间生成一个序列号，因此避免了同一个激活码重复激活的可能。<br>
   根据我的检索，Python中<code>uuid.getnodes()</code>或许可以满足我的要求，当然效果具体如何得等到我的实验验证啦。</p>
-<h2 id="03-核心：RSA加密算法"><a class="header-anchor" href="#03-核心：RSA加密算法"></a>03 核心：RSA加密算法</h2>
+<h2 id="核心：RSA加密算法"><a class="header-anchor" href="#核心：RSA加密算法"></a>核心：RSA加密算法</h2>
 <p>  如何针对序列号生成一段加密序列，使得软件能还原出激活信息？我最初的想法很简单：服务端对序列号进行加密，客户端进行相同的加密方式，两者匹配上即视为注册成功。但是这样存在一个问题：倘若具备一定反编译能力的人找到了客户端里隐藏的加密算法，那就等同于掌握了注册机——他能算出任意序列号对应的激活码，而这就对我们极为不利了。</p>
 <p>  好在数学的发展让我们有了非对称加密的概念：</p>
 <blockquote><p>公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。</p>
@@ -361,7 +361,7 @@
 <figure class="highlight python"><figcaption><span>extend_gcd()</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extend_gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        x1 = <span class="number">1</span></span><br><span class="line">        y1 = <span class="number">0</span></span><br><span class="line">        x = x1</span><br><span class="line">        y = y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        x1, y1 = extend_gcd(b, a % b)</span><br><span class="line">        x = y1</span><br><span class="line">        y = x1 - a // b * y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br></pre></td></tr></table></figure>
 <h3 id="快速幂取模算法"><a class="header-anchor" href="#快速幂取模算法"></a>快速幂取模算法</h3>
 <p>  <strong>施工中</strong></p>
-<h2 id="04-其它tricks"><a class="header-anchor" href="#04-其它tricks"></a>04 其它tricks</h2>
+<h2 id="其它tricks"><a class="header-anchor" href="#其它tricks"></a>其它tricks</h2>
 <h3 id="进制转换：压缩激活码长度"><a class="header-anchor" href="#进制转换：压缩激活码长度"></a>进制转换：压缩激活码长度</h3>
 <p>  在RSA加密算法中，我们实际上是对十进制数字进行签名处理。尽管UUID是十六进制字符串，但Python内自带的函数就能将其转换为十进制数字进行签名或者验签。然而只要你尝试过签名函数，结果会发现它生成的十进制数字签名长得难以想象，因此我进行了折中处理：一方面缩短n的长度来牺牲其安全性以换取长度的缩短。另一方面对于其十进制签名，我们可以将其转换为62进制（用0-9、a-z以及A-Z来表示）来压缩其长度，这部分代码就需要自身实现了，其思路是以十进制为桥梁，先将自身进制转换为十进制，再转换到目标进制。</p>
 <p>  进制转换的代码参见此处：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo/blob/main/src/baseconvert.py">https://github.com/zhmou/RegisterDemo/blob/main/src/baseconvert.py</a></p>
@@ -429,13 +429,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">53k</span>
+    <span title="站点总字数">57k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:12</span>
+    <span title="站点阅读时长">2:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

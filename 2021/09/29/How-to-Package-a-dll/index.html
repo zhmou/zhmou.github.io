@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/img/general/apple-touch-icon.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://zhmou.github.io/img/2021-09-29-How-to-Package-a-dll/05.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2021-09-29-How-to-Package-a-dll/06.png">
 <meta property="article:published_time" content="2021-09-29T00:59:39.000Z">
-<meta property="article:modified_time" content="2021-10-06T05:07:47.000Z">
+<meta property="article:modified_time" content="2022-09-15T11:49:00.107Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta name="twitter:card" content="summary">
@@ -152,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-%E5%88%9B%E5%BB%BAdll%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">01 创建dll项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#02-%E5%BC%95%E5%85%A5%E8%B0%83%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E3%80%81%E9%85%8D%E7%BD%AE%E9%A1%B9%E7%9B%AE%E6%89%80%E9%9C%80%E7%9A%84OpenCV%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">02 引入调用的文件、配置项目所需的OpenCV库文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#03-%E7%BC%96%E5%86%99dll%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">03  编写dll函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#04-%E7%94%9F%E6%88%90dll%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">04  生成dll文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#05-%E8%B0%83%E7%94%A8dll%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">05 调用dll文件</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAdll%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">创建dll项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E8%B0%83%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E3%80%81%E9%85%8D%E7%BD%AE%E9%A1%B9%E7%9B%AE%E6%89%80%E9%9C%80%E7%9A%84OpenCV%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">引入调用的文件、配置项目所需的OpenCV库文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99dll%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">编写dll函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90dll%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">生成dll文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8dll%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">调用dll文件</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -300,12 +300,12 @@
     <div class="post-body" itemprop="articleBody">
         <p>  最近在看学长接手的<a target="_blank" rel="noopener" href="https://sao-kirito.top/2021/09/15/shape_based_matching/">形状匹配(shape based matching)C++工程</a>，虽然看懂的不多，但是被要求将部分代码打包封装成dll，暴露简洁的接口供调用者使用。<br>
   在流程上，我参考了另一位师兄给的<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42435145/article/details/104199125">链接</a>里的步骤。现结合具体工程记述如下：<a id="more"></a></p>
-<h2 id="01-创建dll项目"><a class="header-anchor" href="#01-创建dll项目"></a>01 创建dll项目</h2>
+<h2 id="创建dll项目"><a class="header-anchor" href="#创建dll项目"></a>创建dll项目</h2>
 <p>  打开Visual Studio 2019，在界面中选择<code>创建新项目(<u>N</u>)</code>。</p>
 <p><img data-src="/img/2021-09-29-How-to-Package-a-dll/01.png" alt="创建新项目"></p>
 <p>  随后选择<code>动态链接库</code>项目，按照步骤依次将项目名称、位置以及解决方案名称设置好。创建完成后结构如图所示：</p>
 <p><img data-src="/img/2021-09-29-How-to-Package-a-dll/02.png" alt="创建完成"></p>
-<h2 id="02-引入调用的文件、配置项目所需的OpenCV库文件"><a class="header-anchor" href="#02-引入调用的文件、配置项目所需的OpenCV库文件"></a>02 引入调用的文件、配置项目所需的OpenCV库文件</h2>
+<h2 id="引入调用的文件、配置项目所需的OpenCV库文件"><a class="header-anchor" href="#引入调用的文件、配置项目所需的OpenCV库文件"></a>引入调用的文件、配置项目所需的OpenCV库文件</h2>
 <p>  将原项目中所有<code>.h</code>的头文件复制到该解决方案所在的文件夹中，并右键单击解决方案的<code>头文件</code>-&gt;<code>添加</code>-&gt;<code>现有项</code>，将这些头文件添加进解决方案中，所有被调用到的<code>.cpp</code>也进行相同的操作。完成之后的结果如下：</p>
 <p><img data-src="/img/2021-09-29-How-to-Package-a-dll/03.png" alt="引入头文件与源文件"></p>
 <p>  由于此项目涉及图像处理最常用的OpenCV库，打包dll也需要进行相应的环境配置。点击VS菜单栏的<code>视图(V)</code>-&gt;<code>属性管理器</code>，右键单击本项目，选择<code>添加新项目属性表</code>，添加后双击该属性表进行编辑。在<code>VC++目录</code>的包含目录中配置路径如下：</p>
@@ -318,7 +318,7 @@
 <p>  在库目录中配置路径为：<code>..\OpenCV\build\x64\vc15\lib </code></p>
 <p>  在<code>链接器</code>-&gt;<code>输入</code>的附加依赖项中添加<code>opencv_world346d.lib</code>（在Release版本下则是<code>opencv_world346.lib</code>）。</p>
 <p>  这样，我们所有的先期准备工作就做好了。</p>
-<h2 id="03-编写dll函数"><a class="header-anchor" href="#03-编写dll函数"></a>03  编写dll函数</h2>
+<h2 id="编写dll函数"><a class="header-anchor" href="#编写dll函数"></a>编写dll函数</h2>
 <p>  在<code>pch.h</code>文件中，需要写上准备调用的函数声明，由于这些函数也要调用各自的头文件，因此可以把它们集中放在这个文件里，而在源文件中只需要包含<code>pch.h</code>即可。</p>
 <figure class="highlight c++"><figcaption><span>pch.h</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> PCH_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PCH_H</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加要在此处预编译的标头</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;framework.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;line2Dup.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span>&#123;</span></span><br><span class="line">	<span class="keyword">float</span> x;</span><br><span class="line">	<span class="keyword">float</span> y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">recognizedObjectLocation</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	point topleft;</span><br><span class="line">	point center;</span><br><span class="line">	<span class="keyword">float</span> angle;</span><br><span class="line">	<span class="keyword">float</span> scale;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="function"><span class="keyword">void</span> <span class="title">train</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">				string imgLocation, </span></span></span><br><span class="line"><span class="function"><span class="params">				string saveTemplateDIR, </span></span></span><br><span class="line"><span class="function"><span class="params">				<span class="keyword">int</span> num_feature, Rect roi, <span class="keyword">int</span> padding, </span></span></span><br><span class="line"><span class="function"><span class="params">				string class_id)</span></span>;</span><br><span class="line">_declspec(dllexport) <span class="function">vector&lt;recognizedObjectLocation&gt; <span class="title">test</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">				string testImgLocation, </span></span></span><br><span class="line"><span class="function"><span class="params">				string loadTemplateDir, <span class="keyword">int</span> num_feature, </span></span></span><br><span class="line"><span class="function"><span class="params">				Rect train_roi, <span class="keyword">int</span> train_padding, string class_id, </span></span></span><br><span class="line"><span class="function"><span class="params">				<span class="keyword">int</span> score_thershold, <span class="keyword">int</span> nms_thershold)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//PCH_H</span></span></span><br></pre></td></tr></table></figure>
 <p>  此处工作基本上是按部就班地参考网上教程而来的，在声明函数前，则需要添加上<code>extern &quot;C&quot; _declspec(dllexport)</code>这样的语句，而函数的返回值为C++类型时，譬如我这里自定义的recognizedObjectLocation类型的vector容器，就可以删去<code>extern &quot;C&quot;</code>的语句，否则会产生相应的报错，此处我也不甚了解，只是找到了网上给的解决方法而已。</p>
@@ -329,10 +329,10 @@
 </details>
 <p>  另外，我把line2Dup.cpp中一些输出语句注释掉了，屏蔽掉控制台的输出。而TerryJoe学长解释了代码中各个坐标系下变换中公式的由来，现一并粘贴于此（无关信息已马赛克处理。）<br>
 <img data-src="/img/2021-09-29-How-to-Package-a-dll/04.png" alt="说明"></p>
-<h2 id="04-生成dll文件"><a class="header-anchor" href="#04-生成dll文件"></a>04  生成dll文件</h2>
+<h2 id="生成dll文件"><a class="header-anchor" href="#生成dll文件"></a>生成dll文件</h2>
 <p>  点击<code>本地Windows调试器</code>，若提示错误：<code>在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include”pch.h”</code>，则点击菜单栏中的<code>项目</code>-&gt;<code>项目名属性</code>-&gt;<code>C/C++</code>-&gt;<code>预编译头</code>，将右侧的预编译头由<code>使用(/Yu)</code>调换到<code>不使用预编译头</code>，然后点击<code>应用</code>-&gt;<code>确定</code>。<br>
   再次运行时即能正确运行，若输出显示<code>========== 生成: 成功 1 个，失败 0 个，最新 0 个，跳过 0 个 ==========</code>即为成功，此时会弹出错误框，显示<code>无法启动dll，dll不是有效的Win32应用程序。</code>我们关闭即可，dll必须由其他程序调用。此时我们在项目目录中的Debug或Release目录下即找到生成的<code>.dll</code>文件。</p>
-<h2 id="05-调用dll文件"><a class="header-anchor" href="#05-调用dll文件"></a>05 调用dll文件</h2>
+<h2 id="调用dll文件"><a class="header-anchor" href="#调用dll文件"></a>调用dll文件</h2>
 <p>  现在创建一个空的工程项目，创建主程序调用上述函数。</p>
 <figure class="highlight c++"><figcaption><span>test.cpp</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	string imgLocation = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/train.jpg&quot;</span>;</span><br><span class="line">	string saveTemplateDir = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/temp/&quot;</span>;</span><br><span class="line">	<span class="keyword">int</span> num_feature = <span class="number">16</span>;</span><br><span class="line">	<span class="function">Rect <span class="title">roi</span><span class="params">(<span class="number">90</span>, <span class="number">35</span>, <span class="number">65</span>, <span class="number">35</span>)</span></span>;</span><br><span class="line">	<span class="keyword">int</span> padding = <span class="number">25</span>;</span><br><span class="line">	string class_id = <span class="string">&quot;gongjian&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">train</span>(imgLocation, saveTemplateDir, num_feature, roi, padding, class_id);</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;已生成模板库文件&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">	string testImgLocation = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/ori.jpg&quot;</span>;</span><br><span class="line">	vector&lt;recognizedObjectLocation&gt; ObjLocations;</span><br><span class="line">	ObjLocations = <span class="built_in">test</span>(testImgLocation, saveTemplateDir, num_feature, roi, padding, class_id);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : ObjLocations)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体左上角点横坐标：&quot;</span> &lt;&lt; i.topleft.x &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体左上角点纵坐标：&quot;</span> &lt;&lt; i.topleft.y &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体中心点横坐标：&quot;</span> &lt;&lt; i.center.x &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体中心点纵坐标：&quot;</span> &lt;&lt; i.center.y &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体顺时针旋转角度：&quot;</span> &lt;&lt; i.angle &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体尺度大小变化：&quot;</span> &lt;&lt; i.scale &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;-----------------------------&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>  将dll项目中的各个头文件添加进测试项目之中。将第四步中生成的<code>.dll</code>、<code>.lib</code>文件粘贴于调用函数程序同一文件夹下，如图所示：</p>
@@ -397,13 +397,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">53k</span>
+    <span title="站点总字数">57k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:12</span>
+    <span title="站点阅读时长">2:21</span>
   </span>
 </div>
 <div class="busuanzi-count">
