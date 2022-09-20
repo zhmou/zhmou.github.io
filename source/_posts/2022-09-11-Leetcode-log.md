@@ -71,7 +71,7 @@ var singleNumber = function(nums) {
     </div>
     <div class='clear'></div>
 </div>
-<hr>
+
 
 ## [汉明重量](https://leetcode.cn/problems/number-of-1-bits/) / [汉明距离](https://leetcode.cn/problems/hamming-distance/)
 <strong>简述：</strong>
@@ -124,7 +124,7 @@ var hammingWeight = function(n) {
 具体参见MDN：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators
 否则在范例中，32位有符号数的最高位为1时，循环不会终止。
 {% endnote %}
-<hr>
+
 
 ## 进制转换 / [K进制表示下的各位数字总和](https://leetcode.cn/problems/sum-of-digits-in-base-k/) / [数字转换为16进制数](https://leetcode.cn/problems/convert-a-number-to-hexadecimal/)
 <strong>简述：</strong>
@@ -211,42 +211,7 @@ var BaseChange = function (n) {
 </div>
 <div class='clear'></div>
 </div>
-<hr>
 
-## 双指针 / [排序数组中两个数字之和](https://leetcode.cn/problems/kLl5u1/)
-<strong>简述：</strong>
-&emsp;&emsp;给定一个已按照 **升序排列**  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。
-&emsp;&emsp;函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 <= answer[0] < answer[1] < numbers.length。
-&emsp;&emsp;假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。
-<strong>思路：</strong>
-&emsp;&emsp;一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。
-&emsp;&emsp;为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 <= i <= j <= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。
-<strong>题解：</strong>
-<div>
-<div class='center'>
-``` javascript
-/**
- * @param {number[]} numbers
- * @param {number} target
- * @return {number[]}
- */
-var twoSum = function(numbers, target) {
-    var l = 0, r = numbers.length - 1;
-    while( l<=r ) {
-        if(numbers[l] + numbers[r] < target) {
-            l++;
-        }
-        else if (numbers[l] + numbers[r] > target) { 
-            r--;
-        }
-        else return [l, r]
-    }
-};
-```
-</div>
-<div class='clear'></div>
-</div>
-<hr>
 
 ## [有效的完全平方数](https://leetcode.cn/problems/valid-perfect-square/) / [x的平方根](https://leetcode.cn/problems/sqrtx/)
 <strong>简述：</strong>
@@ -307,7 +272,44 @@ var mySqrt = function(x) {
 <div class='clear'></div> 
 </div>
 
-## 动态规划 / [路径的数目](https://leetcode.cn/problems/2AoeFn/)
+## 双指针 
+### [排序数组中两个数字之和](https://leetcode.cn/problems/kLl5u1/)
+<strong>简述：</strong>
+&emsp;&emsp;给定一个已按照 **升序排列**  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。
+&emsp;&emsp;函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 <= answer[0] < answer[1] < numbers.length。
+&emsp;&emsp;假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。
+<strong>思路：</strong>
+&emsp;&emsp;一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。
+&emsp;&emsp;为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 <= i <= j <= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。
+<strong>题解：</strong>
+<div>
+<div class='center'>
+``` javascript
+/**
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(numbers, target) {
+    var l = 0, r = numbers.length - 1;
+    while( l<=r ) {
+        if(numbers[l] + numbers[r] < target) {
+            l++;
+        }
+        else if (numbers[l] + numbers[r] > target) { 
+            r--;
+        }
+        else return [l, r]
+    }
+};
+```
+</div>
+<div class='clear'></div>
+</div>
+
+
+## 动态规划 
+### [路径的数目](https://leetcode.cn/problems/2AoeFn/)
 <strong>简述：</strong>
 &emsp;&emsp;一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？
 <strong>思路：</strong>
@@ -343,4 +345,67 @@ var uniquePaths = function(m, n) {
 ```
 </div>
 <div class='clear'></div>
+</div>
+
+### [爬楼梯的最少成本](https://leetcode.cn/problems/GzCJIP/)
+<strong>简述：</strong>
+&emsp;&emsp;数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。
+&emsp;&emsp;示例：
+&emsp;&emsp;&emsp;&emsp;**输入**：cost = [10, 15, 20]
+&emsp;&emsp;&emsp;&emsp;**输出**：15
+&emsp;&emsp;&emsp;&emsp;**解释**：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。
+<strong>思路：</strong>
+&emsp;&emsp;登到某级台阶所花费的总体力有两种可能，要么是从前一级一步登上来，要么是从前两级两步登上来。取两者中较小的体力耗费即可。
+<strong>题解：</strong>
+<div>
+<div class='center'>
+```
+/**
+ * @param {number[]} cost
+ * @return {number}
+ */
+var minCostClimbingStairs = function(cost) {
+    var costTotalArray = [];
+    costTotalArray[0] = 0;
+    costTotalArray[1] = 0;
+    for (var i = 2; i <= cost.length; i++){
+        costTotalArray.push(Math.min(cost[i-1] + costTotalArray[i-1], costTotalArray[i-2] + cost[i-2]))
+    }
+    return costTotalArray[cost.length]
+};
+```
+</div>
+<div class='clear'>
+</div>
+
+## [可被 5 整除的二进制前缀](https://leetcode.cn/problems/binary-prefix-divisible-by-5/)
+<strong>简述：</strong>
+&emsp;&emsp;给定一个二进制数组 nums ( 索引从0开始 )。我们将xi 定义为其二进制表示形式为子数组 nums[0..i] (从最高有效位到最低有效位)。
+&emsp;&emsp;例如，如果 nums =[1,0,1] ，那么 x0 = 1, x1 = 2, 和 x2 = 5。返回布尔值列表 answer，只有当 xi 可以被 5 整除时，答案 answer[i] 为 true，否则为 false。
+<strong>思路：</strong>
+&emsp;&emsp;定义一个xi，每读一位数字二进制数字就是左移一位（相当于乘以2）+ 该位数字，然后除以五取余，最后**令xi等于该余数**（这是一个比较巧妙的思路，这样xi就不会溢出），若所得余数为0，可以向answer中压入true，反之则压入false。
+<strong>题解：</strong>
+<div>
+<div class='center'>
+```
+/**
+ * @param {number[]} nums
+ * @return {boolean[]}
+ */
+var prefixesDivBy5 = function(nums) {
+    var ret = []
+    var number = 0;
+    for (var i = 0; i < nums.length; i++){
+        number = number * 2 + nums[i];
+        number %= 5
+        if (!number){
+            ret.push(true);
+        }
+        else ret.push(false);
+    }
+    return ret;
+};
+```
+</div>
+<div class='clear'>
 </div>
