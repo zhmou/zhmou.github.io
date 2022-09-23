@@ -2,6 +2,7 @@
 title: JS杂项知识记录
 date: 2022-09-13 14:42:29
 tags: [Javascript, 编程, 语法]
+categories: 学习
 ---
 <style type='text/css'>
     .left {
@@ -24,6 +25,20 @@ tags: [Javascript, 编程, 语法]
         clear: both;
     }
 </style>
+# 类型
+- 基础数据类型
+  **最新的 ECMAScript 标准定义了 8 种数据类型,分别是**
+  - `string`
+  - `number`
+  - `bigint`
+  - `boolean`
+  - `null`
+  - `undefined`
+  - `symbol` (ECMAScript 2016新增)
+> 所有基本类型的值都是不可改变的。但需要注意的是，基本类型本身和一个赋值为基本类型的变量的区别。变量会被赋予一个新值，而原值不能像数组、对象以及函数那样被改变。
+- 引用类型
+  - `Object`（包含普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function）
+
 # 函数的参数传递
 
 # 变量的作用域
@@ -48,10 +63,10 @@ tags: [Javascript, 编程, 语法]
 <div class='clear'></div>
 </div>
 
-&emsp;&emsp;·局部变量只在函数内部生效  
-&emsp;&emsp;·当局部变量与全局变量重名时，对变量的修改只对局部变量生效  
-&emsp;&emsp;·未声明在函数内部赋值的变量属于全局变量（即函数外可调用）
-&emsp;&emsp;·函数的形参也是局部变量
+- 局部变量只在函数内部生效  
+- 当局部变量与全局变量重名时，对变量的修改只对局部变量生效  
+- 未声明在函数内部赋值的变量属于全局变量（即函数外可调用）
+- 函数的形参也是局部变量
 
 ## 作用域链
 <div>
