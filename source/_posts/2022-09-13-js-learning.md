@@ -32,14 +32,50 @@ categories: 学习
   - `number`
   - `bigint`
   - `boolean`
-  - `null`
+  - `null` (<code>typeof null</code>返回结果为object)
   - `undefined`
   - `symbol` (ECMAScript 2016新增)
 > 所有基本类型的值都是不可改变的。但需要注意的是，基本类型本身和一个赋值为基本类型的变量的区别。变量会被赋予一个新值，而原值不能像数组、对象以及函数那样被改变。
 - 引用类型
   - `Object`（包含普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function）
 
+基本数据类型会放在<b>栈</b>上，引用类型放在<b>堆</b>上
+
 # 函数的参数传递
+- 基本数据类型的参数传递
+<div>
+<div class='center'>
+``` javascript
+function fn(a) {
+    a++;
+    console.log(a);
+}
+var x = 10;
+fn(x)
+console.log(x);
+```
+可以看到传入函数<code>fn</code>的，是变量x的一个复制（值拷贝）。因此尽管函数体内部该变量发生变化，原变量x不发生改变。
+</div>
+<div class='clear'></div>
+</div>
+
+- 引用类型的参数传递
+<div>
+<div class='center'>
+``` javascript
+
+function fn(a) {
+    a[0] = 'a';
+    console.log(a);
+}
+var x = new Array(1, 2, 3);
+fn(x)
+console.log(x);
+```
+这里传入函数的变量a是引用类型（数组对象），实际上传入参数指向了堆中相同的地址，此时函数体内部改变了堆上对象的属性，在函数外也发生改变。
+</div>
+<div class='clear'></div>
+</div>
 
 # 变量的作用域
 ## 局部和全局变量
