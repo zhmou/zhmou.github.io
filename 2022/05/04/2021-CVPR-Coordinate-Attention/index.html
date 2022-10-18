@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content=".wrap {display: flex; justify-content: space-between;}     .left {width: 50%;}     .right {width: 50%;}     .comment {text-align:center; color:grey; font-size:0.8em}    论文标题：Coordinate Attention">
+    <meta name="description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2021CVPR论文：Coordinate Attention">
 <meta property="og:url" content="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/index.html">
 <meta property="og:site_name" content="Zh某的备忘录">
-<meta property="og:description" content=".wrap {display: flex; justify-content: space-between;}     .left {width: 50%;}     .right {width: 50%;}     .comment {text-align:center; color:grey; font-size:0.8em}    论文标题：Coordinate Attention">
+<meta property="og:description" content="论文标题：Coordinate Attention for Efficient Mobile Network Design   Github链接 摘要（翻译）   近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自SENet, CVPR2018)对于模型性能的提升">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/equation.svg">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_9.png">
 <meta property="og:image" content="http://zhmou.github.io/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_10.png">
 <meta property="article:published_time" content="2022-05-04T01:30:58.000Z">
-<meta property="article:modified_time" content="2022-05-09T03:21:20.000Z">
+<meta property="article:modified_time" content="2022-10-18T09:17:05.103Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="机器学习">
@@ -287,7 +287,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4.5k</span>
+      <span>4.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -305,13 +305,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <style type="text/css">
-    .wrap {display: flex; justify-content: space-between;}
-    .left {width: 50%;}
-    .right {width: 50%;}
-    .comment {text-align:center; color:grey; font-size:0.8em}
-</style>
-<p>  论文标题：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Hou_Coordinate_Attention_for_Efficient_Mobile_Network_Design_CVPR_2021_paper.pdf">Coordinate Attention for Efficient Mobile Network Design</a></p>
+        <p>  论文标题：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Hou_Coordinate_Attention_for_Efficient_Mobile_Network_Design_CVPR_2021_paper.pdf">Coordinate Attention for Efficient Mobile Network Design</a></p>
 <p>  <a target="_blank" rel="noopener" href="https://github.com/Andrew-Qibin/CoordAttention">Github链接</a></p>
 <h2 id="摘要（翻译）"><a class="header-anchor" href="#摘要（翻译）"></a>摘要（翻译）</h2>
 <p>  近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1709.01507">SENet, CVPR2018</a>)对于模型性能的提升具有显著效果，但它们通常忽略掉了位置信息——这对于生成空间选择性注意力图(spatially selective attention maps)非常重要。在这篇文章中，我们针对轻量级网络提出了一种新的注意力机制，该机制将位置信息嵌入到通道注意力中。我们称其为 <strong>坐标注意力(Coordinate Attention)</strong> 机制。<br>
@@ -330,11 +324,12 @@
 &emsp;&emsp;然后这个向量再通过两个全连接层，得到各通道真正的权重。这个步骤被作者称作激励(excitation)。两个全连接层都拥有可训练参数，目的是通过所有样本的训练来学习到GAP产生的特征向量到各通道权重之间的关系。这两个全连接层的结构类似瓶颈结构(bottle beck): 第一个全连接层将向量压缩为$1\times1{\times}{C/r}$，随后经ReLU这一非线性变换后送入第二个全连接层，恢复为$1\times1{\times}{C}$，再送入Sigmoid激活函数——由于特征之间并不一定彼此互斥，因此这里没有采用Softmax。最后得到的权重和各个通道相乘得到特征重校准后的$\widetilde{X}$.
 <p>  在激励这一环节中，瓶颈结构能有效降低参数量并提升泛化能力，$r$是一个超参数，称作降维系数(redution ratio)，$r$值的大小决定了SE块的容量(capacity)与计算开销。在论文中，作者采用SE-ResNet-50对$r$值大小进行了实验，在平衡性能与计算开销上，设置$r=16$能在两者之间产生平衡。在实践中，由于不同层承担不同的角色，因此整个网络的$r$值可根据需要调整以达到更好的性能。<br>
   SE模块的方便之处在于可以直接加入现有的骨干网络之上，例如将SE Block插入ResNet和Inception这两种骨干网络中：</p>
-<div class="wrap">
+<div>
 <div class="left"><img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_2.png" alt="SENet" title="SENet" style="float:center"/></div>
 <div class="right"><img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_3.png" alt="SENet" title="SENet" style="float:center"/></div>
+<div class="clear"></div>
 </div>
-<div class="comment">左图：SE-Inception； 右图：SE-ResNet</div>
+<div class="comment">左图：SE-Inception 右图：SE-ResNet</div>
 &emsp;&emsp;卷积训练出来的结果也带有通道的权值，但是实际上，由于卷积核感受野的限制，特征图中各个通道上每一个$H\times{W}$的权重参数，不仅仅有通道上的相关性，还受空间邻域相关性的影响。因此在SE结构中，作者先是采用全局均值池化消去了卷积捕捉到的空间依赖，在排除掉了空间依赖的影响后剩下了通道的影响。因此可以通过全连接来训练获取各个通道的权重。
 <h3 id="CBAM-Convolutional-Block-Attention-Module-ECCV-2018"><a class="header-anchor" href="#CBAM-Convolutional-Block-Attention-Module-ECCV-2018"></a><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_ECCV_2018/papers/Sanghyun_Woo_Convolutional_Block_Attention_ECCV_2018_paper.pdf">CBAM: Convolutional Block Attention Module (ECCV 2018)</a></h3>
 <p>  在SENet中，作者只考虑了通道维度上的权重。而卷积操作本身是通过跨通道信息和空间信息混合在一起来提取信息特征的。因此，在CBAM的模块中；作者考虑在空间和通道两个维度上分别应用注意力机制，来使模型学习到在通道维度上“注意什么”和空间维度上“注意哪里”。<br>
@@ -411,13 +406,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">59k</span>
+    <span title="站点总字数">58k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:26</span>
   </span>
 </div>
 <div class="busuanzi-count">
