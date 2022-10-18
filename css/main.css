@@ -2998,3 +2998,33 @@ body {
 .post-body img {
   margin-bottom: 10px;
 }
+.left {
+  width: 49%;
+  float: left;
+}
+.right {
+  width: 49%;
+  float: right;
+}
+.center {
+  float: left;
+  width: 60%;
+  margin-left: 20%;
+}
+.clear {
+  clear: both;
+}
+@font-face {
+  font-family: "iconfont"; /* Project id 3664290 */
+  src: url("/fonts/iconfont-example/iconfont.woff2") format('woff2'), url("/fonts/iconfont-example/iconfont.woff") format('woff'), url("/fonts/iconfont-example/iconfont.ttf") format('truetype');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.comment {
+  text-align: center;
+}
