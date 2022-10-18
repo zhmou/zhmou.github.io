@@ -5,13 +5,6 @@ tags: [机器学习, 编程, 论文研读]
 categories: 学习
 mathjax: True
 ---
-<style type="text/css">
-    .wrap {display: flex; justify-content: space-between;}
-    .left {width: 50%;}
-    .right {width: 50%;}
-    .comment {text-align:center; color:grey; font-size:0.8em}
-</style>
-
 &emsp;&emsp;论文标题：[Coordinate Attention for Efficient Mobile Network Design](https://openaccess.thecvf.com/content/CVPR2021/papers/Hou_Coordinate_Attention_for_Efficient_Mobile_Network_Design_CVPR_2021_paper.pdf)
 
 &emsp;&emsp;[Github链接](https://github.com/Andrew-Qibin/CoordAttention)
@@ -39,11 +32,12 @@ mathjax: True
 
 &emsp;&emsp;在激励这一环节中，瓶颈结构能有效降低参数量并提升泛化能力，$r$是一个超参数，称作降维系数(redution ratio)，$r$值的大小决定了SE块的容量(capacity)与计算开销。在论文中，作者采用SE-ResNet-50对$r$值大小进行了实验，在平衡性能与计算开销上，设置$r=16$能在两者之间产生平衡。在实践中，由于不同层承担不同的角色，因此整个网络的$r$值可根据需要调整以达到更好的性能。
 &emsp;&emsp;SE模块的方便之处在于可以直接加入现有的骨干网络之上，例如将SE Block插入ResNet和Inception这两种骨干网络中：
-<div class="wrap">
+<div>
 <div class="left"><img src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_2.png" alt="SENet" title="SENet" style="float:center"/></div>
 <div class="right"><img src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_3.png" alt="SENet" title="SENet" style="float:center"/></div>
+<div class="clear"></div>
 </div>
-<div class="comment">左图：SE-Inception； 右图：SE-ResNet</div>
+<div class="comment">左图：SE-Inception 右图：SE-ResNet</div>
 &emsp;&emsp;卷积训练出来的结果也带有通道的权值，但是实际上，由于卷积核感受野的限制，特征图中各个通道上每一个$H\times{W}$的权重参数，不仅仅有通道上的相关性，还受空间邻域相关性的影响。因此在SE结构中，作者先是采用全局均值池化消去了卷积捕捉到的空间依赖，在排除掉了空间依赖的影响后剩下了通道的影响。因此可以通过全连接来训练获取各个通道的权重。
 
 ### [CBAM: Convolutional Block Attention Module (ECCV 2018)](https://openaccess.thecvf.com/content_ECCV_2018/papers/Sanghyun_Woo_Convolutional_Block_Attention_ECCV_2018_paper.pdf)

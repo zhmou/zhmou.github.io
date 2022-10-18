@@ -52,7 +52,7 @@ typora-root-url: ..
 &emsp;&emsp;参考了几篇网络教程，废话不多说，直接上手开干！
 
 ### 读取
-<div class="wrap">
+<div>
 	<div class="left">
 ```python Python代码
 import xml.dom.minidom as minidom
@@ -114,8 +114,6 @@ for person in persons:
           % (name, gender, id_number, tel, province, city))
 ```
 	</div>
-	<div class="middle"></div>
-
 <div class="right">
 ``` bash 控制台输出
 
@@ -177,14 +175,8 @@ Jack
 姓名: Maria	性别: female	id: 02	电话: 10001	地址: Anhui省Hefei市
 ```
 	</div>
+    <div class='clear'></div>
 </div>
-
-<style type="text/css">
-    .wrap {display: flex; justify-content: space-between;}
-    .left {width: 59%;}
-    .right {width: 39%;}
-    .middle {background: #0; width: 2%; margin: 0 0;}
-</style>
 
 {% note warning %}
 警告：在笔者所用的环境下，<code>.childNodes</code>方法会将子元素与子元素之间生成的空格与换行当作空白文本节点并入节点列表，以至于得不到预期的获取元素的效果。个人认为还是最好用<code>.getElementsByTagName</code>获取元素节点列表再通过索引获得元素。

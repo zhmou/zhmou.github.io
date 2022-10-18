@@ -4,27 +4,7 @@ date: 2022-09-13 14:42:29
 tags: [Javascript, 编程, 语法]
 categories: 学习
 ---
-<style type='text/css'>
-    .left {
-        width: 49.5%;
-        float: left;
-    }
 
-    .right {
-        width: 49.5%;
-        float: right;
-    }
-
-    .center {
-        float: left;
-        width: 60%;
-        margin-left: 20%;
-    }
-
-    .clear {
-        clear: both;
-    }
-</style>
 # 类型
 - 基础数据类型
   **最新的 ECMAScript 标准定义了 8 种数据类型,分别是**
