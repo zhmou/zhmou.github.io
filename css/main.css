@@ -18,10 +18,10 @@
   --btn-default-hover-bg: #222;
   --btn-default-hover-color: #fff;
   --btn-default-hover-border-color: #222;
-  --highlight-background: #2d2d2d;
-  --highlight-foreground: #ccc;
-  --highlight-gutter-background: #3c3c3c;
-  --highlight-gutter-foreground: #bcbcbc;
+  --highlight-background: #000;
+  --highlight-foreground: #eaeaea;
+  --highlight-gutter-background: #171717;
+  --highlight-gutter-foreground: #d2d2d2;
   color-scheme: light;
 }
 html {
@@ -362,81 +362,7 @@ td {
   top: -5px;
   transform: rotate(-45deg);
 }
-/* Tomorrow Night Eighties Theme */
-/* Original theme - https://github.com/chriskempson/tomorrow-theme */
-/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
-
-/* Tomorrow Comment */
-.hljs-comment,
-.hljs-quote {
-  color: #999999;
-}
-
-/* Tomorrow Red */
-.hljs-variable,
-.hljs-template-variable,
-.hljs-tag,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-regexp,
-.hljs-deletion {
-  color: #f2777a;
-}
-
-/* Tomorrow Orange */
-.hljs-number,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-literal,
-.hljs-type,
-.hljs-params,
-.hljs-meta,
-.hljs-link {
-  color: #f99157;
-}
-
-/* Tomorrow Yellow */
-.hljs-attribute {
-  color: #ffcc66;
-}
-
-/* Tomorrow Green */
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-addition {
-  color: #99cc99;
-}
-
-/* Tomorrow Blue */
-.hljs-title,
-.hljs-section {
-  color: #6699cc;
-}
-
-/* Tomorrow Purple */
-.hljs-keyword,
-.hljs-selector-tag {
-  color: #cc99cc;
-}
-
-.hljs {
-  display: block;
-  overflow-x: auto;
-  background: #2d2d2d;
-  color: #cccccc;
-  padding: 0.5em;
-}
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: bold;
-}
-
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs-comment,.hljs-quote{color:#969896}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d54e53}.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#e78c45}.hljs-attribute{color:#e7c547}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:#b9ca4a}.hljs-section,.hljs-title{color:#7aa6da}.hljs-keyword,.hljs-selector-tag{color:#c397d8}.hljs{background:#000;color:#eaeaea}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}
 .highlight:hover .copy-btn,
 pre:hover .copy-btn {
   opacity: 1;

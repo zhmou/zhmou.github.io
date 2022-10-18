@@ -28,7 +28,7 @@
 <meta property="og:description" content=".left {         width: 49.5%;         float: left;     }      .right {         width: 49.5%;         float: right;     }      .center {         float: left;         width: 60%;         margin-lef">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-13T06:42:29.000Z">
-<meta property="article:modified_time" content="2022-09-15T11:49:39.171Z">
+<meta property="article:modified_time" content="2022-10-17T03:45:46.760Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="Javascript">
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">1.</span> <span class="nav-text">函数的参数传递</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">2.</span> <span class="nav-text">变量的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">局部和全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="nav-number">2.2.</span> <span class="nav-text">作用域链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E7%9A%84%E9%A2%84%E8%A7%A3%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">JS的预解析</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">2.</span> <span class="nav-text">函数的参数传递</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">3.</span> <span class="nav-text">变量的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">局部和全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="nav-number">3.2.</span> <span class="nav-text">作用域链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E7%9A%84%E9%A2%84%E8%A7%A3%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">JS的预解析</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -251,6 +251,15 @@
 
       <time title="创建时间：2022-09-13 14:42:29" itemprop="dateCreated datePublished" datetime="2022-09-13T14:42:29+08:00">2022-09-13</time>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
 
   
     <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
@@ -266,14 +275,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -305,23 +314,71 @@
         clear: both;
     }
 </style>
+<h1 id="类型"><a class="header-anchor" href="#类型"></a>类型</h1>
+<ul>
+<li>基础数据类型<br>
+<strong>最新的 ECMAScript 标准定义了 8 种数据类型,分别是</strong>
+<ul>
+<li><code>string</code></li>
+<li><code>number</code></li>
+<li><code>bigint</code></li>
+<li><code>boolean</code></li>
+<li><code>null</code> (<code>typeof null</code>返回结果为object)</li>
+<li><code>undefined</code></li>
+<li><code>symbol</code> (ECMAScript 2016新增)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>所有基本类型的值都是不可改变的。但需要注意的是，基本类型本身和一个赋值为基本类型的变量的区别。变量会被赋予一个新值，而原值不能像数组、对象以及函数那样被改变。</p>
+</blockquote>
+<ul>
+<li>引用类型
+<ul>
+<li><code>Object</code>（包含普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function）</li>
+</ul>
+</li>
+</ul>
+<p>基本数据类型会放在<b>栈</b>上，引用类型放在<b>堆</b>上</p>
 <h1 id="函数的参数传递"><a class="header-anchor" href="#函数的参数传递"></a>函数的参数传递</h1>
+<ul>
+<li>基本数据类型的参数传递</li>
+</ul>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">a</span>) &#123;</span><br><span class="line">    a++;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="title function_">fn</span>(x)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x);</span><br></pre></td></tr></table></figure>
+可以看到传入函数<code>fn</code>的，是变量x的一个复制（值拷贝）。因此尽管函数体内部该变量发生变化，原变量x不发生改变。
+</div>
+<div class='clear'></div>
+</div>
+<ul>
+<li>引用类型的参数传递</li>
+</ul>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">a</span>) &#123;</span><br><span class="line">    a[<span class="number">0</span>] = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"><span class="title function_">fn</span>(x)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x);</span><br></pre></td></tr></table></figure>
+这里传入函数的变量a是引用类型（数组对象），实际上传入参数指向了堆中相同的地址，此时函数体内部改变了堆上对象的属性，在函数外也发生改变。
+</div>
+<div class='clear'></div>
+</div>
 <h1 id="变量的作用域"><a class="header-anchor" href="#变量的作用域"></a>变量的作用域</h1>
 <h2 id="局部和全局变量"><a class="header-anchor" href="#局部和全局变量"></a>局部和全局变量</h2>
 <div>
 <div class='center'>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">1</span>;</span><br><span class="line">    p = <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;局部作用域的局部变量p:&#x27;</span> + p);</span><br><span class="line">    <span class="comment">//局部作用域的全局变量</span></span><br><span class="line">    num = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;全局作用域的全局变量p:&#x27;</span> + p);</span><br><span class="line">fn();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;未声明在函数内部赋值的变量属于全局变量:&#x27;</span> + num)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">1</span>;</span><br><span class="line">    p = <span class="number">2</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;局部作用域的局部变量p:&#x27;</span> + p);</span><br><span class="line">    <span class="comment">//局部作用域的全局变量</span></span><br><span class="line">    num = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;全局作用域的全局变量p:&#x27;</span> + p);</span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;未声明在函数内部赋值的变量属于全局变量:&#x27;</span> + num)</span><br></pre></td></tr></table></figure>
 </div>
 <div class='clear'></div>
 </div>
-<p>  ·局部变量只在函数内部生效<br>
-  ·当局部变量与全局变量重名时，对变量的修改只对局部变量生效<br>
-  ·未声明在函数内部赋值的变量属于全局变量（即函数外可调用）<br>
-  ·函数的形参也是局部变量</p>
+<ul>
+<li>局部变量只在函数内部生效</li>
+<li>当局部变量与全局变量重名时，对变量的修改只对局部变量生效</li>
+<li>未声明在函数内部赋值的变量属于全局变量（即函数外可调用）</li>
+<li>函数的形参也是局部变量</li>
+</ul>
 <h2 id="作用域链"><a class="header-anchor" href="#作用域链"></a>作用域链</h2>
 <div>
 <div class='center'>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> num = <span class="number">2</span>;</span><br><span class="line">    fn2();</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> num = <span class="number">2</span>;</span><br><span class="line">    <span class="title function_">fn2</span>();</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">fn2</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">fn</span>();</span><br></pre></td></tr></table></figure>
 </div>
 <div class='clear'></div>
 </div>
@@ -329,7 +386,7 @@
 <h1 id="JS的预解析"><a class="header-anchor" href="#JS的预解析"></a>JS的预解析</h1>
 <div>
 <div class='center'>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.先向控制台打印变量，后声明该变量并赋值</span></span><br><span class="line"><span class="built_in">console</span>.log(num);</span><br><span class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// 控制台输出undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.先调用函数，后通过函数声明的方式创建函数</span></span><br><span class="line">fn();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台输出&#x27;fn&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.以函数表达式创建函数（匿名函数）</span></span><br><span class="line">fn2();</span><br><span class="line"><span class="keyword">var</span> fn2() = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台报错 Uncaught TypeError: fn2 is not a function</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.先向控制台打印变量，后声明该变量并赋值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// 控制台输出undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.先调用函数，后通过函数声明的方式创建函数</span></span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台输出&#x27;fn&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.以函数表达式创建函数（匿名函数）</span></span><br><span class="line"><span class="title function_">fn2</span>();</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">fn2</span>() = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台报错 Uncaught TypeError: fn2 is not a function</span></span><br></pre></td></tr></table></figure>
 </div>
 <div class='clear'></div>
 </div>
@@ -342,7 +399,7 @@
 <p>  因此，上面的代码实际执行顺序如下：</p>
 <div>
 <div class='center'>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> fn2();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 此时num未赋值，因此输出undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(num);</span><br><span class="line">num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// fn()已经声明，可以正常调用</span></span><br><span class="line">fn();</span><br><span class="line"><span class="comment">// fn2 只是一个变量，还不是函数，因此fn2()语句会出错。</span></span><br><span class="line">fn2();</span><br><span class="line">fn2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">fn2</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 此时num未赋值，因此输出undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line">num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// fn()已经声明，可以正常调用</span></span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="comment">// fn2 只是一个变量，还不是函数，因此fn2()语句会出错。</span></span><br><span class="line"><span class="title function_">fn2</span>();</span><br><span class="line">fn2 = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </div>
 <div class='clear'></div>
 </div>
@@ -370,6 +427,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/09/22/h5-css3-learning/" rel="next" title="HTML / CSS 杂项知识记录">
+                  HTML / CSS 杂项知识记录 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -401,13 +461,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">57k</span>
+    <span title="站点总字数">59k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:21</span>
+    <span title="站点阅读时长">2:29</span>
   </span>
 </div>
 <div class="busuanzi-count">

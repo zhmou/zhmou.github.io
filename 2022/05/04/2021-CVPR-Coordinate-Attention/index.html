@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -317,7 +317,7 @@
 <p>  近年来对轻量级网络(mobile network)设计的研究表明，通道注意力机制(例如：Squeeze-and-Excitation attention, 压缩-激发注意力机制，出自<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1709.01507">SENet, CVPR2018</a>)对于模型性能的提升具有显著效果，但它们通常忽略掉了位置信息——这对于生成空间选择性注意力图(spatially selective attention maps)非常重要。在这篇文章中，我们针对轻量级网络提出了一种新的注意力机制，该机制将位置信息嵌入到通道注意力中。我们称其为 <strong>坐标注意力(Coordinate Attention)</strong> 机制。<br>
   不同于通道注意力将一个特征张量通过二维全局池化转换为单个特征向量，坐标注意力将通道注意力拆解为两个一维特征提取的过程，分别沿着两个空间方向(译注：宽，高)提取特征。通过这种方法可以提取一个空间方向上的远距离依赖关系，同时又可以在另一个空间方向上保持精确的位置信息。结果产生的特征图然后分别编码为一对方向感知(direction-aware)与位置敏感(position-sensitive)的注意力图，可以增补应用于输入的特征图来增强对感兴趣对象的表示。<br>
   我们的坐标注意力机制简单，可以灵活插入于经典的轻量级网络，如<em>MobileNetV2</em>, <em>MobileNeXt</em>和<em>EfficientNet</em>并且几乎没有额外的计算开销。大量实验表明，我们的坐标注意力机制在ImageNet分类上存在性能提升，更有趣的是，它在下游任务中表现更好，如目标检测和语义分割。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="回顾几种注意力机制"><a class="header-anchor" href="#回顾几种注意力机制"></a>回顾几种注意力机制</h2>
 <h3 id="SENet"><a class="header-anchor" href="#SENet"></a>SENet</h3>
 <img data-src="/img/2022-05-04-2021-CVPR-Coordinate-Attention/Figure_1.png" alt="SENet" title="SENet" style="float:center"/>
@@ -411,13 +411,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">57k</span>
+    <span title="站点总字数">59k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:21</span>
+    <span title="站点阅读时长">2:29</span>
   </span>
 </div>
 <div class="busuanzi-count">

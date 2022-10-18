@@ -165,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -176,7 +176,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -298,7 +298,7 @@
     <div class="post-body" itemprop="articleBody">
         <p>  一般而言，我的需求大多来自实验室，这次也不例外。由于实验室经常承接某些外包的横向项目，因此实验室需要一个能对项目软件进行加密注册的功能以期实现售卖激活码的方式收费盈利。实验室里之前本来就有这玩意儿，但其由C++实现得即为复杂，加之多年来删改维护，让我第一次直观体会到了“屎山”的威力。于是我觉得还不如自己写个Python的Demo玩玩，所谓“功在当代，利在千秋”是也。</p>
 <p>  GitHub项目地址：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo">https://github.com/zhmou/RegisterDemo</a></p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="构建模型"><a class="header-anchor" href="#构建模型"></a>构建模型</h2>
 <p>  <del>稍有常识的人就能看出</del>……反正对于有经验的网友而言，尽管软件注册有着本地注册、网络激活、激活码等等不同的形式，但本质上大多都万变不离其宗：软件读取一段指定的加密信息用于激活（授权），并确保该信息不能（或者几乎不能）被伪造（用于重复激活多台设备或者是伪装激活）。序列号+激活码就是这样一种常见的模式：</p>
 <p>图片待补，反正是一张描述软件注册流程的图片。</p>
@@ -342,7 +342,7 @@
 <p>  整个核心部分密钥生成的代码参见此处：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo/blob/main/src/keygen.py">https://github.com/zhmou/RegisterDemo/blob/main/src/keygen.py</a></p>
 <h3 id="模反元素d的计算——扩展欧几里得算法"><a class="header-anchor" href="#模反元素d的计算——扩展欧几里得算法"></a>模反元素d的计算——扩展欧几里得算法</h3>
 <p>  欧几里得算法即辗转相除法：给定两个数a、b，计算 a ÷ b 的余数 a % b，并以此作为新的除数计算 b ÷ a % b，直到能够整除没有余数为止。这时候最后一项除法式子的被除数就是原来给定两数a、b的最大公约数（公因数，greatest common divisor）。Python实现如下：</p>
-<figure class="highlight python"><figcaption><span>gcd(a,b)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(b, a % b)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><figcaption><span>gcd(a,b)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">gcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(b, a % b)</span><br></pre></td></tr></table></figure>
 <p>  而扩展欧几里得算法则是用来求ax + by = gcd(a,b)的整数解x、y，而模反元素d是求ed + kφ(n) = 1的整数解d（考虑到e与φ(n)互质, gcd(e,φ(n))=1），所以d可以通过扩展欧几里得算法来计算，原理及Python实现如下：</p>
 <p>  原理:设a&gt;b<br>
   当b=0时,gcd(a,0)=a,对于a=ax+0y,容易得到其正整数解x=1,y=0<br>
@@ -358,7 +358,7 @@
     y1 = x2 - (a//b)*y2</p>
 <p>  由此可知，方程gcd(a, b) = ax1 + by1的解可用gcd(b, a%b) = bx2 + (a%b)y2表示，<br>
   构成了类似欧几里得算法的递归，下述函数即通过递归的方式实现了拓展欧几里得算法。</p>
-<figure class="highlight python"><figcaption><span>extend_gcd()</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extend_gcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        x1 = <span class="number">1</span></span><br><span class="line">        y1 = <span class="number">0</span></span><br><span class="line">        x = x1</span><br><span class="line">        y = y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        x1, y1 = extend_gcd(b, a % b)</span><br><span class="line">        x = y1</span><br><span class="line">        y = x1 - a // b * y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><figcaption><span>extend_gcd()</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extend_gcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        x1 = <span class="number">1</span></span><br><span class="line">        y1 = <span class="number">0</span></span><br><span class="line">        x = x1</span><br><span class="line">        y = y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        x1, y1 = extend_gcd(b, a % b)</span><br><span class="line">        x = y1</span><br><span class="line">        y = x1 - a // b * y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br></pre></td></tr></table></figure>
 <h3 id="快速幂取模算法"><a class="header-anchor" href="#快速幂取模算法"></a>快速幂取模算法</h3>
 <p>  <strong>施工中</strong></p>
 <h2 id="其它tricks"><a class="header-anchor" href="#其它tricks"></a>其它tricks</h2>
@@ -429,13 +429,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">57k</span>
+    <span title="站点总字数">59k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:21</span>
+    <span title="站点阅读时长">2:29</span>
   </span>
 </div>
 <div class="busuanzi-count">
