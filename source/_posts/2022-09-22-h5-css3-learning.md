@@ -18,12 +18,12 @@ categories: 学习
 
 - 等腰三角形
   <div style='width:0px; height:0px; border: 20px solid transparent; border-top: 20px solid red;'></div>
-  如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一即可得到此等腰三角形。
+  如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一为非透明即可得到此等腰三角形。
 - 直角三角形
   <div style='width:0px; height:0px; border-right: 20px solid transparent; border-bottom: 40px solid red;'></div>
   对相邻两边的border属性进行设置，其余两边留空。
 
-<strong>自己来试一试</strong>
+<strong>自己试一试：</strong>
 <div>
 <div class='left' style='border: 1px dotted grey; position: relative; height: 180px;'>
 <div style='width:0; height:0; border-top: 20px solid red;border-right:20px solid brown;border-bottom:20px solid green; border-left:20px solid lightblue; position:absolute; left:50%; top: 60px;margin-left:-20px' id='test'></div>
