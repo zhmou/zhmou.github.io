@@ -19,10 +19,11 @@ type: "links"
          clear: both;
          }
          .card {
-         width: 45%;
+         width: 42%;
+         max-width: 400px;
          font-size: 1rem;
          padding: 10px 20px;
-         border-radius: 4px;
+         border-radius: 5px;
          transition-duration: 0.15s;
          margin-bottom: 1rem;
          display:flex;
@@ -30,8 +31,15 @@ type: "links"
          .card:nth-child(odd) {
          float: left;
          }
-         .card:nth-child(even) {
-         float: right;
+         @media (max-width: 500px) {
+         .card {
+         width: 90%;
+         }
+         }
+         @media (min-width: 990px) {
+         .card {
+         width: 42%;
+         }
          }
          .card:hover {
          transform: scale(1.1);
