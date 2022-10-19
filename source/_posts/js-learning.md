@@ -4,6 +4,9 @@ date: 2022-09-13 14:42:29
 tags: [Javascript, 编程, 语法]
 categories: 学习
 ---
+{% note info %}
+这篇文章仍处在更新当中。
+{% endnote %}
 
 # 类型
 - 基础数据类型
