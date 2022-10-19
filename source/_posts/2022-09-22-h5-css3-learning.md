@@ -31,10 +31,10 @@ categories: 学习
 
 <div class='right' style='border: 1px dotted grey; position: relative; height: 180px;'>
 <div class="slidecontainer">
-  border-left: <input type="range" min="0" max="40" value="20" id="left" style="vertical-align: middle;" onchange='left_display.value=this.value'><output id='left_display' for='left'>20</output><br>
-  border-right: <input type="range" min="0" max="40" value="20" id="right" style="vertical-align: middle;" onchange='right_display.value=this.value'><output id='right_display' for='right'>20</output><br>
-  border-bottom: <input type="range" min="0" max="40" value="20" id="bottom" style="vertical-align: middle;" onchange='bottom_display.value=this.value'><output id='bottom_display' for='bottom'>20</output><br>
-  border-top: <input type="range" min="0" max="40" value="20" id="top" style="vertical-align: middle;" onchange='top_display.value=this.value'><output id='top_display' for='top'>20</output><br>
+  border-left: <input type="range" min="0" max="40" value="20" id="left" style="vertical-align: middle;" oninput='left_display.value=this.value'><output id='left_display' for='left'>20</output><br>
+  border-right: <input type="range" min="0" max="40" value="20" id="right" style="vertical-align: middle;" oninput='right_display.value=this.value'><output id='right_display' for='right'>20</output><br>
+  border-bottom: <input type="range" min="0" max="40" value="20" id="bottom" style="vertical-align: middle;" oninput='bottom_display.value=this.value'><output id='bottom_display' for='bottom'>20</output><br>
+  border-top: <input type="range" min="0" max="40" value="20" id="top" style="vertical-align: middle;" oninput='top_display.value=this.value'><output id='top_display' for='top'>20</output><br>
   <button style='position:absolute; left:50%; margin-left: -40px;width:80px' onclick='changeCSS(left_display.value, right_display.value, bottom_display.value, top_display.value)'>Apply</button>
   <script>
     function changeCSS(a, b, c, d){
