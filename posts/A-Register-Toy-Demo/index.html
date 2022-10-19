@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/general/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/general/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/general/favicon-16x16.png">
+  <link rel="mask-icon" href="/img/general/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一般而言，我的需求大多来自实验室，这次也不例外。由于实验室经常承接某些外包的横向项目，因此实验室需要一个能对项目软件进行加密注册的功能以期实现售卖激活码的方式收费盈利。实验室里之前本来就有这玩意儿，但其由C++实现得即为复杂，加之多年来删改维护，让我第一次直观体会到了“屎山”的威力。于是我觉得还不如自己写个Python的Demo玩玩，所谓“功在当代，利在千秋”是也。   GitHub项目地址：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个实现注册、激活的软件Demo">
+<meta property="og:url" content="http://zhmou.github.io/posts/A-Register-Toy-Demo/index.html">
+<meta property="og:site_name" content="Zh某的备忘录">
+<meta property="og:description" content="一般而言，我的需求大多来自实验室，这次也不例外。由于实验室经常承接某些外包的横向项目，因此实验室需要一个能对项目软件进行加密注册的功能以期实现售卖激活码的方式收费盈利。实验室里之前本来就有这玩意儿，但其由C++实现得即为复杂，加之多年来删改维护，让我第一次直观体会到了“屎山”的威力。于是我觉得还不如自己写个Python的Demo玩玩，所谓“功在当代，利在千秋”是也。   GitHub项目地址：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhmou.github.io/img/2021-10-31-A-Register-Toy-Demo/01.png">
+<meta property="article:published_time" content="2021-10-31T07:08:38.000Z">
+<meta property="article:modified_time" content="2022-09-15T11:48:32.683Z">
+<meta property="article:author" content="Zhmou">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="RSA算法">
+<meta property="article:tag" content="软件注册">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhmou.github.io/img/2021-10-31-A-Register-Toy-Demo/01.png">
+
+
+<link rel="canonical" href="http://zhmou.github.io/posts/A-Register-Toy-Demo/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhmou.github.io/posts/A-Register-Toy-Demo/","path":"/posts/A-Register-Toy-Demo/","title":"一个实现注册、激活的软件Demo"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一个实现注册、激活的软件Demo | Zh某的备忘录</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zh某的备忘录</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活点滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-misc"><a href="/misc/" rel="section"><i class="fa fa-tasks fa-fw"></i>杂项</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">构建模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E8%AE%BE%E5%A4%87%E6%A0%87%E8%AF%86%E7%A0%81UUID"><span class="nav-number">2.</span> <span class="nav-text">唯一设备标识码UUID</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%BC%8F%E8%8E%B7%E5%8F%96%E6%A0%87%E8%AF%86%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">其他方式获取标识码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%EF%BC%9ARSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">核心：RSA加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%8F%8D%E5%85%83%E7%B4%A0d%E7%9A%84%E8%AE%A1%E7%AE%97%E2%80%94%E2%80%94%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">模反元素d的计算——扩展欧几里得算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%B9%82%E5%8F%96%E6%A8%A1%E7%AE%97%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">快速幂取模算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83tricks"><span class="nav-number">4.</span> <span class="nav-text">其它tricks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%EF%BC%9A%E5%8E%8B%E7%BC%A9%E6%BF%80%E6%B4%BB%E7%A0%81%E9%95%BF%E5%BA%A6"><span class="nav-number">4.1.</span> <span class="nav-text">进制转换：压缩激活码长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%97%B6%E9%97%B4%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">添加时间信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PyQt5%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%84%E7%90%86"><span class="nav-number">4.3.</span> <span class="nav-text">PyQt5的可视化与多线程处理</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhmou"
+      src="/img/general/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Zhmou</p>
+  <div class="site-description" itemprop="description">不断学习 关注技术 热爱生活</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:zezhongzhang1999@gmail.com" title="E-Mail → mailto:zezhongzhang1999@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/zhmou" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/A-Register-Toy-Demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/general/avatar.jpg">
+      <meta itemprop="name" content="Zhmou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zh某的备忘录">
+      <meta itemprop="description" content="不断学习 关注技术 热爱生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一个实现注册、激活的软件Demo | Zh某的备忘录">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一个实现注册、激活的软件Demo
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-31 15:08:38" itemprop="dateCreated datePublished" datetime="2021-10-31T15:08:38+08:00">2021-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>  一般而言，我的需求大多来自实验室，这次也不例外。由于实验室经常承接某些外包的横向项目，因此实验室需要一个能对项目软件进行加密注册的功能以期实现售卖激活码的方式收费盈利。实验室里之前本来就有这玩意儿，但其由C++实现得即为复杂，加之多年来删改维护，让我第一次直观体会到了“屎山”的威力。于是我觉得还不如自己写个Python的Demo玩玩，所谓“功在当代，利在千秋”是也。</p>
+<p>  GitHub项目地址：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo">https://github.com/zhmou/RegisterDemo</a></p>
+<span id="more"></span>
+<h2 id="构建模型"><a class="header-anchor" href="#构建模型"></a>构建模型</h2>
+<p>  <del>稍有常识的人就能看出</del>……反正对于有经验的网友而言，尽管软件注册有着本地注册、网络激活、激活码等等不同的形式，但本质上大多都万变不离其宗：软件读取一段指定的加密信息用于激活（授权），并确保该信息不能（或者几乎不能）被伪造（用于重复激活多台设备或者是伪装激活）。序列号+激活码就是这样一种常见的模式：</p>
+<p>图片待补，反正是一张描述软件注册流程的图片。</p>
+<p>  由图可知，我们要实现的需求有以下几条：<br>
+  <strong>客户端Client</strong><br>
+  ①读取机器信息：生成唯一的机器设备标识（序列号）<br>
+  ②判断注册状态：对于未注册的软件，则不允许使用该软件；判断注册信息是否异常<br>
+  ③注册：结合上一步，对于未注册的软件，输入激活码注册，比对激活码是否与该设备的序列号匹配：匹配则生成对应注册信息，不匹配则提示错误。对于已注册的软件，防止重复注册。<br>
+  ④时间信息读写：启动程序时，判断注册状态，注册则读取激活剩余时间，每隔相应的时间对注册信息进行修改，直到剩余时间为0则删除注册信息（或者写入已过期的提示信息）</p>
+<p>  <strong>服务器端Client</strong><br>
+  输入序列号，自动生成对应的激活码</p>
+<p>  总之，这些东西的难度并不是很大，接下来将每一个提到的需求分别在客户端和服务端实现就好。</p>
+<h2 id="唯一设备标识码UUID"><a class="header-anchor" href="#唯一设备标识码UUID"></a>唯一设备标识码UUID</h2>
+<p>  目前，本项目采取的方式是调用命令行显示主板统一规范的smBIOS信息：</p>
+<p>  <code>CURRENT_MACHINE_ID = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip().replace('-', '')</code></p>
+<p>  直接调用命令行显示结果如下：<br>
+<img data-src="/img/2021-10-31-A-Register-Toy-Demo/01.png" alt="命令行"></p>
+<p>  在后面进行了一系列操作如<code>.spilt('\n')[1]</code>（取出以换行符为分割的元素），<code>.strip()</code>（去掉首尾的空格），<code>.replace('-', '')</code>（把连字符-去掉）等，最终生成了一个32位十六进制的字符串作为软件注册时机器的识别编码。</p>
+<h3 id="其他方式获取标识码"><a class="header-anchor" href="#其他方式获取标识码"></a>其他方式获取标识码</h3>
+<p>  上述方法的好处是调用简单，但是也留下了我曾忽视的隐患（当然是我自己的锅= =）：激活码在客户端只会与UUID进行匹配，激活码可能重复激活。之前的屎山代码里不仅根据机器特征，同时会根据时间生成一个序列号，因此避免了同一个激活码重复激活的可能。<br>
+  根据我的检索，Python中<code>uuid.getnodes()</code>或许可以满足我的要求，当然效果具体如何得等到我的实验验证啦。</p>
+<h2 id="核心：RSA加密算法"><a class="header-anchor" href="#核心：RSA加密算法"></a>核心：RSA加密算法</h2>
+<p>  如何针对序列号生成一段加密序列，使得软件能还原出激活信息？我最初的想法很简单：服务端对序列号进行加密，客户端进行相同的加密方式，两者匹配上即视为注册成功。但是这样存在一个问题：倘若具备一定反编译能力的人找到了客户端里隐藏的加密算法，那就等同于掌握了注册机——他能算出任意序列号对应的激活码，而这就对我们极为不利了。</p>
+<p>  好在数学的发展让我们有了非对称加密的概念：</p>
+<blockquote><p>公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。</p>
+<footer><strong>Wikipedia</strong><cite><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86">公开密钥加密</a></cite></footer></blockquote>
+<br>
+&emsp;&emsp;除了加解密之外，非对称加密还具有数字签名的作用：采用私钥进行签名，公钥验证签名。于是我们可以用考虑在服务端用私钥来生成我们的激活码，而在客户端用公钥进行验证，这样两个密钥分离的形式就能免除上述说法提到的风险。
+<p>  RSA算法就是一种知名的非对称加密算法，它基于大数因式分解的困难程度保证了安全性，以及拓展欧几里得算法快速求解不定方程的便捷使其具有可实现性。尽管我不甚理解算法的原理，但是根据步骤使用Python则很容易，RSA公钥、密钥生成步骤按照网上的说明如下：</p>
+<blockquote><p>①随机选择两个不相等的质数p和q。<br>
+②计算n = p*q（一般地，n(base 2)的长度被建议达到2048bit以达到要求的安全性）<br>
+③计算n的欧拉函数φ(n)=(p-1)(q-1)<br>
+④选择整数e满足1&lt;e&lt;φ(n)，且e与φ(n)互质(通常选择65536)<br>
+（之前想了很久还在想万一65536与φ(n)不互质咋办……现在想想，直接重选呗！判断互质直接用辗转相除法就行啦）<br>
+⑤计算e对于φ(n)的模反元素d，即ed / φ(n) 的余数 是 1<br>
+⑥将n和e封装成公钥对，n和d封装成私钥对，并销毁p、q</p>
+</blockquote>
+<p>  本项目用到的签名与验签的步骤则要用到大数幂取模的快速算法：签名信息 = 待签名信息 ^ d % n；原信息 = 签名信息 ^ e % n</p>
+<div class="note warning"><p>提示：待加密信息长度不能超过n的长度。</p>
+</div>
+<p>  整个核心部分密钥生成的代码参见此处：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo/blob/main/src/keygen.py">https://github.com/zhmou/RegisterDemo/blob/main/src/keygen.py</a></p>
+<h3 id="模反元素d的计算——扩展欧几里得算法"><a class="header-anchor" href="#模反元素d的计算——扩展欧几里得算法"></a>模反元素d的计算——扩展欧几里得算法</h3>
+<p>  欧几里得算法即辗转相除法：给定两个数a、b，计算 a ÷ b 的余数 a % b，并以此作为新的除数计算 b ÷ a % b，直到能够整除没有余数为止。这时候最后一项除法式子的被除数就是原来给定两数a、b的最大公约数（公因数，greatest common divisor）。Python实现如下：</p>
+<figure class="highlight python"><figcaption><span>gcd(a,b)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">gcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> gcd(b, a % b)</span><br></pre></td></tr></table></figure>
+<p>  而扩展欧几里得算法则是用来求ax + by = gcd(a,b)的整数解x、y，而模反元素d是求ed + kφ(n) = 1的整数解d（考虑到e与φ(n)互质, gcd(e,φ(n))=1），所以d可以通过扩展欧几里得算法来计算，原理及Python实现如下：</p>
+<p>  原理:设a&gt;b<br>
+  当b=0时,gcd(a,0)=a,对于a=ax+0y,容易得到其正整数解x=1,y=0<br>
+  当b!=0时,设:<br>
+    ax1 + by1 = gcd(a,b)<br>
+    bx2 + (a%b)*y2 = gcd(b,a%b)<br>
+  根据辗转相除法的原理有 gcd(a,b) = gcd(b,a%b);两式联立得:<br>
+    ax1 + by1 = bx2 + (a%b)*y2<br>
+  而a%b可写作 a - (a//b) * b (其中&quot;//&quot;为整除),则有:<br>
+    ax1 + by1 = bx2 + ay2 - (a//b)*by2<br>
+  比对系数可得:<br>
+    x1 = y2<br>
+    y1 = x2 - (a//b)*y2</p>
+<p>  由此可知，方程gcd(a, b) = ax1 + by1的解可用gcd(b, a%b) = bx2 + (a%b)y2表示，<br>
+  构成了类似欧几里得算法的递归，下述函数即通过递归的方式实现了拓展欧几里得算法。</p>
+<figure class="highlight python"><figcaption><span>extend_gcd()</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extend_gcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        x1 = <span class="number">1</span></span><br><span class="line">        y1 = <span class="number">0</span></span><br><span class="line">        x = x1</span><br><span class="line">        y = y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        x1, y1 = extend_gcd(b, a % b)</span><br><span class="line">        x = y1</span><br><span class="line">        y = x1 - a // b * y1</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br></pre></td></tr></table></figure>
+<h3 id="快速幂取模算法"><a class="header-anchor" href="#快速幂取模算法"></a>快速幂取模算法</h3>
+<p>  <strong>施工中</strong></p>
+<h2 id="其它tricks"><a class="header-anchor" href="#其它tricks"></a>其它tricks</h2>
+<h3 id="进制转换：压缩激活码长度"><a class="header-anchor" href="#进制转换：压缩激活码长度"></a>进制转换：压缩激活码长度</h3>
+<p>  在RSA加密算法中，我们实际上是对十进制数字进行签名处理。尽管UUID是十六进制字符串，但Python内自带的函数就能将其转换为十进制数字进行签名或者验签。然而只要你尝试过签名函数，结果会发现它生成的十进制数字签名长得难以想象，因此我进行了折中处理：一方面缩短n的长度来牺牲其安全性以换取长度的缩短。另一方面对于其十进制签名，我们可以将其转换为62进制（用0-9、a-z以及A-Z来表示）来压缩其长度，这部分代码就需要自身实现了，其思路是以十进制为桥梁，先将自身进制转换为十进制，再转换到目标进制。</p>
+<p>  进制转换的代码参见此处：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo/blob/main/src/baseconvert.py">https://github.com/zhmou/RegisterDemo/blob/main/src/baseconvert.py</a></p>
+<h3 id="添加时间信息"><a class="header-anchor" href="#添加时间信息"></a>添加时间信息</h3>
+<p>  思路没啥特别的，就是对待签名信息的指定位置上添加激活时长，我的方法是激活时长（天数）格式化为四位：如 30天 -&gt; 0030，字符串拼接在待签名信息的后面，这样激活的时候读取到该字符串就能正确初始化注册信息文件里的时间了。</p>
+<h3 id="PyQt5的可视化与多线程处理"><a class="header-anchor" href="#PyQt5的可视化与多线程处理"></a>PyQt5的可视化与多线程处理</h3>
+<p>  <strong>施工中</strong></p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Zhmou
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhmou.github.io/posts/A-Register-Toy-Demo/" title="一个实现注册、激活的软件Demo">http://zhmou.github.io/posts/A-Register-Toy-Demo/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/RSA%E7%AE%97%E6%B3%95/" rel="tag"># RSA算法</a>
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%B3%A8%E5%86%8C/" rel="tag"># 软件注册</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/Use-Python-to-Read-and-Write-XML-files/" rel="prev" title="使用Python读写XML文件">
+                  <i class="fa fa-chevron-left"></i> 使用Python读写XML文件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/Machine-Learning-101-00/" rel="next" title="机器学习基础#00：Intro">
+                  机器学习基础#00：Intro <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhmou</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">60k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:30</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://zhmou.github.io/posts/A-Register-Toy-Demo/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

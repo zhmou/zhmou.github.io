@@ -2199,6 +2199,13 @@ header.header {
 .post-block:last-of-type .post-eof {
   display: none;
 }
+.post-copyright ul {
+  list-style: none;
+  padding: 0.5em 1em;
+  background: var(--card-bg-color);
+  border-left: 3px solid #ff2a2a;
+  margin: 1em 0 0;
+}
 .post-tags {
   margin-top: 40px;
   text-align: center;
@@ -2971,7 +2978,7 @@ mjx-container[display='true'] + br {
   }
 }
 body {
-  background: url("/img/general/background.jpg");
+  background: url("/img/general/background.webp");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 50% 50%;

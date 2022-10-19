@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/general/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/general/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/general/favicon-16x16.png">
+  <link rel="mask-icon" href="/img/general/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhmou.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="table {     margin: auto; }    决定对近期学习到的机器学习相关知识进行一次整理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习基础#00：Intro">
+<meta property="og:url" content="http://zhmou.github.io/posts/Machine-Learning-101-00/index.html">
+<meta property="og:site_name" content="Zh某的备忘录">
+<meta property="og:description" content="table {     margin: auto; }    决定对近期学习到的机器学习相关知识进行一次整理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_1.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_2.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_3.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_4.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_5.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_6.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_7.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_8.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_9.png">
+<meta property="og:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_10.png">
+<meta property="article:published_time" content="2022-03-08T05:22:21.000Z">
+<meta property="article:modified_time" content="2022-09-15T11:49:37.332Z">
+<meta property="article:author" content="Zhmou">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhmou.github.io/img/2022-3-9-Machine-Learning-101/Figure_1.png">
+
+
+<link rel="canonical" href="http://zhmou.github.io/posts/Machine-Learning-101-00/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://zhmou.github.io/posts/Machine-Learning-101-00/","path":"/posts/Machine-Learning-101-00/","title":"机器学习基础#00：Intro"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>机器学习基础#00：Intro | Zh某的备忘录</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zh某的备忘录</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活点滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-misc"><a href="/misc/" rel="section"><i class="fa fa-tasks fa-fw"></i>杂项</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是机器学习？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">一个简单的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">更复杂的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9A%E5%BC%95%E5%85%A5Mini-Batch"><span class="nav-number">4.</span> <span class="nav-text">随机梯度下降：引入Mini-Batch</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhmou"
+      src="/img/general/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Zhmou</p>
+  <div class="site-description" itemprop="description">不断学习 关注技术 热爱生活</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:zezhongzhang1999@gmail.com" title="E-Mail → mailto:zezhongzhang1999@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/zhmou" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/Machine-Learning-101-00/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/general/avatar.jpg">
+      <meta itemprop="name" content="Zhmou">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zh某的备忘录">
+      <meta itemprop="description" content="不断学习 关注技术 热爱生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="机器学习基础#00：Intro | Zh某的备忘录">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习基础#00：Intro
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-08 13:22:21" itemprop="dateCreated datePublished" datetime="2022-03-08T13:22:21+08:00">2022-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <style>
+table
+{
+    margin: auto;
+}
+</style>
+<p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
+<span id="more"></span>
+<p>  免责声明：本人对机器学习领域所知甚少，所写博文为对前期所学知识的回顾，不确保其内容的真实性与准确性，不建议以此为基础进行学习。如有差错纰漏，欢迎指正。</p>
+<h2 id="什么是机器学习？"><a class="header-anchor" href="#什么是机器学习？"></a>什么是机器学习？</h2>
+<p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，那就是：</p>
+<blockquote><p>从已有的样本（数据）中发现规律，并能够将其泛化应用于未知的（或者说：新的）样本上。</p>
+<footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
+<br>
+<p>  譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。</p>
+<p><img data-src="/img/2022-3-9-Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
+<div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
+<br>
+<h2 id="一个简单的例子"><a class="header-anchor" href="#一个简单的例子"></a>一个简单的例子</h2>
+<p>  现在，我们有一组$x$与$y$如表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">x</th>
+<th style="text-align:center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">?</td>
+</tr>
+</tbody>
+</table>
+<p>  对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。</p>
+<p>  基于此，我们建立一个简单的线性模型：<br>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
+<p>  此外，我们还需要一个“打分”的函数来评估模型在当前样本（所谓样本，结合这个例子来说就是上述列表里的某一行）上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。</p>
+<p>$$<br>
+loss={(\hat{y}-y)}^2<br>
+$$</p>
+<p>  大多数情况下，我们的目标是令代价函数的值尽可能的变小，即预测值接近真实值。</p>
+<p>  现在，我们随机地初始化一组$w$和$b$($w=1,b=1$)来计算损失函数loss的值：<br>
+  $x=2$时，$\hat{y}=3$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3-4)}^2=1$<br>
+  $x=3$时，$\hat{y}=4$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(4-6)}^2=4$<br>
+  在全体样本上的均方误差$cost = 5\div2=2.5$</p>
+<p>  我们把这个步骤称作“<strong>前向运算</strong>”/“<strong>前馈运算</strong>”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。<br>
+  在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。</p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
+<p>  将其应用于我们的例子中：当我们将两个参数$w、b$沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。</p>
+<p>  根据链式求导法则：<br>
+$$<br>
+\frac{\partial{loss}}{\partial{w}}=\frac{\partial{loss}}{\partial{\hat{y}}}\cdot\frac{\partial{\hat{y}}}{\partial{w}}=2(\hat{y}-y)\cdot{x}<br>
+$$<br>
+  (对b的偏导同理)</p>
+<p>  将前向运算中计算得到的$\hat{y}$和当前样本已知的$x、y$带入上述式子可得：<br>
+  在$x=2$时，$\left.{\frac{\partial{loss}}{\partial{w}}}\right|_{x=2}=−4$，$\left.{\frac{\partial{loss}}{\partial{b}}}\right|_{x=2}=−2$<br>
+  在$x=3$时，$\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3}=-12$，$\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3}=−4$</p>
+<p>  接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。</p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
+<p>$$<br>
+\begin{align*}<br>
+w'&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
+&amp;=w- lr\cdot(\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-4-12)\div2\\<br>
+&amp;=1.32<br>
+\end{align*}<br>
+$$</p>
+<p>  同理，$b$的值计算结果为：<br>
+$$<br>
+\begin{align*}<br>
+b'&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
+&amp;=b-lr\cdot(\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-2-4)\div2\\<br>
+&amp;=1.12<br>
+\end{align*}<br>
+$$</p>
+<p>  如上述的这个过程，被称为“反向传播”。这样，我们便走完了神经网络训练的一个轮次（Epoch）。此时，重新计算预测值、loss与cost，更新权重后的结果为：</p>
+<p>  $x=2$时，$\hat{y}=3.76$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3.76-4)}^2=0.0576$<br>
+  $x=3$时，$\hat{y}=5.08$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(5.08-6)}^2=0.8464$<br>
+  在全体样本上的均方误差$cost' = 0.452$</p>
+<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程，在经过第二次训练后，得到$w'=1.644$，$b'=1.236$</p>
+<p>  现在，对于例子开头提出来的问题，在经过两轮训练后，神经网络给出的$x=4$时的预测结果为:<br>
+$$<br>
+ŷ = 1.644\times4+1.236 = 7.812<br>
+$$</p>
+<p>  当反复训练后，cost的值趋近于零，在某个区间内呈现波动的时候，我们称这个网络<strong>收敛</strong>，而当cost值不再变小而且和0相去较远时，则可能陷入了局部最优解，或者是学习率过大导致无法收敛于全局最优解。</p>
+<blockquote>
+<p><strong>小结</strong><br>
+神经元：网络中负责某种基础运算的单元。例如本例中建模采用的$y=kx+b$就是一个基础的神经元。<br>
+神经网络训练的步骤：正向运算求Loss，反向计算求Loss对各个参数的偏导，依赖偏导对参数进行微小的调整。在本例中，反复以样本训练较好地逼近了结果。<br>
+<strong>问题</strong>：<br>
+多个线性神经元简单叠加，如两个神经元：$y = w_1(w_2x+b_2)+b_1 = w_1w_2x+w_1b_2+b_1$ ，仍与单个神经元效果相同，需要引入<em>非线性变换</em>才能较好的拟合非线性函数。</p>
+</blockquote>
+<h2 id="更复杂的例子"><a class="header-anchor" href="#更复杂的例子"></a>更复杂的例子</h2>
+<p>  下方是某商品的评价及其人工标注的情感标签，试建立模型分析其中关系。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">评价</th>
+<th style="text-align:center">情感标签</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">“好看”</td>
+<td style="text-align:center">正面</td>
+</tr>
+<tr>
+<td style="text-align:center">“不好”</td>
+<td style="text-align:center">负面</td>
+</tr>
+<tr>
+<td style="text-align:center">“好”</td>
+<td style="text-align:center">正面</td>
+</tr>
+<tr>
+<td style="text-align:center">“不好看”</td>
+<td style="text-align:center">负面</td>
+</tr>
+<tr>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+</tr>
+</tbody>
+</table>
+<p>  由于神经网络只能接受数字化的输入并产生相对应的数字化输出，因此需要将这些样本转化成数据：</p>
+<p>  首先提取基本语素，在这个简单的任务中，共有三个字：{好，不，看}<br>
+  对这三个字进行“<strong>独热编码</strong>”：<br>
+  <strong>好 = [1, 0, 0] 不 = [0, 1, 0] 看 = [0, 0, 1]</strong><br>
+  输入样本的向量即为各个字符编码的相加，例如：<br>
+  <strong>好看 = [1, 0, 1] 不好 = [1, 1, 0] ……</strong><br>
+  对于输出，由于只存在两种标签，因此编码为：<br>
+  <strong>正面 = [1, 0] 负面 = [0, 1]</strong><br>
+  依照上述步骤，我们构造出了一个$4×3$(样本数×input size/基本语素单位)的输入矩阵$x$与$4×2$(样本数×标注类别)的标注矩阵$y$：<br>
+$$<br>
+x=\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 1\end{bmatrix} y=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}<br>
+$$</p>
+<p>  类似于第二部分中给出的例子，我们设计出一个相较于前者更为复杂的网络：<br>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/></p>
+<p>  在两个隐藏层向各个下一层神经元传输相应数字时(箭头所示位置)，需要引入非线性变换的激活函数(Activation function)，这里选用的是Sigmoid函数：$𝑆(𝑥)=\frac{1}{(1+𝑒^{−𝑥})}$，它将实数域R的数字映射至(0, 1)内。网络最后一层的Softmax函数也是一种非线性变换，它将该层所有结果都映射到(0, 1)内，不改变大小的相对位置。对于该层的各个元素$x_i$，经变换后的值计算如下：<br>
+$$<br>
+softmax\ value = \frac{e^{x_i}}{\sum_{j}e^{x_j}{}}<br>
+$$</p>
+<p>  图中实线连接的部分就是我们在反向算法过程中需要更新的权重，为简化计算，在这个例子中我们忽略bias项即偏置的影响(也就是说每一条线代表的基础运算单元仅仅是$y=kx$)，只考虑权重w构成的三个矩阵：<br>
+  $𝑤_1$为三行两列矩阵，$𝐻_1=𝑥𝑤_1$，$𝑤_2$ 、$𝑤_3$ 为两行两列的矩阵： $𝐻_2=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_1 ) 𝑤_2$，$𝑂𝑢𝑡𝑝𝑢𝑡=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_2)𝑤_3$</p>
+<p>  <strong>正向运算：</strong><br>
+  首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
+<p>  <strong>计算Loss：</strong><br>
+  在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：<br>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/></p>
+<p>  <strong>反向传播：</strong><br>
+  这一部分公式太多，懒得用$\LaTeX$再整理一遍，直接借用之前自己做的PPT里面的推导过程（不过说起来这里面的矩阵转置当时弄得我有些晕，其实你需要弄清楚对应元素的位置就比较清楚了。）：<br>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/></p>
+<p>  <strong>更新权重：</strong><br>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/></p>
+<blockquote>
+<p><strong>小结与反思</strong><br>
+同单层模型一样，多层模型仍采用反向传播算法来进行权重的更新。<br>
+引入sigmoid、softmax等非线性变换来构筑更复杂的模型。<br>
+损失计算采用了负对数似然损失(能否采用MSE，为什么？)<br>
+对于文本序列而言，其出现的顺序对于理解其含义是至关重要的，简单向量相加丢失了字符出现顺序的信息。(改进：RNN)<br>
+层数越深，由链式法则相乘得到的梯度越来越小，可能出现梯度消失的问题(改进：ResNet)<br>
+文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分元素都是0）。②（基于前者）大部分句子的向量都分布在坐标轴附近。③（基于前者）难以衡量两个句子之间的相似度。</p>
+</blockquote>
+<h2 id="随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#随机梯度下降：引入Mini-Batch"></a>随机梯度下降：引入Mini-Batch</h2>
+<p>  对于梯度下降，有几种不同的方法对其进行实现：<br>
+  批量梯度下降：计算所有样本的loss后，再更新权重w与偏置b。<br>
+  随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。<br>
+  小批量(随机)梯度下降：将全体样本划分为若干个mini-batch，每个batch中存在若干样本，随机抽出一个mini-batch，计算该批次样本中的loss后更新权重w与偏置b，直到跑完所有mini-batch后，记作训练一个轮次。在训练完一个轮次后。对样本进行shuffle处理，即重新划分mini-batch，再次进行训练，形象化的比喻可以称作“洗牌”，这也是为什么英文叫做&quot;shuffle&quot;。</p>
+<img data-src="/img/2022-3-9-Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
+<p>  三种不同方式的对比：<br>
+  一般来说，小批量梯度下降通过选取部分样本引入了更大噪声，使得它在解空间的“鞍点”位置更容易受噪声扰动，在一些情况下性能表现比批量梯度下降更好。而随机梯度下降更新权重只关注当前样本的梯度，所以尽管每一步使得当前样本得到最优的表现，但从整体样本考虑则不一定最优，且每一个样本前向计算时都需要依赖上一个样本反向传播后更新的权重，并行化程度不如其它两者高。<br>
+  形象化的三种方式如上图所示，红点位置即为所求的最优解，图中带箭头的线则显示了这三种方法在寻找最优解的过程。</p>
+<hr>
+&emsp;&emsp;这篇文章，笔者简要回顾了机器学习的最基础内容，虽然听起来或者推导起来比较复杂。但作为感性的认知来看，了解机器学习的工作原理并不困难，甚至完全可以只用高中的知识理解。本期的内容还未涉及到代码部分，这些工作将在下期进行介绍。
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Zhmou
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://zhmou.github.io/posts/Machine-Learning-101-00/" title="机器学习基础#00：Intro">http://zhmou.github.io/posts/Machine-Learning-101-00/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/A-Register-Toy-Demo/" rel="prev" title="一个实现注册、激活的软件Demo">
+                  <i class="fa fa-chevron-left"></i> 一个实现注册、激活的软件Demo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/2021-CVPR-Coordinate-Attention/" rel="next" title="2021CVPR论文：Coordinate Attention">
+                  2021CVPR论文：Coordinate Attention <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhmou</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">60k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:30</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://zhmou.github.io/posts/Machine-Learning-101-00/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

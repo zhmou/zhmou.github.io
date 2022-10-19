@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-misc"><a href="/misc/" rel="section"><i class="fa fa-tasks fa-fw"></i>杂项</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -213,7 +213,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2022/09/22/h5-css3-learning/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/h5-css3-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -231,7 +231,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/22/h5-css3-learning/" class="post-title-link" itemprop="url">HTML / CSS 杂项知识记录</a>
+          <a href="/posts/h5-css3-learning/" class="post-title-link" itemprop="url">HTML / CSS 杂项知识记录</a>
         </h2>
 
         <div class="post-meta-container">
@@ -261,14 +261,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>559</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -279,7 +279,78 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="字体图标"><a class="header-anchor" href="#字体图标"></a>字体图标</h1>
+          <h1 id="HTML"><a class="header-anchor" href="#HTML"></a>HTML</h1>
+<h2 id="HTML5新增"><a class="header-anchor" href="#HTML5新增"></a>HTML5新增</h2>
+<ul>
+<li>语义化标签
+<ul>
+<li><b>&lt;header&gt;</b> 头部标签</li>
+<li><b>&lt;nav&gt;</b> 导航标签</li>
+<li><b>&lt;article&gt;</b> 内容标签</li>
+<li><b>&lt;section&gt;</b> 定义文档某个区域</li>
+<li><b>&lt;aside&gt;</b> 侧边栏</li>
+<li><b>&lt;footer&gt;</b> 尾部标签</li>
+</ul>
+</li>
+<li>音频 视频标签
+<ul>
+<li><b>&lt;audio&gt;</b> <a target="_blank" rel="noopener" href="https://www.runoob.com/tags/tag-audio.html">音频标签</a></li>
+<li><b>&lt;video&gt;</b> <a target="_blank" rel="noopener" href="https://www.runoob.com/tags/tag-video.html">视频标签</a> mp4 / webm / ogg 格式，其中mp4兼容性最好</li>
+</ul>
+</li>
+<li>input表单类型（见下面）</li>
+</ul>
+<div>
+<style>
+  form {
+    position: relative;
+    border: 1px dotted grey;
+    width: 400px;
+    margin: auto auto;
+  }
+  form li {
+    list-style: none;
+  }
+  form li .input {
+    width: 200px
+  }
+  form li span {
+    width: 100px;
+    display: inline-block;
+    text-align: right;
+  }
+  input::placeholder {
+    color: hotpink;
+  }
+</style>
+  <div style='text-align:center'>新增input表单类型 / 属性</div>
+  <form action=''>
+    <li><span>邮箱：</span><input type='email' class='input' required='required' placeholder='请输入邮箱'/></li>
+    <li><span>网址：</span><input type='url' class='input' required='required' placeholder='占位文本测试'/></li>
+    <li><span>时间：</span><input type='time' class='input' required='required'/></li>
+    <li><span>日期：</span><input type='date' class='input' required='required'/></li>
+    <li><span>数量：</span><input type='number' class='input' required='required'/></li>
+    <li><span>手机号码：</span><input type='tel' class='input' required='required'/></li>
+    <li><span>搜索：</span><input type='search' class='input' required='required'/></li>
+    <li><span>颜色：</span><input type='color' class='input' required='required'/></li>
+    <li><span>多选文件：</span><input type='file' class='input' required='required' multiple='multiple'/></li>
+    <li style='position: relative; left:50%; margin-left: -25px; width: 50px'><input type='submit' value='提交'/></li>
+  </form>
+</div>
+<ul>
+<li>表单属性（见上面）
+<ul>
+<li><b>required</b> 不能为空</li>
+<li><b>placeholder</b> 占位提示文本 默认灰色，使用伪类选择器<code>input::placeholder</code>选择 值：对应文本</li>
+<li><b>autofocus</b> 自动获得焦点</li>
+<li><b>autocomplete</b> 自动补全 值: on / off</li>
+<li><b>multiple</b> 多选文件提交</li>
+</ul>
+</li>
+</ul>
+<h1 id="CSS"><a class="header-anchor" href="#CSS"></a>CSS</h1>
+<h1 id="CSS3新增内容"><a class="header-anchor" href="#CSS3新增内容"></a>CSS3新增内容</h1>
+<h2 id="字体图标"><a class="header-anchor" href="#字体图标"></a>字体图标</h2>
 <p>矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：</p>
 <div class='iconfont' style='font-size:30px;color:red;cursor: default;        
         -webkit-user-select: none;
@@ -288,27 +359,28 @@
         -ms-user-select: none;
         user-select: none;'>&#xe606;&#xe607;&#xe608;&#xe609;&#xe60a;</div>
 同时，为了避免复制这些字体图标粘贴到其它未设置该字体的地方导致乱码，我们可以将这里的鼠标样式设置为默认 / css禁止选择该段文本。
-<h1 id="css三角形绘制"><a class="header-anchor" href="#css三角形绘制"></a>css三角形绘制</h1>
+<h2 id="CSS三角形绘制"><a class="header-anchor" href="#CSS三角形绘制"></a>CSS三角形绘制</h2>
 <ul>
 <li>等腰三角形<div style='width:0px; height:0px; border: 20px solid transparent; border-top: 20px solid red;'></div>
-如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一即可得到此等腰三角形。
+如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一为非透明即可得到此等腰三角形。
 </li>
 <li>直角三角形<div style='width:0px; height:0px; border-right: 20px solid transparent; border-bottom: 40px solid red;'></div>
 对相邻两边的border属性进行设置，其余两边留空。
 </li>
 </ul>
-<p><strong>自己来试一试</strong></p>
+<p><strong>自己试一试：</strong></p>
 <div>
-<div class='left' style='border: 1px dotted grey; position: relative; height: 180px;'>
-<div style='width:0; height:0; border-top: 20px solid red;border-right:20px solid brown;border-bottom:20px solid green; border-left:20px solid lightblue; position:absolute; left:50%; top: 60px;margin-left:-20px' id='test'></div>
+<div class='left' style='border: 1px dotted grey; position: relative; height: 180px'>
+<div style='width:0; height:0; border-top: 20px solid red;border-right:20px solid brown;border-bottom:20px solid green; border-left:20px solid lightblue; position: relative; left: 50%; margin-left: -20px; top: 60px' id='test'></div>
 </div>
-<div class='right' style='border: 1px dotted grey; position: relative; height: 180px;'>
-<div class="slidecontainer">
-  border-left: <input type="range" min="0" max="40" value="20" id="left" style="vertical-align: middle;" onchange='left_display.value=this.value'><output id='left_display' for='left'>20</output><br>
-  border-right: <input type="range" min="0" max="40" value="20" id="right" style="vertical-align: middle;" onchange='right_display.value=this.value'><output id='right_display' for='right'>20</output><br>
-  border-bottom: <input type="range" min="0" max="40" value="20" id="bottom" style="vertical-align: middle;" onchange='bottom_display.value=this.value'><output id='bottom_display' for='bottom'>20</output><br>
-  border-top: <input type="range" min="0" max="40" value="20" id="top" style="vertical-align: middle;" onchange='top_display.value=this.value'><output id='top_display' for='top'>20</output><br>
-  <button style='position:absolute; left:50%; margin-left: -40px;width:80px' onclick='changeCSS(left_display.value, right_display.value, bottom_display.value, top_display.value)'>Apply</button>
+<div class='right' style='border: 1px dotted grey;'>
+<div style='position:relative; min-height: 180px'>
+  border-left: <input type="range" min="0" max="40" value="20" id="left" style="vertical-align: middle; width: 40%;" oninput='left_display.value=this.value'><output id='left_display' for='left'>20</output><br>
+  border-right: <input type="range" min="0" max="40" value="20" id="right" style="vertical-align: middle; width: 40%" oninput='right_display.value=this.value'><output id='right_display' for='right'>20</output><br>
+  border-bottom: <input type="range" min="0" max="40" value="20" id="bottom" style="vertical-align: middle; width: 40%" oninput='bottom_display.value=this.value'><output id='bottom_display' for='bottom'>20</output><br>
+  border-top: <input type="range" min="0" max="40" value="20" id="top" style="vertical-align: middle; width: 40%" oninput='top_display.value=this.value'><output id='top_display' for='top'>20</output><br>
+  <button style='position:relative; left:50%; margin-left: -40px;width:80px' onclick='changeCSS(left_display.value, right_display.value, bottom_display.value, top_display.value)'>Apply</button>
+  <div class='clear'></div>
   <script>
     function changeCSS(a, b, c, d){
       var divbox = document.getElementById("test"); 
@@ -322,6 +394,9 @@
 </div>
 <div class='clear'></div>
 </div>
+<h2 id="CSS初始化"><a class="header-anchor" href="#CSS初始化"></a>CSS初始化</h2>
+<p>为确保网页在不同浏览器下的兼容性与显示的一致性，CSS需要初始化 / 重设。</p>
+<figure class="highlight css"><figcaption><span>京东CSS初始化</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 所有标签的内外边距清零 */</span></span><br><span class="line">* &#123;</span><br><span class="line">  <span class="attribute">margin</span>:<span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>:<span class="number">0</span></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 斜体文字不倾斜 */</span></span><br><span class="line"><span class="selector-tag">em</span>,<span class="selector-tag">i</span> &#123;</span><br><span class="line">  <span class="attribute">font-style</span>:normal</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 去掉li的小圆点 */</span></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>:none</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* border:0 照顾低版本浏览器图片加链接会产生边框的问题 */</span></span><br><span class="line"><span class="comment">/* vertical-align: 文字和图片中线对齐（默认是基线） */</span></span><br><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>:<span class="number">0</span>;</span><br><span class="line">  <span class="attribute">vertical-align</span>:middle</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 鼠标经过按钮控件变小手 */</span></span><br><span class="line"><span class="selector-tag">button</span> &#123;</span><br><span class="line">  <span class="attribute">cursor</span>:pointer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 指定链接颜色，取消下划线 */</span></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>:<span class="number">#666</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>:none</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 鼠标经过变成红色 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>:<span class="number">#c81623</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">button</span>,<span class="selector-tag">input</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>:Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,<span class="string">&quot;\5B8B\4F53&quot;</span>,sans-serif</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="comment">/* 文字放大抗锯齿 */</span></span><br><span class="line">  -webkit-<span class="attribute">font-smoothing</span>:antialiased;</span><br><span class="line">  <span class="attribute">background-color</span>:<span class="number">#fff</span>;</span><br><span class="line">  <span class="comment">/* &quot;\5B8B\4F53&quot;是宋体的Unicode编码，防止出现乱码 */</span></span><br><span class="line">  <span class="attribute">font</span>:<span class="number">12px</span>/<span class="number">1.5</span> Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,<span class="string">&quot;\5B8B\4F53&quot;</span>,sans-serif;</span><br><span class="line">  <span class="attribute">color</span>:<span class="number">#666</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">/* 隐藏 */</span></span><br><span class="line"><span class="selector-class">.hide</span>,<span class="selector-class">.none</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>:none</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 伪元素方法清除浮动 */</span></span><br><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">visibility</span>:hidden;</span><br><span class="line">  <span class="attribute">clear</span>:both;</span><br><span class="line">  <span class="attribute">display</span>:block;</span><br><span class="line">  <span class="attribute">content</span>:<span class="string">&quot;.&quot;</span>;</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">  *zoom:<span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -348,7 +423,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2022/09/13/js-learning/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/js-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -366,7 +441,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/13/js-learning/" class="post-title-link" itemprop="url">JS杂项知识记录</a>
+          <a href="/posts/js-learning/" class="post-title-link" itemprop="url">JS杂项知识记录</a>
         </h2>
 
         <div class="post-meta-container">
@@ -528,7 +603,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2022/09/11/Leetcode-log/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/Leetcode-log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -546,7 +621,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/11/Leetcode-log/" class="post-title-link" itemprop="url">力扣刷题小录</a>
+          <a href="/posts/Leetcode-log/" class="post-title-link" itemprop="url">力扣刷题小录</a>
         </h2>
 
         <div class="post-meta-container">
@@ -604,7 +679,7 @@
   而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/11/Leetcode-log/#more" rel="contents">
+              <a class="btn" href="/posts/Leetcode-log/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -635,7 +710,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2022/05/04/2021-CVPR-Coordinate-Attention/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/2021-CVPR-Coordinate-Attention/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -653,7 +728,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/04/2021-CVPR-Coordinate-Attention/" class="post-title-link" itemprop="url">2021CVPR论文：Coordinate Attention</a>
+          <a href="/posts/2021-CVPR-Coordinate-Attention/" class="post-title-link" itemprop="url">2021CVPR论文：Coordinate Attention</a>
         </h2>
 
         <div class="post-meta-container">
@@ -709,7 +784,7 @@
   我们的坐标注意力机制简单，可以灵活插入于经典的轻量级网络，如<em>MobileNetV2</em>, <em>MobileNeXt</em>和<em>EfficientNet</em>并且几乎没有额外的计算开销。大量实验表明，我们的坐标注意力机制在ImageNet分类上存在性能提升，更有趣的是，它在下游任务中表现更好，如目标检测和语义分割。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/05/04/2021-CVPR-Coordinate-Attention/#more" rel="contents">
+              <a class="btn" href="/posts/2021-CVPR-Coordinate-Attention/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -740,7 +815,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2022/03/08/Machine-Learning-101-00/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/Machine-Learning-101-00/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -758,7 +833,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/08/Machine-Learning-101-00/" class="post-title-link" itemprop="url">机器学习基础#00：Intro</a>
+          <a href="/posts/Machine-Learning-101-00/" class="post-title-link" itemprop="url">机器学习基础#00：Intro</a>
         </h2>
 
         <div class="post-meta-container">
@@ -815,7 +890,7 @@ table
 <p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/08/Machine-Learning-101-00/#more" rel="contents">
+              <a class="btn" href="/posts/Machine-Learning-101-00/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -846,7 +921,7 @@ table
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2021/10/31/A-Register-Toy-Demo/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/A-Register-Toy-Demo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -864,7 +939,7 @@ table
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/31/A-Register-Toy-Demo/" class="post-title-link" itemprop="url">一个实现注册、激活的软件Demo</a>
+          <a href="/posts/A-Register-Toy-Demo/" class="post-title-link" itemprop="url">一个实现注册、激活的软件Demo</a>
         </h2>
 
         <div class="post-meta-container">
@@ -916,7 +991,7 @@ table
 <p>  GitHub项目地址：<a target="_blank" rel="noopener" href="https://github.com/zhmou/RegisterDemo">https://github.com/zhmou/RegisterDemo</a></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/10/31/A-Register-Toy-Demo/#more" rel="contents">
+              <a class="btn" href="/posts/A-Register-Toy-Demo/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -947,7 +1022,7 @@ table
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2021/10/12/Use-Python-to-Read-and-Write-XML-files/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/Use-Python-to-Read-and-Write-XML-files/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -965,7 +1040,7 @@ table
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/12/Use-Python-to-Read-and-Write-XML-files/" class="post-title-link" itemprop="url">使用Python读写XML文件</a>
+          <a href="/posts/Use-Python-to-Read-and-Write-XML-files/" class="post-title-link" itemprop="url">使用Python读写XML文件</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1016,7 +1091,7 @@ table
           <p>  因学长所用的<a target="_blank" rel="noopener" href="https://sao-kirito.top/2021/10/09/yolov5-dota-obb/">某个针对yolov5的修改版训练网络</a>针对<strong>宽高不等的图片无法作为数据正常送入网络进行训练</strong>，而先期使用labelimg2标注工具所截取的图片往往都不是正方形，所以我要对之前处理的图片进行padding处理使之成为正方形。同时padding操作改变了图片的坐标系位置以及图片宽高属性，因此要对标签(XML文件)进行更新操作，而这涉及到对XML文件的读写，在网上查询相关资料后，我成功实现了预期目标。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/10/12/Use-Python-to-Read-and-Write-XML-files/#more" rel="contents">
+              <a class="btn" href="/posts/Use-Python-to-Read-and-Write-XML-files/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1047,7 +1122,7 @@ table
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2021/10/09/Configure-a-NCNN-Project/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/Configure-a-NCNN-Project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -1065,7 +1140,7 @@ table
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/09/Configure-a-NCNN-Project/" class="post-title-link" itemprop="url">配置SOLOV2_ncnn相关环境并运行Demo</a>
+          <a href="/posts/Configure-a-NCNN-Project/" class="post-title-link" itemprop="url">配置SOLOV2_ncnn相关环境并运行Demo</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1147,7 +1222,7 @@ table
 </table>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/10/09/Configure-a-NCNN-Project/#more" rel="contents">
+              <a class="btn" href="/posts/Configure-a-NCNN-Project/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1178,7 +1253,7 @@ table
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2021/09/29/How-to-Package-a-dll/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/How-to-Package-a-dll/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -1196,7 +1271,7 @@ table
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/29/How-to-Package-a-dll/" class="post-title-link" itemprop="url">用VS 2019打包dll文件</a>
+          <a href="/posts/How-to-Package-a-dll/" class="post-title-link" itemprop="url">用VS 2019打包dll文件</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1248,7 +1323,7 @@ table
   在流程上，我参考了另一位师兄给的<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42435145/article/details/104199125">链接</a>里的步骤。现结合具体工程记述如下：
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/09/29/How-to-Package-a-dll/#more" rel="contents">
+              <a class="btn" href="/posts/How-to-Package-a-dll/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1279,7 +1354,7 @@ table
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/2020/10/25/Signals-Systems-Fourier/">
+    <link itemprop="mainEntityOfPage" href="http://zhmou.github.io/posts/Signals-Systems-Fourier/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/general/avatar.jpg">
@@ -1297,7 +1372,7 @@ table
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/10/25/Signals-Systems-Fourier/" class="post-title-link" itemprop="url">信号与系统——傅里叶变换公式的推导</a>
+          <a href="/posts/Signals-Systems-Fourier/" class="post-title-link" itemprop="url">信号与系统——傅里叶变换公式的推导</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1357,7 +1432,7 @@ $$<br>
 通过这个数学工具，我们建立起了两个不同的角度间描述同一个信号的桥梁。而笔者在复习《信号与系统》的过程中，深刻认识到了它的重要性，因此决定记录下它的推导过程以加深理解。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/10/25/Signals-Systems-Fourier/#more" rel="contents">
+              <a class="btn" href="/posts/Signals-Systems-Fourier/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1401,13 +1476,13 @@ $$<br>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">58k</span>
+    <span title="站点总字数">60k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:26</span>
+    <span title="站点阅读时长">2:30</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -1459,6 +1534,9 @@ $$<br>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://zhmou.github.io/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
 
 </body>
 </html>
