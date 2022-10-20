@@ -2990,6 +2990,9 @@ mjx-container[display='true'] + br {
     padding: 10px 12px;
   }
 }
+.footer {
+  color: #f5f5f5;
+}
 .post-body .link-grid {
 /* one column per row */
   grid-template-columns: 1fr;
