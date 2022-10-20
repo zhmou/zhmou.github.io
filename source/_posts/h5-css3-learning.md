@@ -27,17 +27,17 @@ categories: 学习
   form {
     position: relative;
     border: 1px dotted grey;
-    width: 400px;
+    width: 60%;
     margin: auto auto;
   }
   form li {
     list-style: none;
   }
   form li .input {
-    width: 200px
+    width: 50%;
   }
   form li span {
-    width: 100px;
+    width: 30%;
     display: inline-block;
     text-align: right;
   }
