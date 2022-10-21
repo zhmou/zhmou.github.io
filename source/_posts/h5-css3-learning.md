@@ -67,9 +67,185 @@ categories: 学习
   - <b>autocomplete</b> 自动补全 值: on / off
   - <b>multiple</b> 多选文件提交
 
+<!-- more -->
+
 # CSS
 # CSS3新增内容
+- 属性选择器
 
+| 选择符 | 简介 |
+| :----:| :----: |
+| E[att] | 选择具有att属性的E元素 |
+| E[att='val'] | 选择具有att属性且值为val的E元素 |
+| E[att^='val'] | 选择具有att属性且值以val开头的E元素 |
+| E[att$='val'] | 选择具有att属性且值以val结尾的E元素 |
+| E[att*='val'] | 选择具有att属性且值中含有val的E元素 |
+
+{% tabs attr-selector-test %}
+<!-- tab HTML-->
+``` HTML
+<body>
+  <div class='attr-selector-test'>
+    <input type='text' id='has-id-att'/>
+    <input type='text' value='hello'/>
+    <input type='text' value='start-test'/>
+    <input type='text' value='test-end'/>
+    <input type='text' value='te-middle-st'/>
+  </div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS-->
+``` CSS
+.attr-selector-test input[id] {
+  background-color: coral;
+}
+
+.attr-selector-test input[value='hello'] {
+  background-color: skyblue;
+}
+
+.attr-selector-test input[value^='start'] {
+  background-color: lightgreen;
+}
+
+.attr-selector-test input[value$='end'] {
+  background-color: yellow;
+}
+
+.attr-selector-test input[value$='middle'] {
+  background-color: hotpink;
+}
+```
+<!-- endtab -->
+{% endtabs %}
+
+**效果：**
+<style>
+.attr-selector-test input[id] {
+  background-color: coral;
+}
+
+.attr-selector-test input[value='hello'] {
+  background-color: skyblue;
+}
+
+.attr-selector-test input[value^='start'] {
+  background-color: lightgreen;
+}
+
+.attr-selector-test input[value$='end'] {
+  background-color: yellow;
+}
+
+.attr-selector-test input[value*='middle'] {
+  background-color: hotpink;
+}
+</style>
+
+<div class='attr-selector-test'>
+  <input type='text' id='has-id-att'/>
+  <input type='text' value='hello'/>
+  <input type='text' value='start-test'/>
+  <input type='text' value='test-end'/>
+  <input type='text' value='te-middle-st'/>
+</div>
+
+
+- 结构伪类选择器
+
+| 选择符 | 简介 |
+| :----:| :----: |
+| E:first-child | 第一个E(子)元素 |
+| E:last-child | 最后一个E(子)元素 |
+| E:nth-child(n) | 第n个E(子)元素 **n还可以为odd even / 表达式** |
+| E[att$='val'] | 选择具有att属性且值以val结尾的E元素 |
+| E[att*='val'] | 选择具有att属性且值中含有val的E元素 |
+
+E:nth-child(n)，n的常见公式与取值对应：
+| 公式 | 取值 |
+| :----:| :----: |
+| 2n | 偶数 |
+| 2n + 1 | 奇数 |
+| 5n | 5、10、15... |
+| n + 5 | 从第五个开始到最后 |
+| -n + 5 | 第一至第五个 |
+
+{% tabs structural-pseudo-classes-selector-test %}
+<!-- tab HTML-->
+``` HTML
+<body>
+  <ul class='structural-pseudo-classes-selector-test'>
+    外圈为父级div元素
+    <li>first-child</li>
+    <li>second-child</li>
+    <li>third-child</li>
+    <li>forth-child</li>
+    <li>last-child</li>
+  </ul>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS-->
+``` CSS
+.structural-pseudo-classes-selector-test {
+  width: 20%;
+  border: 1px dotted grey;
+  padding: 5%;
+}
+
+.structural-pseudo-classes-selector-test li:first-child {
+  background-color: red;
+}
+
+.structural-pseudo-classes-selector-test li:last-child {
+  background-color: blue;
+}
+
+.structural-pseudo-classes-selector-test li:nth-child(3) {
+  background-color: green;
+}
+
+.structural-pseudo-classes-selector-test li:nth-child(n==2 || n ==4) {
+  background-color: orange;
+}
+```
+<!-- endtab -->
+{% endtabs %}
+
+
+**效果：**
+<style>
+.structural-pseudo-classes-selector-test {
+  width: 20%;
+  border: 1px dotted grey;
+  padding: 0 5% 0 5%;
+}
+
+.structural-pseudo-classes-selector-test li:first-child {
+  background-color: red;
+}
+
+.structural-pseudo-classes-selector-test li:last-child {
+  background-color: blue;
+}
+
+.structural-pseudo-classes-selector-test li:nth-child(3) {
+  background-color: green;
+}
+
+.structural-pseudo-classes-selector-test li:nth-child(n=2) {
+  background-color: orange;
+}
+</style>
+<ul class='structural-pseudo-classes-selector-test'>
+  外圈为父级div元素
+  <li>first-child</li>
+  <li>second-child</li>
+  <li>third-child</li>
+  <li>forth-child</li>
+  <li>last-child</li>
+</ul>
 
 ## 字体图标
 矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：
