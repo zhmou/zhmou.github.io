@@ -818,7 +818,7 @@
     # Make the nav bar of tabs with long content stick to the top.
     sticky: false
     transition:
-      tabs: false
+      tabs: true
       labels: true
 
   # PDF tag

@@ -70,8 +70,8 @@ categories: 学习
 <!-- more -->
 
 # CSS
-# CSS3新增内容
-- 属性选择器
+## CSS3新增内容
+### 属性选择器
 
 | 选择符 | 简介 |
 | :----:| :----: |
@@ -97,6 +97,7 @@ categories: 学习
 <!-- endtab -->
 <!-- tab CSS-->
 ``` CSS
+<style>
 .attr-selector-test input[id] {
   background-color: coral;
 }
@@ -116,6 +117,7 @@ categories: 学习
 .attr-selector-test input[value$='middle'] {
   background-color: hotpink;
 }
+</style>
 ```
 <!-- endtab -->
 {% endtabs %}
@@ -152,15 +154,16 @@ categories: 学习
 </div>
 
 
-- 结构伪类选择器
+### 结构伪类选择器
 
 | 选择符 | 简介 |
 | :----:| :----: |
-| E:first-child | 第一个E(子)元素 |
-| E:last-child | 最后一个E(子)元素 |
-| E:nth-child(n) | 第n个E(子)元素 **n还可以为odd even / 表达式** |
-| E[att$='val'] | 选择具有att属性且值以val结尾的E元素 |
-| E[att*='val'] | 选择具有att属性且值中含有val的E元素 |
+| E:first-child | 匹配父元素中的第一个E(子)元素 |
+| E:last-child | 匹配父元素中的最后一个E(子)元素 |
+| E:nth-child(n) | 匹配父元素中的第n个E(子)元素 **n还可以为odd even / 表达式** |
+| E:first-of-type | 匹配父元素中E(子)元素的第一个 |
+| E:last-of-type | 匹配父元素中E(子)元素的最后一个 |
+| E:nth-of-type(n) | 匹配父元素中E(子)元素的第n个 **n还可以为odd even / 表达式** |
 
 E:nth-child(n)，n的常见公式与取值对应：
 | 公式 | 取值 |
@@ -188,6 +191,7 @@ E:nth-child(n)，n的常见公式与取值对应：
 <!-- endtab -->
 <!-- tab CSS-->
 ``` CSS
+<style>
 .structural-pseudo-classes-selector-test {
   width: 20%;
   border: 1px dotted grey;
@@ -206,9 +210,10 @@ E:nth-child(n)，n的常见公式与取值对应：
   background-color: green;
 }
 
-.structural-pseudo-classes-selector-test li:nth-child(n==2 || n ==4) {
+.structural-pseudo-classes-selector-test li:nth-child(2n) {
   background-color: orange;
 }
+</style>
 ```
 <!-- endtab -->
 {% endtabs %}
@@ -234,7 +239,7 @@ E:nth-child(n)，n的常见公式与取值对应：
   background-color: green;
 }
 
-.structural-pseudo-classes-selector-test li:nth-child(n=2) {
+.structural-pseudo-classes-selector-test li:nth-child(2n) {
   background-color: orange;
 }
 </style>
@@ -247,24 +252,356 @@ E:nth-child(n)，n的常见公式与取值对应：
   <li>last-child</li>
 </ul>
 
+**<code>nth-child</code>与<code>nth-type-of</code>的区别：**
+<div>
+<div class='center'>
+``` HTML
+<div.diff>
+  <p></p>
+  <div></div>
+</div>
+```
+</div>
+<div class='clear'></div>
+</div>
+
+&emsp;&emsp;在如上所示的代码中，<code>.diff div:first-child</code>将不会选择任何一个元素，因为该选择器选择了first-child，判断为p元素，与前面限定的div冲突。  
+&emsp;&emsp;而<code>.diff div:first-of-type</code>先选中所有满足类型要求&lt;div&gt;的子标签，再从中选出第一个，因此会选中子&lt;div&gt;标签。
+
+### 伪元素选择器
+&emsp;&emsp;伪元素选择器帮助我们利用CSS创建新标签元素，从而避免HTML标签的使用，简化HTML的结构
+
+| 选择符 | 简介 |
+| :----:| :----: |
+| ::before| 在子元素的前面插入内容 |
+| ::after| 在子元素的后面插入内容 |
+
+&emsp;&emsp;伪元素选择器创建的元素属于行内元素，要有大小需要转化为块级元素或者行内块元素
+{% tabs pseudo-element-selector-test %}
+<!-- tab HTML-->
+``` HTML
+<body>
+  <div class='pseudo-element-selector-test'>
+    Hello, world!
+  </div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS-->
+``` CSS
+<style>
+  .pseudo-element-selector-test {
+    width: 10%;
+    height: 10%;
+    background-color: pink;
+  }
+
+  .pseudo-element-selector-test::before {
+    content: 'before';
+  }
+
+  .pseudo-element-selector-test::after {
+    content: 'after';
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+**效果：**
+<style>
+  .pseudo-element-selector-test {
+    width: 30%;
+    background-color: pink;
+  }
+
+  .pseudo-element-selector-test::before {
+    content: 'before';
+  }
+
+  .pseudo-element-selector-test::after {
+    content: 'after';
+  }
+</style>
+  <div class='pseudo-element-selector-test'>
+    Hello, world!
+  </div>
+<br>
+
+**使用场景：**
+
+- **按钮样式（结合字体图标）**
+{% tabs button %}
+<!-- tab HTML-->
+``` HTML
+<body>
+  <div class='situation1'>
+  </div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS-->
+``` CSS
+<style>
+  .situation1 {
+    border: 1px solid grey; width: 30%; height: 30px;
+    position: relative;
+  }
+
+  .situation1::after {
+    font-family: 'iconfont';
+    font-size: 20px;
+    line-height: 20px;
+    content: '\e60a';
+    position: absolute;
+    top: 6px;
+    right: 5px;
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs%}
+<style>
+  .situation1 {
+    margin: 10px auto;
+    border: 1px solid grey; width: 30%; height: 30px;
+    position: relative;
+  }
+
+  .situation1::after {
+    font-family: 'iconfont';
+    font-size: 20px;
+    line-height: 20px;
+    content: '\e60a';
+    position: absolute;
+    top: 6px;
+    right: 5px;
+  }
+</style>
+**效果：**
+<div class='situation1'></div>
+&emsp;&emsp;（在写的过程中发现绝对定位的计算位置是包括padding的）
+
+- **视频网站遮罩效果**
+{% tabs tudou %}
+<!-- tab HTML-->
+``` HTML
+<body>
+  <div class='tudou'>
+  </div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS-->
+``` CSS
+<style>
+  .tudou {
+    margin: 10px auto;
+    width: 50%;
+    height: 240px;
+    background-color: #AD1453;
+    position: relative;
+  }
+
+  .tudou:hover::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    content: '';
+  }
+</style>
+```
+<!-- endtab-->
+{% endtabs %}
+  
+<style>
+  .tudou {
+    margin: 10px auto;
+    width: 50%;
+    height: 240px;
+    background-color: #AD1453;
+    position: relative;
+  }
+
+  .tudou:hover::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    content: '';
+  }
+</style>
+
+<div class='tudou'></div>
+
+- **伪元素清除浮动法**
+  浮动元素脱离标准流，导致子元素无法“撑起”父级元素的高度。
+
+**效果：**
+<div style='border: 1px solid grey; margin: 10px auto; width: 50%;'>父级元素<div style="width: 20%; height: 100px; background-color: red; float: right;"></div></div>
+
+**解决方法：**
+&emsp;&emsp;在浮动元素之后插入清除浮动效果的标签。
+
+{% tabs clearfix %}
+<!-- tab HTML-->
+``` HTML
+<body>
+<div class='clearfix box'>
+  父级元素
+  <div class='floatElement'></div>
+</div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS-->
+``` CSS
+<style>
+  .clearfix:after {
+    content:'';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+  .box {
+    border: 1px solid grey; margin: 10px auto; width: 50%;
+  }
+
+  .floatElement {
+    width: 20%; height: 100px; background-color: red; float: right;
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+**效果：**
+<style>
+  .clearfix:after {
+    content:'';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+  .box {
+    border: 1px solid grey; margin: 10px auto; width: 50%;
+  }
+
+  .floatElement {
+    width: 20%; height: 100px; background-color: red; float: right;
+  }
+</style>
+<div class='clearfix box'>
+  父级元素
+  <div class='floatElement'></div>
+</div>
+
+### CSS3盒子模型
+&emsp;&emsp;以往，一个200px大小的div盒子，加上15px边框，15px内边距后，整体大小变为270px;
+&emsp;&emsp;CSS3中新增属性<code>box-sizing</code>，默认值<code>content-box</code>表现和原来一样；设置为<code>border-box</code>后，盒子显示的大小不变（内部变小）
+
+### 过滤器属性filter
+&emsp;&emsp;具体函数可参见[MDN文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter)
+**blur效果：**
+<img src='/img/general/avatar.jpg' width='10%' style='filter:blur(5px);'/>
+
+### calc()函数计算宽度
+&emsp;&emsp;calc() 此 CSS 函数允许在声明 CSS 属性值时执行一些计算。
+
+### transition动画效果
+- 写法：transition: **变化属性** **时间（单位为s）** 动画效果（函数） 延时触发时间（s）
+- 谁触发动画给谁加
+{% tabs progressbar %}
+<!-- tab HTML -->
+``` HTML
+<body>
+  <div class=pgbar><div class='pgbar-in'></div></div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .pgbar {
+    margin: 0px auto;
+    width: 20%;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid red;
+    padding: 2px;
+    box-sizing: border-box;
+  }
+
+  .pgbar-in {
+    width: 50%;
+    height: 100%;
+    background-color: red;
+    border-radius: 8px;
+    transition: all 0.7s
+  }
+
+  .pgbar:hover .pgbar-in {
+    background-color: hotpink;
+    width: 100%;
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+<style>
+  .pgbar {
+    margin: 0px auto;
+    width: 20%;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid red;
+    padding: 2px;
+    box-sizing: border-box;
+  }
+
+  .pgbar-in {
+    width: 50%;
+    height: 100%;
+    background-color: red;
+    border-radius: 8px;
+    transition: all 0.7s
+  }
+
+  .pgbar:hover .pgbar-in {
+    background-color: hotpink;
+    width: 100%;
+  }
+</style>
+<div class=pgbar><div class='pgbar-in'></div></div>
+
 ## 字体图标
-矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：
+&emsp;&emsp;矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：
 <div class='iconfont' style='font-size:30px;color:red;cursor: default;        
         -webkit-user-select: none;
         -webkit-touch-callout: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;'>&#xe606;&#xe607;&#xe608;&#xe609;&#xe60a;</div>
-同时，为了避免复制这些字体图标粘贴到其它未设置该字体的地方导致乱码，我们可以将这里的鼠标样式设置为默认 / css禁止选择该段文本。
+&emsp;&emsp;同时，为了避免复制这些字体图标粘贴到其它未设置该字体的地方导致乱码，我们可以将这里的鼠标样式设置为默认 / css禁止选择该段文本。
 
 ## CSS三角形绘制
 
 - 等腰三角形
   <div style='width:0px; height:0px; border: 20px solid transparent; border-top: 20px solid red;'></div>
-  如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一为非透明即可得到此等腰三角形。
+
+&emsp;&emsp;如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一为非透明即可得到此等腰三角形。
 - 直角三角形
   <div style='width:0px; height:0px; border-right: 20px solid transparent; border-bottom: 40px solid red;'></div>
-  对相邻两边的border属性进行设置，其余两边留空。
+
+&emsp;&emsp;对相邻两边的border属性进行设置，其余两边留空。
 
 <strong>自己试一试：</strong>
 <div>
