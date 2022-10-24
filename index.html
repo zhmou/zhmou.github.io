@@ -355,14 +355,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>9.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>23 分钟</span>
     </span>
 </div>
 
@@ -444,56 +444,14 @@
 </ul>
 </li>
 </ul>
-<h1 id="CSS"><a class="header-anchor" href="#CSS"></a>CSS</h1>
-<h1 id="CSS3新增内容"><a class="header-anchor" href="#CSS3新增内容"></a>CSS3新增内容</h1>
-<h2 id="字体图标"><a class="header-anchor" href="#字体图标"></a>字体图标</h2>
-<p>矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：</p>
-<div class='iconfont' style='font-size:30px;color:red;cursor: default;        
-        -webkit-user-select: none;
-        -webkit-touch-callout: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;'>&#xe606;&#xe607;&#xe608;&#xe609;&#xe60a;</div>
-同时，为了避免复制这些字体图标粘贴到其它未设置该字体的地方导致乱码，我们可以将这里的鼠标样式设置为默认 / css禁止选择该段文本。
-<h2 id="CSS三角形绘制"><a class="header-anchor" href="#CSS三角形绘制"></a>CSS三角形绘制</h2>
-<ul>
-<li>等腰三角形<div style='width:0px; height:0px; border: 20px solid transparent; border-top: 20px solid red;'></div>
-如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一为非透明即可得到此等腰三角形。
-</li>
-<li>直角三角形<div style='width:0px; height:0px; border-right: 20px solid transparent; border-bottom: 40px solid red;'></div>
-对相邻两边的border属性进行设置，其余两边留空。
-</li>
-</ul>
-<p><strong>自己试一试：</strong></p>
-<div>
-<div class='left' style='border: 1px dotted grey; position: relative; height: 180px'>
-<div style='width:0; height:0; border-top: 20px solid red;border-right:20px solid brown;border-bottom:20px solid green; border-left:20px solid lightblue; position: relative; left: 50%; margin-left: -20px; top: 60px' id='test'></div>
-</div>
-<div class='right' style='border: 1px dotted grey;'>
-<div style='position:relative; min-height: 180px'>
-  border-left: <input type="range" min="0" max="40" value="20" id="left" style="vertical-align: middle; width: 40%;" oninput='left_display.value=this.value'><output id='left_display' for='left'>20</output><br>
-  border-right: <input type="range" min="0" max="40" value="20" id="right" style="vertical-align: middle; width: 40%" oninput='right_display.value=this.value'><output id='right_display' for='right'>20</output><br>
-  border-bottom: <input type="range" min="0" max="40" value="20" id="bottom" style="vertical-align: middle; width: 40%" oninput='bottom_display.value=this.value'><output id='bottom_display' for='bottom'>20</output><br>
-  border-top: <input type="range" min="0" max="40" value="20" id="top" style="vertical-align: middle; width: 40%" oninput='top_display.value=this.value'><output id='top_display' for='top'>20</output><br>
-  <button style='position:relative; left:50%; margin-left: -40px;width:80px' onclick='changeCSS(left_display.value, right_display.value, bottom_display.value, top_display.value)'>Apply</button>
-  <div class='clear'></div>
-  <script>
-    function changeCSS(a, b, c, d){
-      var divbox = document.getElementById("test"); 
-      divbox.style.borderTopWidth = d + 'px';
-      divbox.style.borderBottomWidth = c + 'px';
-      divbox.style.borderLeftWidth = a + 'px';
-      divbox.style.borderRightWidth = b + 'px';
-    }
-  </script>
-</div>
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="CSS初始化"><a class="header-anchor" href="#CSS初始化"></a>CSS初始化</h2>
-<p>为确保网页在不同浏览器下的兼容性与显示的一致性，CSS需要初始化 / 重设。</p>
-<figure class="highlight css"><figcaption><span>京东CSS初始化</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 所有标签的内外边距清零 */</span></span><br><span class="line">* &#123;</span><br><span class="line">  <span class="attribute">margin</span>:<span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>:<span class="number">0</span></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 斜体文字不倾斜 */</span></span><br><span class="line"><span class="selector-tag">em</span>,<span class="selector-tag">i</span> &#123;</span><br><span class="line">  <span class="attribute">font-style</span>:normal</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 去掉li的小圆点 */</span></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>:none</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* border:0 照顾低版本浏览器图片加链接会产生边框的问题 */</span></span><br><span class="line"><span class="comment">/* vertical-align: 文字和图片中线对齐（默认是基线） */</span></span><br><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>:<span class="number">0</span>;</span><br><span class="line">  <span class="attribute">vertical-align</span>:middle</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 鼠标经过按钮控件变小手 */</span></span><br><span class="line"><span class="selector-tag">button</span> &#123;</span><br><span class="line">  <span class="attribute">cursor</span>:pointer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 指定链接颜色，取消下划线 */</span></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>:<span class="number">#666</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>:none</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 鼠标经过变成红色 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>:<span class="number">#c81623</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">button</span>,<span class="selector-tag">input</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>:Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,<span class="string">&quot;\5B8B\4F53&quot;</span>,sans-serif</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="comment">/* 文字放大抗锯齿 */</span></span><br><span class="line">  -webkit-<span class="attribute">font-smoothing</span>:antialiased;</span><br><span class="line">  <span class="attribute">background-color</span>:<span class="number">#fff</span>;</span><br><span class="line">  <span class="comment">/* &quot;\5B8B\4F53&quot;是宋体的Unicode编码，防止出现乱码 */</span></span><br><span class="line">  <span class="attribute">font</span>:<span class="number">12px</span>/<span class="number">1.5</span> Microsoft YaHei,Heiti SC,tahoma,arial,Hiragino Sans GB,<span class="string">&quot;\5B8B\4F53&quot;</span>,sans-serif;</span><br><span class="line">  <span class="attribute">color</span>:<span class="number">#666</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">/* 隐藏 */</span></span><br><span class="line"><span class="selector-class">.hide</span>,<span class="selector-class">.none</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>:none</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 伪元素方法清除浮动 */</span></span><br><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">visibility</span>:hidden;</span><br><span class="line">  <span class="attribute">clear</span>:both;</span><br><span class="line">  <span class="attribute">display</span>:block;</span><br><span class="line">  <span class="attribute">content</span>:<span class="string">&quot;.&quot;</span>;</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">  *zoom:<span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/h5-css3-learning/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1474,13 +1432,13 @@ table
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">60k</span>
+    <span title="站点总字数">67k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:31</span>
+    <span title="站点阅读时长">2:48</span>
   </span>
 </div>
 <div class="busuanzi-count">

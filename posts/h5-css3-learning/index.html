@@ -27,13 +27,15 @@
 <meta property="og:site_name" content="Zh某的备忘录">
 <meta property="og:description" content="这篇文章仍处在更新当中。  HTML HTML5新增  语义化标签  &lt;header&gt; 头部标签 &lt;nav&gt; 导航标签 &lt;article&gt; 内容标签 &lt;section&gt; 定义文档某个区域 &lt;aside&gt; 侧边栏 &lt;footer&gt; 尾部标签   音频 视频标签  &lt;audio&gt; 音频标签 &lt;video&gt;">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zhmou.xyz/img/general/avatar.jpg">
 <meta property="article:published_time" content="2022-09-22T02:14:25.000Z">
-<meta property="article:modified_time" content="2022-10-20T04:00:22.574Z">
+<meta property="article:modified_time" content="2022-10-24T02:34:47.564Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content="CSS">
 <meta property="article:tag" content="语法">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.zhmou.xyz/img/general/avatar.jpg">
 
 
 <link rel="canonical" href="https://www.zhmou.xyz/posts/h5-css3-learning/">
@@ -147,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML"><span class="nav-number">1.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5%E6%96%B0%E5%A2%9E"><span class="nav-number">1.1.</span> <span class="nav-text">HTML5新增</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS"><span class="nav-number">2.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS3%E6%96%B0%E5%A2%9E%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">CSS3新增内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87"><span class="nav-number">3.1.</span> <span class="nav-text">字体图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E4%B8%89%E8%A7%92%E5%BD%A2%E7%BB%98%E5%88%B6"><span class="nav-number">3.2.</span> <span class="nav-text">CSS三角形绘制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">CSS初始化</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML"><span class="nav-number">1.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5%E6%96%B0%E5%A2%9E"><span class="nav-number">1.1.</span> <span class="nav-text">HTML5新增</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS"><span class="nav-number">2.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS3%E6%96%B0%E5%A2%9E%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.</span> <span class="nav-text">CSS3新增内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">属性选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.1.2.</span> <span class="nav-text">结构伪类选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E5%85%83%E7%B4%A0%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">伪元素选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.4.</span> <span class="nav-text">CSS3盒子模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E5%B1%9E%E6%80%A7filter"><span class="nav-number">2.1.5.</span> <span class="nav-text">过滤器属性filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#calc-%E5%87%BD%E6%95%B0%E8%AE%A1%E7%AE%97%E5%AE%BD%E5%BA%A6"><span class="nav-number">2.1.6.</span> <span class="nav-text">calc()函数计算宽度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transition%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="nav-number">2.1.7.</span> <span class="nav-text">transition动画效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87"><span class="nav-number">2.2.</span> <span class="nav-text">字体图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E4%B8%89%E8%A7%92%E5%BD%A2%E7%BB%98%E5%88%B6"><span class="nav-number">2.3.</span> <span class="nav-text">CSS三角形绘制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.4.</span> <span class="nav-text">CSS初始化</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -275,14 +277,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>9.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>23 分钟</span>
     </span>
 </div>
 
@@ -364,26 +366,361 @@
 </ul>
 </li>
 </ul>
+<span id="more"></span>
 <h1 id="CSS"><a class="header-anchor" href="#CSS"></a>CSS</h1>
-<h1 id="CSS3新增内容"><a class="header-anchor" href="#CSS3新增内容"></a>CSS3新增内容</h1>
+<h2 id="CSS3新增内容"><a class="header-anchor" href="#CSS3新增内容"></a>CSS3新增内容</h2>
+<h3 id="属性选择器"><a class="header-anchor" href="#属性选择器"></a>属性选择器</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">选择符</th>
+<th style="text-align:center">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">E[att]</td>
+<td style="text-align:center">选择具有att属性的E元素</td>
+</tr>
+<tr>
+<td style="text-align:center">E[att='val']</td>
+<td style="text-align:center">选择具有att属性且值为val的E元素</td>
+</tr>
+<tr>
+<td style="text-align:center">E[att^='val']</td>
+<td style="text-align:center">选择具有att属性且值以val开头的E元素</td>
+</tr>
+<tr>
+<td style="text-align:center">E[att$='val']</td>
+<td style="text-align:center">选择具有att属性且值以val结尾的E元素</td>
+</tr>
+<tr>
+<td style="text-align:center">E[att*='val']</td>
+<td style="text-align:center">选择具有att属性且值中含有val的E元素</td>
+</tr>
+</tbody>
+</table>
+<div class="tabs" id="attr-selector-test"><ul class="nav-tabs"><li class="tab active"><a href="#attr-selector-test-1">HTML</a></li><li class="tab"><a href="#attr-selector-test-2">CSS</a></li></ul><div class="tab-content"><div class="tab-pane active" id="attr-selector-test-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;attr-selector-test&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;text&#x27;</span> <span class="attr">id</span>=<span class="string">&#x27;has-id-att&#x27;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;text&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;hello&#x27;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;text&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;start-test&#x27;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;text&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;test-end&#x27;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;text&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;te-middle-st&#x27;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="attr-selector-test-2"><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-class">.attr-selector-test</span> <span class="selector-tag">input</span><span class="selector-attr">[id]</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: coral;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.attr-selector-test</span> <span class="selector-tag">input</span><span class="selector-attr">[value=<span class="string">&#x27;hello&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.attr-selector-test</span> <span class="selector-tag">input</span><span class="selector-attr">[value^=<span class="string">&#x27;start&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: lightgreen;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.attr-selector-test</span> <span class="selector-tag">input</span><span class="selector-attr">[value$=<span class="string">&#x27;end&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.attr-selector-test</span> <span class="selector-tag">input</span><span class="selector-attr">[value$=<span class="string">&#x27;middle&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: hotpink;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></div></div></div>
+<p><strong>效果：</strong></p>
+<style>
+.attr-selector-test input[id] {
+  background-color: coral;
+}
+
+.attr-selector-test input[value='hello'] {
+  background-color: skyblue;
+}
+
+.attr-selector-test input[value^='start'] {
+  background-color: lightgreen;
+}
+
+.attr-selector-test input[value$='end'] {
+  background-color: yellow;
+}
+
+.attr-selector-test input[value*='middle'] {
+  background-color: hotpink;
+}
+</style>
+<div class='attr-selector-test'>
+  <input type='text' id='has-id-att'/>
+  <input type='text' value='hello'/>
+  <input type='text' value='start-test'/>
+  <input type='text' value='test-end'/>
+  <input type='text' value='te-middle-st'/>
+</div>
+<h3 id="结构伪类选择器"><a class="header-anchor" href="#结构伪类选择器"></a>结构伪类选择器</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">选择符</th>
+<th style="text-align:center">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">E:first-child</td>
+<td style="text-align:center">匹配父元素中的第一个E(子)元素</td>
+</tr>
+<tr>
+<td style="text-align:center">E:last-child</td>
+<td style="text-align:center">匹配父元素中的最后一个E(子)元素</td>
+</tr>
+<tr>
+<td style="text-align:center">E:nth-child(n)</td>
+<td style="text-align:center">匹配父元素中的第n个E(子)元素 <strong>n还可以为odd even / 表达式</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">E:first-of-type</td>
+<td style="text-align:center">匹配父元素中E(子)元素的第一个</td>
+</tr>
+<tr>
+<td style="text-align:center">E:last-of-type</td>
+<td style="text-align:center">匹配父元素中E(子)元素的最后一个</td>
+</tr>
+<tr>
+<td style="text-align:center">E:nth-of-type(n)</td>
+<td style="text-align:center">匹配父元素中E(子)元素的第n个 <strong>n还可以为odd even / 表达式</strong></td>
+</tr>
+</tbody>
+</table>
+<p>E:nth-child(n)，n的常见公式与取值对应：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">公式</th>
+<th style="text-align:center">取值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2n</td>
+<td style="text-align:center">偶数</td>
+</tr>
+<tr>
+<td style="text-align:center">2n + 1</td>
+<td style="text-align:center">奇数</td>
+</tr>
+<tr>
+<td style="text-align:center">5n</td>
+<td style="text-align:center">5、10、15...</td>
+</tr>
+<tr>
+<td style="text-align:center">n + 5</td>
+<td style="text-align:center">从第五个开始到最后</td>
+</tr>
+<tr>
+<td style="text-align:center">-n + 5</td>
+<td style="text-align:center">第一至第五个</td>
+</tr>
+</tbody>
+</table>
+<div class="tabs" id="structural-pseudo-classes-selector-test"><ul class="nav-tabs"><li class="tab active"><a href="#structural-pseudo-classes-selector-test-1">HTML</a></li><li class="tab"><a href="#structural-pseudo-classes-selector-test-2">CSS</a></li></ul><div class="tab-content"><div class="tab-pane active" id="structural-pseudo-classes-selector-test-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&#x27;structural-pseudo-classes-selector-test&#x27;</span>&gt;</span></span><br><span class="line">    外圈为父级div元素</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>first-child<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>second-child<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>third-child<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>forth-child<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>last-child<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="structural-pseudo-classes-selector-test-2"><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-class">.structural-pseudo-classes-selector-test</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20%</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> dotted grey;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.structural-pseudo-classes-selector-test</span> <span class="selector-tag">li</span><span class="selector-pseudo">:first</span>-child &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.structural-pseudo-classes-selector-test</span> <span class="selector-tag">li</span><span class="selector-pseudo">:last-child</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: blue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.structural-pseudo-classes-selector-test</span> <span class="selector-tag">li</span><span class="selector-pseudo">:nth-child</span>(<span class="number">3</span>) &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: green;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.structural-pseudo-classes-selector-test</span> <span class="selector-tag">li</span><span class="selector-pseudo">:nth-child</span>(<span class="number">2</span>n) &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: orange;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></div></div></div>
+<p><strong>效果：</strong></p>
+<style>
+.structural-pseudo-classes-selector-test {
+  width: 20%;
+  border: 1px dotted grey;
+  padding: 0 5% 0 5%;
+}
+
+.structural-pseudo-classes-selector-test li:first-child {
+  background-color: red;
+}
+
+.structural-pseudo-classes-selector-test li:last-child {
+  background-color: blue;
+}
+
+.structural-pseudo-classes-selector-test li:nth-child(3) {
+  background-color: green;
+}
+
+.structural-pseudo-classes-selector-test li:nth-child(2n) {
+  background-color: orange;
+}
+</style>
+<ul class='structural-pseudo-classes-selector-test'>
+  外圈为父级div元素
+  <li>first-child</li>
+  <li>second-child</li>
+  <li>third-child</li>
+  <li>forth-child</li>
+  <li>last-child</li>
+</ul>
+<p><strong><code>nth-child</code>与<code>nth-type-of</code>的区别：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div.diff</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<p>  在如上所示的代码中，<code>.diff div:first-child</code>将不会选择任何一个元素，因为该选择器选择了first-child，判断为p元素，与前面限定的div冲突。<br>
+  而<code>.diff div:first-of-type</code>先选中所有满足类型要求&lt;div&gt;的子标签，再从中选出第一个，因此会选中子&lt;div&gt;标签。</p>
+<h3 id="伪元素选择器"><a class="header-anchor" href="#伪元素选择器"></a>伪元素选择器</h3>
+<p>  伪元素选择器帮助我们利用CSS创建新标签元素，从而避免HTML标签的使用，简化HTML的结构</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">选择符</th>
+<th style="text-align:center">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">::before</td>
+<td style="text-align:center">在子元素的前面插入内容</td>
+</tr>
+<tr>
+<td style="text-align:center">::after</td>
+<td style="text-align:center">在子元素的后面插入内容</td>
+</tr>
+</tbody>
+</table>
+<p>  伪元素选择器创建的元素属于行内元素，要有大小需要转化为块级元素或者行内块元素</p>
+<div class="tabs" id="pseudo-element-selector-test"><ul class="nav-tabs"><li class="tab active"><a href="#pseudo-element-selector-test-1">HTML</a></li><li class="tab"><a href="#pseudo-element-selector-test-2">CSS</a></li></ul><div class="tab-content"><div class="tab-pane active" id="pseudo-element-selector-test-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;pseudo-element-selector-test&#x27;</span>&gt;</span></span><br><span class="line">    Hello, world!</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="pseudo-element-selector-test-2"><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  <span class="selector-class">.pseudo-element-selector-test</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">10%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">10%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: pink;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.pseudo-element-selector-test</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;before&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.pseudo-element-selector-test</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;after&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></div></div></div>
+<p><strong>效果：</strong></p>
+<style>
+  .pseudo-element-selector-test {
+    width: 30%;
+    background-color: pink;
+  }
+
+  .pseudo-element-selector-test::before {
+    content: 'before';
+  }
+
+  .pseudo-element-selector-test::after {
+    content: 'after';
+  }
+</style>
+  <div class='pseudo-element-selector-test'>
+    Hello, world!
+  </div>
+<br>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li><strong>按钮样式（结合字体图标）</strong></li>
+</ul>
+<div class="tabs" id="button"><ul class="nav-tabs"><li class="tab active"><a href="#button-1">HTML</a></li><li class="tab"><a href="#button-2">CSS</a></li></ul><div class="tab-content"><div class="tab-pane active" id="button-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;situation1&#x27;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="button-2"><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  <span class="selector-class">.situation1</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid grey; <span class="attribute">width</span>: <span class="number">30%</span>; <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.situation1</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;iconfont&#x27;</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;\e60a&#x27;</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">6px</span>;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">5px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></div></div></div>
+<style>
+  .situation1 {
+    margin: 10px auto;
+    border: 1px solid grey; width: 30%; height: 30px;
+    position: relative;
+  }
+
+  .situation1::after {
+    font-family: 'iconfont';
+    font-size: 20px;
+    line-height: 20px;
+    content: '\e60a';
+    position: absolute;
+    top: 6px;
+    right: 5px;
+  }
+</style>
+<p><strong>效果：</strong></p>
+<div class='situation1'></div>
+&emsp;&emsp;（在写的过程中发现绝对定位的计算位置是包括padding的）
+<ul>
+<li><strong>视频网站遮罩效果</strong></li>
+</ul>
+<div class="tabs" id="tudou"><ul class="nav-tabs"><li class="tab active"><a href="#tudou-1">HTML</a></li><li class="tab"><a href="#tudou-2">CSS</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tudou-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;tudou&#x27;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="tudou-2"><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  <span class="selector-class">.tudou</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> auto;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">240px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#AD1453</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.tudou</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></div></div></div>
+<style>
+  .tudou {
+    margin: 10px auto;
+    width: 50%;
+    height: 240px;
+    background-color: #AD1453;
+    position: relative;
+  }
+
+  .tudou:hover::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    content: '';
+  }
+</style>
+<div class='tudou'></div>
+<ul>
+<li><strong>伪元素清除浮动法</strong><br>
+浮动元素脱离标准流，导致子元素无法“撑起”父级元素的高度。</li>
+</ul>
+<p><strong>效果：</strong></p>
+<div style='border: 1px solid grey; margin: 10px auto; width: 50%;'>父级元素<div style="width: 20%; height: 100px; background-color: red; float: right;"></div></div>
+<p><strong>解决方法：</strong><br>
+  在浮动元素之后插入清除浮动效果的标签。</p>
+<div class="tabs" id="clearfix"><ul class="nav-tabs"><li class="tab active"><a href="#clearfix-1">HTML</a></li><li class="tab"><a href="#clearfix-2">CSS</a></li></ul><div class="tab-content"><div class="tab-pane active" id="clearfix-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;clearfix box&#x27;</span>&gt;</span></span><br><span class="line">  父级元素</span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;floatElement&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="clearfix-2"><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  <span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>:<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">    <span class="attribute">visibility</span>: hidden;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid grey; <span class="attribute">margin</span>: <span class="number">10px</span> auto; <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.floatElement</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">20%</span>; <span class="attribute">height</span>: <span class="number">100px</span>; <span class="attribute">background-color</span>: red; <span class="attribute">float</span>: right;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></div></div></div>
+<p><strong>效果：</strong></p>
+<style>
+  .clearfix:after {
+    content:'';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+  .box {
+    border: 1px solid grey; margin: 10px auto; width: 50%;
+  }
+
+  .floatElement {
+    width: 20%; height: 100px; background-color: red; float: right;
+  }
+</style>
+<div class='clearfix box'>
+  父级元素
+  <div class='floatElement'></div>
+</div>
+<h3 id="CSS3盒子模型"><a class="header-anchor" href="#CSS3盒子模型"></a>CSS3盒子模型</h3>
+<p>  以往，一个200px大小的div盒子，加上15px边框，15px内边距后，整体大小变为270px;<br>
+  CSS3中新增属性<code>box-sizing</code>，默认值<code>content-box</code>表现和原来一样；设置为<code>border-box</code>后，盒子显示的大小不变（内部变小）</p>
+<h3 id="过滤器属性filter"><a class="header-anchor" href="#过滤器属性filter"></a>过滤器属性filter</h3>
+<p>  具体函数可参见<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter">MDN文档</a><br>
+<strong>blur效果：</strong><br>
+<img data-src='/img/general/avatar.jpg' width='10%' style='filter:blur(5px);'/></p>
+<h3 id="calc-函数计算宽度"><a class="header-anchor" href="#calc-函数计算宽度"></a>calc()函数计算宽度</h3>
+<p>  calc() 此 CSS 函数允许在声明 CSS 属性值时执行一些计算。</p>
+<h3 id="transition动画效果"><a class="header-anchor" href="#transition动画效果"></a>transition动画效果</h3>
+<ul>
+<li>写法：transition: <strong>变化属性</strong> <strong>时间（单位为s）</strong> 动画效果（函数） 延时触发时间（s）</li>
+<li>谁触发动画给谁加</li>
+</ul>
+<div class="tabs" id="progressbar"><ul class="nav-tabs"><li class="tab active"><a href="#progressbar-1">HTML</a></li><li class="tab"><a href="#progressbar-2">CSS</a></li></ul><div class="tab-content"><div class="tab-pane active" id="progressbar-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">pgbar</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;pgbar-in&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="progressbar-2"><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  <span class="selector-class">.pgbar</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0px</span> auto;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">20%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">2px</span>;</span><br><span class="line">    <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.pgbar-in</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">8px</span>;</span><br><span class="line">    <span class="attribute">transition</span>: all <span class="number">0.7s</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.pgbar</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.pgbar-in</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: hotpink;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></div></div></div>
+<style>
+  .pgbar {
+    margin: 0px auto;
+    width: 20%;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid red;
+    padding: 2px;
+    box-sizing: border-box;
+  }
+
+  .pgbar-in {
+    width: 50%;
+    height: 100%;
+    background-color: red;
+    border-radius: 8px;
+    transition: all 0.7s
+  }
+
+  .pgbar:hover .pgbar-in {
+    background-color: hotpink;
+    width: 100%;
+  }
+</style>
+<p><strong>效果</strong>：</p>
+<div class=pgbar><div class='pgbar-in'></div></div>
 <h2 id="字体图标"><a class="header-anchor" href="#字体图标"></a>字体图标</h2>
-<p>矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：</p>
+<p>  矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：</p>
 <div class='iconfont' style='font-size:30px;color:red;cursor: default;        
         -webkit-user-select: none;
         -webkit-touch-callout: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;'>&#xe606;&#xe607;&#xe608;&#xe609;&#xe60a;</div>
-同时，为了避免复制这些字体图标粘贴到其它未设置该字体的地方导致乱码，我们可以将这里的鼠标样式设置为默认 / css禁止选择该段文本。
+&emsp;&emsp;同时，为了避免复制这些字体图标粘贴到其它未设置该字体的地方导致乱码，我们可以将这里的鼠标样式设置为默认 / css禁止选择该段文本。
 <h2 id="CSS三角形绘制"><a class="header-anchor" href="#CSS三角形绘制"></a>CSS三角形绘制</h2>
 <ul>
 <li>等腰三角形<div style='width:0px; height:0px; border: 20px solid transparent; border-top: 20px solid red;'></div>
-如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一为非透明即可得到此等腰三角形。
-</li>
-<li>直角三角形<div style='width:0px; height:0px; border-right: 20px solid transparent; border-bottom: 40px solid red;'></div>
-对相邻两边的border属性进行设置，其余两边留空。
 </li>
 </ul>
+<p>  如上所示，将div盒子的大小设置为0，边框border指定大小，solid，并且设定四个边其中之一为非透明即可得到此等腰三角形。</p>
+<ul>
+<li>直角三角形<div style='width:0px; height:0px; border-right: 20px solid transparent; border-bottom: 40px solid red;'></div>
+</li>
+</ul>
+<p>  对相邻两边的border属性进行设置，其余两边留空。</p>
 <p><strong>自己试一试：</strong></p>
 <div>
 <div class='left' style='border: 1px dotted grey; position: relative; height: 180px'>
@@ -489,13 +826,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">60k</span>
+    <span title="站点总字数">67k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:31</span>
+    <span title="站点阅读时长">2:48</span>
   </span>
 </div>
 <div class="busuanzi-count">

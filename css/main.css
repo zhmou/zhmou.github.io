@@ -966,6 +966,7 @@ pre code {
   border-top: 3px solid transparent;
   flex-grow: 1;
   list-style-type: none;
+  transition: all 0.2s ease-out;
 }
 @media (max-width: 413px) {
   .post-body .tabs ul.nav-tabs li.tab,
@@ -2993,12 +2994,63 @@ mjx-container[display='true'] + br {
 .footer {
   color: #fff;
 }
-.post-body .link-grid {
-/* one column per row */
+.post-body .my-grid {
+  display: grid;
+  grid-gap: 1.5rem;
+  gap: 1.5rem;
   grid-template-columns: 1fr;
+  margin-bottom: 20px;
+  padding: 1rem;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.post-body .link-grid .link-grid-container .link-grid-image {
-  border-radius: 0px;
+@media (max-width: 767px) {
+  .post-body .my-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.post-body .my-grid .my-grid-container {
+  border: solid #ddd;
+  box-shadow: 1rem 1rem 0.5rem rgba(0,0,0,0.5);
+  min-height: 5rem;
+  min-width: 0;
+  padding: 0.5rem;
+  position: relative;
+  transition: background 0.3s;
+}
+.post-body .my-grid .my-grid-container:hover {
+  background: var(--card-bg-color);
+}
+.post-body .my-grid .my-grid-container:active {
+  box-shadow: 0.5rem 0.5rem 0.25rem rgba(0,0,0,0.5);
+  transform: translate(0.2rem, 0.2rem);
+}
+.post-body .my-grid .my-grid-container .my-grid-image-link {
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 5rem;
+  width: 5rem;
+  padding: 3px;
+  position: absolute;
+}
+.post-body .my-grid .my-grid-container img {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 0px;
+}
+.post-body .my-grid .my-grid-container p {
+  margin: 0 1rem 0 6rem;
+}
+.post-body .my-grid .my-grid-container p:first-of-type {
+  font-size: 1.2em;
+}
+.post-body .my-grid .my-grid-container p:last-of-type {
+  font-size: 0.8em;
+  line-height: 1.3rem;
+  opacity: 0.7;
 }
 body {
   background: url("/img/general/background.webp");
