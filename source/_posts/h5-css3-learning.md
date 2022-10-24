@@ -580,6 +580,7 @@ E:nth-child(n)，n的常见公式与取值对应：
     width: 100%;
   }
 </style>
+**效果**：
 <div class=pgbar><div class='pgbar-in'></div></div>
 
 ## 字体图标
