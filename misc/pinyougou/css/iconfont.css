@@ -24,8 +24,3 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
-.arrow-icon::after {
-    content: '\e91e';
-    margin-left: 6px;
-}
