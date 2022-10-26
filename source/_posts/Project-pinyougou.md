@@ -29,6 +29,8 @@ categories: 项目
 ```
 
 ## Logo优化
-- logo里面首先放一个<code>&lt;h1&gt;</code>标签
+- logo里面首先放一个<code>&lt;h1&gt;</code>标签（**用于提权**）
 - <code>&lt;h1&gt;</code>标签中插入链接<code>&lt;a&gt;</code>标签，返回首页
-- 链接里面放文字
+- 链接里面放文字（网站名称），但是为了视觉效果，文字不能显示出来（<code>font-size: 0</code>）
+- 链接给一个<code>title</code>属性，鼠标放在Logo上可显示文字
+<!-- more -->
