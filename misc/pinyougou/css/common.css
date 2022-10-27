@@ -1,4 +1,11 @@
-/* 版心 */
+.none-select {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .w {
     width: 1200px;
     margin: 0 auto;
@@ -174,14 +181,20 @@
 
 .nav .dropdown {
     float: left;
-    width: 210px;
+    width: 230px;
     height: 45px;
     background-color: #b1191a;
+    border-radius: 25px 25px 0 0;
 }
 
-.nav navitems {
+.nav .navitems {
     float: right;
 }
+
+.dropdown .dt {
+    border-radius: 25px 25px 0 0;
+}
+
 
 .dropdown .dt a {
     display: block;
@@ -191,15 +204,72 @@
     line-height: 45px;
     font-size: 16px;
     color: #fff;
+    border-radius: 25px 25px 0 0;
 }
 
 .dropdown .dd {
-    display: none;
+    visibility: hidden;
 }
 
 .dropdown:hover .dd {
-    display: block;
-    width: 210px;
+    visibility: visible;
+    width: 230px;
     height: 465px;
     background-color: #c81625;
+    border-radius: 0 0 25px 25px;
+}
+
+.dd ul::before {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: #b1191a;
+    content: "";
+}
+
+.dd ul li {
+    position: relative;
+    height: 31px;
+    line-height: 31px;
+    font-size: 14px;
+    margin-left: 2px;
+    text-indent: 10px;
+}
+
+.dd ul li::after {
+    position: absolute;
+    right: 10px;
+    top: 1px;
+    font-family: 'icomoon' !important;
+    content: '\e920';
+    color: white;
+}
+
+.dd ul li a {
+    color: white;
+}
+
+.dd ul li:hover {
+    background-color: #fff;
+}
+
+.dd ul li:hover::after {
+    color: #666;
+}
+
+.dd ul li:hover a {
+    color: #666;
+}
+
+.dd ul li:hover a:hover {
+    color: #c81625;
+}
+
+.dd ul li .slash {
+    color: white;
+    cursor: default;
+}
+
+.dd ul li:hover .slash {
+    color: #c81625;
 }
