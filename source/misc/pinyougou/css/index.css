@@ -1,0 +1,273 @@
+.user {
+    width: 230px;
+    height: 455px;
+    background-color: black;
+    float: left;
+    margin-right: 10px;
+}
+
+.main {
+    width: 1200px;
+    height: 455px;
+    margin-top: 10px;
+    z-index: 0;
+}
+
+.focus {
+    float: left;
+    width: 700px;
+    height: 455px;
+    background-color: skyblue;
+}
+
+.focus ul li {
+    position: relative;
+}
+
+.focus ul li button {
+    position: absolute;
+    border: 1px solid skyblue;
+    border-radius: 18px;
+    bottom: 100px;
+    left: 40px;
+    background-color: rgba(135, 206, 235, 0.6);
+    transition: all 0.4s;
+}
+
+.focus ul li button:hover {
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.8);
+}
+
+.focus ul li button::after {
+    font-family: 'icomoon' !important;
+    content: '\e920';
+    font-size: 24px;
+    line-height: 36px;
+}
+
+.focus ul li button a {
+    display: block;
+    height: 36px;
+    line-height: 36px;
+    width: 260px;
+    float: left;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 18px;
+}
+
+.newsflash {
+    float: right;
+    width: 250px;
+    height: 455px;
+}
+
+.newsflash .news {
+    height: 140px;
+    border: 1px solid #ccc;
+}
+
+.news-hd {
+    height: 33px;
+    line-height: 32px;
+    border-bottom: 1px dotted #ccc;
+    padding: 0 15px;
+}
+
+.news-hd h5 {
+    float: left;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.news-hd .more {
+    float: right
+}
+
+
+.news-hd .more::after {
+    content: "\e920";
+    font-family: "icomoon" !important;
+}
+
+.news-bd {
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+.news-bd li {
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.newsflash .lifeservice {
+    height: 200px;
+    border: 1px solid #ccc;
+    border-top: 0;
+    overflow: hidden;
+}
+
+.lifeservice ul {
+    width: 252px;
+}
+
+.lifeservice ul li {
+    width: 63px;
+    height: 68px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    float: left;
+    text-align: center;
+}
+
+.lifeservice ul li i {
+    display: inline-block;
+    width: 24px;
+    height: 28px;
+    margin-top: 12px;
+    background-repeat: no-repeat;
+    background-image: url(../images/icons.png);
+}
+
+.huafei {
+    background-position: -19px -15px;
+}
+
+.jipiao {
+    background-position: -80px -16px;
+}
+
+.dianyingpiao {
+    background-position: -142px -18px;
+}
+
+.youxi {
+    background-position: -205px -18px;
+}
+
+.caipiao {
+    background-position: -16px -88px;
+}
+
+.jiayouzhan {
+    background-position: -79px -87px;
+}
+
+.jiudian {
+    background-position: -143px -88px;
+}
+
+.huochepiao {
+    background-position: -208px -88px;
+}
+
+.zhongchou {
+    background-position: -16px -159px;
+}
+
+.licai {
+    background-position: -79px -158px;
+}
+
+.lipinka {
+    background-position: -142px -159px;
+}
+
+.baitiao {
+    background-position: -209px -159px;
+}
+
+.newsflash .bargain {
+    margin-top: 5px;
+}
+
+.bargain a {
+    position: relative;
+    display: block;
+    width: 110px;
+    height: 110px;
+}
+
+.bargain .img_right {
+    width: 110px;
+    height: 110px;
+    float: right;
+}
+
+.bargain .img_left {
+    width: 110px;
+    height: 110px;
+    float: left;
+}
+
+.hot-new {
+    position: absolute;
+    z-index: 1;
+    top: -3px;
+    left: 100px;
+    height: 14px;
+    line-height: 14px;
+    border-radius: 7px 7px 7px 0;
+    padding: 0px 5px;
+    color: #fff;
+    background-color: #c81625;
+}
+
+.bargain a:hover {
+    animation: next-shake .5s;
+}
+
+@keyframes next-shake {
+    0% {
+        transform: translate(1pt, 1pt) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1pt, -2pt) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3pt, 0pt) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3pt, 2pt) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1pt, -1pt) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1pt, 2pt) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3pt, 1pt) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3pt, 1pt) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1pt, -1pt) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1pt, 2pt) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1pt, -2pt) rotate(-1deg);
+    }
+}
+
+.recommend {
+    height: 163px;
+    background-color: pink;
+    margin-top: 12px;
+}
