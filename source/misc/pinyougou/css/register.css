@@ -1,0 +1,173 @@
+.w {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    height: 84px;
+    border-bottom: 2px solid #c81623;
+}
+
+.logo {
+    padding-top: 18px;
+}
+
+.registerarea {
+    height: 532px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+.registerarea h3 {
+    height: 42px;
+    border-bottom: 1px solid #ccc;
+    background-color: #e9e9e9;
+    line-height: 42px;
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: normal;
+
+}
+
+.registerarea h3>.login {
+    float: right;
+    font-size: 14px;
+}
+
+.registerarea h3>.login>a {
+    color: #c81623
+}
+
+.registerarea .register_bd {
+    width: 600px;
+    margin: 50px auto 0;
+}
+
+.register_bd ul li {
+    margin-bottom: 20px;
+}
+
+.register_bd ul li i {
+    margin-left: 20px;
+}
+
+.register_bd ul li label {
+    display: inline-block;
+    width: 88px;
+    text-align: right;
+}
+
+
+.register_bd ul li .inp {
+    display: inline-block;
+    width: 242px;
+    height: 37px;
+    border: 1px solid #ccc;
+}
+
+.error {
+    color: #c81623;
+}
+
+.error_icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/error.png);
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+.success {
+    color: green;
+}
+
+.success_icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/success.png);
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+.safe {
+    padding-left: 172px;
+}
+
+.safe em {
+    padding: 0 12px;
+    color: white;
+}
+
+.safe em:first-child {
+    background-color: red;
+}
+
+.safe em:nth-child(2) {
+    background-color: orange;
+}
+
+.safe em:last-child {
+    background-color: green;
+}
+
+.agree {
+    padding-left: 88px;
+}
+
+.agree label {
+    margin-right: 20px;
+}
+
+.agree a {
+    color: #1ba1e6;
+}
+
+.btn {
+    width: 200px;
+    height: 34px;
+    background-color: #c81625;
+    font-size: 14px;
+    color: white;
+    margin: 30px 0 0 70px;
+    margin-left: 88px;
+    border-radius: 10px;
+
+}
+
+.btn:active {
+    transform: translate(.1rem, .1rem);
+    box-shadow: 0.1rem 0.1rem .3rem rgba(0, 0, 0, 0.9);
+}
+
+.mod_copyright {
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+.mod_copyright .links {
+    margin-bottom: 20px;
+    margin-left: 95px;
+}
+
+.links ul li {
+    float: left;
+}
+
+.links ul li:nth-of-type(2n-1) {
+    padding: 0 15px;
+}
+
+.links ul li:nth-of-type(2n) {
+    width: 1px;
+    height: 12px;
+    background-color: #333;
+    vertical-align: middle;
+    margin-top: 3px;
+}
+
+.mod_copyright .copyright {
+    line-height: 20px;
+}

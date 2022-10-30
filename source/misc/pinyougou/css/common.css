@@ -216,6 +216,7 @@
 }
 
 .dropdown:hover .dd {
+    z-index: 1;
     position: absolute;
     display: block;
     width: 230px;
