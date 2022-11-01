@@ -637,8 +637,14 @@
     margin-top: 30px;
 }
 
+.floor a img:hover {
+    transition: all 0.3s;
+    transform: translateY(-5px);
+}
+
 .box-bd {
     height: 361px;
+    overflow: hidden;
 }
 
 .tab_list_item>div {
@@ -654,6 +660,7 @@
 
 .col_width329 {
     width: 329px;
+    background-color: #aed6d8;
 }
 
 .col_width221 {
@@ -685,6 +692,8 @@
 }
 
 .bb {
+    position: relative;
+    z-index: 1;
     display: block;
     border-bottom: 1px solid #ccc;
 }
