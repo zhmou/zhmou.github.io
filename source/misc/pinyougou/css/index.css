@@ -495,16 +495,26 @@
 .recom_bd ul li {
     float: left;
     position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.recom_bd ul li:hover img {
+    transform: scale(1.05);
 }
 
 .recom_bd ul li img {
+    position: relative;
+    z-index: 0;
     width: 248px;
     height: 163px;
+    transition: all 0.3s;
 }
 
 .recom_bd ul li::after {
     content: "";
     position: absolute;
+    z-index: 1;
     right: 0;
     width: 1px;
     height: 145px;
@@ -573,9 +583,16 @@
     margin: 0 20px;
     width: 160px;
     height: 160px;
+    transition: all 0.3s;
+}
+
+.like_bd ul li:hover .photo {
+    transform: scale(1.1);
 }
 
 .like_bd ul li .desc {
+    position: relative;
+    z-index: 0;
     margin: 0 40px;
     line-height: 21px;
     height: 40px;

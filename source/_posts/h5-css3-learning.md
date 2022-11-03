@@ -73,10 +73,10 @@ categories: 学习
 ## CSS3新增内容
 ### 属性选择器
 
-| 选择符 | 简介 |
-| :----:| :----: |
-| E[att] | 选择具有att属性的E元素 |
-| E[att='val'] | 选择具有att属性且值为val的E元素 |
+|    选择符     |                简介                 |
+| :-----------: | :---------------------------------: |
+|    E[att]     |       选择具有att属性的E元素        |
+| E[att='val']  |   选择具有att属性且值为val的E元素   |
 | E[att^='val'] | 选择具有att属性且值以val开头的E元素 |
 | E[att$='val'] | 选择具有att属性且值以val结尾的E元素 |
 | E[att*='val'] | 选择具有att属性且值中含有val的E元素 |
@@ -156,23 +156,23 @@ categories: 学习
 
 ### 结构伪类选择器
 
-| 选择符 | 简介 |
-| :----:| :----: |
-| E:first-child | 匹配父元素中的第一个E(子)元素 |
-| E:last-child | 匹配父元素中的最后一个E(子)元素 |
-| E:nth-child(n) | 匹配父元素中的第n个E(子)元素 **n还可以为odd even / 表达式** |
-| E:first-of-type | 匹配父元素中E(子)元素的第一个 |
-| E:last-of-type | 匹配父元素中E(子)元素的最后一个 |
+|      选择符      |                            简介                             |
+| :--------------: | :---------------------------------------------------------: |
+|  E:first-child   |                匹配父元素中的第一个E(子)元素                |
+|   E:last-child   |               匹配父元素中的最后一个E(子)元素               |
+|  E:nth-child(n)  | 匹配父元素中的第n个E(子)元素 **n还可以为odd even / 表达式** |
+| E:first-of-type  |                匹配父元素中E(子)元素的第一个                |
+|  E:last-of-type  |               匹配父元素中E(子)元素的最后一个               |
 | E:nth-of-type(n) | 匹配父元素中E(子)元素的第n个 **n还可以为odd even / 表达式** |
 
 E:nth-child(n)，n的常见公式与取值对应：
-| 公式 | 取值 |
-| :----:| :----: |
-| 2n | 偶数 |
-| 2n + 1 | 奇数 |
-| 5n | 5、10、15... |
-| n + 5 | 从第五个开始到最后 |
-| -n + 5 | 第一至第五个 |
+|  公式  |        取值        |
+| :----: | :----------------: |
+|   2n   |        偶数        |
+| 2n + 1 |        奇数        |
+|   5n   |    5、10、15...    |
+| n + 5  | 从第五个开始到最后 |
+| -n + 5 |    第一至第五个    |
 
 {% tabs structural-pseudo-classes-selector-test %}
 <!-- tab HTML-->
@@ -271,10 +271,10 @@ E:nth-child(n)，n的常见公式与取值对应：
 ### 伪元素选择器
 &emsp;&emsp;伪元素选择器帮助我们利用CSS创建新标签元素，从而避免HTML标签的使用，简化HTML的结构
 
-| 选择符 | 简介 |
-| :----:| :----: |
-| ::before| 在子元素的前面插入内容 |
-| ::after| 在子元素的后面插入内容 |
+|  选择符  |          简介          |
+| :------: | :--------------------: |
+| ::before | 在子元素的前面插入内容 |
+| ::after  | 在子元素的后面插入内容 |
 
 &emsp;&emsp;伪元素选择器创建的元素属于行内元素，要有大小需要转化为块级元素或者行内块元素
 {% tabs pseudo-element-selector-test %}
@@ -584,11 +584,561 @@ E:nth-child(n)，n的常见公式与取值对应：
 <div class=pgbar><div class='pgbar-in'></div></div>
 
 ### 2D转换(transform)
-- translate 坐标位移
+- translate(x, y) 坐标位移
   - 沿着x和y轴移动元素
-  - **不会影响其他元素的位置**（定位：脱离标准流）
+  - **不会影响其他元素的位置**（绝对定位：脱离标准流）
   - 取值为百分比时是相对自身元素的大小
   - 对行内元素无效果
+- rotate(θdeg) 旋转
+  - 单位**deg**
+  - 正值顺时针，负值逆时针
+  - 默认旋转中心点是元素的中心点
+    - transform-origin:x y; 可设定旋转中心点（百分比 方位名词 像素）
+- scale(x, y) 缩放
+  - 不加单位：缩放倍数
+  - 对比width, height的缩放，scale不会影响其它盒子，且scale是以中心点为基准，向四周缩放。
+- 连写时注意要把位移变换放在最前面，否则旋转后坐标轴发生变动，可能达不到预期效果。
+
+&emsp;&emsp;利用旋转做出下拉三角的效果
+{% tabs Rotate %}
+<!-- tab HTML -->
+``` HTML
+<body>
+    <div class='wrapper'><input type='text' class='rotate_box'/></div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .wrapper {
+    position: relative;
+    margin: 10px auto;
+    width: 200px;
+    height: 20px;
+  }
+
+  .rotate_box {
+    width: 200px;
+    height: 20px;
+    outline: medium;
+  }
+
+  .wrapper::after {
+    content: "";
+    position: absolute;
+    top: 13px;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #666;
+    border-right: 2px solid #666;
+    transform: rotate(45deg);
+    transition: transform 0.5s;
+  }
+
+  .wrapper:hover::after {
+    transform: rotate(135deg);
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+<style>
+  .wrapper {
+    position: relative;
+    margin: 10px auto;
+    width: 200px;
+    height: 20px;
+  }
+
+  .rotate_box {
+    width: 200px;
+    height: 20px;
+    outline: medium;
+  }
+
+  .wrapper::after {
+    content: "";
+    position: absolute;
+    top: 13px;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #666;
+    border-right: 2px solid #666;
+    transform: rotate(45deg);
+    transition: all 0.5s;
+  }
+
+  .wrapper:hover::after {
+    top: 11px;
+    transform: rotate(135deg);
+  }
+</style>
+**效果**：
+(由于CSS没有父元素的同级元素选择器……所以纯CSS似乎没办法选出input:active状态下wrapper元素下的after伪元素)
+<div class='wrapper'><input type='text' class='rotate_box'/></div>
+
+### 动画(animation)
+- 定义动画
+<div class='center'>
+  ``` CSS
+    @keyframes 动画名称 {
+      <!-- 定义关键帧 -->
+      0% {
+        balabala;
+      }
+      10% {
+        balabala;
+      }
+      ……
+      100% {
+        balabala;
+      }
+    }
+  ```
+</div>
+<div class='clear'></div>
+
+- 调用动画
+<div class='center'>
+  ``` CSS
+    选择器 {
+      animation-name: 动画名称;
+      animation-duration: 动画时间;
+    }
+  ```
+
+</div>
+<div class='clear'></div>
+
+- 简写
+  - animation: 动画名称 持续时间 运动曲线 何时开始 播放次数 是否反方向 起始或结束的状态
+
+**波纹动画**
+{% tabs animation %}
+<!-- tab HTML -->
+``` HTML
+<div class='animation'>
+  <div class='dot'></div>
+  <div class='pulse1'></div>
+  <div class='pulse2'></div>
+  <div class='pulse3'></div>
+</div>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .animation {
+    position: relative;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #666
+  }
+
+  .animation .dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: #09f;
+    border-radius: 50%
+  }
+
+  .animation div[class^='pulse'] {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    box-shadow: 0 0 12px #09f;
+    border-radius: 50%;
+    animation: p 1.5s linear infinite;
+  }
+
+  .animation .pulse2 {
+    animation-delay: 0.5s !important
+  }
+
+  .animation .pulse3 {
+    animation-delay: 1.0s !important
+  }
+
+  @keyframes p {
+    0% {
+  
+    }
+
+    70% {
+      width: 40px;
+      height: 40px;
+      opacity: 1;
+    }
+
+    100% {
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+    }
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+
+<style>
+  .animation {
+    position: relative;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #666
+  }
+
+  .animation .dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: #09f;
+    border-radius: 50%
+  }
+
+  .animation div[class^='pulse'] {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    box-shadow: 0 0 12px #09f;
+    border-radius: 50%;
+    animation: p 1.5s linear infinite;
+  }
+
+  .animation .pulse2 {
+    animation-delay: 0.5s !important
+  }
+
+  .animation .pulse3 {
+    animation-delay: 1.0s !important
+  }
+
+  @keyframes p {
+    0% {
+  
+    }
+
+    70% {
+      width: 40px;
+      height: 40px;
+      opacity: 1;
+    }
+
+    100% {
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+    }
+  }
+</style>
+
+<div class='animation'>
+  <div class='dot'></div>
+  <div class='pulse1'></div>
+  <div class='pulse2'></div>
+  <div class='pulse3'></div>
+</div>
+
+**奔跑的北极熊**
+{% tabs animation2 %}
+<!-- tab HTML -->
+``` HTML
+<body>
+  <div class='bg'>
+    <div class='display'></div>
+  </div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .bg {
+    position: relative;
+    width: 100%;
+    height: 336px;
+    background: url(/img/h5-css3-learning/bg1.png);
+    opacity: 1;
+    animation: bg_move 10s linear infinite
+  }
+  .display {
+    position: absolute;
+    left: 0;
+    bottom: 10%; 
+    width: 200px;
+    height: 100px;
+    background:url(/img/h5-css3-learning/bear.png) no-repeat;
+    animation: play 0.8s steps(8) infinite, move 2s linear 1 forwards;
+  }
+
+  @keyframes play {
+    0% {
+    }
+
+    100% {
+      background-position: -1600px 0;
+    }
+  }
+  @keyframes move {
+    0% {
+    }
+    100% {
+      left: 50%;
+      transform: translateX(-50%); 
+    }
+  }
+
+  @keyframes bg_move {
+    0%{}
+    100%{
+      background-position: -3840px 0;
+    }
+  }
+
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+<style>
+  .bg {
+    position: relative;
+    width: 100%;
+    height: 336px;
+    background: url(/img/h5-css3-learning/bg1.png);
+    opacity: 1;
+    animation: bg_move 10s linear infinite
+  }
+  .display {
+    position: absolute;
+    left: 0;
+    bottom: 10%; 
+    width: 200px;
+    height: 100px;
+    background:url(/img/h5-css3-learning/bear.png) no-repeat;
+    animation: play 0.8s steps(8) infinite, move 2s linear 1 forwards;
+  }
+
+  @keyframes play {
+    0% {
+    }
+
+    100% {
+      background-position: -1600px 0;
+    }
+  }
+  @keyframes move {
+    0% {
+    }
+    100% {
+      left: 50%;
+      transform: translateX(-50%); 
+    }
+  }
+
+  @keyframes bg_move {
+    0%{}
+    100%{
+      background-position: -3840px 0;
+    }
+  }
+
+</style>
+<div class='bg'>
+<div class='display'>
+
+</div>
+</div>
+
+### 3D转换
+- translate3d(x, y, z)
+  - 在z轴上移动可在直接用translateZ()
+  - z轴移动尽量用px单位
+  - z轴正方向朝向屏幕外
+- perspective
+  - 视距，即视点离屏幕的距离，px单位
+- rotateX | rotateY | rotateZ
+  - 分别绕X Y Z轴转动
+- transform-style: 呈现形式
+
+**示例**
+{% tabs 3d1 %}
+<!-- tab HTML -->
+``` HTML
+<body>
+  <div class='boxes'>
+    <div></div>
+    <div></div>
+  </div>
+</body>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .boxes {
+    perspective: 500px;
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #666;
+    transform-style: preserve-3d;
+    transition: all 1s;
+  }
+
+  .boxes:hover {
+    transform: rotateY(-60deg);
+  }
+
+  .boxes div:first-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateX(60deg);
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+  }
+
+  .boxes div:last-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background-color: skyblue;
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+<style>
+  .boxes {
+    perspective: 500px;
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #666;
+    transform-style: preserve-3d;
+    transition: all 1s;
+  }
+
+  .boxes:hover {
+    transform: rotateY(-60deg);
+  }
+
+  .boxes div:first-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateX(60deg);
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+  }
+
+  .boxes div:last-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background-color: skyblue;
+  }
+</style>
+
+**效果：**
+<div class='boxes'>
+  <div></div>
+  <div></div>
+</div>
+
+**两面翻转盒子**
+<style>
+    .flipboxes {
+        position: relative;
+        margin: 0 auto;
+        width: 200px;
+        height: 200px;
+        transform-style: preserve-3d;
+    }
+
+    .flipboxes>div:first-child {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 200px;
+        border-radius: 50%;
+        background-color: pink;
+        z-index: 1;
+        transition: all 1.5s;
+    }
+
+    .flipboxes>div:last-child {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotateY(180deg);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 200px;
+        border-radius: 50%;
+        background-color: skyblue;
+        transition: all 1.5s;
+    }
+
+    .flipboxes:hover>div:first-child {
+        transform: translate(-50%, -50%) rotateY(180deg);
+    }
+
+    .flipboxes:hover>div:last-child {
+        transform: translate(-50%, -50%) rotateY(360deg);
+        z-index: 1;
+    }
+
+    /* .flipboxes:hover {
+        transform: rotateY(180deg);
+    }
+
+    .flipboxes:hover>div:last-child {
+        z-index: 1;
+    } */
+</style>
+
+<div class='flipwrapper'>
+  <div class='flipboxes'>
+    <div>Hello</div>
+    <div>World</div>
+  </div>
+</div>
+
 ## 字体图标
 &emsp;&emsp;矢量绘制的小图标，以字体的形式引入方便运用于需要调整颜色/改变大小的地方(可以像文字一样调整大小和颜色)。例如以下几个图标：
 <div class='iconfont' style='font-size:30px;color:red;cursor: default;        
