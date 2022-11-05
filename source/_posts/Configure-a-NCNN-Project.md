@@ -25,7 +25,7 @@ typora-root-url: ..
 
 &emsp;&emsp;理论上来讲，根据自身的需求直接使用release下官方的预编译静/动态库应该不会出现错误，然而笔者在实际配置项目时，添加了ncnn.lib这一附加依赖项后，在运行中依旧会产生Vulkan相关报错，如图所示：
 
-![vulkan报错](/img/2021-10-09-Configure-a-NCNN-Project/1.png)
+![vulkan报错](/img/Configure-a-NCNN-Project/1.png)
 
 &emsp;&emsp;推测可能为官方打包的库中默认调用了VulkanSDK与glslang这一submoudle，因此我们需要自己来对ncnn打包了。
 
@@ -33,7 +33,7 @@ typora-root-url: ..
 
 &emsp;&emsp;首先在开始菜单下找到Visual Studio 2019的文件夹，打开x64 Native Tools Command Prompt这个VS 2019的命令行工具。
 
-![操作步骤](/img/2021-10-09-Configure-a-NCNN-Project/2.png)
+![操作步骤](/img/Configure-a-NCNN-Project/2.png)
 
 &emsp;&emsp;下载 protobuf 3.4.0 的[源码](https://github.com/google/protobuf/archive/v3.4.0.zip)（不知道其它版本是否可行），解压，编译ncnn前需要编译protobuf。
 
@@ -149,7 +149,7 @@ cmake ..
 
 &emsp;&emsp;根据前文下载的模型权重存储路径修改权重读取位置：
 
-![修改代码](/img/2021-10-09-Configure-a-NCNN-Project/3.png)
+![修改代码](/img/Configure-a-NCNN-Project/3.png)
 
 &emsp;&emsp;注释并重写main函数：
 ```c++ solov2.cpp
@@ -179,17 +179,17 @@ int main() {
 
 &emsp;&emsp;做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：
 
-![修改代码](/img/2021-10-09-Configure-a-NCNN-Project/4.png)
+![修改代码](/img/Configure-a-NCNN-Project/4.png)
 
 &emsp;&emsp;然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。
 
 &emsp;&emsp;运行窗口如图：
 
-![运行窗口](/img/2021-10-09-Configure-a-NCNN-Project/5.png)
+![运行窗口](/img/Configure-a-NCNN-Project/5.png)
 
 &emsp;&emsp;运行效果如图：
 
-![运行效果1](/img/2021-10-09-Configure-a-NCNN-Project/horses.jpg "读取到的图片")
+![运行效果1](/img/Configure-a-NCNN-Project/horses.jpg "读取到的图片")
 
-![运行效果2](/img/2021-10-09-Configure-a-NCNN-Project/result.png "实例分割的结果")
+![运行效果2](/img/Configure-a-NCNN-Project/result.png "实例分割的结果")
 

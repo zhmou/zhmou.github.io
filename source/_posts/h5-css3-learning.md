@@ -84,15 +84,13 @@ categories: 学习
 {% tabs attr-selector-test %}
 <!-- tab HTML-->
 ``` HTML
-<body>
-  <div class='attr-selector-test'>
-    <input type='text' id='has-id-att'/>
-    <input type='text' value='hello'/>
-    <input type='text' value='start-test'/>
-    <input type='text' value='test-end'/>
-    <input type='text' value='te-middle-st'/>
-  </div>
-</body>
+<div class='attr-selector-test'>
+  <input type='text' id='has-id-att'/>
+  <input type='text' value='hello'/>
+  <input type='text' value='start-test'/>
+  <input type='text' value='test-end'/>
+  <input type='text' value='te-middle-st'/>
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS-->
@@ -177,16 +175,14 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs structural-pseudo-classes-selector-test %}
 <!-- tab HTML-->
 ``` HTML
-<body>
-  <ul class='structural-pseudo-classes-selector-test'>
-    外圈为父级div元素
-    <li>first-child</li>
-    <li>second-child</li>
-    <li>third-child</li>
-    <li>forth-child</li>
-    <li>last-child</li>
-  </ul>
-</body>
+<ul class='structural-pseudo-classes-selector-test'>
+  外圈为父级div元素
+  <li>first-child</li>
+  <li>second-child</li>
+  <li>third-child</li>
+  <li>forth-child</li>
+  <li>last-child</li>
+</ul>
 ```
 <!-- endtab -->
 <!-- tab CSS-->
@@ -280,11 +276,9 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs pseudo-element-selector-test %}
 <!-- tab HTML-->
 ``` HTML
-<body>
-  <div class='pseudo-element-selector-test'>
-    Hello, world!
-  </div>
-</body>
+<div class='pseudo-element-selector-test'>
+  Hello, world!
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS-->
@@ -333,10 +327,8 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs button %}
 <!-- tab HTML-->
 ``` HTML
-<body>
-  <div class='situation1'>
-  </div>
-</body>
+<div class='situation1'>
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS-->
@@ -385,10 +377,8 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs tudou %}
 <!-- tab HTML-->
 ``` HTML
-<body>
-  <div class='tudou'>
-  </div>
-</body>
+<div class='tudou'>
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS-->
@@ -451,12 +441,10 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs clearfix %}
 <!-- tab HTML-->
 ``` HTML
-<body>
 <div class='clearfix box'>
   父级元素
   <div class='floatElement'></div>
 </div>
-</body>
 ```
 <!-- endtab -->
 <!-- tab CSS-->
@@ -522,9 +510,9 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs progressbar %}
 <!-- tab HTML -->
 ``` HTML
-<body>
-  <div class=pgbar><div class='pgbar-in'></div></div>
-</body>
+<div class=pgbar>
+  <div class='pgbar-in'></div>
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS -->
@@ -603,9 +591,9 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs Rotate %}
 <!-- tab HTML -->
 ``` HTML
-<body>
-    <div class='wrapper'><input type='text' class='rotate_box'/></div>
-</body>
+<div class='wrapper'>
+  <input type='text' class='rotate_box'/>
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS -->
@@ -862,11 +850,9 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs animation2 %}
 <!-- tab HTML -->
 ``` HTML
-<body>
-  <div class='bg'>
-    <div class='display'></div>
-  </div>
-</body>
+<div class='bg'>
+  <div class='display'></div>
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS -->
@@ -983,19 +969,24 @@ E:nth-child(n)，n的常见公式与取值对应：
 {% tabs 3d1 %}
 <!-- tab HTML -->
 ``` HTML
-<body>
+<div class='wrapper3d1'>
   <div class='boxes'>
     <div></div>
     <div></div>
   </div>
-</body>
+</div>
 ```
 <!-- endtab -->
 <!-- tab CSS -->
 ``` CSS
 <style>
+  .wrapper3d1 {
+    margin: 0 auto;
+    perspective: 600px;
+    width: 300px;
+    height: 300px;
+  }
   .boxes {
-    perspective: 500px;
     position: relative;
     margin: 0 auto;
     width: 300px;
@@ -1005,7 +996,7 @@ E:nth-child(n)，n的常见公式与取值对应：
     transition: all 1s;
   }
 
-  .boxes:hover {
+  .wrapper3d1:hover .boxes {
     transform: rotateY(-60deg);
   }
 
@@ -1033,8 +1024,13 @@ E:nth-child(n)，n的常见公式与取值对应：
 <!-- endtab -->
 {% endtabs %}
 <style>
+  .wrapper3d1 {
+    margin: 0 auto;
+    perspective: 600px;
+    width: 300px;
+    height: 300px;
+  }
   .boxes {
-    perspective: 500px;
     position: relative;
     margin: 0 auto;
     width: 300px;
@@ -1044,7 +1040,7 @@ E:nth-child(n)，n的常见公式与取值对应：
     transition: all 1s;
   }
 
-  .boxes:hover {
+  .wrapper3d1:hover .boxes {
     transform: rotateY(-60deg);
   }
 
@@ -1070,73 +1066,391 @@ E:nth-child(n)，n的常见公式与取值对应：
 </style>
 
 **效果：**
-<div class='boxes'>
-  <div></div>
-  <div></div>
+<div class='wrapper3d1'>
+  <div class='boxes'>
+    <div></div>
+    <div></div>
+  </div>
 </div>
 
 **两面翻转盒子**
-<style>
-    .flipboxes {
-        position: relative;
-        margin: 0 auto;
-        width: 200px;
-        height: 200px;
-        transform-style: preserve-3d;
-    }
-
-    .flipboxes>div:first-child {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        line-height: 200px;
-        border-radius: 50%;
-        background-color: pink;
-        z-index: 1;
-        transition: all 1.5s;
-    }
-
-    .flipboxes>div:last-child {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) rotateY(180deg);
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        line-height: 200px;
-        border-radius: 50%;
-        background-color: skyblue;
-        transition: all 1.5s;
-    }
-
-    .flipboxes:hover>div:first-child {
-        transform: translate(-50%, -50%) rotateY(180deg);
-    }
-
-    .flipboxes:hover>div:last-child {
-        transform: translate(-50%, -50%) rotateY(360deg);
-        z-index: 1;
-    }
-
-    /* .flipboxes:hover {
-        transform: rotateY(180deg);
-    }
-
-    .flipboxes:hover>div:last-child {
-        z-index: 1;
-    } */
-</style>
-
-<div class='flipwrapper'>
+{% tabs 3d2 %}
+<!-- tab HTML -->
+``` HTML
+<div class='wrapper3d2'>
   <div class='flipboxes'>
     <div>Hello</div>
     <div>World</div>
   </div>
+</div>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .wrapper3d2 {
+    perspective: 500px;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+  }
+
+  .flipboxes {
+    position: relative;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transition: all 1.5s;
+  }
+
+  .flipboxes>div:first-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 200px;
+    border-radius: 50%;
+    background-color: pink;
+    z-index: 1;
+  }
+
+  .flipboxes>div:last-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateY(180deg);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 200px;
+    border-radius: 50%;
+    background-color: skyblue;
+  }
+
+  .wrapper3d2:hover .flipboxes {
+    transform: rotateY(180deg);
+  }
+
+  .wrapper3d2:hover>.flipboxes>div:last-child {
+    z-index: 1;
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+<style>
+  .wrapper3d2 {
+    perspective: 500px;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+  }
+
+  .flipboxes {
+    position: relative;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transition: all 1.5s;
+  }
+
+  .flipboxes>div:first-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 200px;
+    border-radius: 50%;
+    background-color: pink;
+    z-index: 1;
+  }
+
+  .flipboxes>div:last-child {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateY(180deg);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 200px;
+    border-radius: 50%;
+    background-color: skyblue;
+  }
+
+  .wrapper3d2:hover .flipboxes {
+    transform: rotateY(180deg);
+  }
+
+  .wrapper3d2:hover>.flipboxes>div:last-child {
+    z-index: 1;
+  }
+</style>
+
+**效果：**
+<div class='wrapper3d2'>
+  <div class='flipboxes'>
+    <div>Hello</div>
+    <div>World</div>
+  </div>
+</div>
+
+**3D翻转导航烂**
+{% tabs 3d3 %}
+<!-- tab HTML -->
+``` HTML
+<div class='demowrapper'>
+  <div class='navdemo'>
+    <div class='front'>1234</div>
+    <div class='bottom'>5678</div> 
+  </div>
+</div>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .demowrapper {
+    perspective: 200px;
+  }
+
+  .navdemo {
+    position: relative;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transition: all 1s;
+  }
+
+  .navdemo .front, .navdemo .bottom {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  .navdemo .front {
+    background-color:skyblue;
+    transform: translate(-50%, -50%) translateZ(20px);
+    z-index: 1;
+  }
+
+  .navdemo .bottom {
+    background-color:pink;
+    transform: translate(-50%, -50%) translateY(50%) rotateX(-90deg);
+  }
+
+  .navdemo:hover {
+    transform: rotateX(90deg);
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+
+<style>
+  .demowrapper {
+    perspective: 600px;
+  }
+
+  .navdemo {
+    position: relative;
+    margin: 0 auto;
+    width: 200px;
+    height: 80px;
+    transform-style: preserve-3d;
+    transition: all 1s;
+  }
+
+  .navdemo .front, .navdemo .bottom {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  .navdemo .front {
+    background-color:skyblue;
+    transform: translate(-50%, -50%) translateZ(20px);
+    z-index: 1;
+  }
+
+  .navdemo .bottom {
+    background-color:pink;
+    transform: translate(-50%, -50%) translateY(50%) rotateX(-90deg);
+  }
+
+  .navdemo:hover {
+    transform: rotateX(90deg);
+  }
+</style>
+**效果：(引入wrapper的perspective属性)**
+<div class='demowrapper'>
+  <div class='navdemo'>
+    <div class='front'>1234</div>
+    <div class='bottom'>5678</div> 
+  </div>
+</div>
+
+**效果：(没有perspective属性)**
+<div class='navdemo'>
+  <div class='front'>1234</div>
+  <div class='bottom'>5678</div> 
+</div>
+
+**旋转木马**
+{% tabs 3d4 %}
+<!-- tab HTML -->
+``` HTML
+<div class=wrapperCarousel>
+  <section>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </section>
+</div>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+<style>
+  .wrapperCarousel {
+    perspective: 1000px;
+    height: 300px;
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  .wrapperCarousel section:hover {
+    animation-play-state: paused
+  }
+
+  .wrapperCarousel>section {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    transform-style: preserve-3d;
+    animation: rotate 10s linear infinite
+  }
+
+  .wrapperCarousel>section>div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .wrapperCarousel>section>div:nth-child(1){
+    background-image: url(/img/h5-css3-learning/amazon-logo.png);
+    transform: translateZ(150px);
+  }
+  .wrapperCarousel>section>div:nth-child(2){
+    background-image: url(/img/h5-css3-learning/apple-logo.png);
+    transform: rotateY(90deg) translateZ(180px);
+  }
+  .wrapperCarousel>section>div:nth-child(3){
+    background-image: url(/img/h5-css3-learning/google-logo.png);
+    transform: rotateY(180deg) translateZ(180px);
+  }
+  .wrapperCarousel>section>div:nth-child(4){
+    background-image: url(/img/h5-css3-learning/microsoft-logo.png);
+    transform: rotateY(270deg) translateZ(180px);
+  }
+
+  @keyframes rotate {
+    0%{}
+    100%{
+      transform: rotateY(360deg)
+    }
+  }
+</style>
+```
+<!-- endtab -->
+{% endtabs %}
+<style>
+  .wrapperCarousel {
+    perspective: 1000px;
+    height: 300px;
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  .wrapperCarousel section:hover {
+    animation-play-state: paused
+  }
+
+  .wrapperCarousel>section {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    transform-style: preserve-3d;
+    animation: rotate 10s linear infinite
+  }
+
+  .wrapperCarousel>section>div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .wrapperCarousel>section>div:nth-child(1){
+    background-image: url(/img/h5-css3-learning/amazon-logo.png);
+    transform: translateZ(150px);
+  }
+  .wrapperCarousel>section>div:nth-child(2){
+    background-image: url(/img/h5-css3-learning/apple-logo.png);
+    transform: rotateY(90deg) translateZ(180px);
+  }
+  .wrapperCarousel>section>div:nth-child(3){
+    background-image: url(/img/h5-css3-learning/google-logo.png);
+    transform: rotateY(180deg) translateZ(180px);
+  }
+  .wrapperCarousel>section>div:nth-child(4){
+    background-image: url(/img/h5-css3-learning/microsoft-logo.png);
+    transform: rotateY(270deg) translateZ(180px);
+  }
+
+  @keyframes rotate {
+    0%{}
+    100%{
+      transform: rotateY(360deg)
+    }
+  }
+</style>
+
+**效果：**
+<div class=wrapperCarousel>
+  <section>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </section>
 </div>
 
 ## 字体图标

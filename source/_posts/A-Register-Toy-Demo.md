@@ -40,7 +40,7 @@ typora-root-url: ..
 &emsp;&emsp;<code>CURRENT_MACHINE_ID = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip().replace('-', '')</code>
 
 &emsp;&emsp;直接调用命令行显示结果如下：
-![命令行](/img/2021-10-31-A-Register-Toy-Demo/01.png)
+![命令行](/img/A-Register-Toy-Demo/01.png)
 
 &emsp;&emsp;在后面进行了一系列操作如<code>.spilt('\n')[1]</code>（取出以换行符为分割的元素），<code>.strip()</code>（去掉首尾的空格），<code>.replace('-', '')</code>（把连字符-去掉）等，最终生成了一个32位十六进制的字符串作为软件注册时机器的识别编码。
 

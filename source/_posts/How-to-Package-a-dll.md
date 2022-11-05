@@ -13,17 +13,17 @@ typora-root-url: ..
 
 &emsp;&emsp;打开Visual Studio 2019，在界面中选择<code>创建新项目(<u>N</u>)</code>。
 
-![创建新项目](/img/2021-09-29-How-to-Package-a-dll/01.png)
+![创建新项目](/img/How-to-Package-a-dll/01.png)
 
 &emsp;&emsp;随后选择<code>动态链接库</code>项目，按照步骤依次将项目名称、位置以及解决方案名称设置好。创建完成后结构如图所示：
 
-![创建完成](/img/2021-09-29-How-to-Package-a-dll/02.png)
+![创建完成](/img/How-to-Package-a-dll/02.png)
 
 ## 引入调用的文件、配置项目所需的OpenCV库文件
 
 &emsp;&emsp;将原项目中所有<code>.h</code>的头文件复制到该解决方案所在的文件夹中，并右键单击解决方案的<code>头文件</code>-><code>添加</code>-><code>现有项</code>，将这些头文件添加进解决方案中，所有被调用到的<code>.cpp</code>也进行相同的操作。完成之后的结果如下：
 
-![引入头文件与源文件](/img/2021-09-29-How-to-Package-a-dll/03.png)
+![引入头文件与源文件](/img/How-to-Package-a-dll/03.png)
 
 &emsp;&emsp;由于此项目涉及图像处理最常用的OpenCV库，打包dll也需要进行相应的环境配置。点击VS菜单栏的<code>视图(V)</code>-><code>属性管理器</code>，右键单击本项目，选择<code>添加新项目属性表</code>，添加后双击该属性表进行编辑。在<code>VC++目录</code>的包含目录中配置路径如下：
 
@@ -320,7 +320,7 @@ vector<recognizedObjectLocation> test(string testImgLocation, string loadTemplat
 ```
 {% endnote %}
 &emsp;&emsp;另外，我把line2Dup.cpp中一些输出语句注释掉了，屏蔽掉控制台的输出。而TerryJoe学长解释了代码中各个坐标系下变换中公式的由来，现一并粘贴于此（无关信息已马赛克处理。）
-![说明](/img/2021-09-29-How-to-Package-a-dll/04.png)
+![说明](/img/How-to-Package-a-dll/04.png)
 
 ## 生成dll文件
 
@@ -367,11 +367,11 @@ int main()
 
 &emsp;&emsp;将dll项目中的各个头文件添加进测试项目之中。将第四步中生成的<code>.dll</code>、<code>.lib</code>文件粘贴于调用函数程序同一文件夹下，如图所示：
 
-![项目结构](/img/2021-09-29-How-to-Package-a-dll/05.png)
+![项目结构](/img/How-to-Package-a-dll/05.png)
 
 &emsp;&emsp;然后按照第二步里的方法，添加OpenCV库，并在<code>链接器</code>-><code>输入</code>的附加依赖项中额外添加之前生成的<code>.lib</code>文件。
 
 &emsp;&emsp;最后运行程序即可：
 
-![项目结构](/img/2021-09-29-How-to-Package-a-dll/06.png)
+![项目结构](/img/How-to-Package-a-dll/06.png)
 

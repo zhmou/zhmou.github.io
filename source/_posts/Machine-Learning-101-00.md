@@ -32,7 +32,7 @@ table
 
 &emsp;&emsp;譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。
 
-![MNIST数据集图片识别](/img/2022-3-9-Machine-Learning-101/Figure_1.png)
+![MNIST数据集图片识别](/img/Machine-Learning-101/Figure_1.png)
 
 <div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
 
@@ -52,7 +52,7 @@ table
 &emsp;&emsp;对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。
 
 &emsp;&emsp;基于此，我们建立一个简单的线性模型：
-![线性模型](/img/2022-3-9-Machine-Learning-101/Figure_2.png)
+![线性模型](/img/Machine-Learning-101/Figure_2.png)
 
 &emsp;&emsp;此外，我们还需要一个“打分”的函数来评估模型在当前样本（所谓样本，结合这个例子来说就是上述列表里的某一行）上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。
 
@@ -70,7 +70,7 @@ $$
 &emsp;&emsp;我们把这个步骤称作“**前向运算**”/“**前馈运算**”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。
 &emsp;&emsp;在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。
 
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
+<img src="/img/Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
 
 &emsp;&emsp;将其应用于我们的例子中：当我们将两个参数$w、b$沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。
 
@@ -86,7 +86,7 @@ $$
 
 &emsp;&emsp;接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。
 
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
+<img src="/img/Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
 
 $$
 \begin{align*}
@@ -154,7 +154,7 @@ x=\begin{bmatrix} 1 & 0 & 1 \\\\ 1 & 1 & 0 \\\\ 1 & 0 & 0 \\\\ 1 & 1 & 1\end{bma
 $$
 
 &emsp;&emsp;类似于第二部分中给出的例子，我们设计出一个相较于前者更为复杂的网络：
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/>
+<img src="/img/Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/>
 
 &emsp;&emsp;在两个隐藏层向各个下一层神经元传输相应数字时(箭头所示位置)，需要引入非线性变换的激活函数(Activation function)，这里选用的是Sigmoid函数：$𝑆(𝑥)=\frac{1}{(1+𝑒^{−𝑥})}$，它将实数域R的数字映射至(0, 1)内。网络最后一层的Softmax函数也是一种非线性变换，它将该层所有结果都映射到(0, 1)内，不改变大小的相对位置。对于该层的各个元素$x_i$，经变换后的值计算如下：
 $$
@@ -167,18 +167,18 @@ $$
 
 &emsp;&emsp;**正向运算：**
 &emsp;&emsp;首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/>
+<img src="/img/Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/>
 
 &emsp;&emsp;**计算Loss：**
 &emsp;&emsp;在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/>
+<img src="/img/Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/>
 
 &emsp;&emsp;**反向传播：**
 &emsp;&emsp;这一部分公式太多，懒得用$\LaTeX$再整理一遍，直接借用之前自己做的PPT里面的推导过程（不过说起来这里面的矩阵转置当时弄得我有些晕，其实你需要弄清楚对应元素的位置就比较清楚了。）：
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/>
+<img src="/img/Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/>
 
 &emsp;&emsp;**更新权重：**
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/>
+<img src="/img/Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/>
 
 >**小结与反思**
 同单层模型一样，多层模型仍采用反向传播算法来进行权重的更新。
@@ -194,7 +194,7 @@ $$
 &emsp;&emsp;随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。
 &emsp;&emsp;小批量(随机)梯度下降：将全体样本划分为若干个mini-batch，每个batch中存在若干样本，随机抽出一个mini-batch，计算该批次样本中的loss后更新权重w与偏置b，直到跑完所有mini-batch后，记作训练一个轮次。在训练完一个轮次后。对样本进行shuffle处理，即重新划分mini-batch，再次进行训练，形象化的比喻可以称作“洗牌”，这也是为什么英文叫做"shuffle"。
 
-<img src="/img/2022-3-9-Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
+<img src="/img/Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
 
 &emsp;&emsp;三种不同方式的对比：  
 &emsp;&emsp;一般来说，小批量梯度下降通过选取部分样本引入了更大噪声，使得它在解空间的“鞍点”位置更容易受噪声扰动，在一些情况下性能表现比批量梯度下降更好。而随机梯度下降更新权重只关注当前样本的梯度，所以尽管每一步使得当前样本得到最优的表现，但从整体样本考虑则不一定最优，且每一个样本前向计算时都需要依赖上一个样本反向传播后更新的权重，并行化程度不如其它两者高。

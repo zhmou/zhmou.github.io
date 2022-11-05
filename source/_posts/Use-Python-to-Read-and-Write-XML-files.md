@@ -264,11 +264,11 @@ with open('modified.xml', 'w') as f:
 ```
 &emsp;&emsp;但仍存在其问题，由于读取XML文件时，元素之间的换行符与空格被当作文本内容(在DOM下同样被视作元素)，从而<code>.writexml</code>参数中的换行、缩进同样对其生效，导致新加的元素格式正常，而原来排版工整的元素出现了格式问题：
 
-![换行](/img/2021-10-12-Use-Python-to-Read-and-Write-XML-files/01.png "换行问题")
+![换行](/img/Use-Python-to-Read-and-Write-XML-files/01.png "换行问题")
 <div align="center">换行问题</div>
 <br>
 
-![正常](/img/2021-10-12-Use-Python-to-Read-and-Write-XML-files/02.png "正常效果")
+![正常](/img/Use-Python-to-Read-and-Write-XML-files/02.png "正常效果")
 <div align="center">正常效果</div>
 
 ## 03 SAX解析XML文件
