@@ -3060,17 +3060,14 @@ body {
   background-position: 50% 50%;
   background-size: cover;
 }
-.sidebar {
-  opacity: 1;
-}
 .sidebar-inner {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.6);
 }
 .header-inner {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.6);
 }
 .main-inner {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 .back-to-top {
   border-radius: 0 0 20px 20px;

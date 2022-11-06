@@ -28,6 +28,9 @@
 }
 
 .shortcut {
+    position: sticky;
+    z-index: 2;
+    top: 0;
     height: 32px;
     line-height: 32px;
     background-color: #f1f1f1;
@@ -131,7 +134,7 @@
 }
 
 .hotwords ul li {
-    display: inline;
+    float: left;
     margin: 0 12px;
 }
 
@@ -185,10 +188,11 @@
     height: 45px;
     background-color: #b1191a;
     border-radius: 25px 25px 0 0;
+    z-index: 1;
 }
 
 .nav .navitems {
-    float: right;
+    float: left;
 }
 
 .dropdown .dt {
@@ -208,15 +212,16 @@
 }
 
 .dropdown .dd {
-    visibility: hidden;
+    display: none;
 }
 
 .dropdown:hover .dd {
-    visibility: visible;
+    z-index: 1;
+    position: absolute;
+    display: block;
     width: 230px;
-    height: 465px;
+    height: 467px;
     background-color: #c81625;
-    border-radius: 0 0 25px 25px;
 }
 
 .dd ul::before {
@@ -232,8 +237,8 @@
     height: 31px;
     line-height: 31px;
     font-size: 14px;
-    margin-left: 2px;
     text-indent: 10px;
+    transition: all 0.4s;
 }
 
 .dd ul li::after {
@@ -251,6 +256,9 @@
 
 .dd ul li:hover {
     background-color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 2px;
 }
 
 .dd ul li:hover::after {
@@ -272,4 +280,140 @@
 
 .dd ul li:hover .slash {
     color: #c81625;
+}
+
+.navitems ul li {
+    float: left;
+}
+
+.navitems ul li a {
+    display: block;
+    height: 45px;
+    font-size: 16px;
+    line-height: 45px;
+    padding: 0 25px;
+}
+
+.footer {
+    height: 415px;
+    background-color: #f5f5f5;
+    padding-top: 30px;
+}
+
+.footer .mod_service {
+    height: 80px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mod_service ul li {
+    height: 50px;
+    width: 240px;
+    float: left;
+    padding-left: 35px;
+
+}
+
+.mod_service ul li h5 {
+    float: left;
+    margin-right: 8px;
+    background-image: url(../images/icons.png);
+    background-repeat: no-repeat;
+    height: 50px;
+    width: 50px;
+    font-size: 0px;
+
+}
+
+.mod_service ul li h4 {
+    font-size: 14px;
+}
+
+.mod_service ul li p {
+    font-size: 12px;
+}
+
+.mod_service ul li .certified_goods {
+    background-position: -253px -3px;
+}
+
+.mod_service ul li .fast_delivery {
+    background-position: -255px -54px;
+}
+
+.mod_service ul li .customer_service {
+    background-position: -257px -106px;
+}
+
+.mod_service ul li .special_service {
+    background-position: -258px -157px;
+}
+
+.mod_service ul li .help_center {
+    background-position: -257px -209px;
+}
+
+.mod_help {
+    height: 185px;
+    padding-top: 20px;
+    padding-left: 50px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mod_help dl {
+    float: left;
+    width: 200px;
+}
+
+.mod_help dl:last-child {
+    width: 90px;
+}
+
+.mod_help dl:last-child img {
+    padding-top: 5px;
+    padding-bottom: 8px;
+    margin-left: -12px;
+}
+
+.mod_help dl:last-child dd p {
+    font-size: 12px;
+    margin-left: -3px;
+    color: #333;
+}
+
+
+.mod_help dl dt {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.mod_copyright {
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+.mod_copyright .links {
+    margin-bottom: 20px;
+    margin-left: 95px;
+}
+
+.links ul li {
+    float: left;
+}
+
+.links ul li:nth-of-type(2n-1) {
+    padding: 0 15px;
+}
+
+.links ul li:nth-of-type(2n) {
+    width: 1px;
+    height: 12px;
+    background-color: #333;
+    vertical-align: middle;
+    margin-top: 3px;
+}
+
+.mod_copyright .copyright {
+    line-height: 20px;
 }
