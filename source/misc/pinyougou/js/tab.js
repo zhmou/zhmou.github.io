@@ -19,10 +19,9 @@ for (let j = 0; j < ul_lists.length; j++) {
             }
             this.className = "style_red";
             for (let m = 0; m < tab_contents[this.getAttribute('which_tab')].getElementsByClassName('tab_list_item').length; m++) {
-                tab_contents[this.getAttribute('which_tab')].getElementsByClassName('tab_list_item')[m].style.display == 'none';
+                tab_contents[this.getAttribute('which_tab')].getElementsByClassName('tab_list_item')[m].className = 'tab_list_item display_none';
             }
-            console.log(tab_contents[this.getAttribute('which_tab')].getElementsByClassName('tab_list_item')[this.getAttribute('which_page')])
-            tab_contents[this.getAttribute('which_tab')].getElementsByClassName('tab_list_item')[this.getAttribute('which_page')].style.display == 'block';
+            tab_contents[this.getAttribute('which_tab')].getElementsByClassName('tab_list_item')[this.getAttribute('which_page')].className = 'tab_list_item';
         }
     }
     a_lists.push(a_per_tab)

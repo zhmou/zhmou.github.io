@@ -664,11 +664,6 @@
     overflow: hidden;
 }
 
-.tab_content {
-    height: 100%;
-    overflow: hidden;
-}
-
 .tab_list_item>div {
     float: left;
     height: 361px;
@@ -718,4 +713,8 @@
     z-index: 1;
     display: block;
     border-bottom: 1px solid #ccc;
+}
+
+.display_none {
+    display: none;
 }
