@@ -49,6 +49,14 @@ pwd.onkeyup = function () {
         span[2].innerHTML = "<i class='error_icon'></i> 密码不满足要求，请重新输入";
         span[2].className = "error";
     }
+
+    if (this.value != confirm_pwd.value && confirm_pwd.value.length != 0) {
+        span[3].innerHTML = "<i class='error_icon'></i> 两次密码输入不一致，请重新输入";
+        span[3].className = "error";
+    } else if (this.value == confirm_pwd.value && confirm_pwd.value.length != 0) {
+        span[3].innerHTML = "<i class='success_icon'></i> 两次密码输入相同";
+        span[3].className = "success";
+    }
     checkStatus();
 }
 
@@ -57,7 +65,7 @@ confirm_pwd.onkeyup = function () {
         span[3].innerHTML = "<i class='info_icon'></i> 请重复输入的密码";
         span[3].className = "info";
     }
-    if (this.value != pwd.value) {
+    else if (this.value != pwd.value) {
         span[3].innerHTML = "<i class='error_icon'></i> 两次密码输入不一致，请重新输入";
         span[3].className = "error";
     } else {

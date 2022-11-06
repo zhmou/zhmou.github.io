@@ -217,16 +217,16 @@ fn2 = function() {
 &emsp;&emsp;**常见鼠标事件**
 <div class='center'>
 
-| 鼠标事件 | 触发条件 |
-| ---- | ---- |
-| <code>onclick</code> | 点击左键 |
-| <code>onmouseover</code> | 鼠标经过 |
-| <code>onmouseout</code> | 鼠标离开 |
-| <code>onfocus</code> | 获得鼠标焦点 |
-| <code>onblur</code> | 失去鼠标焦点 |
-| <code>onmousemove</code> | 鼠标移动 |
-| <code>onmouseup</code> | 鼠标弹起 |
-| <code>onmousedown</code> | 鼠标按下 |
+| 鼠标事件                 | 触发条件     |
+| ------------------------ | ------------ |
+| <code>onclick</code>     | 点击左键     |
+| <code>onmouseover</code> | 鼠标经过     |
+| <code>onmouseout</code>  | 鼠标离开     |
+| <code>onfocus</code>     | 获得鼠标焦点 |
+| <code>onblur</code>      | 失去鼠标焦点 |
+| <code>onmousemove</code> | 鼠标移动     |
+| <code>onmouseup</code>   | 鼠标弹起     |
+| <code>onmousedown</code> | 鼠标按下     |
 
 </div>
 <div class='clear'></div>
@@ -332,7 +332,10 @@ fn2 = function() {
 </script>
 
 ### 改变元素属性
-<code>element.***属性名***</code>
+- <code>element.***属性名***</code>（内置属性 id、src等，可读写）
+- <code>element.***getAttribute('属性名')***</code>（自定义属性）
+- <code>element.***setAttribute('属性名', 值)*** （主要是自定义属性）
+- <code>element.***removeAttribute('属性名')***</code>（移除某个属性）
 
 ### 改变表单属性
 &emsp;&emsp;利用DOM可以操作如下表单元素的属性:
