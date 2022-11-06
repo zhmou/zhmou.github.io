@@ -394,7 +394,33 @@ JS中的样式采取驼峰命名法
 JS修改style样式操作，产生的是行内样式
 {% endnote %}
 **示例：修改文本框内容**
-
+{% tabs changeInputdemo %}
+<!-- tab HTML -->
+``` HTML
+<input type='text' value='默认' id='inputdemo'/>
+```
+<!-- endtab -->
+<!-- tab Javascript -->
+``` Javascript
+    var demo = document.getElementById('inputdemo');
+    var defaultString = demo.value;
+    demo.style.color = '#666';
+    demo.onfocus = function(){
+        if (demo.value === defaultString) {
+            demo.value = '';
+            demo.style.color = 'red';
+        }
+    }
+    demo.onblur = function(){
+        if (demo.value === '') {
+            demo.value = defaultString;
+            demo.style.color = '#666';
+        }
+    }
+```
+<!-- endtab -->
+{% endtabs %}
+**效果：**
 <input type='text' value='默认' id='inputdemo'/>
 <script>
     var demo = document.getElementById('inputdemo');

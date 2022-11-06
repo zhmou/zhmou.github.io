@@ -39,12 +39,22 @@ header {
 }
 
 .registerarea .register_bd {
-    width: 600px;
-    margin: 50px auto 0;
+    width: 800px;
+    margin: 50px 300px 0;
 }
 
 .register_bd ul li {
     margin-bottom: 20px;
+}
+
+.register_bd ul li input {
+    padding-left: 0.5em;
+    transition: all 0.1s linear;
+}
+
+.register_bd ul li input:focus {
+    border: 2px solid #2196F3;
+    border-radius: 10px;
 }
 
 .register_bd ul li i {
@@ -63,6 +73,19 @@ header {
     width: 242px;
     height: 37px;
     border: 1px solid #ccc;
+}
+
+.info {
+    color: #666;
+}
+
+.info_icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/info.png);
+    background-repeat: no-repeat;
+    vertical-align: middle;
 }
 
 .error {
@@ -136,7 +159,14 @@ header {
 
 }
 
-.btn:active {
+.btn:disabled {
+    cursor: not-allowed;
+    text-decoration: line-through;
+    background-color: #ccc;
+    color: #333;
+}
+
+.btn:active:not(:disabled) {
     transform: translate(.1rem, .1rem);
     box-shadow: 0.1rem 0.1rem .3rem rgba(0, 0, 0, 0.9);
 }
