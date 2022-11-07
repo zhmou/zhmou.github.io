@@ -43,3 +43,8 @@ categories: 项目
 &emsp;&emsp;或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑**增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。**，此外，还需要**在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。**
 
 # 层叠上下文相关
+&emsp;&emsp;z-index在定位元素上生效，需要指定position:xxx
+
+# tab分页栏的制作
+
+

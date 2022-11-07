@@ -334,7 +334,7 @@ fn2 = function() {
 ### 改变元素属性
 - <code>element.***属性名***</code>（内置属性 id、src等，可读写）
 - <code>element.***getAttribute('属性名')***</code>（自定义属性）
-- <code>element.***setAttribute('属性名', 值)*** （主要是自定义属性）
+- <code>element.***setAttribute('属性名', 值)***</code> （主要是自定义属性）
 - <code>element.***removeAttribute('属性名')***</code>（移除某个属性）
 
 ### 改变表单属性
