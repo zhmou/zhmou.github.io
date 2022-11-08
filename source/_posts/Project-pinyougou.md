@@ -46,5 +46,6 @@ categories: 项目
 &emsp;&emsp;z-index在定位元素上生效，需要指定position:xxx
 
 # tab分页栏的制作
-
+&emsp;&emsp;首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。
+&emsp;&emsp;对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。
 

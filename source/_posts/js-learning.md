@@ -442,3 +442,25 @@ JS修改style样式操作，产生的是行内样式
         }
     }
 </script>
+
+### 节点操作
+&emsp;&emsp;DOM树中，一切都是节点。
+
+- 一般地，节点至少拥有nodeType nodeName nodeValue这三个基本属性
+    - 元素节点 nodeType为1
+    - 属性节点 nodeType为2
+    - 文本节点 nodeType为3
+<br>
+- <code>node.***parentNode***</code>  获取离元素最近的父节点
+- <code>node.***childNodes***</code>  子节点，包含元素节点 文本节点（因此一般不提倡使用）
+- <code>node.***children***</code>  子元素节点
+- <code>node.***firstChild / lastChild***</code>  第一 / 最后一个 子节点
+- <code>node.***firstElementChild / lastElementChild***</code> （兼容性问题）第一 / 最后一个 子元素节点
+    - 实际写法：<code>node.***children[0/node.children.length-1]***</code> 
+- <code>node.***nextSibling / previousSibling***</code>  下一个兄弟节点
+- <code>node.***nextElementSibling / previousElementSibling***</code>  下一个兄弟元素节点
+- <code>document.***creatElement('tagName')***</code>  创建元素节点
+- <code>node.***appendChild(child)***</code>  添加节点至node节点结尾
+- <code>node.***insertBefore(child, 位置)***</code>  添加节点至node节点指定位置之前
+- <code>node.***removeChild(child)***</code>  删除节点
+- <code>node.***cloneNode()***</code>  复制节点，默认空参数 或者 false 是浅拷贝，不复制里面的内容，为true是深拷贝

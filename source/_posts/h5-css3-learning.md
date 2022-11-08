@@ -66,6 +66,10 @@ categories: 学习
   - <b>autofocus</b> 自动获得焦点
   - <b>autocomplete</b> 自动补全 值: on / off
   - <b>multiple</b> 多选文件提交
+<br>
+- 自定义属性
+  - H5规定自定义属性data-开头作为属性名并赋值：比如<code>&lt;div data-index='1'&gt;&lt;/div&gt;</code>
+  - 获取属性<code>element.dataset.index</code>或者<code>element.dataset['index']</code>
 
 <!-- more -->
 
