@@ -714,3 +714,7 @@
     display: block;
     border-bottom: 1px solid #ccc;
 }
+
+.display_none {
+    display: none;
+}

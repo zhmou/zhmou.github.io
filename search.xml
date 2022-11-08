@@ -247,160 +247,6 @@
       </tags>
   </entry>
   <entry>
-    <title>力扣刷题小录</title>
-    <url>//posts/Leetcode-log/</url>
-    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
-</div>
-<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
-<h2 id="只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a><a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
-<p><strong>简述：</strong><br>
-  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
-  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
-<strong>思路：</strong><br>
-  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
-  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
-<span id="more"></span>
-<p><strong>题解：</strong><br></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.<span class="property">length</span> ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.<span class="property">length</span>; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
-</div>
-<h2 id="汉明重量-汉明距离"><a class="header-anchor" href="#汉明重量-汉明距离"></a><a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
-<p><strong>简述：</strong><br>
-  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。<br>
-  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
-<strong>思路：</strong><br>
-  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
-  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
-<strong>题解：</strong></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
-</div>
-<div class="note warning"><p>题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充。<br>
-具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a><br>
-否则在范例中，32位有符号数的最高位为1时，循环不会终止。</p>
-</div>
-<h2 id="进制转换-K进制表示下的各位数字总和-数字转换为16进制数"><a class="header-anchor" href="#进制转换-K进制表示下的各位数字总和-数字转换为16进制数"></a>进制转换 / <a href="https://leetcode.cn/problems/sum-of-digits-in-base-k/">K进制表示下的各位数字总和</a> / <a href="https://leetcode.cn/problems/convert-a-number-to-hexadecimal/">数字转换为16进制数</a></h2>
-<p><strong>简述：</strong><br>
-  ①给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。（K进制表示下的各位数字总和）<br>
-  ②给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 <i>补码运算</i> 方法。</p>
-<div class="note info"><p>注意:<br>
-十六进制中所有字母(a-f)都必须是小写。<br>
-十六进制字符串中不能包含多余的前导零。如果要转化的数为0，那么以单个字符'0'，来表示；对于其他情况，十六进制字符串中的第一个字符将不会是0字符。 <br>
-给定的数确保在32位有符号整数范围内。<br>
-不能使用任何由库提供的将数字直接转换或格式化为十六进制的方法。</p>
-</div>
-<p><strong>思路：</strong><br>
-  10进制转 k 进制：10进制的数字 除以 k，得到的余数就是目标待转换的数字的最后一位，再拿刚刚所得到的商继续除以k，如此循环，直到所得的商为0。<br>
-  对于题目②。特别地，对于32位有符号整数的表示，比如 -1 在32位有符号整数的表示，与无符号数下2<sup>32</sup>-1是一致的。<br>
-  此外，由于16进制数中存在a~f，余数为10即对应a、11对应b……可利用这种方式将对应字符保存起来：<code>String.fromCharCode(余数-10 + 'a'.charCodeAt() //即a对应的ascii码)</code><br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n, k</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        ret += <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">        n = -n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(n % k);</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> k = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true则说明该函数功能正确</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(n.<span class="title function_">toString</span>(k) == <span class="title class_">BaseChange</span>(n, k));</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>十六进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> toHex = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(num &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>,<span class="number">32</span>) + num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">BaseChange</span>(num);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n % <span class="number">16</span>&gt;= <span class="number">10</span>)&#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>() + n % <span class="number">16</span> - <span class="number">10</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(n % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="有效的完全平方数-x的平方根"><a class="header-anchor" href="#有效的完全平方数-x的平方根"></a><a href="https://leetcode.cn/problems/valid-perfect-square/">有效的完全平方数</a> / <a href="https://leetcode.cn/problems/sqrtx/">x的平方根</a></h2>
-<p><strong>简述：</strong><br>
-  ①判断一个数是否是完全平方数<br>
-  ②返回非负整数x的算术平方根(取整)<br>
-<strong>思路：</strong><br>
-  两者皆可用双指针二分查找的方式进行。设左指针l指向0，右指针r指向输入的数字。判断有效的完全平方数就是看[0, nums]里是否有一个数target使得target<sup>2</sup>=nums; 计算平方根则是找到满足target<sup>2</sup>&lt;=nums的最大target。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='left'> 
-<figure class="highlight javascript"><figcaption><span>有效的完全平方数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isPerfectSquare = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = num;</span><br><span class="line">    <span class="keyword">var</span> ans;</span><br><span class="line">    <span class="keyword">var</span> center;</span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &lt;= num)&#123;</span><br><span class="line">            <span class="comment">//每次满足条件的时候，ans都需要更新</span></span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            r = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans * ans == num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='right'> 
-<figure class="highlight javascript"><figcaption><span>x的平方根</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">x</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> mySqrt = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = x;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        <span class="keyword">var</span> center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &gt; x)&#123;</span><br><span class="line">            r = center - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div> 
-</div>
-<h2 id="双指针"><a class="header-anchor" href="#双指针"></a>双指针</h2>
-<h3 id="排序数组中两个数字之和"><a class="header-anchor" href="#排序数组中两个数字之和"></a><a href="https://leetcode.cn/problems/kLl5u1/">排序数组中两个数字之和</a></h3>
-<p><strong>简述：</strong><br>
-  给定一个已按照 <strong>升序排列</strong>  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。<br>
-  函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 &lt;= answer[0] &lt; answer[1] &lt; numbers.length。<br>
-  假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。<br>
-<strong>思路：</strong><br>
-  一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。<br>
-  为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 &lt;= i &lt;= j &lt;= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">numbers</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">target</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoSum = <span class="keyword">function</span>(<span class="params">numbers, target</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = numbers.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>( l&lt;=r ) &#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers[l] + numbers[r] &lt; target) &#123;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (numbers[l] + numbers[r] &gt; target) &#123; </span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> [l, r]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="动态规划"><a class="header-anchor" href="#动态规划"></a>动态规划</h2>
-<h3 id="路径的数目"><a class="header-anchor" href="#路径的数目"></a><a href="https://leetcode.cn/problems/2AoeFn/">路径的数目</a></h3>
-<p><strong>简述：</strong><br>
-  一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？<br>
-<strong>思路：</strong><br>
-  建立一个二维数组记录从顶点到达当前位置的路径数，对于如题所述的二维网格来说，位于中间的某个格子只能从上方的相邻格子或者左边的相邻格子走过来。因此当前格子的路径数等于左边格子的路径数 + 上边格子的路径数。而对于第一行或者第一列的格子，只能由左边或者上边格子走过来，因此这些格子的路径数都是1。<br>
-  而更简单的解法是利用组合数学（杨辉三角）：从(1,1)行进到(m,n)共要移动(m + n - 2)次，其中有(m-1)次是向右移动：所需次数为C(m+n-2, m-1) = (m+n-2)!/((n-1)!*(m-1)!)<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>路径数目</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">m</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> uniquePaths = <span class="keyword">function</span>(<span class="params">m, n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> path = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">        path.<span class="title function_">push</span>([]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; n; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j] + path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h3 id="爬楼梯的最少成本"><a class="header-anchor" href="#爬楼梯的最少成本"></a><a href="https://leetcode.cn/problems/GzCJIP/">爬楼梯的最少成本</a></h3>
-<p><strong>简述：</strong><br>
-  数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>
-  示例：<br>
-    <strong>输入</strong>：cost = [10, 15, 20]<br>
-    <strong>输出</strong>：15<br>
-    <strong>解释</strong>：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。<br>
-<strong>思路：</strong><br>
-  登到某级台阶所花费的总体力有两种可能，要么是从前一级一步登上来，要么是从前两级两步登上来。取两者中较小的体力耗费即可。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; cost</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var minCostClimbingStairs = function(cost) &#123;</span><br><span class="line">    var costTotalArray = [];</span><br><span class="line">    costTotalArray[0] = 0;</span><br><span class="line">    costTotalArray[1] = 0;</span><br><span class="line">    for (var i = 2; i &lt;= cost.length; i++)&#123;</span><br><span class="line">        costTotalArray.push(Math.min(cost[i-1] + costTotalArray[i-1], costTotalArray[i-2] + cost[i-2]))</span><br><span class="line">    &#125;</span><br><span class="line">    return costTotalArray[cost.length]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'>
-</div>
-<h2 id="可被-5-整除的二进制前缀"><a class="header-anchor" href="#可被-5-整除的二进制前缀"></a><a href="https://leetcode.cn/problems/binary-prefix-divisible-by-5/">可被 5 整除的二进制前缀</a></h2>
-<p><strong>简述：</strong><br>
-  给定一个二进制数组 nums ( 索引从0开始 )。我们将xi 定义为其二进制表示形式为子数组 nums[0..i] (从最高有效位到最低有效位)。<br>
-  例如，如果 nums =[1,0,1] ，那么 x0 = 1, x1 = 2, 和 x2 = 5。返回布尔值列表 answer，只有当 xi 可以被 5 整除时，答案 answer[i] 为 true，否则为 false。<br>
-<strong>思路：</strong><br>
-  定义一个xi，每读一位数字二进制数字就是左移一位（相当于乘以2）+ 该位数字，然后除以五取余，最后<strong>令xi等于该余数</strong>（这是一个比较巧妙的思路，这样xi就不会溢出），若所得余数为0，可以向answer中压入true，反之则压入false。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;boolean[]&#125;</span><br><span class="line"> */</span><br><span class="line">var prefixesDivBy5 = function(nums) &#123;</span><br><span class="line">    var ret = []</span><br><span class="line">    var number = 0;</span><br><span class="line">    for (var i = 0; i &lt; nums.length; i++)&#123;</span><br><span class="line">        number = number * 2 + nums[i];</span><br><span class="line">        number %= 5</span><br><span class="line">        if (!number)&#123;</span><br><span class="line">            ret.push(true);</span><br><span class="line">        &#125;</span><br><span class="line">        else ret.push(false);</span><br><span class="line">    &#125;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'>
-</div>]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>用VS 2019打包dll文件</title>
     <url>//posts/How-to-Package-a-dll/</url>
     <content><![CDATA[<p>  最近在看学长接手的<a href="https://sao-kirito.top/2021/09/15/shape_based_matching/">形状匹配(shape based matching)C++工程</a>，虽然看懂的不多，但是被要求将部分代码打包封装成dll，暴露简洁的接口供调用者使用。<br>
@@ -651,6 +497,160 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>力扣刷题小录</title>
+    <url>//posts/Leetcode-log/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
+<h2 id="只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a><a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
+<p><strong>简述：</strong><br>
+  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
+  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
+<strong>思路：</strong><br>
+  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
+  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
+<span id="more"></span>
+<p><strong>题解：</strong><br></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.<span class="property">length</span> ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.<span class="property">length</span>; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<h2 id="汉明重量-汉明距离"><a class="header-anchor" href="#汉明重量-汉明距离"></a><a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
+<p><strong>简述：</strong><br>
+  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。<br>
+  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
+<strong>思路：</strong><br>
+  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
+  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
+<strong>题解：</strong></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<div class="note warning"><p>题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充。<br>
+具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a><br>
+否则在范例中，32位有符号数的最高位为1时，循环不会终止。</p>
+</div>
+<h2 id="进制转换-K进制表示下的各位数字总和-数字转换为16进制数"><a class="header-anchor" href="#进制转换-K进制表示下的各位数字总和-数字转换为16进制数"></a>进制转换 / <a href="https://leetcode.cn/problems/sum-of-digits-in-base-k/">K进制表示下的各位数字总和</a> / <a href="https://leetcode.cn/problems/convert-a-number-to-hexadecimal/">数字转换为16进制数</a></h2>
+<p><strong>简述：</strong><br>
+  ①给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。（K进制表示下的各位数字总和）<br>
+  ②给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 <i>补码运算</i> 方法。</p>
+<div class="note info"><p>注意:<br>
+十六进制中所有字母(a-f)都必须是小写。<br>
+十六进制字符串中不能包含多余的前导零。如果要转化的数为0，那么以单个字符'0'，来表示；对于其他情况，十六进制字符串中的第一个字符将不会是0字符。 <br>
+给定的数确保在32位有符号整数范围内。<br>
+不能使用任何由库提供的将数字直接转换或格式化为十六进制的方法。</p>
+</div>
+<p><strong>思路：</strong><br>
+  10进制转 k 进制：10进制的数字 除以 k，得到的余数就是目标待转换的数字的最后一位，再拿刚刚所得到的商继续除以k，如此循环，直到所得的商为0。<br>
+  对于题目②。特别地，对于32位有符号整数的表示，比如 -1 在32位有符号整数的表示，与无符号数下2<sup>32</sup>-1是一致的。<br>
+  此外，由于16进制数中存在a~f，余数为10即对应a、11对应b……可利用这种方式将对应字符保存起来：<code>String.fromCharCode(余数-10 + 'a'.charCodeAt() //即a对应的ascii码)</code><br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n, k</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        ret += <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">        n = -n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(n % k);</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> k = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true则说明该函数功能正确</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(n.<span class="title function_">toString</span>(k) == <span class="title class_">BaseChange</span>(n, k));</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>十六进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> toHex = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(num &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>,<span class="number">32</span>) + num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">BaseChange</span>(num);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n % <span class="number">16</span>&gt;= <span class="number">10</span>)&#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>() + n % <span class="number">16</span> - <span class="number">10</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(n % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h2 id="有效的完全平方数-x的平方根"><a class="header-anchor" href="#有效的完全平方数-x的平方根"></a><a href="https://leetcode.cn/problems/valid-perfect-square/">有效的完全平方数</a> / <a href="https://leetcode.cn/problems/sqrtx/">x的平方根</a></h2>
+<p><strong>简述：</strong><br>
+  ①判断一个数是否是完全平方数<br>
+  ②返回非负整数x的算术平方根(取整)<br>
+<strong>思路：</strong><br>
+  两者皆可用双指针二分查找的方式进行。设左指针l指向0，右指针r指向输入的数字。判断有效的完全平方数就是看[0, nums]里是否有一个数target使得target<sup>2</sup>=nums; 计算平方根则是找到满足target<sup>2</sup>&lt;=nums的最大target。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='left'> 
+<figure class="highlight javascript"><figcaption><span>有效的完全平方数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isPerfectSquare = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = num;</span><br><span class="line">    <span class="keyword">var</span> ans;</span><br><span class="line">    <span class="keyword">var</span> center;</span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &lt;= num)&#123;</span><br><span class="line">            <span class="comment">//每次满足条件的时候，ans都需要更新</span></span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            r = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans * ans == num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='right'> 
+<figure class="highlight javascript"><figcaption><span>x的平方根</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">x</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> mySqrt = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = x;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        <span class="keyword">var</span> center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &gt; x)&#123;</span><br><span class="line">            r = center - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div> 
+</div>
+<h2 id="双指针"><a class="header-anchor" href="#双指针"></a>双指针</h2>
+<h3 id="排序数组中两个数字之和"><a class="header-anchor" href="#排序数组中两个数字之和"></a><a href="https://leetcode.cn/problems/kLl5u1/">排序数组中两个数字之和</a></h3>
+<p><strong>简述：</strong><br>
+  给定一个已按照 <strong>升序排列</strong>  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。<br>
+  函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 &lt;= answer[0] &lt; answer[1] &lt; numbers.length。<br>
+  假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。<br>
+<strong>思路：</strong><br>
+  一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。<br>
+  为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 &lt;= i &lt;= j &lt;= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">numbers</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">target</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoSum = <span class="keyword">function</span>(<span class="params">numbers, target</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = numbers.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>( l&lt;=r ) &#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers[l] + numbers[r] &lt; target) &#123;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (numbers[l] + numbers[r] &gt; target) &#123; </span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> [l, r]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h2 id="动态规划"><a class="header-anchor" href="#动态规划"></a>动态规划</h2>
+<h3 id="路径的数目"><a class="header-anchor" href="#路径的数目"></a><a href="https://leetcode.cn/problems/2AoeFn/">路径的数目</a></h3>
+<p><strong>简述：</strong><br>
+  一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？<br>
+<strong>思路：</strong><br>
+  建立一个二维数组记录从顶点到达当前位置的路径数，对于如题所述的二维网格来说，位于中间的某个格子只能从上方的相邻格子或者左边的相邻格子走过来。因此当前格子的路径数等于左边格子的路径数 + 上边格子的路径数。而对于第一行或者第一列的格子，只能由左边或者上边格子走过来，因此这些格子的路径数都是1。<br>
+  而更简单的解法是利用组合数学（杨辉三角）：从(1,1)行进到(m,n)共要移动(m + n - 2)次，其中有(m-1)次是向右移动：所需次数为C(m+n-2, m-1) = (m+n-2)!/((n-1)!*(m-1)!)<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>路径数目</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">m</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> uniquePaths = <span class="keyword">function</span>(<span class="params">m, n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> path = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">        path.<span class="title function_">push</span>([]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; n; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j] + path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h3 id="爬楼梯的最少成本"><a class="header-anchor" href="#爬楼梯的最少成本"></a><a href="https://leetcode.cn/problems/GzCJIP/">爬楼梯的最少成本</a></h3>
+<p><strong>简述：</strong><br>
+  数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>
+  示例：<br>
+    <strong>输入</strong>：cost = [10, 15, 20]<br>
+    <strong>输出</strong>：15<br>
+    <strong>解释</strong>：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。<br>
+<strong>思路：</strong><br>
+  登到某级台阶所花费的总体力有两种可能，要么是从前一级一步登上来，要么是从前两级两步登上来。取两者中较小的体力耗费即可。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; cost</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var minCostClimbingStairs = function(cost) &#123;</span><br><span class="line">    var costTotalArray = [];</span><br><span class="line">    costTotalArray[0] = 0;</span><br><span class="line">    costTotalArray[1] = 0;</span><br><span class="line">    for (var i = 2; i &lt;= cost.length; i++)&#123;</span><br><span class="line">        costTotalArray.push(Math.min(cost[i-1] + costTotalArray[i-1], costTotalArray[i-2] + cost[i-2]))</span><br><span class="line">    &#125;</span><br><span class="line">    return costTotalArray[cost.length]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'>
+</div>
+<h2 id="可被-5-整除的二进制前缀"><a class="header-anchor" href="#可被-5-整除的二进制前缀"></a><a href="https://leetcode.cn/problems/binary-prefix-divisible-by-5/">可被 5 整除的二进制前缀</a></h2>
+<p><strong>简述：</strong><br>
+  给定一个二进制数组 nums ( 索引从0开始 )。我们将xi 定义为其二进制表示形式为子数组 nums[0..i] (从最高有效位到最低有效位)。<br>
+  例如，如果 nums =[1,0,1] ，那么 x0 = 1, x1 = 2, 和 x2 = 5。返回布尔值列表 answer，只有当 xi 可以被 5 整除时，答案 answer[i] 为 true，否则为 false。<br>
+<strong>思路：</strong><br>
+  定义一个xi，每读一位数字二进制数字就是左移一位（相当于乘以2）+ 该位数字，然后除以五取余，最后<strong>令xi等于该余数</strong>（这是一个比较巧妙的思路，这样xi就不会溢出），若所得余数为0，可以向answer中压入true，反之则压入false。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;boolean[]&#125;</span><br><span class="line"> */</span><br><span class="line">var prefixesDivBy5 = function(nums) &#123;</span><br><span class="line">    var ret = []</span><br><span class="line">    var number = 0;</span><br><span class="line">    for (var i = 0; i &lt; nums.length; i++)&#123;</span><br><span class="line">        number = number * 2 + nums[i];</span><br><span class="line">        number %= 5</span><br><span class="line">        if (!number)&#123;</span><br><span class="line">            ret.push(true);</span><br><span class="line">        &#125;</span><br><span class="line">        else ret.push(false);</span><br><span class="line">    &#125;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'>
+</div>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>Javascript</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>品优购项目：踩坑细节记录</title>
     <url>//posts/Project-pinyougou/</url>
     <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
@@ -691,6 +691,10 @@ $$</p>
 <p>  在某个页面布局时，经常会遇到列表元素宽度难以确定的问题。譬如，在宽度为1200px的版心中布置5个&lt;li&gt;元素很容易确定单个元素的宽度可以是240px，但是又要使得这些元素间插入四个外边距值margin则需要一番计算：这需要使得一行内n个&lt;li&gt;元素减少的总宽度(n的倍数，假设单个表单元素减少的宽度以1px为单位)恰好是(n-1)的倍数。<br>
   或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑<strong>增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。</strong>，此外，还需要<strong>在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。</strong></p>
 <h1 id="层叠上下文相关"><a class="header-anchor" href="#层叠上下文相关"></a>层叠上下文相关</h1>
+<p>  z-index在定位元素上生效，需要指定position:xxx</p>
+<h1 id="tab分页栏的制作"><a class="header-anchor" href="#tab分页栏的制作"></a>tab分页栏的制作</h1>
+<p>  首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。<br>
+  对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。</p>
 ]]></content>
       <categories>
         <category>项目</category>
@@ -982,352 +986,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>JS杂项知识记录</title>
-    <url>//posts/js-learning/</url>
-    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
-</div>
-<h1 id="JS基础"><a class="header-anchor" href="#JS基础"></a>JS基础</h1>
-<h2 id="类型"><a class="header-anchor" href="#类型"></a>类型</h2>
-<ul>
-<li>基础数据类型<br>
-<strong>最新的 ECMAScript 标准定义了 8 种数据类型,分别是</strong>
-<ul>
-<li><code>string</code></li>
-<li><code>number</code></li>
-<li><code>bigint</code></li>
-<li><code>boolean</code></li>
-<li><code>null</code> (<code>typeof null</code>返回结果为object)</li>
-<li><code>undefined</code></li>
-<li><code>symbol</code> (ECMAScript 2016新增)</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>所有基本类型的值都是不可改变的。但需要注意的是，基本类型本身和一个赋值为基本类型的变量的区别。变量会被赋予一个新值，而原值不能像数组、对象以及函数那样被改变。</p>
-</blockquote>
-<ul>
-<li>引用类型
-<ul>
-<li><code>Object</code>（包含普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function）</li>
-</ul>
-</li>
-</ul>
-<p>基本数据类型会放在<b>栈</b>上，引用类型放在<b>堆</b>上</p>
-<span id="more"></span>
-<h2 id="函数的参数传递"><a class="header-anchor" href="#函数的参数传递"></a>函数的参数传递</h2>
-<ul>
-<li>基本数据类型的参数传递</li>
-</ul>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">a</span>) &#123;</span><br><span class="line">    a++;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="title function_">fn</span>(x)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x);</span><br></pre></td></tr></table></figure>
-可以看到传入函数<code>fn</code>的，是变量x的一个复制（值拷贝）。因此尽管函数体内部该变量发生变化，原变量x不发生改变。
-</div>
-<div class='clear'></div>
-</div>
-<ul>
-<li>引用类型的参数传递</li>
-</ul>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">a</span>) &#123;</span><br><span class="line">    a[<span class="number">0</span>] = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"><span class="title function_">fn</span>(x)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x);</span><br></pre></td></tr></table></figure>
-这里传入函数的变量a是引用类型（数组对象），实际上传入参数指向了堆中相同的地址，此时函数体内部改变了堆上对象的属性，在函数外也发生改变。
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="变量的作用域"><a class="header-anchor" href="#变量的作用域"></a>变量的作用域</h2>
-<h3 id="局部和全局变量"><a class="header-anchor" href="#局部和全局变量"></a>局部和全局变量</h3>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">1</span>;</span><br><span class="line">    p = <span class="number">2</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;局部作用域的局部变量p:&#x27;</span> + p);</span><br><span class="line">    <span class="comment">//局部作用域的全局变量</span></span><br><span class="line">    num = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;全局作用域的全局变量p:&#x27;</span> + p);</span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;未声明在函数内部赋值的变量属于全局变量:&#x27;</span> + num)</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<ul>
-<li>局部变量只在函数内部生效</li>
-<li>当局部变量与全局变量重名时，对变量的修改只对局部变量生效</li>
-<li>未声明在函数内部赋值的变量属于全局变量（即函数外可调用）</li>
-<li>函数的形参也是局部变量</li>
-</ul>
-<h3 id="作用域链"><a class="header-anchor" href="#作用域链"></a>作用域链</h3>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> num = <span class="number">2</span>;</span><br><span class="line">    <span class="title function_">fn2</span>();</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">fn2</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">fn</span>();</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-&emsp;&emsp;·内部函数访问外部变量，根据链式查找方式决定。
-<h2 id="JS的预解析"><a class="header-anchor" href="#JS的预解析"></a>JS的预解析</h2>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1.先向控制台打印变量，后声明该变量并赋值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// 控制台输出undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.先调用函数，后通过函数声明的方式创建函数</span></span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台输出&#x27;fn&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.以函数表达式创建函数（匿名函数）</span></span><br><span class="line"><span class="title function_">fn2</span>();</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">fn2</span>() = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台报错 Uncaught TypeError: fn2 is not a function</span></span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<p>  JS解释器在执行js脚本时，会先进行预解析，然后进行代码执行。<br>
-    (1)预解析将所有<strong>var声明</strong>的变量以及function提升至当前作用域的最前面。<br>
-    (2)按照预解析后的顺序依次执行。<br>
-  预解析分为变量预解析和函数预解析。<br>
-    (1)变量预解析将变量的声明放在最前方。<strong>不涉及变量赋值</strong><br>
-    (2)函数预解析将函数声明所创建的函数放在最前方。<strong>不涉及函数表达式创建的函数</strong></p>
-<p>  因此，上面的代码实际执行顺序如下：</p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">fn2</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 此时num未赋值，因此输出undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line">num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// fn()已经声明，可以正常调用</span></span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="comment">// fn2 只是一个变量，还不是函数，因此fn2()语句会出错。</span></span><br><span class="line"><span class="title function_">fn2</span>();</span><br><span class="line">fn2 = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h1 id="DOM：文档对象模型"><a class="header-anchor" href="#DOM：文档对象模型"></a>DOM：文档对象模型</h1>
-<h2 id="基础概念"><a class="header-anchor" href="#基础概念"></a>基础概念</h2>
-<ul>
-<li>文档
-<ul>
-<li>一个页面就是一个文档，DOM中用document表示</li>
-</ul>
-</li>
-<li>元素
-<ul>
-<li>页面中所有标签都是元素，DOM中用element表示</li>
-</ul>
-</li>
-<li>节点
-<ul>
-<li>网页中的所有内容都是节点（标签 属性 文本 注释等），DOM中用node表示</li>
-</ul>
-</li>
-</ul>
-<p><strong>DOM把以上内容都看做是对象</strong></p>
-<h2 id="获取元素"><a class="header-anchor" href="#获取元素"></a>获取元素</h2>
-<ul>
-<li><code>document.<em><strong>getElementById</strong></em></code>
-<ul>
-<li>参数:id字符串</li>
-<li>返回文档中拥有特定ID的元素，不存在则返回Null</li>
-<li>返回值为<em>一个</em> <strong>Element</strong> 对象</li>
-</ul>
-</li>
-<li><code>document.<em><strong>getElementsByTagName</strong></em></code>
-<ul>
-<li>参数:标签类名字符串</li>
-<li>返回某类标签 <strong>集合</strong> ，以伪数组形式存储，不存在则返回空的伪数组</li>
-<li>指定父元素：<em><strong>element</strong></em>.getElementsByTagName('Tag name')</li>
-</ul>
-</li>
-<li><code>document.<em><strong>getElementsByClassName</strong></em></code>
-<ul>
-<li>根据类名返回元素对象 <strong>集合</strong></li>
-</ul>
-</li>
-<li><code>document.<em><strong>querySelector</strong></em></code>
-<ul>
-<li>根据指定选择器返回<strong>第一个</strong>元素对象</li>
-<li>选择器需要加符号 . #</li>
-</ul>
-</li>
-<li><code>document.<em><strong>querySelectorAll</strong></em></code>
-<ul>
-<li>根据指定选择器返回所有元素对象集合</li>
-<li>选择器需要加符号 . #</li>
-</ul>
-</li>
-<li><code>document.<em><strong>body</strong></em></code>
-<ul>
-<li>获取body元素</li>
-</ul>
-</li>
-<li><code>document.<em><strong>documentElement</strong></em></code>
-<ul>
-<li>获取html元素</li>
-</ul>
-</li>
-</ul>
-<h2 id="事件基础"><a class="header-anchor" href="#事件基础"></a>事件基础</h2>
-<p>  事件：可以被JavaScript侦测到的行为。</p>
-<ul>
-<li>事件三要素
-<ul>
-<li>事件源 事件被触发的对象</li>
-<li>事件类型 如何触发（什么事件）</li>
-<li>事件处理程序</li>
-</ul>
-</li>
-</ul>
-<p><button id='event_btn'>测试按钮</button></p>
-<script>
-    var btn = document.getElementById('event_btn');
-    btn.onclick = function(){
-        alert("在此示例中：\n    按钮是事件源。\n    onclick是事件类型。\n    弹出当前窗口用到的alert函数就是事件处理程序。");
-    }
-</script>
-<p>  <strong>常见鼠标事件</strong></p>
-<div class='center'>
-<table>
-<thead>
-<tr>
-<th>鼠标事件</th>
-<th>触发条件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>onclick</code></td>
-<td>点击左键</td>
-</tr>
-<tr>
-<td><code>onmouseover</code></td>
-<td>鼠标经过</td>
-</tr>
-<tr>
-<td><code>onmouseout</code></td>
-<td>鼠标离开</td>
-</tr>
-<tr>
-<td><code>onfocus</code></td>
-<td>获得鼠标焦点</td>
-</tr>
-<tr>
-<td><code>onblur</code></td>
-<td>失去鼠标焦点</td>
-</tr>
-<tr>
-<td><code>onmousemove</code></td>
-<td>鼠标移动</td>
-</tr>
-<tr>
-<td><code>onmouseup</code></td>
-<td>鼠标弹起</td>
-</tr>
-<tr>
-<td><code>onmousedown</code></td>
-<td>鼠标按下</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class='clear'></div>
-<h2 id="操作元素"><a class="header-anchor" href="#操作元素"></a>操作元素</h2>
-<h3 id="改变元素内容"><a class="header-anchor" href="#改变元素内容"></a>改变元素内容</h3>
-<ul>
-<li><code>element.<em><strong>innerText</strong></em></code></li>
-<li><code>element.<em><strong>innerHTML</strong></em></code></li>
-<li>两者都能对元素内的文本内容进行读写操作，但是前者会忽略掉元素内的所有HTML标签以及源代码中的换行与空格。</li>
-</ul>
-<p><strong>示例：分时问候</strong></p>
-<div class="tabs" id="changeelement"><ul class="nav-tabs"><li class="tab active"><a href="#changeelement-1">HTML</a></li><li class="tab"><a href="#changeelement-2">CSS</a></li><li class="tab"><a href="#changeelement-3">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="changeelement-1"><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;changeContent&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeelement-2"><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#changeContent</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeelement-3"><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> div = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#changeContent&#x27;</span>);</span><br><span class="line">div.<span class="property">innerHTML</span> = <span class="title function_">getTimeNow</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getTimeNow</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">    <span class="keyword">var</span> hours = date.<span class="title function_">getHours</span>();</span><br><span class="line">    <span class="keyword">var</span> minutes = date.<span class="title function_">getMinutes</span>();</span><br><span class="line">    <span class="keyword">if</span>(minutes &lt; <span class="number">10</span>)</span><br><span class="line">        minutes = <span class="string">&#x27;0&#x27;</span> + minutes;</span><br><span class="line">    <span class="keyword">var</span> welcomeString;</span><br><span class="line">    <span class="keyword">if</span> (hours &gt;= <span class="number">5</span> &amp;&amp; hours &lt; <span class="number">7</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;清晨好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">7</span> &amp;&amp; hours &lt; <span class="number">11</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;早上好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">11</span> &amp;&amp; hours &lt; <span class="number">13</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;中午好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">13</span> &amp;&amp; hours &lt; <span class="number">17</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;下午好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">17</span> &amp;&amp; hours &lt; <span class="number">19</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;傍晚好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">19</span> &amp;&amp; hours &lt; <span class="number">23</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;晚上好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;夜深了&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> welcomeString + <span class="string">&#x27;，现在是&#x27;</span> + hours + <span class="string">&#x27;点&#x27;</span> + minutes + <span class="string">&#x27;分。&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
-<style>
-    #changeContent {
-        text-align: center;
-    }
-</style>
-<p><strong>效果：</strong></p>
-<div id='changeContent'></div>
-<script>
-    var div = document.querySelector('#changeContent');
-    div.innerHTML = getTimeNow();
-    function getTimeNow() {
-        var date = new Date();
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        if(minutes < 10)
-            minutes = '0' + minutes;
-        var welcomeString;
-        if (hours >= 5 && hours < 7){
-            welcomeString = '清晨好';
-        } 
-        else if (hours >= 7 && hours < 11){
-            welcomeString = '早上好';
-        } 
-        else if (hours >= 11 && hours < 13){
-            welcomeString = '中午好';
-        } 
-        else if (hours >= 13 && hours < 17){
-            welcomeString = '下午好';
-        } 
-        else if (hours >= 17 && hours < 19){
-            welcomeString = '傍晚好';
-        } 
-        else if (hours >= 19 && hours < 23){
-            welcomeString = '晚上好';
-        } 
-        else {
-            welcomeString = '夜深了';
-        }
-        return welcomeString + '，现在是' + hours + '点' + minutes + '分。'
-    }
-</script>
-<h3 id="改变元素属性"><a class="header-anchor" href="#改变元素属性"></a>改变元素属性</h3>
-<p><code>element.<em><strong>属性名</strong></em></code></p>
-<h3 id="改变表单属性"><a class="header-anchor" href="#改变表单属性"></a>改变表单属性</h3>
-<p>  利用DOM可以操作如下表单元素的属性:</p>
-<blockquote><p>type、value、checked、selected、disabled</p>
-</blockquote>
-<p><strong>示例：显示密码</strong></p>
-<div class="tabs" id="changeinput"><ul class="nav-tabs"><li class="tab active"><a href="#changeinput-1">HTML</a></li><li class="tab"><a href="#changeinput-2">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="changeinput-1"><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;password&#x27;</span> <span class="attr">id</span>=<span class="string">&#x27;pwd_demo_input&#x27;</span>/&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&#x27;pwd_demo_btn&#x27;</span>&gt;</span>显示密码<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeinput-2"><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> input = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;pwd_demo_input&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;pwd_demo_btn&#x27;</span>);</span><br><span class="line">btn.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> type = input.<span class="property">type</span>;</span><br><span class="line">    <span class="keyword">if</span> (type == <span class="string">&#x27;text&#x27;</span>) &#123;</span><br><span class="line">        input.<span class="property">type</span> = <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">innerHTML</span> = <span class="string">&#x27;显示密码&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">&#x27;password&#x27;</span>) &#123;</span><br><span class="line">        input.<span class="property">type</span> = <span class="string">&#x27;text&#x27;</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">innerHTML</span> = <span class="string">&#x27;隐藏密码&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
-<p><strong>效果：</strong><br>
-<input type='password' id='pwd_demo_input'/><button id='pwd_demo_btn'>显示密码</button></p>
-<script>
-    var input = document.getElementById('pwd_demo_input');
-    var btn = document.getElementById('pwd_demo_btn');
-    btn.onclick = function(){
-        var type = input.type;
-        if (type == 'text') {
-            input.type = 'password';
-            this.innerHTML = '显示密码';
-        }
-        else if (type == 'password') {
-            input.type = 'text';
-            this.innerHTML = '隐藏密码';
-        }
-    }
-</script>
-<h3 id="改变样式属性"><a class="header-anchor" href="#改变样式属性"></a>改变样式属性</h3>
-<p>  我们可以通过JS修改元素的大小、颜色、位置等样式</p>
-<ul>
-<li><code>element.<em><strong>style</strong></em></code>
-<ul>
-<li>行内样式操作</li>
-</ul>
-</li>
-<li><code>element.<em><strong>className</strong></em></code>
-<ul>
-<li>类名样式操作，适用于样式较多或者功能复杂的情况</li>
-</ul>
-</li>
-</ul>
-<div class="note warning"><p>JS中的样式采取驼峰命名法<br>
-JS修改style样式操作，产生的是行内样式</p>
-</div>
-<p><strong>示例：修改文本框内容</strong></p>
-<div class="tabs" id="changeinputdemo"><ul class="nav-tabs"><li class="tab active"><a href="#changeinputdemo-1">HTML</a></li><li class="tab"><a href="#changeinputdemo-2">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="changeinputdemo-1"><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;text&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;默认&#x27;</span> <span class="attr">id</span>=<span class="string">&#x27;inputdemo&#x27;</span>/&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeinputdemo-2"><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> demo = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;inputdemo&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> defaultString = demo.<span class="property">value</span>;</span><br><span class="line">demo.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;#666&#x27;</span>;</span><br><span class="line">demo.<span class="property">onfocus</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (demo.<span class="property">value</span> === defaultString) &#123;</span><br><span class="line">        demo.<span class="property">value</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        demo.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">demo.<span class="property">onblur</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (demo.<span class="property">value</span> === <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">        demo.<span class="property">value</span> = defaultString;</span><br><span class="line">        demo.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;#666&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
-<p><strong>效果：</strong><br>
-<input type='text' value='默认' id='inputdemo'/></p>
-<script>
-    var demo = document.getElementById('inputdemo');
-    var defaultString = demo.value;
-    demo.style.color = '#666';
-    demo.onfocus = function(){
-        if (demo.value === defaultString) {
-            demo.value = '';
-            demo.style.color = 'red';
-        }
-    }
-    demo.onblur = function(){
-        if (demo.value === '') {
-            demo.value = defaultString;
-            demo.style.color = '#666';
-        }
-    }
-</script>]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>语法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Python读写XML文件</title>
     <url>//posts/Use-Python-to-Read-and-Write-XML-files/</url>
     <content><![CDATA[<div class="note warning"><p>2022 / 10 / 19 说明：本文仍为未完成状态，且后续很长一段时间内将不会进一步完善此文。请谨慎阅读这篇文章。</p>
@@ -1460,7 +1118,14 @@ JS修改style样式操作，产生的是行内样式</p>
 <li><b>placeholder</b> 占位提示文本 默认灰色，使用伪类选择器<code>input::placeholder</code>选择 值：对应文本</li>
 <li><b>autofocus</b> 自动获得焦点</li>
 <li><b>autocomplete</b> 自动补全 值: on / off</li>
-<li><b>multiple</b> 多选文件提交</li>
+<li><b>multiple</b> 多选文件提交<br>
+<br></li>
+</ul>
+</li>
+<li>自定义属性
+<ul>
+<li>H5规定自定义属性data-开头作为属性名并赋值：比如<code>&lt;div data-index='1'&gt;&lt;/div&gt;</code></li>
+<li>获取属性<code>element.dataset.index</code>或者<code>element.dataset['index']</code></li>
 </ul>
 </li>
 </ul>
@@ -2310,6 +1975,386 @@ JS修改style样式操作，产生的是行内样式</p>
       <tags>
         <tag>HTML</tag>
         <tag>CSS</tag>
+        <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JS杂项知识记录</title>
+    <url>//posts/js-learning/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<h1 id="JS基础"><a class="header-anchor" href="#JS基础"></a>JS基础</h1>
+<h2 id="类型"><a class="header-anchor" href="#类型"></a>类型</h2>
+<ul>
+<li>基础数据类型<br>
+<strong>最新的 ECMAScript 标准定义了 8 种数据类型,分别是</strong>
+<ul>
+<li><code>string</code></li>
+<li><code>number</code></li>
+<li><code>bigint</code></li>
+<li><code>boolean</code></li>
+<li><code>null</code> (<code>typeof null</code>返回结果为object)</li>
+<li><code>undefined</code></li>
+<li><code>symbol</code> (ECMAScript 2016新增)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>所有基本类型的值都是不可改变的。但需要注意的是，基本类型本身和一个赋值为基本类型的变量的区别。变量会被赋予一个新值，而原值不能像数组、对象以及函数那样被改变。</p>
+</blockquote>
+<ul>
+<li>引用类型
+<ul>
+<li><code>Object</code>（包含普通对象-Object，数组对象-Array，正则对象-RegExp，日期对象-Date，数学函数-Math，函数对象-Function）</li>
+</ul>
+</li>
+</ul>
+<p>基本数据类型会放在<b>栈</b>上，引用类型放在<b>堆</b>上</p>
+<span id="more"></span>
+<h2 id="函数的参数传递"><a class="header-anchor" href="#函数的参数传递"></a>函数的参数传递</h2>
+<ul>
+<li>基本数据类型的参数传递</li>
+</ul>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">a</span>) &#123;</span><br><span class="line">    a++;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="title function_">fn</span>(x)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x);</span><br></pre></td></tr></table></figure>
+可以看到传入函数<code>fn</code>的，是变量x的一个复制（值拷贝）。因此尽管函数体内部该变量发生变化，原变量x不发生改变。
+</div>
+<div class='clear'></div>
+</div>
+<ul>
+<li>引用类型的参数传递</li>
+</ul>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">a</span>) &#123;</span><br><span class="line">    a[<span class="number">0</span>] = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"><span class="title function_">fn</span>(x)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x);</span><br></pre></td></tr></table></figure>
+这里传入函数的变量a是引用类型（数组对象），实际上传入参数指向了堆中相同的地址，此时函数体内部改变了堆上对象的属性，在函数外也发生改变。
+</div>
+<div class='clear'></div>
+</div>
+<h2 id="变量的作用域"><a class="header-anchor" href="#变量的作用域"></a>变量的作用域</h2>
+<h3 id="局部和全局变量"><a class="header-anchor" href="#局部和全局变量"></a>局部和全局变量</h3>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="number">1</span>;</span><br><span class="line">    p = <span class="number">2</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;局部作用域的局部变量p:&#x27;</span> + p);</span><br><span class="line">    <span class="comment">//局部作用域的全局变量</span></span><br><span class="line">    num = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;全局作用域的全局变量p:&#x27;</span> + p);</span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;未声明在函数内部赋值的变量属于全局变量:&#x27;</span> + num)</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<ul>
+<li>局部变量只在函数内部生效</li>
+<li>当局部变量与全局变量重名时，对变量的修改只对局部变量生效</li>
+<li>未声明在函数内部赋值的变量属于全局变量（即函数外可调用）</li>
+<li>函数的形参也是局部变量</li>
+</ul>
+<h3 id="作用域链"><a class="header-anchor" href="#作用域链"></a>作用域链</h3>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> num = <span class="number">2</span>;</span><br><span class="line">    <span class="title function_">fn2</span>();</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">fn2</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">fn</span>();</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+&emsp;&emsp;·内部函数访问外部变量，根据链式查找方式决定。
+<h2 id="JS的预解析"><a class="header-anchor" href="#JS的预解析"></a>JS的预解析</h2>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1.先向控制台打印变量，后声明该变量并赋值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// 控制台输出undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.先调用函数，后通过函数声明的方式创建函数</span></span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台输出&#x27;fn&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.以函数表达式创建函数（匿名函数）</span></span><br><span class="line"><span class="title function_">fn2</span>();</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">fn2</span>() = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台报错 Uncaught TypeError: fn2 is not a function</span></span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<p>  JS解释器在执行js脚本时，会先进行预解析，然后进行代码执行。<br>
+    (1)预解析将所有<strong>var声明</strong>的变量以及function提升至当前作用域的最前面。<br>
+    (2)按照预解析后的顺序依次执行。<br>
+  预解析分为变量预解析和函数预解析。<br>
+    (1)变量预解析将变量的声明放在最前方。<strong>不涉及变量赋值</strong><br>
+    (2)函数预解析将函数声明所创建的函数放在最前方。<strong>不涉及函数表达式创建的函数</strong></p>
+<p>  因此，上面的代码实际执行顺序如下：</p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num;</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">fn2</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 此时num未赋值，因此输出undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(num);</span><br><span class="line">num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// fn()已经声明，可以正常调用</span></span><br><span class="line"><span class="title function_">fn</span>();</span><br><span class="line"><span class="comment">// fn2 只是一个变量，还不是函数，因此fn2()语句会出错。</span></span><br><span class="line"><span class="title function_">fn2</span>();</span><br><span class="line">fn2 = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fn2&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h1 id="DOM：文档对象模型"><a class="header-anchor" href="#DOM：文档对象模型"></a>DOM：文档对象模型</h1>
+<h2 id="基础概念"><a class="header-anchor" href="#基础概念"></a>基础概念</h2>
+<ul>
+<li>文档
+<ul>
+<li>一个页面就是一个文档，DOM中用document表示</li>
+</ul>
+</li>
+<li>元素
+<ul>
+<li>页面中所有标签都是元素，DOM中用element表示</li>
+</ul>
+</li>
+<li>节点
+<ul>
+<li>网页中的所有内容都是节点（标签 属性 文本 注释等），DOM中用node表示</li>
+</ul>
+</li>
+</ul>
+<p><strong>DOM把以上内容都看做是对象</strong></p>
+<h2 id="获取元素"><a class="header-anchor" href="#获取元素"></a>获取元素</h2>
+<ul>
+<li><code>document.<em><strong>getElementById</strong></em></code>
+<ul>
+<li>参数:id字符串</li>
+<li>返回文档中拥有特定ID的元素，不存在则返回Null</li>
+<li>返回值为<em>一个</em> <strong>Element</strong> 对象</li>
+</ul>
+</li>
+<li><code>document.<em><strong>getElementsByTagName</strong></em></code>
+<ul>
+<li>参数:标签类名字符串</li>
+<li>返回某类标签 <strong>集合</strong> ，以伪数组形式存储，不存在则返回空的伪数组</li>
+<li>指定父元素：<em><strong>element</strong></em>.getElementsByTagName('Tag name')</li>
+</ul>
+</li>
+<li><code>document.<em><strong>getElementsByClassName</strong></em></code>
+<ul>
+<li>根据类名返回元素对象 <strong>集合</strong></li>
+</ul>
+</li>
+<li><code>document.<em><strong>querySelector</strong></em></code>
+<ul>
+<li>根据指定选择器返回<strong>第一个</strong>元素对象</li>
+<li>选择器需要加符号 . #</li>
+</ul>
+</li>
+<li><code>document.<em><strong>querySelectorAll</strong></em></code>
+<ul>
+<li>根据指定选择器返回所有元素对象集合</li>
+<li>选择器需要加符号 . #</li>
+</ul>
+</li>
+<li><code>document.<em><strong>body</strong></em></code>
+<ul>
+<li>获取body元素</li>
+</ul>
+</li>
+<li><code>document.<em><strong>documentElement</strong></em></code>
+<ul>
+<li>获取html元素</li>
+</ul>
+</li>
+</ul>
+<h2 id="事件基础"><a class="header-anchor" href="#事件基础"></a>事件基础</h2>
+<p>  事件：可以被JavaScript侦测到的行为。</p>
+<ul>
+<li>事件三要素
+<ul>
+<li>事件源 事件被触发的对象</li>
+<li>事件类型 如何触发（什么事件）</li>
+<li>事件处理程序</li>
+</ul>
+</li>
+</ul>
+<p><button id='event_btn'>测试按钮</button></p>
+<script>
+    var btn = document.getElementById('event_btn');
+    btn.onclick = function(){
+        alert("在此示例中：\n    按钮是事件源。\n    onclick是事件类型。\n    弹出当前窗口用到的alert函数就是事件处理程序。");
+    }
+</script>
+<p>  <strong>常见鼠标事件</strong></p>
+<div class='center'>
+<table>
+<thead>
+<tr>
+<th>鼠标事件</th>
+<th>触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onclick</code></td>
+<td>点击左键</td>
+</tr>
+<tr>
+<td><code>onmouseover</code></td>
+<td>鼠标经过</td>
+</tr>
+<tr>
+<td><code>onmouseout</code></td>
+<td>鼠标离开</td>
+</tr>
+<tr>
+<td><code>onfocus</code></td>
+<td>获得鼠标焦点</td>
+</tr>
+<tr>
+<td><code>onblur</code></td>
+<td>失去鼠标焦点</td>
+</tr>
+<tr>
+<td><code>onmousemove</code></td>
+<td>鼠标移动</td>
+</tr>
+<tr>
+<td><code>onmouseup</code></td>
+<td>鼠标弹起</td>
+</tr>
+<tr>
+<td><code>onmousedown</code></td>
+<td>鼠标按下</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class='clear'></div>
+<h2 id="操作元素"><a class="header-anchor" href="#操作元素"></a>操作元素</h2>
+<h3 id="改变元素内容"><a class="header-anchor" href="#改变元素内容"></a>改变元素内容</h3>
+<ul>
+<li><code>element.<em><strong>innerText</strong></em></code></li>
+<li><code>element.<em><strong>innerHTML</strong></em></code></li>
+<li>两者都能对元素内的文本内容进行读写操作，但是前者会忽略掉元素内的所有HTML标签以及源代码中的换行与空格。</li>
+</ul>
+<p><strong>示例：分时问候</strong></p>
+<div class="tabs" id="changeelement"><ul class="nav-tabs"><li class="tab active"><a href="#changeelement-1">HTML</a></li><li class="tab"><a href="#changeelement-2">CSS</a></li><li class="tab"><a href="#changeelement-3">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="changeelement-1"><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;changeContent&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeelement-2"><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#changeContent</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeelement-3"><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> div = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#changeContent&#x27;</span>);</span><br><span class="line">div.<span class="property">innerHTML</span> = <span class="title function_">getTimeNow</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getTimeNow</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">    <span class="keyword">var</span> hours = date.<span class="title function_">getHours</span>();</span><br><span class="line">    <span class="keyword">var</span> minutes = date.<span class="title function_">getMinutes</span>();</span><br><span class="line">    <span class="keyword">if</span>(minutes &lt; <span class="number">10</span>)</span><br><span class="line">        minutes = <span class="string">&#x27;0&#x27;</span> + minutes;</span><br><span class="line">    <span class="keyword">var</span> welcomeString;</span><br><span class="line">    <span class="keyword">if</span> (hours &gt;= <span class="number">5</span> &amp;&amp; hours &lt; <span class="number">7</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;清晨好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">7</span> &amp;&amp; hours &lt; <span class="number">11</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;早上好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">11</span> &amp;&amp; hours &lt; <span class="number">13</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;中午好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">13</span> &amp;&amp; hours &lt; <span class="number">17</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;下午好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">17</span> &amp;&amp; hours &lt; <span class="number">19</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;傍晚好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (hours &gt;= <span class="number">19</span> &amp;&amp; hours &lt; <span class="number">23</span>)&#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;晚上好&#x27;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        welcomeString = <span class="string">&#x27;夜深了&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> welcomeString + <span class="string">&#x27;，现在是&#x27;</span> + hours + <span class="string">&#x27;点&#x27;</span> + minutes + <span class="string">&#x27;分。&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+<style>
+    #changeContent {
+        text-align: center;
+    }
+</style>
+<p><strong>效果：</strong></p>
+<div id='changeContent'></div>
+<script>
+    var div = document.querySelector('#changeContent');
+    div.innerHTML = getTimeNow();
+    function getTimeNow() {
+        var date = new Date();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        if(minutes < 10)
+            minutes = '0' + minutes;
+        var welcomeString;
+        if (hours >= 5 && hours < 7){
+            welcomeString = '清晨好';
+        } 
+        else if (hours >= 7 && hours < 11){
+            welcomeString = '早上好';
+        } 
+        else if (hours >= 11 && hours < 13){
+            welcomeString = '中午好';
+        } 
+        else if (hours >= 13 && hours < 17){
+            welcomeString = '下午好';
+        } 
+        else if (hours >= 17 && hours < 19){
+            welcomeString = '傍晚好';
+        } 
+        else if (hours >= 19 && hours < 23){
+            welcomeString = '晚上好';
+        } 
+        else {
+            welcomeString = '夜深了';
+        }
+        return welcomeString + '，现在是' + hours + '点' + minutes + '分。'
+    }
+</script>
+<h3 id="改变元素属性"><a class="header-anchor" href="#改变元素属性"></a>改变元素属性</h3>
+<ul>
+<li><code>element.<em><strong>属性名</strong></em></code>（内置属性 id、src等，可读写）</li>
+<li><code>element.<em><strong>getAttribute('属性名')</strong></em></code>（自定义属性）</li>
+<li><code>element.<em><strong>setAttribute('属性名', 值)</strong></em></code> （主要是自定义属性）</li>
+<li><code>element.<em><strong>removeAttribute('属性名')</strong></em></code>（移除某个属性）</li>
+</ul>
+<h3 id="改变表单属性"><a class="header-anchor" href="#改变表单属性"></a>改变表单属性</h3>
+<p>  利用DOM可以操作如下表单元素的属性:</p>
+<blockquote><p>type、value、checked、selected、disabled</p>
+</blockquote>
+<p><strong>示例：显示密码</strong></p>
+<div class="tabs" id="changeinput"><ul class="nav-tabs"><li class="tab active"><a href="#changeinput-1">HTML</a></li><li class="tab"><a href="#changeinput-2">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="changeinput-1"><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;password&#x27;</span> <span class="attr">id</span>=<span class="string">&#x27;pwd_demo_input&#x27;</span>/&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&#x27;pwd_demo_btn&#x27;</span>&gt;</span>显示密码<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeinput-2"><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> input = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;pwd_demo_input&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> btn = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;pwd_demo_btn&#x27;</span>);</span><br><span class="line">btn.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> type = input.<span class="property">type</span>;</span><br><span class="line">    <span class="keyword">if</span> (type == <span class="string">&#x27;text&#x27;</span>) &#123;</span><br><span class="line">        input.<span class="property">type</span> = <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">innerHTML</span> = <span class="string">&#x27;显示密码&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">&#x27;password&#x27;</span>) &#123;</span><br><span class="line">        input.<span class="property">type</span> = <span class="string">&#x27;text&#x27;</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">innerHTML</span> = <span class="string">&#x27;隐藏密码&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+<p><strong>效果：</strong><br>
+<input type='password' id='pwd_demo_input'/><button id='pwd_demo_btn'>显示密码</button></p>
+<script>
+    var input = document.getElementById('pwd_demo_input');
+    var btn = document.getElementById('pwd_demo_btn');
+    btn.onclick = function(){
+        var type = input.type;
+        if (type == 'text') {
+            input.type = 'password';
+            this.innerHTML = '显示密码';
+        }
+        else if (type == 'password') {
+            input.type = 'text';
+            this.innerHTML = '隐藏密码';
+        }
+    }
+</script>
+<h3 id="改变样式属性"><a class="header-anchor" href="#改变样式属性"></a>改变样式属性</h3>
+<p>  我们可以通过JS修改元素的大小、颜色、位置等样式</p>
+<ul>
+<li><code>element.<em><strong>style</strong></em></code>
+<ul>
+<li>行内样式操作</li>
+</ul>
+</li>
+<li><code>element.<em><strong>className</strong></em></code>
+<ul>
+<li>类名样式操作，适用于样式较多或者功能复杂的情况</li>
+</ul>
+</li>
+</ul>
+<div class="note warning"><p>JS中的样式采取驼峰命名法<br>
+JS修改style样式操作，产生的是行内样式</p>
+</div>
+<p><strong>示例：修改文本框内容</strong></p>
+<div class="tabs" id="changeinputdemo"><ul class="nav-tabs"><li class="tab active"><a href="#changeinputdemo-1">HTML</a></li><li class="tab"><a href="#changeinputdemo-2">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="changeinputdemo-1"><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;text&#x27;</span> <span class="attr">value</span>=<span class="string">&#x27;默认&#x27;</span> <span class="attr">id</span>=<span class="string">&#x27;inputdemo&#x27;</span>/&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="changeinputdemo-2"><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> demo = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;inputdemo&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> defaultString = demo.<span class="property">value</span>;</span><br><span class="line">demo.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;#666&#x27;</span>;</span><br><span class="line">demo.<span class="property">onfocus</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (demo.<span class="property">value</span> === defaultString) &#123;</span><br><span class="line">        demo.<span class="property">value</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        demo.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">demo.<span class="property">onblur</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (demo.<span class="property">value</span> === <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">        demo.<span class="property">value</span> = defaultString;</span><br><span class="line">        demo.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;#666&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+<p><strong>效果：</strong><br>
+<input type='text' value='默认' id='inputdemo'/></p>
+<script>
+    var demo = document.getElementById('inputdemo');
+    var defaultString = demo.value;
+    demo.style.color = '#666';
+    demo.onfocus = function(){
+        if (demo.value === defaultString) {
+            demo.value = '';
+            demo.style.color = 'red';
+        }
+    }
+    demo.onblur = function(){
+        if (demo.value === '') {
+            demo.value = defaultString;
+            demo.style.color = '#666';
+        }
+    }
+</script>
+<h3 id="节点操作"><a class="header-anchor" href="#节点操作"></a>节点操作</h3>
+<p>  DOM树中，一切都是节点。</p>
+<ul>
+<li>一般地，节点至少拥有nodeType nodeName nodeValue这三个基本属性
+<ul>
+<li>元素节点 nodeType为1</li>
+<li>属性节点 nodeType为2</li>
+<li>文本节点 nodeType为3<br>
+<br></li>
+</ul>
+</li>
+<li><code>node.<em><strong>parentNode</strong></em></code>  获取离元素最近的父节点</li>
+<li><code>node.<em><strong>childNodes</strong></em></code>  子节点，包含元素节点 文本节点（因此一般不提倡使用）</li>
+<li><code>node.<em><strong>children</strong></em></code>  子元素节点</li>
+<li><code>node.<em><strong>firstChild / lastChild</strong></em></code>  第一 / 最后一个 子节点</li>
+<li><code>node.<em><strong>firstElementChild / lastElementChild</strong></em></code> （兼容性问题）第一 / 最后一个 子元素节点
+<ul>
+<li>实际写法：<code>node.<em><strong>children[0/node.children.length-1]</strong></em></code></li>
+</ul>
+</li>
+<li><code>node.<em><strong>nextSibling / previousSibling</strong></em></code>  下一个兄弟节点</li>
+<li><code>node.<em><strong>nextElementSibling / previousElementSibling</strong></em></code>  下一个兄弟元素节点</li>
+<li><code>document.<em><strong>creatElement('tagName')</strong></em></code>  创建元素节点</li>
+<li><code>node.<em><strong>appendChild(child)</strong></em></code>  添加节点至node节点结尾</li>
+<li><code>node.<em><strong>insertBefore(child, 位置)</strong></em></code>  添加节点至node节点指定位置之前</li>
+<li><code>node.<em><strong>removeChild(child)</strong></em></code>  删除节点</li>
+<li><code>node.<em><strong>cloneNode()</strong></em></code>  复制节点，默认空参数 或者 false 是浅拷贝，不复制里面的内容，为true是深拷贝</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>Javascript</tag>
         <tag>语法</tag>
       </tags>
   </entry>

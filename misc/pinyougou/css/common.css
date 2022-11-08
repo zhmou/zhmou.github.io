@@ -41,34 +41,58 @@
     margin-left: 6px;
 }
 
-.shortcut ul li {
+.shortcut ul>li {
     float: left;
+    position: relative;
 }
 
-.shortcut .fr ul li:nth-of-type(2n-1) {
+.shortcut .fr>ul>li:nth-of-type(2n-1) {
     padding: 0 15px;
 }
 
-.shortcut .fr ul li:nth-of-type(2n) {
+.shortcut .fr>ul>li:nth-of-type(2n) {
     width: 1px;
     height: 12px;
     background-color: #666;
     margin: 10px 0 0;
 }
 
-.shortcut .fr ul .follow {
-    position: relative;
+.shortcut .fr>ul>li .my_pyg_dropdown {
+    display: none;
+    position: absolute;
+    left: 0px;
+    background-color: #fff;
+    border-radius: 15px;
+    border: 1px solid #f1f1f1;
 }
 
-.shortcut .fr ul .follow .dropdown-layer {
+.shortcut .fr>ul>li .my_pyg_dropdown>li {
+    float: left;
+    width: 100%;
+}
+
+.shortcut .fr>ul>li .my_pyg_dropdown>li>a {
+    display: block;
+    border-bottom: 1px solid transparent;
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.shortcut .fr>ul>li .my_pyg_dropdown>li>a:hover {
+    border-bottom: 1px solid #c81625;
+}
+
+.shortcut .fr>ul .follow .dropdown-layer {
     display: none;
 }
 
-.shortcut .fr ul .follow:hover {
+.shortcut .fr>ul .follow:hover {
     background-color: #fff;
 }
 
-.shortcut .fr ul .follow:hover .dropdown-layer {
+.shortcut .fr>ul .follow:hover .dropdown-layer {
     display: block;
     position: absolute;
     z-index: 1;
