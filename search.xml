@@ -145,108 +145,6 @@
       </tags>
   </entry>
   <entry>
-    <title>配置SOLOV2_ncnn相关环境并运行Demo</title>
-    <url>//posts/Configure-a-NCNN-Project/</url>
-    <content><![CDATA[<p>  今天最开心的事情是终于在Windows环境下运行起来Github上<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">这个项目</a>的Demo，对于我一个电脑小白而言那背后的可都是泪呀TAT，因此有必要记录一下整个流程以方便其他人的需要~</p>
-<p>  简述一下相关背景：<a href="https://github.com/Tencent/ncnn">ncnn</a>是一个前向神经网络框架，由纯C++实现所实现。而<a href="https://arxiv.org/abs/2003.10152">SOLOV2</a>是一个快速的实例分割算法，关于什么是实例分割，可参考图像处理的相关文章。此外，笔者的相关环境配置一并列举于此处，方便读者参考：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">环境</th>
-<th style="text-align:center">版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Windows</td>
-<td style="text-align:center">10 专业版 20H2</td>
-</tr>
-<tr>
-<td style="text-align:center">Visual Studio 2019</td>
-<td style="text-align:center">Community Edition<br>16.11.31702.278</td>
-</tr>
-<tr>
-<td style="text-align:center">OpenCV</td>
-<td style="text-align:center">3.4.5</td>
-</tr>
-<tr>
-<td style="text-align:center">CMake</td>
-<td style="text-align:center">3.21.3</td>
-</tr>
-<tr>
-<td style="text-align:center">ncnn</td>
-<td style="text-align:center"><a href="https://github.com/Tencent/ncnn/tree/2c4ae096044c816d7195476d652eb8d5aefb8379">Release 2c4ae09604</a><br>即目前的lateset release(20210720)</td>
-</tr>
-</tbody>
-</table>
-<span id="more"></span>
-<h2 id="01-ncnn编译"><a class="header-anchor" href="#01-ncnn编译"></a>01 ncnn编译</h2>
-<p>  理论上来讲，根据自身的需求直接使用release下官方的预编译静/动态库应该不会出现错误，然而笔者在实际配置项目时，添加了ncnn.lib这一附加依赖项后，在运行中依旧会产生Vulkan相关报错，如图所示：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/1.png" alt="vulkan报错"></p>
-<p>  推测可能为官方打包的库中默认调用了VulkanSDK与glslang这一submoudle，因此我们需要自己来对ncnn打包了。</p>
-<p>  在使用VS 2019命令行编译ncnn的过程中，也同样遇到了这样或那样的问题，不过所幸被Github上这条<a href="https://github.com/Tencent/ncnn/issues/2498">issue</a>解决了，大体上只要按照issue作者提示的操作就不会出现问题。</p>
-<p>  首先在开始菜单下找到Visual Studio 2019的文件夹，打开x64 Native Tools Command Prompt这个VS 2019的命令行工具。</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/2.png" alt="操作步骤"></p>
-<p>  下载 protobuf 3.4.0 的<a href="https://github.com/google/protobuf/archive/v3.4.0.zip">源码</a>（不知道其它版本是否可行），解压，编译ncnn前需要编译protobuf。</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 进入protobuf-3.4.0文件夹</span><br><span class="line"><span class="built_in">cd</span> protobuf-3.4.0</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// cmake -DCMAKE_BUILD_TYPE参数也可设为debug，但总之要前后一致</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line">    -Dprotobuf_BUILD_TESTS=OFF ^</span><br><span class="line">    -Dprotobuf_MSVC_STATIC_RUNTIME=OFF ../cmake</span><br><span class="line">    </span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即protobuf-3.4.0文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
-<p>  通过git克隆ncnn的源码并编译ncnn：</p>
-<div class="note warning"><p>提示：请务必注意路径问题！</p>
-</div>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 克隆远端仓库代码，放在ncnn文件夹下</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Tencent/ncnn.git</span><br><span class="line"></span><br><span class="line">// 进入ncnn文件夹</span><br><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line">// 拉取submodule</span><br><span class="line">git submodule update --init</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// 同上，-DCMAKE_BUILD_TYPE参数也可设为debug</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line"></span><br><span class="line">// 更改为自己电脑上Protobuf对应文件夹所在的路径，注意：请务必改为绝对路径而不是相对路径！</span><br><span class="line">    -DProtobuf_INCLUDE_DIR=E:/Project/protobuf-3.4.0/build-vs2019/install/include ^</span><br><span class="line">    -DProtobuf_LIBRARIES=E:/Project/protobuf-3.4.0/build-vs2019/install/lib/libprotobuf.lib ^</span><br><span class="line">    -DProtobuf_PROTOC_EXECUTABLE=E:/Project/protobuf-3.4.0/build-vs2019/install/bin/protoc.exe ^</span><br><span class="line">// 更改为自己电脑上OpenCV3.4.5对应文件夹所在的路径，依然是注意绝对路径的问题</span><br><span class="line">	-DOpenCV_DIR=E:/opencv/build/x64/vc15/lib ..</span><br><span class="line">	</span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即ncnn文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
-<p>  至此，运行此项目demo的环境构建工作就做好了，接下来就可以准备开始调试SOLOv2 ncnn的项目。</p>
-<h2 id="02-项目调试"><a class="header-anchor" href="#02-项目调试"></a>02 项目调试</h2>
-<p>  与上一步相同，首先需要使用获得一份源码：</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DayBreak-u/SOLOV2_ncnn.git</span><br></pre></td></tr></table></figure>
-<p>  根据<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">项目主页</a><a href="http://xn--README-ow6o.md">的README.md</a>，执行前三行代码：</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build </span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
-<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>-- Configuring done</code>、<code>-- Generating done</code>时即意味着项目解决方案的成功生成。</p>
-<p>  下载模型权重：</p>
-<blockquote>
-<p>链接: <a href="https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng">https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng</a> 密码: phh8</p>
-</blockquote>
-<p>  在Windows环境下，由于没有Linux下的GNU Make，所以我们直接用VS来编译代码：</p>
-<h3 id="VS配置ncnn和opencv环境"><a class="header-anchor" href="#VS配置ncnn和opencv环境"></a>VS配置ncnn和opencv环境</h3>
-<p>  点击<code>项目</code>-&gt;<code>属性</code>-&gt;<code>VC++目录</code>，在Release配置、x64平台下，根据自己目录的实际情况添加以下路径至<code>包含目录</code>：</p>
-<div class="note warning"><p>注意：如果前文中您将protobuf、ncnn的源码编译为debug版本，则此处也要将其改为debug配置。</p>
-</div>
-<p>  <code>E:\opencv\build\include</code><br>
-  <code>E:\opencv\build\include\opencv</code><br>
-  <code>E:\opencv\build\include\opencv2</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\include</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\include\ncnn</code></p>
-<p>  同样，在<code>库目录</code> 中根据自身情况添加以下路径：</p>
-<p>  <code>E:\opencv\build\x64\vc15\lib</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\lib</code></p>
-<p>  在<code>链接器</code>-&gt;<code>输入</code>中加入<code>ncnn.lib</code>、<code>opencv_world345.lib</code>这两个<code>附加依赖项</code>就可以进行下一步操作了。</p>
-<h3 id="修改代码"><a class="header-anchor" href="#修改代码"></a>修改代码</h3>
-<p>  为方便运行demo查看效果，我对其进行了一定修改，以solov2.cpp为例（<del>才不是我没有测试过solov2_fast.cpp的原因呢</del>，哼o(~ヘ~o#)）：</p>
-<p>  根据前文下载的模型权重存储路径修改权重读取位置：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/3.png" alt="修改代码"></p>
-<p>  注释并重写main函数：</p>
-<figure class="highlight c++"><figcaption><span>solov2.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* imagepath = <span class="string">&quot;E:/Project/SOLOV2_ncnn/imgs/horses.jpg&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cv::Mat m = cv::<span class="built_in">imread</span>(imagepath, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (m.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;cv::imread %s failed\n&quot;</span>, imagepath);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::vector &lt;Object&gt; objects;</span><br><span class="line">    <span class="built_in">detect_solov2</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_objects</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  程序生成的结果result.png默认放在项目build文件夹下，如果您想要直观地看见程序运行的效果，可以将main函数上方原作者注释掉的两行代码取消注释：<br>
-  <code>//    cv::imshow(&quot;image&quot;, image);</code><br>
-  <code>//    cv::waitKey(0);</code></p>
-<h3 id="运行代码"><a class="header-anchor" href="#运行代码"></a>运行代码</h3>
-<p>  做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/4.png" alt="修改代码"></p>
-<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
-<p>  运行窗口如图：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/5.png" alt="运行窗口"></p>
-<p>  运行效果如图：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/horses.jpg" alt="运行效果1" title="读取到的图片"></p>
-<p><img data-src="/img/Configure-a-NCNN-Project/result.png" alt="运行效果2" title="实例分割的结果"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>编程</tag>
-        <tag>SOLOv2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>用VS 2019打包dll文件</title>
     <url>//posts/How-to-Package-a-dll/</url>
     <content><![CDATA[<p>  最近在看学长接手的<a href="https://sao-kirito.top/2021/09/15/shape_based_matching/">形状匹配(shape based matching)C++工程</a>，虽然看懂的不多，但是被要求将部分代码打包封装成dll，暴露简洁的接口供调用者使用。<br>
@@ -296,203 +194,6 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习基础#00：Intro</title>
-    <url>//posts/Machine-Learning-101-00/</url>
-    <content><![CDATA[<style>
-table
-{
-    margin: auto;
-}
-</style>
-<p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
-<span id="more"></span>
-<p>  免责声明：本人对机器学习领域所知甚少，所写博文为对前期所学知识的回顾，不确保其内容的真实性与准确性，不建议以此为基础进行学习。如有差错纰漏，欢迎指正。</p>
-<h2 id="什么是机器学习？"><a class="header-anchor" href="#什么是机器学习？"></a>什么是机器学习？</h2>
-<p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，那就是：</p>
-<blockquote><p>从已有的样本（数据）中发现规律，并能够将其泛化应用于未知的（或者说：新的）样本上。</p>
-<footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
-<br>
-<p>  譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。</p>
-<p><img data-src="/img/Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
-<div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
-<br>
-<h2 id="一个简单的例子"><a class="header-anchor" href="#一个简单的例子"></a>一个简单的例子</h2>
-<p>  现在，我们有一组$x$与$y$如表所示：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">x</th>
-<th style="text-align:center">y</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4</td>
-</tr>
-<tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center">6</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">?</td>
-</tr>
-</tbody>
-</table>
-<p>  对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。</p>
-<p>  基于此，我们建立一个简单的线性模型：<br>
-<img data-src="/img/Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
-<p>  此外，我们还需要一个“打分”的函数来评估模型在当前样本（所谓样本，结合这个例子来说就是上述列表里的某一行）上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。</p>
-<p>$$<br>
-loss={(\hat{y}-y)}^2<br>
-$$</p>
-<p>  大多数情况下，我们的目标是令代价函数的值尽可能的变小，即预测值接近真实值。</p>
-<p>  现在，我们随机地初始化一组$w$和$b$($w=1,b=1$)来计算损失函数loss的值：<br>
-  $x=2$时，$\hat{y}=3$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3-4)}^2=1$<br>
-  $x=3$时，$\hat{y}=4$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(4-6)}^2=4$<br>
-  在全体样本上的均方误差$cost = 5\div2=2.5$</p>
-<p>  我们把这个步骤称作“<strong>前向运算</strong>”/“<strong>前馈运算</strong>”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。<br>
-  在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。</p>
-<img data-src="/img/Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
-<p>  将其应用于我们的例子中：当我们将两个参数$w、b$沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。</p>
-<p>  根据链式求导法则：<br>
-$$<br>
-\frac{\partial{loss}}{\partial{w}}=\frac{\partial{loss}}{\partial{\hat{y}}}\cdot\frac{\partial{\hat{y}}}{\partial{w}}=2(\hat{y}-y)\cdot{x}<br>
-$$<br>
-  (对b的偏导同理)</p>
-<p>  将前向运算中计算得到的$\hat{y}$和当前样本已知的$x、y$带入上述式子可得：<br>
-  在$x=2$时，$\left.{\frac{\partial{loss}}{\partial{w}}}\right|_{x=2}=−4$，$\left.{\frac{\partial{loss}}{\partial{b}}}\right|_{x=2}=−2$<br>
-  在$x=3$时，$\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3}=-12$，$\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3}=−4$</p>
-<p>  接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。</p>
-<img data-src="/img/Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
-<p>$$<br>
-\begin{align*}<br>
-w'&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
-&amp;=w- lr\cdot(\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3})\div2\\<br>
-&amp;=1-0.04\times(-4-12)\div2\\<br>
-&amp;=1.32<br>
-\end{align*}<br>
-$$</p>
-<p>  同理，$b$的值计算结果为：<br>
-$$<br>
-\begin{align*}<br>
-b'&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
-&amp;=b-lr\cdot(\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3})\div2\\<br>
-&amp;=1-0.04\times(-2-4)\div2\\<br>
-&amp;=1.12<br>
-\end{align*}<br>
-$$</p>
-<p>  如上述的这个过程，被称为“反向传播”。这样，我们便走完了神经网络训练的一个轮次（Epoch）。此时，重新计算预测值、loss与cost，更新权重后的结果为：</p>
-<p>  $x=2$时，$\hat{y}=3.76$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3.76-4)}^2=0.0576$<br>
-  $x=3$时，$\hat{y}=5.08$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(5.08-6)}^2=0.8464$<br>
-  在全体样本上的均方误差$cost' = 0.452$</p>
-<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程，在经过第二次训练后，得到$w'=1.644$，$b'=1.236$</p>
-<p>  现在，对于例子开头提出来的问题，在经过两轮训练后，神经网络给出的$x=4$时的预测结果为:<br>
-$$<br>
-ŷ = 1.644\times4+1.236 = 7.812<br>
-$$</p>
-<p>  当反复训练后，cost的值趋近于零，在某个区间内呈现波动的时候，我们称这个网络<strong>收敛</strong>，而当cost值不再变小而且和0相去较远时，则可能陷入了局部最优解，或者是学习率过大导致无法收敛于全局最优解。</p>
-<blockquote>
-<p><strong>小结</strong><br>
-神经元：网络中负责某种基础运算的单元。例如本例中建模采用的$y=kx+b$就是一个基础的神经元。<br>
-神经网络训练的步骤：正向运算求Loss，反向计算求Loss对各个参数的偏导，依赖偏导对参数进行微小的调整。在本例中，反复以样本训练较好地逼近了结果。<br>
-<strong>问题</strong>：<br>
-多个线性神经元简单叠加，如两个神经元：$y = w_1(w_2x+b_2)+b_1 = w_1w_2x+w_1b_2+b_1$ ，仍与单个神经元效果相同，需要引入<em>非线性变换</em>才能较好的拟合非线性函数。</p>
-</blockquote>
-<h2 id="更复杂的例子"><a class="header-anchor" href="#更复杂的例子"></a>更复杂的例子</h2>
-<p>  下方是某商品的评价及其人工标注的情感标签，试建立模型分析其中关系。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">评价</th>
-<th style="text-align:center">情感标签</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">“好看”</td>
-<td style="text-align:center">正面</td>
-</tr>
-<tr>
-<td style="text-align:center">“不好”</td>
-<td style="text-align:center">负面</td>
-</tr>
-<tr>
-<td style="text-align:center">“好”</td>
-<td style="text-align:center">正面</td>
-</tr>
-<tr>
-<td style="text-align:center">“不好看”</td>
-<td style="text-align:center">负面</td>
-</tr>
-<tr>
-<td style="text-align:center">……</td>
-<td style="text-align:center">……</td>
-</tr>
-</tbody>
-</table>
-<p>  由于神经网络只能接受数字化的输入并产生相对应的数字化输出，因此需要将这些样本转化成数据：</p>
-<p>  首先提取基本语素，在这个简单的任务中，共有三个字：{好，不，看}<br>
-  对这三个字进行“<strong>独热编码</strong>”：<br>
-  <strong>好 = [1, 0, 0] 不 = [0, 1, 0] 看 = [0, 0, 1]</strong><br>
-  输入样本的向量即为各个字符编码的相加，例如：<br>
-  <strong>好看 = [1, 0, 1] 不好 = [1, 1, 0] ……</strong><br>
-  对于输出，由于只存在两种标签，因此编码为：<br>
-  <strong>正面 = [1, 0] 负面 = [0, 1]</strong><br>
-  依照上述步骤，我们构造出了一个$4×3$(样本数×input size/基本语素单位)的输入矩阵$x$与$4×2$(样本数×标注类别)的标注矩阵$y$：<br>
-$$<br>
-x=\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 1\end{bmatrix} y=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}<br>
-$$</p>
-<p>  类似于第二部分中给出的例子，我们设计出一个相较于前者更为复杂的网络：<br>
-<img data-src="/img/Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/></p>
-<p>  在两个隐藏层向各个下一层神经元传输相应数字时(箭头所示位置)，需要引入非线性变换的激活函数(Activation function)，这里选用的是Sigmoid函数：$𝑆(𝑥)=\frac{1}{(1+𝑒^{−𝑥})}$，它将实数域R的数字映射至(0, 1)内。网络最后一层的Softmax函数也是一种非线性变换，它将该层所有结果都映射到(0, 1)内，不改变大小的相对位置。对于该层的各个元素$x_i$，经变换后的值计算如下：<br>
-$$<br>
-softmax\ value = \frac{e^{x_i}}{\sum_{j}e^{x_j}{}}<br>
-$$</p>
-<p>  图中实线连接的部分就是我们在反向算法过程中需要更新的权重，为简化计算，在这个例子中我们忽略bias项即偏置的影响(也就是说每一条线代表的基础运算单元仅仅是$y=kx$)，只考虑权重w构成的三个矩阵：<br>
-  $𝑤_1$为三行两列矩阵，$𝐻_1=𝑥𝑤_1$，$𝑤_2$ 、$𝑤_3$ 为两行两列的矩阵： $𝐻_2=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_1 ) 𝑤_2$，$𝑂𝑢𝑡𝑝𝑢𝑡=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_2)𝑤_3$</p>
-<p>  <strong>正向运算：</strong><br>
-  首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
-<img data-src="/img/Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
-<p>  <strong>计算Loss：</strong><br>
-  在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：<br>
-<img data-src="/img/Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/></p>
-<p>  <strong>反向传播：</strong><br>
-  这一部分公式太多，懒得用$\LaTeX$再整理一遍，直接借用之前自己做的PPT里面的推导过程（不过说起来这里面的矩阵转置当时弄得我有些晕，其实你需要弄清楚对应元素的位置就比较清楚了。）：<br>
-<img data-src="/img/Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/></p>
-<p>  <strong>更新权重：</strong><br>
-<img data-src="/img/Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/></p>
-<blockquote>
-<p><strong>小结与反思</strong><br>
-同单层模型一样，多层模型仍采用反向传播算法来进行权重的更新。<br>
-引入sigmoid、softmax等非线性变换来构筑更复杂的模型。<br>
-损失计算采用了负对数似然损失(能否采用MSE，为什么？)<br>
-对于文本序列而言，其出现的顺序对于理解其含义是至关重要的，简单向量相加丢失了字符出现顺序的信息。(改进：RNN)<br>
-层数越深，由链式法则相乘得到的梯度越来越小，可能出现梯度消失的问题(改进：ResNet)<br>
-文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分元素都是0）。②（基于前者）大部分句子的向量都分布在坐标轴附近。③（基于前者）难以衡量两个句子之间的相似度。</p>
-</blockquote>
-<h2 id="随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#随机梯度下降：引入Mini-Batch"></a>随机梯度下降：引入Mini-Batch</h2>
-<p>  对于梯度下降，有几种不同的方法对其进行实现：<br>
-  批量梯度下降：计算所有样本的loss后，再更新权重w与偏置b。<br>
-  随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。<br>
-  小批量(随机)梯度下降：将全体样本划分为若干个mini-batch，每个batch中存在若干样本，随机抽出一个mini-batch，计算该批次样本中的loss后更新权重w与偏置b，直到跑完所有mini-batch后，记作训练一个轮次。在训练完一个轮次后。对样本进行shuffle处理，即重新划分mini-batch，再次进行训练，形象化的比喻可以称作“洗牌”，这也是为什么英文叫做&quot;shuffle&quot;。</p>
-<img data-src="/img/Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
-<p>  三种不同方式的对比：<br>
-  一般来说，小批量梯度下降通过选取部分样本引入了更大噪声，使得它在解空间的“鞍点”位置更容易受噪声扰动，在一些情况下性能表现比批量梯度下降更好。而随机梯度下降更新权重只关注当前样本的梯度，所以尽管每一步使得当前样本得到最优的表现，但从整体样本考虑则不一定最优，且每一个样本前向计算时都需要依赖上一个样本反向传播后更新的权重，并行化程度不如其它两者高。<br>
-  形象化的三种方式如上图所示，红点位置即为所求的最优解，图中带箭头的线则显示了这三种方法在寻找最优解的过程。</p>
-<hr>
-&emsp;&emsp;这篇文章，笔者简要回顾了机器学习的最基础内容，虽然听起来或者推导起来比较复杂。但作为感性的认知来看，了解机器学习的工作原理并不困难，甚至完全可以只用高中的知识理解。本期的内容还未涉及到代码部分，这些工作将在下期进行介绍。
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
         <tag>编程</tag>
       </tags>
   </entry>
@@ -704,6 +405,305 @@ $$</p>
         <tag>Javascript</tag>
         <tag>HTML</tag>
         <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>配置SOLOV2_ncnn相关环境并运行Demo</title>
+    <url>//posts/Configure-a-NCNN-Project/</url>
+    <content><![CDATA[<p>  今天最开心的事情是终于在Windows环境下运行起来Github上<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">这个项目</a>的Demo，对于我一个电脑小白而言那背后的可都是泪呀TAT，因此有必要记录一下整个流程以方便其他人的需要~</p>
+<p>  简述一下相关背景：<a href="https://github.com/Tencent/ncnn">ncnn</a>是一个前向神经网络框架，由纯C++实现所实现。而<a href="https://arxiv.org/abs/2003.10152">SOLOV2</a>是一个快速的实例分割算法，关于什么是实例分割，可参考图像处理的相关文章。此外，笔者的相关环境配置一并列举于此处，方便读者参考：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">环境</th>
+<th style="text-align:center">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Windows</td>
+<td style="text-align:center">10 专业版 20H2</td>
+</tr>
+<tr>
+<td style="text-align:center">Visual Studio 2019</td>
+<td style="text-align:center">Community Edition<br>16.11.31702.278</td>
+</tr>
+<tr>
+<td style="text-align:center">OpenCV</td>
+<td style="text-align:center">3.4.5</td>
+</tr>
+<tr>
+<td style="text-align:center">CMake</td>
+<td style="text-align:center">3.21.3</td>
+</tr>
+<tr>
+<td style="text-align:center">ncnn</td>
+<td style="text-align:center"><a href="https://github.com/Tencent/ncnn/tree/2c4ae096044c816d7195476d652eb8d5aefb8379">Release 2c4ae09604</a><br>即目前的lateset release(20210720)</td>
+</tr>
+</tbody>
+</table>
+<span id="more"></span>
+<h2 id="01-ncnn编译"><a class="header-anchor" href="#01-ncnn编译"></a>01 ncnn编译</h2>
+<p>  理论上来讲，根据自身的需求直接使用release下官方的预编译静/动态库应该不会出现错误，然而笔者在实际配置项目时，添加了ncnn.lib这一附加依赖项后，在运行中依旧会产生Vulkan相关报错，如图所示：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/1.png" alt="vulkan报错"></p>
+<p>  推测可能为官方打包的库中默认调用了VulkanSDK与glslang这一submoudle，因此我们需要自己来对ncnn打包了。</p>
+<p>  在使用VS 2019命令行编译ncnn的过程中，也同样遇到了这样或那样的问题，不过所幸被Github上这条<a href="https://github.com/Tencent/ncnn/issues/2498">issue</a>解决了，大体上只要按照issue作者提示的操作就不会出现问题。</p>
+<p>  首先在开始菜单下找到Visual Studio 2019的文件夹，打开x64 Native Tools Command Prompt这个VS 2019的命令行工具。</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/2.png" alt="操作步骤"></p>
+<p>  下载 protobuf 3.4.0 的<a href="https://github.com/google/protobuf/archive/v3.4.0.zip">源码</a>（不知道其它版本是否可行），解压，编译ncnn前需要编译protobuf。</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 进入protobuf-3.4.0文件夹</span><br><span class="line"><span class="built_in">cd</span> protobuf-3.4.0</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// cmake -DCMAKE_BUILD_TYPE参数也可设为debug，但总之要前后一致</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line">    -Dprotobuf_BUILD_TESTS=OFF ^</span><br><span class="line">    -Dprotobuf_MSVC_STATIC_RUNTIME=OFF ../cmake</span><br><span class="line">    </span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即protobuf-3.4.0文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>  通过git克隆ncnn的源码并编译ncnn：</p>
+<div class="note warning"><p>提示：请务必注意路径问题！</p>
+</div>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 克隆远端仓库代码，放在ncnn文件夹下</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Tencent/ncnn.git</span><br><span class="line"></span><br><span class="line">// 进入ncnn文件夹</span><br><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line">// 拉取submodule</span><br><span class="line">git submodule update --init</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// 同上，-DCMAKE_BUILD_TYPE参数也可设为debug</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line"></span><br><span class="line">// 更改为自己电脑上Protobuf对应文件夹所在的路径，注意：请务必改为绝对路径而不是相对路径！</span><br><span class="line">    -DProtobuf_INCLUDE_DIR=E:/Project/protobuf-3.4.0/build-vs2019/install/include ^</span><br><span class="line">    -DProtobuf_LIBRARIES=E:/Project/protobuf-3.4.0/build-vs2019/install/lib/libprotobuf.lib ^</span><br><span class="line">    -DProtobuf_PROTOC_EXECUTABLE=E:/Project/protobuf-3.4.0/build-vs2019/install/bin/protoc.exe ^</span><br><span class="line">// 更改为自己电脑上OpenCV3.4.5对应文件夹所在的路径，依然是注意绝对路径的问题</span><br><span class="line">	-DOpenCV_DIR=E:/opencv/build/x64/vc15/lib ..</span><br><span class="line">	</span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即ncnn文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>  至此，运行此项目demo的环境构建工作就做好了，接下来就可以准备开始调试SOLOv2 ncnn的项目。</p>
+<h2 id="02-项目调试"><a class="header-anchor" href="#02-项目调试"></a>02 项目调试</h2>
+<p>  与上一步相同，首先需要使用获得一份源码：</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DayBreak-u/SOLOV2_ncnn.git</span><br></pre></td></tr></table></figure>
+<p>  根据<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">项目主页</a><a href="http://xn--README-ow6o.md">的README.md</a>，执行前三行代码：</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build </span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
+<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>-- Configuring done</code>、<code>-- Generating done</code>时即意味着项目解决方案的成功生成。</p>
+<p>  下载模型权重：</p>
+<blockquote>
+<p>链接: <a href="https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng">https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng</a> 密码: phh8</p>
+</blockquote>
+<p>  在Windows环境下，由于没有Linux下的GNU Make，所以我们直接用VS来编译代码：</p>
+<h3 id="VS配置ncnn和opencv环境"><a class="header-anchor" href="#VS配置ncnn和opencv环境"></a>VS配置ncnn和opencv环境</h3>
+<p>  点击<code>项目</code>-&gt;<code>属性</code>-&gt;<code>VC++目录</code>，在Release配置、x64平台下，根据自己目录的实际情况添加以下路径至<code>包含目录</code>：</p>
+<div class="note warning"><p>注意：如果前文中您将protobuf、ncnn的源码编译为debug版本，则此处也要将其改为debug配置。</p>
+</div>
+<p>  <code>E:\opencv\build\include</code><br>
+  <code>E:\opencv\build\include\opencv</code><br>
+  <code>E:\opencv\build\include\opencv2</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\include</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\include\ncnn</code></p>
+<p>  同样，在<code>库目录</code> 中根据自身情况添加以下路径：</p>
+<p>  <code>E:\opencv\build\x64\vc15\lib</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\lib</code></p>
+<p>  在<code>链接器</code>-&gt;<code>输入</code>中加入<code>ncnn.lib</code>、<code>opencv_world345.lib</code>这两个<code>附加依赖项</code>就可以进行下一步操作了。</p>
+<h3 id="修改代码"><a class="header-anchor" href="#修改代码"></a>修改代码</h3>
+<p>  为方便运行demo查看效果，我对其进行了一定修改，以solov2.cpp为例（<del>才不是我没有测试过solov2_fast.cpp的原因呢</del>，哼o(~ヘ~o#)）：</p>
+<p>  根据前文下载的模型权重存储路径修改权重读取位置：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/3.png" alt="修改代码"></p>
+<p>  注释并重写main函数：</p>
+<figure class="highlight c++"><figcaption><span>solov2.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* imagepath = <span class="string">&quot;E:/Project/SOLOV2_ncnn/imgs/horses.jpg&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cv::Mat m = cv::<span class="built_in">imread</span>(imagepath, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (m.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;cv::imread %s failed\n&quot;</span>, imagepath);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::vector &lt;Object&gt; objects;</span><br><span class="line">    <span class="built_in">detect_solov2</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_objects</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  程序生成的结果result.png默认放在项目build文件夹下，如果您想要直观地看见程序运行的效果，可以将main函数上方原作者注释掉的两行代码取消注释：<br>
+  <code>//    cv::imshow(&quot;image&quot;, image);</code><br>
+  <code>//    cv::waitKey(0);</code></p>
+<h3 id="运行代码"><a class="header-anchor" href="#运行代码"></a>运行代码</h3>
+<p>  做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/4.png" alt="修改代码"></p>
+<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
+<p>  运行窗口如图：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/5.png" alt="运行窗口"></p>
+<p>  运行效果如图：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/horses.jpg" alt="运行效果1" title="读取到的图片"></p>
+<p><img data-src="/img/Configure-a-NCNN-Project/result.png" alt="运行效果2" title="实例分割的结果"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>编程</tag>
+        <tag>SOLOv2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习基础#00：Intro</title>
+    <url>//posts/Machine-Learning-101-00/</url>
+    <content><![CDATA[<style>
+table
+{
+    margin: auto;
+}
+</style>
+<p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
+<span id="more"></span>
+<p>  免责声明：本人对机器学习领域所知甚少，所写博文为对前期所学知识的回顾，不确保其内容的真实性与准确性，不建议以此为基础进行学习。如有差错纰漏，欢迎指正。</p>
+<h2 id="什么是机器学习？"><a class="header-anchor" href="#什么是机器学习？"></a>什么是机器学习？</h2>
+<p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，那就是：</p>
+<blockquote><p>从已有的样本（数据）中发现规律，并能够将其泛化应用于未知的（或者说：新的）样本上。</p>
+<footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
+<br>
+<p>  譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。</p>
+<p><img data-src="/img/Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
+<div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
+<br>
+<h2 id="一个简单的例子"><a class="header-anchor" href="#一个简单的例子"></a>一个简单的例子</h2>
+<p>  现在，我们有一组$x$与$y$如表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">x</th>
+<th style="text-align:center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">?</td>
+</tr>
+</tbody>
+</table>
+<p>  对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。</p>
+<p>  基于此，我们建立一个简单的线性模型：<br>
+<img data-src="/img/Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
+<p>  此外，我们还需要一个“打分”的函数来评估模型在当前样本（所谓样本，结合这个例子来说就是上述列表里的某一行）上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。</p>
+<p>$$<br>
+loss={(\hat{y}-y)}^2<br>
+$$</p>
+<p>  大多数情况下，我们的目标是令代价函数的值尽可能的变小，即预测值接近真实值。</p>
+<p>  现在，我们随机地初始化一组$w$和$b$($w=1,b=1$)来计算损失函数loss的值：<br>
+  $x=2$时，$\hat{y}=3$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3-4)}^2=1$<br>
+  $x=3$时，$\hat{y}=4$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(4-6)}^2=4$<br>
+  在全体样本上的均方误差$cost = 5\div2=2.5$</p>
+<p>  我们把这个步骤称作“<strong>前向运算</strong>”/“<strong>前馈运算</strong>”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。<br>
+  在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。</p>
+<img data-src="/img/Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
+<p>  将其应用于我们的例子中：当我们将两个参数$w、b$沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。</p>
+<p>  根据链式求导法则：<br>
+$$<br>
+\frac{\partial{loss}}{\partial{w}}=\frac{\partial{loss}}{\partial{\hat{y}}}\cdot\frac{\partial{\hat{y}}}{\partial{w}}=2(\hat{y}-y)\cdot{x}<br>
+$$<br>
+  (对b的偏导同理)</p>
+<p>  将前向运算中计算得到的$\hat{y}$和当前样本已知的$x、y$带入上述式子可得：<br>
+  在$x=2$时，$\left.{\frac{\partial{loss}}{\partial{w}}}\right|_{x=2}=−4$，$\left.{\frac{\partial{loss}}{\partial{b}}}\right|_{x=2}=−2$<br>
+  在$x=3$时，$\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3}=-12$，$\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3}=−4$</p>
+<p>  接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。</p>
+<img data-src="/img/Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
+<p>$$<br>
+\begin{align*}<br>
+w'&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
+&amp;=w- lr\cdot(\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-4-12)\div2\\<br>
+&amp;=1.32<br>
+\end{align*}<br>
+$$</p>
+<p>  同理，$b$的值计算结果为：<br>
+$$<br>
+\begin{align*}<br>
+b'&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
+&amp;=b-lr\cdot(\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-2-4)\div2\\<br>
+&amp;=1.12<br>
+\end{align*}<br>
+$$</p>
+<p>  如上述的这个过程，被称为“反向传播”。这样，我们便走完了神经网络训练的一个轮次（Epoch）。此时，重新计算预测值、loss与cost，更新权重后的结果为：</p>
+<p>  $x=2$时，$\hat{y}=3.76$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3.76-4)}^2=0.0576$<br>
+  $x=3$时，$\hat{y}=5.08$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(5.08-6)}^2=0.8464$<br>
+  在全体样本上的均方误差$cost' = 0.452$</p>
+<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程，在经过第二次训练后，得到$w'=1.644$，$b'=1.236$</p>
+<p>  现在，对于例子开头提出来的问题，在经过两轮训练后，神经网络给出的$x=4$时的预测结果为:<br>
+$$<br>
+ŷ = 1.644\times4+1.236 = 7.812<br>
+$$</p>
+<p>  当反复训练后，cost的值趋近于零，在某个区间内呈现波动的时候，我们称这个网络<strong>收敛</strong>，而当cost值不再变小而且和0相去较远时，则可能陷入了局部最优解，或者是学习率过大导致无法收敛于全局最优解。</p>
+<blockquote>
+<p><strong>小结</strong><br>
+神经元：网络中负责某种基础运算的单元。例如本例中建模采用的$y=kx+b$就是一个基础的神经元。<br>
+神经网络训练的步骤：正向运算求Loss，反向计算求Loss对各个参数的偏导，依赖偏导对参数进行微小的调整。在本例中，反复以样本训练较好地逼近了结果。<br>
+<strong>问题</strong>：<br>
+多个线性神经元简单叠加，如两个神经元：$y = w_1(w_2x+b_2)+b_1 = w_1w_2x+w_1b_2+b_1$ ，仍与单个神经元效果相同，需要引入<em>非线性变换</em>才能较好的拟合非线性函数。</p>
+</blockquote>
+<h2 id="更复杂的例子"><a class="header-anchor" href="#更复杂的例子"></a>更复杂的例子</h2>
+<p>  下方是某商品的评价及其人工标注的情感标签，试建立模型分析其中关系。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">评价</th>
+<th style="text-align:center">情感标签</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">“好看”</td>
+<td style="text-align:center">正面</td>
+</tr>
+<tr>
+<td style="text-align:center">“不好”</td>
+<td style="text-align:center">负面</td>
+</tr>
+<tr>
+<td style="text-align:center">“好”</td>
+<td style="text-align:center">正面</td>
+</tr>
+<tr>
+<td style="text-align:center">“不好看”</td>
+<td style="text-align:center">负面</td>
+</tr>
+<tr>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+</tr>
+</tbody>
+</table>
+<p>  由于神经网络只能接受数字化的输入并产生相对应的数字化输出，因此需要将这些样本转化成数据：</p>
+<p>  首先提取基本语素，在这个简单的任务中，共有三个字：{好，不，看}<br>
+  对这三个字进行“<strong>独热编码</strong>”：<br>
+  <strong>好 = [1, 0, 0] 不 = [0, 1, 0] 看 = [0, 0, 1]</strong><br>
+  输入样本的向量即为各个字符编码的相加，例如：<br>
+  <strong>好看 = [1, 0, 1] 不好 = [1, 1, 0] ……</strong><br>
+  对于输出，由于只存在两种标签，因此编码为：<br>
+  <strong>正面 = [1, 0] 负面 = [0, 1]</strong><br>
+  依照上述步骤，我们构造出了一个$4×3$(样本数×input size/基本语素单位)的输入矩阵$x$与$4×2$(样本数×标注类别)的标注矩阵$y$：<br>
+$$<br>
+x=\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 1\end{bmatrix} y=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}<br>
+$$</p>
+<p>  类似于第二部分中给出的例子，我们设计出一个相较于前者更为复杂的网络：<br>
+<img data-src="/img/Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/></p>
+<p>  在两个隐藏层向各个下一层神经元传输相应数字时(箭头所示位置)，需要引入非线性变换的激活函数(Activation function)，这里选用的是Sigmoid函数：$𝑆(𝑥)=\frac{1}{(1+𝑒^{−𝑥})}$，它将实数域R的数字映射至(0, 1)内。网络最后一层的Softmax函数也是一种非线性变换，它将该层所有结果都映射到(0, 1)内，不改变大小的相对位置。对于该层的各个元素$x_i$，经变换后的值计算如下：<br>
+$$<br>
+softmax\ value = \frac{e^{x_i}}{\sum_{j}e^{x_j}{}}<br>
+$$</p>
+<p>  图中实线连接的部分就是我们在反向算法过程中需要更新的权重，为简化计算，在这个例子中我们忽略bias项即偏置的影响(也就是说每一条线代表的基础运算单元仅仅是$y=kx$)，只考虑权重w构成的三个矩阵：<br>
+  $𝑤_1$为三行两列矩阵，$𝐻_1=𝑥𝑤_1$，$𝑤_2$ 、$𝑤_3$ 为两行两列的矩阵： $𝐻_2=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_1 ) 𝑤_2$，$𝑂𝑢𝑡𝑝𝑢𝑡=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_2)𝑤_3$</p>
+<p>  <strong>正向运算：</strong><br>
+  首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
+<img data-src="/img/Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
+<p>  <strong>计算Loss：</strong><br>
+  在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：<br>
+<img data-src="/img/Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/></p>
+<p>  <strong>反向传播：</strong><br>
+  这一部分公式太多，懒得用$\LaTeX$再整理一遍，直接借用之前自己做的PPT里面的推导过程（不过说起来这里面的矩阵转置当时弄得我有些晕，其实你需要弄清楚对应元素的位置就比较清楚了。）：<br>
+<img data-src="/img/Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/></p>
+<p>  <strong>更新权重：</strong><br>
+<img data-src="/img/Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/></p>
+<blockquote>
+<p><strong>小结与反思</strong><br>
+同单层模型一样，多层模型仍采用反向传播算法来进行权重的更新。<br>
+引入sigmoid、softmax等非线性变换来构筑更复杂的模型。<br>
+损失计算采用了负对数似然损失(能否采用MSE，为什么？)<br>
+对于文本序列而言，其出现的顺序对于理解其含义是至关重要的，简单向量相加丢失了字符出现顺序的信息。(改进：RNN)<br>
+层数越深，由链式法则相乘得到的梯度越来越小，可能出现梯度消失的问题(改进：ResNet)<br>
+文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分元素都是0）。②（基于前者）大部分句子的向量都分布在坐标轴附近。③（基于前者）难以衡量两个句子之间的相似度。</p>
+</blockquote>
+<h2 id="随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#随机梯度下降：引入Mini-Batch"></a>随机梯度下降：引入Mini-Batch</h2>
+<p>  对于梯度下降，有几种不同的方法对其进行实现：<br>
+  批量梯度下降：计算所有样本的loss后，再更新权重w与偏置b。<br>
+  随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。<br>
+  小批量(随机)梯度下降：将全体样本划分为若干个mini-batch，每个batch中存在若干样本，随机抽出一个mini-batch，计算该批次样本中的loss后更新权重w与偏置b，直到跑完所有mini-batch后，记作训练一个轮次。在训练完一个轮次后。对样本进行shuffle处理，即重新划分mini-batch，再次进行训练，形象化的比喻可以称作“洗牌”，这也是为什么英文叫做&quot;shuffle&quot;。</p>
+<img data-src="/img/Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
+<p>  三种不同方式的对比：<br>
+  一般来说，小批量梯度下降通过选取部分样本引入了更大噪声，使得它在解空间的“鞍点”位置更容易受噪声扰动，在一些情况下性能表现比批量梯度下降更好。而随机梯度下降更新权重只关注当前样本的梯度，所以尽管每一步使得当前样本得到最优的表现，但从整体样本考虑则不一定最优，且每一个样本前向计算时都需要依赖上一个样本反向传播后更新的权重，并行化程度不如其它两者高。<br>
+  形象化的三种方式如上图所示，红点位置即为所求的最优解，图中带箭头的线则显示了这三种方法在寻找最优解的过程。</p>
+<hr>
+&emsp;&emsp;这篇文章，笔者简要回顾了机器学习的最基础内容，虽然听起来或者推导起来比较复杂。但作为感性的认知来看，了解机器学习的工作原理并不困难，甚至完全可以只用高中的知识理解。本期的内容还未涉及到代码部分，这些工作将在下期进行介绍。
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
@@ -2202,6 +2202,189 @@ $$</p>
 </table>
 </div>
 <div class='clear'></div>
+<h2 id="事件高级"><a class="header-anchor" href="#事件高级"></a>事件高级</h2>
+<ul>
+<li>绑定 / 注册事件
+<ul>
+<li>以上给元素添加事件的方式（利用on开头的事件）是<strong>传统方式</strong>注册事件
+<ul>
+<li>特点：唯一性，同一个元素的同一事件只能设置一个处理函数，后注册的处理函数会覆盖前面注册的</li>
+</ul>
+</li>
+<li>W3C标准推荐使用方法监听注册方式
+<ul>
+<li>addEventListener()是一个方法</li>
+<li>IE9以前不支持此方法，可使用attachEvent()方法代替</li>
+<li>特点：同一个元素同一事件可以注册多个监听器</li>
+</ul>
+</li>
+<li><code>eventTarget.<em><strong>addEventListener(type, listener, [useCapture])</strong></em></code>
+<ul>
+<li>type: 事件类型字符串</li>
+<li>listener: 事件处理函数</li>
+<li>useCapture: 可选参数，默认为false</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>解绑事件
+<ul>
+<li>传统方式绑定的事件解绑: on事件 = null;</li>
+<li>方法监听绑定的事件解绑: removeEventListener()</li>
+<li><code>eventTarget.<em><strong>removeEventListener(type, listener, [useCapture])</strong></em></code>
+<ul>
+<li>type: 事件类型字符串</li>
+<li>listener: 事件处理函数</li>
+<li>useCapture: 可选参数，默认为false</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="DOM事件流理论"><a class="header-anchor" href="#DOM事件流理论"></a>DOM事件流理论</h3>
+<p>  DOM中事件流描述的是从页面中接收事件的顺序。事件发生时会在元素节点之间按照特定的顺序传播，这个传播过程即DOM事件流。</p>
+<ul>
+<li>DOM事件流分为3个阶段
+<ul>
+<li>捕获阶段：从上至下</li>
+<li>当前目标阶段</li>
+<li>冒泡阶段：从下至上
+<ul>
+<li>实际开发中很少使用事件捕获，更关注事件冒泡</li>
+<li>onblur onfocus onmouseenter onmouseleave 事件等没有冒泡<br>
+<strong>例子：</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="tabs" id="dom_event"><ul class="nav-tabs"><li class="tab active"><a href="#dom_event-1">HTML</a></li><li class="tab"><a href="#dom_event-2">CSS</a></li><li class="tab"><a href="#dom_event-3">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="dom_event-1"><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;event&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;father1&#x27;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span> = <span class="string">&#x27;son1&#x27;</span>&gt;</span>冒泡<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;father2&#x27;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span> = <span class="string">&#x27;son2&#x27;</span>&gt;</span>捕获<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="dom_event-2"><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#event</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> dotted <span class="number">#666</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#event</span>&gt;<span class="selector-tag">span</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">10%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#father1</span>, <span class="selector-id">#father2</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#son1</span>, <span class="selector-id">#son2</span> &#123;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">25%</span> auto;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="dom_event-3"><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> f1 = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#father1&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> s1 = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#son1&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> f2 = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#father2&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#son2&#x27;</span>);</span><br><span class="line">f1.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, myName);</span><br><span class="line">s1.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, myName);</span><br><span class="line">f2.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, myName, <span class="literal">true</span>);</span><br><span class="line">s2.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, myName, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">myName</span>(<span class="params">e</span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;我是&#x27;</span> + <span class="variable language_">this</span>.<span class="property">id</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">target</span>,<span class="variable language_">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+<style>
+    #event {
+        margin: 0 auto;
+        width: 50%;
+        border: 1px dotted #666;
+        text-align: center;
+    }
+    #event>span {
+        display: inline-block;
+        width: 10%;
+    }
+
+    #father1, #father2 {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+
+    #son1, #son2 {
+        cursor: pointer;
+        margin: 25% auto;
+        width: 50%;
+        height: 50%;
+        background-color: pink;
+    }
+</style>
+<p><strong>效果：</strong></p>
+<div id='event'>
+    <div id='father1'>
+        <div id = 'son1'>冒泡</div>
+    </div><span></span>
+    <div id='father2'>
+        <div id = 'son2'>捕获</div>
+    </div>
+</div>
+<script>
+    var f1 = document.querySelector('#father1');
+    var s1 = document.querySelector('#son1');
+    var f2 = document.querySelector('#father2');
+    var s2 = document.querySelector('#son2');
+    f1.addEventListener('click', myName);
+    s1.addEventListener('click', myName);
+    f2.addEventListener('click', myName, true);
+    s2.addEventListener('click', myName, true);
+
+    function myName(e){
+        alert('我是' + this.id);
+        console.log(e.target,this)
+    }
+</script>
+<h3 id="事件对象"><a class="header-anchor" href="#事件对象"></a>事件对象</h3>
+<ul>
+<li>监听函数的形参</li>
+<li>事件对象只有存在事件才会存在，系统自动创建</li>
+<li>事件对象中包含了与事件相关的数据 属性 方法等
+<ul>
+<li><code>e.<em><strong>target</strong></em></code>: 返回触发事件的对象
+<ul>
+<li>this: 返回绑定的对象，注意区别</li>
+</ul>
+</li>
+<li><code>e.<em><strong>type</strong></em></code>: 事件类型</li>
+<li><code>e.<em><strong>preventDefault()</strong></em></code> 阻止默认事件，比如禁止链接跳转
+<ul>
+<li>return false; 也可以阻止默认事件，但仅限于传统注册方式</li>
+</ul>
+</li>
+<li><code>e.<em><strong>stopPropagation()</strong></em></code> 阻止事件传播</li>
+</ul>
+</li>
+<li>鼠标事件对象 MouseEvent
+<ul>
+<li><code>e.<em><strong>clientX / elientY</strong></em></code> 相对浏览器窗口可视区的X Y坐标</li>
+<li><code>e.<em><strong>pageX / pageY</strong></em></code> 相对文档页面的X Y坐标</li>
+<li><code>e.<em><strong>screenX / screenY</strong></em></code> 相对电脑屏幕的X Y坐标</li>
+</ul>
+</li>
+</ul>
+<h3 id="事件委托"><a class="header-anchor" href="#事件委托"></a>事件委托</h3>
+<ul>
+<li>原理：不为每个子节点单独设置事件监听器，而是设置在父节点上，然后利用冒泡原理影响设置每个子节点(e.target)</li>
+<li>作用：只操作了一次DOM，提高性能</li>
+</ul>
+<h3 id="更多的鼠标-键盘事件"><a class="header-anchor" href="#更多的鼠标-键盘事件"></a>更多的鼠标 / 键盘事件</h3>
+<ul>
+<li>contextmenu
+<ul>
+<li>控制何时应该显示上下文菜单，比如屏蔽右键菜单可以通过阻止默认事件进行</li>
+</ul>
+</li>
+<li>selectstart
+<ul>
+<li>开始选中，阻止默认事件可以禁止鼠标选中文本</li>
+</ul>
+</li>
+<li>keyup
+<ul>
+<li>按键松开时触发</li>
+</ul>
+</li>
+<li>keydown
+<ul>
+<li>按键按下时触发</li>
+</ul>
+</li>
+<li>keypress
+<ul>
+<li>按下时触发，但不识别功能键</li>
+</ul>
+</li>
+</ul>
+<p> <strong>键盘对象的属性：</strong></p>
+<ul>
+<li><code>e.<em><strong>key</strong></em></code>
+<ul>
+<li>按下键的字符串</li>
+</ul>
+</li>
+<li><code>e.<em><strong>keyCode</strong></em></code>
+<ul>
+<li>按下键的ASCII码值</li>
+<li>keyup / keydown不区分大小写，keypress区分</li>
+</ul>
+</li>
+</ul>
 <h2 id="操作元素"><a class="header-anchor" href="#操作元素"></a>操作元素</h2>
 <h3 id="改变元素内容"><a class="header-anchor" href="#改变元素内容"></a>改变元素内容</h3>
 <ul>
@@ -2322,15 +2505,19 @@ JS修改style样式操作，产生的是行内样式</p>
 </script>
 <h3 id="节点操作"><a class="header-anchor" href="#节点操作"></a>节点操作</h3>
 <p>  DOM树中，一切都是节点。</p>
+<div>
 <ul>
 <li>一般地，节点至少拥有nodeType nodeName nodeValue这三个基本属性
 <ul>
 <li>元素节点 nodeType为1</li>
 <li>属性节点 nodeType为2</li>
-<li>文本节点 nodeType为3<br>
-<br></li>
+<li>文本节点 nodeType为3</li>
 </ul>
 </li>
+</ul>
+</div>
+<div>
+<ul>
 <li><code>node.<em><strong>parentNode</strong></em></code>  获取离元素最近的父节点</li>
 <li><code>node.<em><strong>childNodes</strong></em></code>  子节点，包含元素节点 文本节点（因此一般不提倡使用）</li>
 <li><code>node.<em><strong>children</strong></em></code>  子元素节点</li>
@@ -2347,6 +2534,16 @@ JS修改style样式操作，产生的是行内样式</p>
 <li><code>node.<em><strong>insertBefore(child, 位置)</strong></em></code>  添加节点至node节点指定位置之前</li>
 <li><code>node.<em><strong>removeChild(child)</strong></em></code>  删除节点</li>
 <li><code>node.<em><strong>cloneNode()</strong></em></code>  复制节点，默认空参数 或者 false 是浅拷贝，不复制里面的内容，为true是深拷贝</li>
+</ul>
+</div>
+<ul>
+<li>动态创建元素的三种方法比对
+<ul>
+<li><code>document.<em><strong>write()</strong></em></code>  文档流执行完毕后，此语句会导致页面的重绘</li>
+<li><code>element.<em><strong>innerHTML</strong></em></code>  创建大量相同元素时，不要采用字符串拼接的形式，而是采用数组join的形式（性能）。</li>
+<li><code>document.<em><strong>createElement</strong></em></code>  创建大量相同元素时，此种方式比上面字符串拼接的方式更快，但是稍慢于数组join，但是语义更清晰</li>
+</ul>
+</li>
 </ul>
 ]]></content>
       <categories>
