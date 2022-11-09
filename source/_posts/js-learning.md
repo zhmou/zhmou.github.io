@@ -231,6 +231,188 @@ fn2 = function() {
 </div>
 <div class='clear'></div>
 
+## 事件高级
+- 绑定 / 注册事件
+    - 以上给元素添加事件的方式（利用on开头的事件）是**传统方式**注册事件
+        - 特点：唯一性，同一个元素的同一事件只能设置一个处理函数，后注册的处理函数会覆盖前面注册的
+    - W3C标准推荐使用方法监听注册方式
+        - addEventListener()是一个方法
+        - IE9以前不支持此方法，可使用attachEvent()方法代替
+        - 特点：同一个元素同一事件可以注册多个监听器
+    - <code>eventTarget.***addEventListener(type, listener, [useCapture])***</code>
+        - type: 事件类型字符串
+        - listener: 事件处理函数
+        - useCapture: 可选参数，默认为false
+- 解绑事件
+    - 传统方式绑定的事件解绑: on事件 = null;
+    - 方法监听绑定的事件解绑: removeEventListener()
+    - <code>eventTarget.***removeEventListener(type, listener, [useCapture])***</code>
+        - type: 事件类型字符串
+        - listener: 事件处理函数
+        - useCapture: 可选参数，默认为false
+
+### DOM事件流理论
+&emsp;&emsp;DOM中事件流描述的是从页面中接收事件的顺序。事件发生时会在元素节点之间按照特定的顺序传播，这个传播过程即DOM事件流。
+- DOM事件流分为3个阶段
+    - 捕获阶段：从上至下
+    - 当前目标阶段
+    - 冒泡阶段：从下至上
+        - 实际开发中很少使用事件捕获，更关注事件冒泡
+        - onblur onfocus onmouseenter onmouseleave 事件等没有冒泡
+**例子：**
+{% tabs DOM_Event %}
+<!-- tab HTML -->
+``` HTML
+<div id='event'>
+    <div id='father1'>
+        <div id = 'son1'>冒泡</div>
+    </div>
+    <span></span>
+    <div id='father2'>
+        <div id = 'son2'>捕获</div>
+    </div>
+</div>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+``` CSS
+    #event {
+        margin: 0 auto;
+        width: 50%;
+        border: 1px dotted #666;
+        text-align: center;
+    }
+    #event>span {
+        display: inline-block;
+        width: 10%;
+    }
+
+    #father1, #father2 {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+
+    #son1, #son2 {
+        cursor: pointer;
+        margin: 25% auto;
+        width: 50%;
+        height: 50%;
+        background-color: pink;
+    }
+```
+<!-- endtab -->
+<!-- tab Javascript -->
+``` Javascript
+    var f1 = document.querySelector('#father1');
+    var s1 = document.querySelector('#son1');
+    var f2 = document.querySelector('#father2');
+    var s2 = document.querySelector('#son2');
+    f1.addEventListener('click', myName);
+    s1.addEventListener('click', myName);
+    f2.addEventListener('click', myName, true);
+    s2.addEventListener('click', myName, true);
+
+    function myName(e){
+        alert('我是' + this.id);
+        console.log(e.target,this);
+    }
+```
+<!-- endtab -->
+{% endtabs %}
+
+<style>
+    #event {
+        margin: 0 auto;
+        width: 50%;
+        border: 1px dotted #666;
+        text-align: center;
+    }
+    #event>span {
+        display: inline-block;
+        width: 10%;
+    }
+
+    #father1, #father2 {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+
+    #son1, #son2 {
+        cursor: pointer;
+        margin: 25% auto;
+        width: 50%;
+        height: 50%;
+        background-color: pink;
+    }
+</style>
+**效果：**
+<div id='event'>
+    <div id='father1'>
+        <div id = 'son1'>冒泡</div>
+    </div><span></span>
+    <div id='father2'>
+        <div id = 'son2'>捕获</div>
+    </div>
+</div>
+
+<script>
+    var f1 = document.querySelector('#father1');
+    var s1 = document.querySelector('#son1');
+    var f2 = document.querySelector('#father2');
+    var s2 = document.querySelector('#son2');
+    f1.addEventListener('click', myName);
+    s1.addEventListener('click', myName);
+    f2.addEventListener('click', myName, true);
+    s2.addEventListener('click', myName, true);
+
+    function myName(e){
+        alert('我是' + this.id);
+        console.log(e.target,this)
+    }
+</script>
+
+### 事件对象
+- 监听函数的形参
+- 事件对象只有存在事件才会存在，系统自动创建
+- 事件对象中包含了与事件相关的数据 属性 方法等
+    - <code>e.***target***</code>: 返回触发事件的对象
+        - this: 返回绑定的对象，注意区别
+    - <code>e.***type***</code>: 事件类型
+    - <code>e.***preventDefault()***</code> 阻止默认事件，比如禁止链接跳转
+        - return false; 也可以阻止默认事件，但仅限于传统注册方式
+    - <code>e.***stopPropagation()***</code> 阻止事件传播
+- 鼠标事件对象 MouseEvent
+    - <code>e.***clientX / elientY***</code> 相对浏览器窗口可视区的X Y坐标
+    - <code>e.***pageX / pageY***</code> 相对文档页面的X Y坐标
+    - <code>e.***screenX / screenY***</code> 相对电脑屏幕的X Y坐标
+
+### 事件委托
+- 原理：不为每个子节点单独设置事件监听器，而是设置在父节点上，然后利用冒泡原理影响设置每个子节点(e.target)
+- 作用：只操作了一次DOM，提高性能
+
+### 更多的鼠标 / 键盘事件
+- contextmenu
+    - 控制何时应该显示上下文菜单，比如屏蔽右键菜单可以通过阻止默认事件进行
+- selectstart
+    - 开始选中，阻止默认事件可以禁止鼠标选中文本
+- keyup
+    - 按键松开时触发
+- keydown
+    - 按键按下时触发
+- keypress
+    - 按下时触发，但不识别功能键
+
+&emsp;**键盘对象的属性：**
+- <code>e.***key***</code>
+    - 按下键的字符串
+- <code>e.***keyCode***</code>
+    - 按下键的ASCII码值
+    - keyup / keydown不区分大小写，keypress区分
+
 ## 操作元素
 ### 改变元素内容
 - <code>element.***innerText***</code>
@@ -446,11 +628,15 @@ JS修改style样式操作，产生的是行内样式
 ### 节点操作
 &emsp;&emsp;DOM树中，一切都是节点。
 
+<div>
+
 - 一般地，节点至少拥有nodeType nodeName nodeValue这三个基本属性
     - 元素节点 nodeType为1
     - 属性节点 nodeType为2
     - 文本节点 nodeType为3
-<br>
+</div>
+<div>
+
 - <code>node.***parentNode***</code>  获取离元素最近的父节点
 - <code>node.***childNodes***</code>  子节点，包含元素节点 文本节点（因此一般不提倡使用）
 - <code>node.***children***</code>  子元素节点
@@ -464,3 +650,9 @@ JS修改style样式操作，产生的是行内样式
 - <code>node.***insertBefore(child, 位置)***</code>  添加节点至node节点指定位置之前
 - <code>node.***removeChild(child)***</code>  删除节点
 - <code>node.***cloneNode()***</code>  复制节点，默认空参数 或者 false 是浅拷贝，不复制里面的内容，为true是深拷贝
+</div>
+
+- 动态创建元素的三种方法比对
+    - <code>document.***write()***</code>  文档流执行完毕后，此语句会导致页面的重绘
+    - <code>element.***innerHTML***</code>  创建大量相同元素时，不要采用字符串拼接的形式，而是采用数组join的形式（性能）。
+    - <code>document.***createElement***</code>  创建大量相同元素时，此种方式比上面字符串拼接的方式更快，但是稍慢于数组join，但是语义更清晰
