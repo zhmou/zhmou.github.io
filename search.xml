@@ -145,6 +145,59 @@
       </tags>
   </entry>
   <entry>
+    <title>用VS 2019打包dll文件</title>
+    <url>//posts/How-to-Package-a-dll/</url>
+    <content><![CDATA[<p>  最近在看学长接手的<a href="https://sao-kirito.top/2021/09/15/shape_based_matching/">形状匹配(shape based matching)C++工程</a>，虽然看懂的不多，但是被要求将部分代码打包封装成dll，暴露简洁的接口供调用者使用。<br>
+  在流程上，我参考了另一位师兄给的<a href="https://blog.csdn.net/weixin_42435145/article/details/104199125">链接</a>里的步骤。现结合具体工程记述如下：<span id="more"></span></p>
+<h2 id="创建dll项目"><a class="header-anchor" href="#创建dll项目"></a>创建dll项目</h2>
+<p>  打开Visual Studio 2019，在界面中选择<code>创建新项目(<u>N</u>)</code>。</p>
+<p><img data-src="/img/How-to-Package-a-dll/01.png" alt="创建新项目"></p>
+<p>  随后选择<code>动态链接库</code>项目，按照步骤依次将项目名称、位置以及解决方案名称设置好。创建完成后结构如图所示：</p>
+<p><img data-src="/img/How-to-Package-a-dll/02.png" alt="创建完成"></p>
+<h2 id="引入调用的文件、配置项目所需的OpenCV库文件"><a class="header-anchor" href="#引入调用的文件、配置项目所需的OpenCV库文件"></a>引入调用的文件、配置项目所需的OpenCV库文件</h2>
+<p>  将原项目中所有<code>.h</code>的头文件复制到该解决方案所在的文件夹中，并右键单击解决方案的<code>头文件</code>-&gt;<code>添加</code>-&gt;<code>现有项</code>，将这些头文件添加进解决方案中，所有被调用到的<code>.cpp</code>也进行相同的操作。完成之后的结果如下：</p>
+<p><img data-src="/img/How-to-Package-a-dll/03.png" alt="引入头文件与源文件"></p>
+<p>  由于此项目涉及图像处理最常用的OpenCV库，打包dll也需要进行相应的环境配置。点击VS菜单栏的<code>视图(V)</code>-&gt;<code>属性管理器</code>，右键单击本项目，选择<code>添加新项目属性表</code>，添加后双击该属性表进行编辑。在<code>VC++目录</code>的包含目录中配置路径如下：</p>
+<div align = "center"><code>..\OpenCV\build\include</code>
+</div>
+<div align = "center"><code>..\OpenCV\build\include\opencv</code>
+</div>
+<div align = "center"><code>..\OpenCV\build\include\opencv2</code>
+</div>
+<p>  在库目录中配置路径为：<code>..\OpenCV\build\x64\vc15\lib </code></p>
+<p>  在<code>链接器</code>-&gt;<code>输入</code>的附加依赖项中添加<code>opencv_world346d.lib</code>（在Release版本下则是<code>opencv_world346.lib</code>）。</p>
+<p>  这样，我们所有的先期准备工作就做好了。</p>
+<h2 id="编写dll函数"><a class="header-anchor" href="#编写dll函数"></a>编写dll函数</h2>
+<p>  在<code>pch.h</code>文件中，需要写上准备调用的函数声明，由于这些函数也要调用各自的头文件，因此可以把它们集中放在这个文件里，而在源文件中只需要包含<code>pch.h</code>即可。</p>
+<figure class="highlight c++"><figcaption><span>pch.h</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> PCH_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PCH_H</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加要在此处预编译的标头</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;framework.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;line2Dup.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">point</span>&#123;</span><br><span class="line">	<span class="type">float</span> x;</span><br><span class="line">	<span class="type">float</span> y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">recognizedObjectLocation</span></span><br><span class="line">&#123;</span><br><span class="line">	point topleft;</span><br><span class="line">	point center;</span><br><span class="line">	<span class="type">float</span> angle;</span><br><span class="line">	<span class="type">float</span> scale;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="function"><span class="type">void</span> <span class="title">train</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">				string imgLocation, </span></span></span><br><span class="line"><span class="params"><span class="function">				string saveTemplateDIR, </span></span></span><br><span class="line"><span class="params"><span class="function">				<span class="type">int</span> num_feature, Rect roi, <span class="type">int</span> padding, </span></span></span><br><span class="line"><span class="params"><span class="function">				string class_id)</span></span>;</span><br><span class="line">_declspec(dllexport) <span class="function">vector&lt;recognizedObjectLocation&gt; <span class="title">test</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">				string testImgLocation, </span></span></span><br><span class="line"><span class="params"><span class="function">				string loadTemplateDir, <span class="type">int</span> num_feature, </span></span></span><br><span class="line"><span class="params"><span class="function">				Rect train_roi, <span class="type">int</span> train_padding, string class_id, </span></span></span><br><span class="line"><span class="params"><span class="function">				<span class="type">int</span> score_thershold, <span class="type">int</span> nms_thershold)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">//PCH_H</span></span></span><br></pre></td></tr></table></figure>
+<p>  此处工作基本上是按部就班地参考网上教程而来的，在声明函数前，则需要添加上<code>extern &quot;C&quot; _declspec(dllexport)</code>这样的语句，而函数的返回值为C++类型时，譬如我这里自定义的recognizedObjectLocation类型的vector容器，就可以删去<code>extern &quot;C&quot;</code>的语句，否则会产生相应的报错，此处我也不甚了解，只是找到了网上给的解决方法而已。</p>
+<p>  在<code>pch.cpp</code>中，我们需要对自己编写的函数进行实现。需要注意的是：即使函数没有实现，在编译生成时，VS并不会报错而是正常生成对应的<code>.lib</code>与<code>.dll</code>文件，直到调用dll的代码进行编译时才会产生链接过程中的错误<code>LNK 2001 无法解析的外部符号...</code>。（小插曲：这段问题是我自己在编写dll过程中所遇到的问题，由于在函数声明和编写函数时，我所写的函数设置的参数数量不一样，被编译器视作不同的函数，所以链接时才找不到函数定义。）</p>
+<details class="note info no-icon"><summary><p>函数实现代码pch.cpp</p>
+</summary>
+<figure class="highlight c++"><figcaption><span>pch.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">// pch.cpp: 与预编译标头对应的源文件</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="keyword">namespace</span>  cv_dnn &#123;</span><br><span class="line">	<span class="keyword">namespace</span></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">		<span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">bool</span> <span class="title">SortScorePairDescend</span><span class="params">(<span class="type">const</span> std::pair&lt;<span class="type">float</span>, T&gt;&amp; pair1,</span></span></span><br><span class="line"><span class="params"><span class="function">			<span class="type">const</span> std::pair&lt;<span class="type">float</span>, T&gt;&amp; pair2)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> pair1.first &gt; pair2.first;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125; <span class="comment">// namespace</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">GetMaxScoreIndex</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">float</span>&gt;&amp; scores, <span class="type">const</span> <span class="type">float</span> threshold, </span></span></span><br><span class="line"><span class="params"><span class="function">                                 <span class="type">const</span> <span class="type">int</span> top_k,std::vector&lt;std::pair&lt;<span class="type">float</span>, <span class="type">int</span>&gt; &gt;&amp; score_index_vec)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; scores.<span class="built_in">size</span>(); ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (scores[i] &gt; threshold)</span><br><span class="line">			&#123;</span><br><span class="line">				score_index_vec.<span class="built_in">push_back</span>(std::<span class="built_in">make_pair</span>(scores[i], i));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		std::<span class="built_in">stable_sort</span>(score_index_vec.<span class="built_in">begin</span>(), score_index_vec.<span class="built_in">end</span>(),</span><br><span class="line">			SortScorePairDescend&lt;<span class="type">int</span>&gt;);</span><br><span class="line">		<span class="keyword">if</span> (top_k &gt; <span class="number">0</span> &amp;&amp; top_k &lt; (<span class="type">int</span>)score_index_vec.<span class="built_in">size</span>())</span><br><span class="line">		&#123;</span><br><span class="line">			score_index_vec.<span class="built_in">resize</span>(top_k);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> BoxType&gt;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">NMSFast_</span><span class="params">(<span class="type">const</span> std::vector&lt;BoxType&gt;&amp; bboxes,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="type">const</span> std::vector&lt;<span class="type">float</span>&gt;&amp; scores, <span class="type">const</span> <span class="type">float</span> score_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="type">const</span> <span class="type">float</span> nms_threshold, <span class="type">const</span> <span class="type">float</span> eta, <span class="type">const</span> <span class="type">int</span> top_k,</span></span></span><br><span class="line"><span class="params"><span class="function">		std::vector&lt;<span class="type">int</span>&gt;&amp; indices, <span class="type">float</span> (*computeOverlap)(<span class="type">const</span> BoxType&amp;, <span class="type">const</span> BoxType&amp;))</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">CV_Assert</span>(bboxes.<span class="built_in">size</span>() == scores.<span class="built_in">size</span>());</span><br><span class="line">		std::vector&lt;std::pair&lt;<span class="type">float</span>, <span class="type">int</span>&gt; &gt; score_index_vec;</span><br><span class="line">		<span class="built_in">GetMaxScoreIndex</span>(scores, score_threshold, top_k, score_index_vec);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Do nms.</span></span><br><span class="line">		<span class="type">float</span> adaptive_threshold = nms_threshold;</span><br><span class="line">		indices.<span class="built_in">clear</span>();</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; score_index_vec.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">			<span class="type">const</span> <span class="type">int</span> idx = score_index_vec[i].second;</span><br><span class="line">			<span class="type">bool</span> keep = <span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; (<span class="type">int</span>)indices.<span class="built_in">size</span>() &amp;&amp; keep; ++k) &#123;</span><br><span class="line">				<span class="type">const</span> <span class="type">int</span> kept_idx = indices[k];</span><br><span class="line">				<span class="type">float</span> overlap = <span class="built_in">computeOverlap</span>(bboxes[idx], bboxes[kept_idx]);</span><br><span class="line">				keep = overlap &lt;= adaptive_threshold;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (keep)</span><br><span class="line">				indices.<span class="built_in">push_back</span>(idx);</span><br><span class="line">			<span class="keyword">if</span> (keep &amp;&amp; eta &lt; <span class="number">1</span> &amp;&amp; adaptive_threshold &gt; <span class="number">0.5</span>) &#123;</span><br><span class="line">				adaptive_threshold *= eta;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// copied from opencv 3.4, not exist in 3.0</span></span><br><span class="line">	<span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt; <span class="type">static</span> <span class="keyword">inline</span></span></span><br><span class="line"><span class="function">		<span class="type">double</span> <span class="title">jaccardDistance__</span><span class="params">(<span class="type">const</span> Rect_&lt;_Tp&gt;&amp; a, <span class="type">const</span> Rect_&lt;_Tp&gt;&amp; b)</span> </span>&#123;</span><br><span class="line">		_Tp Aa = a.<span class="built_in">area</span>();</span><br><span class="line">		_Tp Ab = b.<span class="built_in">area</span>();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> ((Aa + Ab) &lt;= std::numeric_limits&lt;_Tp&gt;::<span class="built_in">epsilon</span>()) &#123;</span><br><span class="line">			<span class="comment">// jaccard_index = 1 -&gt; distance = 0</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="type">double</span> Aab = (a &amp; b).<span class="built_in">area</span>();</span><br><span class="line">		<span class="comment">// distance = 1 - jaccard_index</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">1.0</span> - Aab / (Aa + Ab - Aab);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">float</span> <span class="title">rectOverlap</span><span class="params">(<span class="type">const</span> T&amp; a, <span class="type">const</span> T&amp; b)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1.f</span> - <span class="built_in">static_cast</span>&lt;<span class="type">float</span>&gt;(<span class="built_in">jaccardDistance__</span>(a, b));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">NMSBoxes</span><span class="params">(<span class="type">const</span> std::vector&lt;Rect&gt;&amp; bboxes, <span class="type">const</span> std::vector&lt;<span class="type">float</span>&gt;&amp; scores,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="type">const</span> <span class="type">float</span> score_threshold, <span class="type">const</span> <span class="type">float</span> nms_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">		std::vector&lt;<span class="type">int</span>&gt;&amp; indices, <span class="type">const</span> <span class="type">float</span> eta = <span class="number">1</span>, <span class="type">const</span> <span class="type">int</span> top_k = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">NMSFast_</span>(bboxes, scores, score_threshold, nms_threshold, eta, top_k, indices, rectOverlap);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 当使用预编译的头时，需要使用此源文件，编译才能成功。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">train</span><span class="params">(string imgLocation, string saveTemplateDir, <span class="type">int</span> num_feature, Rect roi, <span class="type">int</span> padding, string class_id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">line2Dup::Detector <span class="title">detector</span><span class="params">(num_feature, &#123; <span class="number">4</span>, <span class="number">8</span> &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// read the img</span></span><br><span class="line">	Mat img = <span class="built_in">imread</span>(imgLocation);</span><br><span class="line">	<span class="built_in">assert</span>(!img.<span class="built_in">empty</span>() &amp;&amp; <span class="string">&quot;check your img path&quot;</span>);</span><br><span class="line">	<span class="comment">// cut the object out of img, location depends on &quot;roi&quot;</span></span><br><span class="line">	img = <span class="built_in">img</span>(roi).<span class="built_in">clone</span>();</span><br><span class="line"></span><br><span class="line">	Mat mask = <span class="built_in">Mat</span>(img.<span class="built_in">size</span>(), CV_8UC1, &#123; <span class="number">255</span> &#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// padding to avoid rotating out</span></span><br><span class="line">	cv::Mat padded_img = cv::<span class="built_in">Mat</span>(img.rows + <span class="number">2</span> * padding, img.cols + <span class="number">2</span> * padding, img.<span class="built_in">type</span>(), cv::Scalar::<span class="built_in">all</span>(<span class="number">0</span>));</span><br><span class="line">	img.<span class="built_in">copyTo</span>(<span class="built_in">padded_img</span>(<span class="built_in">Rect</span>(padding, padding, img.cols, img.rows)));</span><br><span class="line">	cv::Mat padded_mask = cv::<span class="built_in">Mat</span>(mask.rows + <span class="number">2</span> * padding, mask.cols + <span class="number">2</span> * padding, mask.<span class="built_in">type</span>(), cv::Scalar::<span class="built_in">all</span>(<span class="number">0</span>));</span><br><span class="line">	mask.<span class="built_in">copyTo</span>(<span class="built_in">padded_mask</span>(<span class="built_in">Rect</span>(padding, padding, img.cols, img.rows)));</span><br><span class="line"></span><br><span class="line">	<span class="function">shape_based_matching::shapeInfo_producer <span class="title">shapes</span><span class="params">(padded_img, padded_mask)</span></span>;</span><br><span class="line">	shapes.angle_range = &#123; <span class="number">0</span>, <span class="number">360</span> &#125;;    <span class="comment">// 模板库角度范围</span></span><br><span class="line">	shapes.angle_step = <span class="number">1</span>;  <span class="comment">// 模板库角度步长</span></span><br><span class="line">	<span class="comment">//shapes.scale_range = &#123; 0.9f, 1.1f &#125;;  // 模板库尺度范围</span></span><br><span class="line">	<span class="comment">//shapes.scale_step = 0.05f;     模板库尺度步长</span></span><br><span class="line">	shapes.scale_range = &#123; <span class="number">1.0f</span> &#125;;</span><br><span class="line">	shapes.<span class="built_in">produce_infos</span>();</span><br><span class="line">	std::vector&lt;shape_based_matching::shapeInfo_producer::Info&gt; infos_have_templ;</span><br><span class="line"></span><br><span class="line">	<span class="type">bool</span> is_first = <span class="literal">true</span>;</span><br><span class="line">	<span class="comment">// for other scales you want to re-extract points: </span></span><br><span class="line">	<span class="comment">// set shapes.scale_range then produce_infos; set is_first = false;</span></span><br><span class="line">	<span class="type">int</span> first_id = <span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> first_angle = <span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> first_scale = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span>&amp; info : shapes.infos) &#123;</span><br><span class="line">		Mat to_show = shapes.<span class="built_in">src_of</span>(info);</span><br><span class="line">		<span class="type">int</span> templ_id = detector.<span class="built_in">addTemplate</span>(shapes.<span class="built_in">src_of</span>(info), class_id, shapes.<span class="built_in">mask_of</span>(info),</span><br><span class="line">			<span class="built_in">int</span>(num_feature * info.scale));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (templ_id != <span class="number">-1</span>) &#123;</span><br><span class="line">			<span class="keyword">auto</span> templ = detector.<span class="built_in">getTemplates</span>(class_id, templ_id);</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; templ[<span class="number">0</span>].features.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">				<span class="keyword">auto</span> feat = templ[<span class="number">0</span>].features[i];</span><br><span class="line">				cv::<span class="built_in">circle</span>(to_show, &#123; feat.x + templ[<span class="number">0</span>].tl_x, feat.y + templ[<span class="number">0</span>].tl_y &#125;, <span class="number">3</span>, &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span> &#125;, <span class="number">-1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			infos_have_templ.<span class="built_in">push_back</span>(info);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">fabs</span>(info.scale - first_scale) &gt; <span class="number">0.002f</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			is_first = <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// .../class_id_templ.yaml</span></span><br><span class="line">		detector.<span class="built_in">writeClasses</span>(saveTemplateDir + class_id + <span class="string">&quot;_templ.yaml&quot;</span>);  <span class="comment">// 模板库</span></span><br><span class="line">		shapes.<span class="built_in">save_infos</span>(infos_have_templ, saveTemplateDir + class_id + <span class="string">&quot;_info.yaml&quot;</span>);   <span class="comment">// 模板信息</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;recognizedObjectLocation&gt; <span class="title">test</span><span class="params">(string testImgLocation, string loadTemplateDir, <span class="type">int</span> num_feature, </span></span></span><br><span class="line"><span class="params"><span class="function">                                      Rect train_roi, <span class="type">int</span> train_padding, string class_id, </span></span></span><br><span class="line"><span class="params"><span class="function">                                      <span class="type">int</span> score_thershold = <span class="number">90</span>, <span class="type">int</span> nms_thershold = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	vector&lt;recognizedObjectLocation&gt; ObjLocations;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	std::vector&lt;std::string&gt; ids;</span><br><span class="line">	ids.<span class="built_in">push_back</span>(class_id);</span><br><span class="line">	<span class="function">line2Dup::Detector <span class="title">detector</span><span class="params">(num_feature, &#123; <span class="number">4</span>, <span class="number">8</span> &#125;)</span></span>;</span><br><span class="line">	detector.<span class="built_in">readClasses</span>(ids, loadTemplateDir + class_id + <span class="string">&quot;_templ.yaml&quot;</span>);</span><br><span class="line">	<span class="keyword">auto</span> infos = shape_based_matching::shapeInfo_producer::<span class="built_in">load_infos</span>(loadTemplateDir + class_id + <span class="string">&quot;_info.yaml&quot;</span>);</span><br><span class="line"></span><br><span class="line">	Mat test_img = <span class="built_in">imread</span>(testImgLocation);</span><br><span class="line">	<span class="built_in">assert</span>(!test_img.<span class="built_in">empty</span>() &amp;&amp; <span class="string">&quot;check your img path&quot;</span>);</span><br><span class="line">	<span class="comment">// padding to avoid rotating out</span></span><br><span class="line">	<span class="type">int</span> padding = <span class="number">0</span>;</span><br><span class="line">	cv::Mat padded_img = cv::<span class="built_in">Mat</span>(test_img.rows + <span class="number">2</span> * padding,</span><br><span class="line">		test_img.cols + <span class="number">2</span> * padding, test_img.<span class="built_in">type</span>(), cv::Scalar::<span class="built_in">all</span>(<span class="number">0</span>));</span><br><span class="line">	test_img.<span class="built_in">copyTo</span>(<span class="built_in">padded_img</span>(<span class="built_in">Rect</span>(padding, padding, test_img.cols, test_img.rows)));</span><br><span class="line">	<span class="type">int</span> stride = <span class="number">32</span>;</span><br><span class="line">	<span class="type">int</span> n = padded_img.rows / stride;</span><br><span class="line">	<span class="type">int</span> m = padded_img.cols / stride;</span><br><span class="line">	<span class="function">Rect <span class="title">roi</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>, stride * m, stride * n)</span></span>;</span><br><span class="line">	Mat img = <span class="built_in">padded_img</span>(roi).<span class="built_in">clone</span>();</span><br><span class="line">	<span class="built_in">assert</span>(img.<span class="built_in">isContinuous</span>());</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> matches = detector.<span class="built_in">match</span>(img, score_thershold, ids);</span><br><span class="line"></span><br><span class="line">	vector&lt;Rect&gt; boxes;</span><br><span class="line">	vector&lt;<span class="type">float</span>&gt; scores;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; idxs;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> match : matches) &#123;</span><br><span class="line">		Rect box;</span><br><span class="line">		box.x = match.x;</span><br><span class="line">		box.y = match.y;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> templ = detector.<span class="built_in">getTemplates</span>(class_id, match.template_id);</span><br><span class="line"></span><br><span class="line">		box.width = templ[<span class="number">0</span>].width;</span><br><span class="line">		box.height = templ[<span class="number">0</span>].height;</span><br><span class="line">		boxes.<span class="built_in">push_back</span>(box);</span><br><span class="line">		scores.<span class="built_in">push_back</span>(match.similarity);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cv_dnn::<span class="built_in">NMSBoxes</span>(boxes, scores, score_thershold, nms_thershold, idxs);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> idx : idxs)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">auto</span> match = matches[idx];</span><br><span class="line">		<span class="keyword">auto</span> templ = detector.<span class="built_in">getTemplates</span>(class_id,  <span class="comment">// 读取训练好的模板类</span></span><br><span class="line">			match.template_id);</span><br><span class="line"></span><br><span class="line">		recognizedObjectLocation obj;</span><br><span class="line"></span><br><span class="line">		obj.topleft.x = match.x;</span><br><span class="line">		obj.topleft.y = match.y;</span><br><span class="line"><span class="comment">// Update 21/10/5 今天才发现train_roi这里写错了，应该是train_roi.weight 和 train_roi.height</span></span><br><span class="line">		<span class="type">float</span> train_img_half_width = train_roi.x / <span class="number">2.0f</span> + train_padding;</span><br><span class="line">		<span class="type">float</span> train_img_half_height = train_roi.y / <span class="number">2.0f</span> + train_padding;</span><br><span class="line">		obj.center.x = match.x - templ[<span class="number">0</span>].tl_x + train_img_half_width;</span><br><span class="line">		obj.center.y = match.y - templ[<span class="number">0</span>].tl_y + train_img_half_height;</span><br><span class="line"></span><br><span class="line">		obj.angle = <span class="number">360</span> - infos[match.template_id].angle;</span><br><span class="line">		obj.scale = infos[match.template_id].scale;</span><br><span class="line"></span><br><span class="line">		ObjLocations.<span class="built_in">push_back</span>(obj);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ObjLocations;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</details>
+<p>  另外，我把line2Dup.cpp中一些输出语句注释掉了，屏蔽掉控制台的输出。而TerryJoe学长解释了代码中各个坐标系下变换中公式的由来，现一并粘贴于此（无关信息已马赛克处理。）<br>
+<img data-src="/img/How-to-Package-a-dll/04.png" alt="说明"></p>
+<h2 id="生成dll文件"><a class="header-anchor" href="#生成dll文件"></a>生成dll文件</h2>
+<p>  点击<code>本地Windows调试器</code>，若提示错误：<code>在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include”pch.h”</code>，则点击菜单栏中的<code>项目</code>-&gt;<code>项目名属性</code>-&gt;<code>C/C++</code>-&gt;<code>预编译头</code>，将右侧的预编译头由<code>使用(/Yu)</code>调换到<code>不使用预编译头</code>，然后点击<code>应用</code>-&gt;<code>确定</code>。<br>
+  再次运行时即能正确运行，若输出显示<code>========== 生成: 成功 1 个，失败 0 个，最新 0 个，跳过 0 个 ==========</code>即为成功，此时会弹出错误框，显示<code>无法启动dll，dll不是有效的Win32应用程序。</code>我们关闭即可，dll必须由其他程序调用。此时我们在项目目录中的Debug或Release目录下即找到生成的<code>.dll</code>文件。</p>
+<h2 id="调用dll文件"><a class="header-anchor" href="#调用dll文件"></a>调用dll文件</h2>
+<p>  现在创建一个空的工程项目，创建主程序调用上述函数。</p>
+<figure class="highlight c++"><figcaption><span>test.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	string imgLocation = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/train.jpg&quot;</span>;</span><br><span class="line">	string saveTemplateDir = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/temp/&quot;</span>;</span><br><span class="line">	<span class="type">int</span> num_feature = <span class="number">16</span>;</span><br><span class="line">	<span class="function">Rect <span class="title">roi</span><span class="params">(<span class="number">90</span>, <span class="number">35</span>, <span class="number">65</span>, <span class="number">35</span>)</span></span>;</span><br><span class="line">	<span class="type">int</span> padding = <span class="number">25</span>;</span><br><span class="line">	string class_id = <span class="string">&quot;gongjian&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">train</span>(imgLocation, saveTemplateDir, num_feature, roi, padding, class_id);</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;已生成模板库文件&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">	string testImgLocation = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/ori.jpg&quot;</span>;</span><br><span class="line">	vector&lt;recognizedObjectLocation&gt; ObjLocations;</span><br><span class="line">	ObjLocations = <span class="built_in">test</span>(testImgLocation, saveTemplateDir, num_feature, roi, padding, class_id);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : ObjLocations)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体左上角点横坐标：&quot;</span> &lt;&lt; i.topleft.x &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体左上角点纵坐标：&quot;</span> &lt;&lt; i.topleft.y &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体中心点横坐标：&quot;</span> &lt;&lt; i.center.x &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体中心点纵坐标：&quot;</span> &lt;&lt; i.center.y &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体顺时针旋转角度：&quot;</span> &lt;&lt; i.angle &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体尺度大小变化：&quot;</span> &lt;&lt; i.scale &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;-----------------------------&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  将dll项目中的各个头文件添加进测试项目之中。将第四步中生成的<code>.dll</code>、<code>.lib</code>文件粘贴于调用函数程序同一文件夹下，如图所示：</p>
+<p><img data-src="/img/How-to-Package-a-dll/05.png" alt="项目结构"></p>
+<p>  然后按照第二步里的方法，添加OpenCV库，并在<code>链接器</code>-&gt;<code>输入</code>的附加依赖项中额外添加之前生成的<code>.lib</code>文件。</p>
+<p>  最后运行程序即可：</p>
+<p><img data-src="/img/How-to-Package-a-dll/06.png" alt="项目结构"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>配置SOLOV2_ncnn相关环境并运行Demo</title>
     <url>//posts/Configure-a-NCNN-Project/</url>
     <content><![CDATA[<p>  今天最开心的事情是终于在Windows环境下运行起来Github上<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">这个项目</a>的Demo，对于我一个电脑小白而言那背后的可都是泪呀TAT，因此有必要记录一下整个流程以方便其他人的需要~</p>
@@ -247,56 +300,256 @@
       </tags>
   </entry>
   <entry>
-    <title>用VS 2019打包dll文件</title>
-    <url>//posts/How-to-Package-a-dll/</url>
-    <content><![CDATA[<p>  最近在看学长接手的<a href="https://sao-kirito.top/2021/09/15/shape_based_matching/">形状匹配(shape based matching)C++工程</a>，虽然看懂的不多，但是被要求将部分代码打包封装成dll，暴露简洁的接口供调用者使用。<br>
-  在流程上，我参考了另一位师兄给的<a href="https://blog.csdn.net/weixin_42435145/article/details/104199125">链接</a>里的步骤。现结合具体工程记述如下：<span id="more"></span></p>
-<h2 id="创建dll项目"><a class="header-anchor" href="#创建dll项目"></a>创建dll项目</h2>
-<p>  打开Visual Studio 2019，在界面中选择<code>创建新项目(<u>N</u>)</code>。</p>
-<p><img data-src="/img/How-to-Package-a-dll/01.png" alt="创建新项目"></p>
-<p>  随后选择<code>动态链接库</code>项目，按照步骤依次将项目名称、位置以及解决方案名称设置好。创建完成后结构如图所示：</p>
-<p><img data-src="/img/How-to-Package-a-dll/02.png" alt="创建完成"></p>
-<h2 id="引入调用的文件、配置项目所需的OpenCV库文件"><a class="header-anchor" href="#引入调用的文件、配置项目所需的OpenCV库文件"></a>引入调用的文件、配置项目所需的OpenCV库文件</h2>
-<p>  将原项目中所有<code>.h</code>的头文件复制到该解决方案所在的文件夹中，并右键单击解决方案的<code>头文件</code>-&gt;<code>添加</code>-&gt;<code>现有项</code>，将这些头文件添加进解决方案中，所有被调用到的<code>.cpp</code>也进行相同的操作。完成之后的结果如下：</p>
-<p><img data-src="/img/How-to-Package-a-dll/03.png" alt="引入头文件与源文件"></p>
-<p>  由于此项目涉及图像处理最常用的OpenCV库，打包dll也需要进行相应的环境配置。点击VS菜单栏的<code>视图(V)</code>-&gt;<code>属性管理器</code>，右键单击本项目，选择<code>添加新项目属性表</code>，添加后双击该属性表进行编辑。在<code>VC++目录</code>的包含目录中配置路径如下：</p>
-<div align = "center"><code>..\OpenCV\build\include</code>
-</div>
-<div align = "center"><code>..\OpenCV\build\include\opencv</code>
-</div>
-<div align = "center"><code>..\OpenCV\build\include\opencv2</code>
-</div>
-<p>  在库目录中配置路径为：<code>..\OpenCV\build\x64\vc15\lib </code></p>
-<p>  在<code>链接器</code>-&gt;<code>输入</code>的附加依赖项中添加<code>opencv_world346d.lib</code>（在Release版本下则是<code>opencv_world346.lib</code>）。</p>
-<p>  这样，我们所有的先期准备工作就做好了。</p>
-<h2 id="编写dll函数"><a class="header-anchor" href="#编写dll函数"></a>编写dll函数</h2>
-<p>  在<code>pch.h</code>文件中，需要写上准备调用的函数声明，由于这些函数也要调用各自的头文件，因此可以把它们集中放在这个文件里，而在源文件中只需要包含<code>pch.h</code>即可。</p>
-<figure class="highlight c++"><figcaption><span>pch.h</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> PCH_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PCH_H</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加要在此处预编译的标头</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;framework.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;line2Dup.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">point</span>&#123;</span><br><span class="line">	<span class="type">float</span> x;</span><br><span class="line">	<span class="type">float</span> y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">recognizedObjectLocation</span></span><br><span class="line">&#123;</span><br><span class="line">	point topleft;</span><br><span class="line">	point center;</span><br><span class="line">	<span class="type">float</span> angle;</span><br><span class="line">	<span class="type">float</span> scale;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="function"><span class="type">void</span> <span class="title">train</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">				string imgLocation, </span></span></span><br><span class="line"><span class="params"><span class="function">				string saveTemplateDIR, </span></span></span><br><span class="line"><span class="params"><span class="function">				<span class="type">int</span> num_feature, Rect roi, <span class="type">int</span> padding, </span></span></span><br><span class="line"><span class="params"><span class="function">				string class_id)</span></span>;</span><br><span class="line">_declspec(dllexport) <span class="function">vector&lt;recognizedObjectLocation&gt; <span class="title">test</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">				string testImgLocation, </span></span></span><br><span class="line"><span class="params"><span class="function">				string loadTemplateDir, <span class="type">int</span> num_feature, </span></span></span><br><span class="line"><span class="params"><span class="function">				Rect train_roi, <span class="type">int</span> train_padding, string class_id, </span></span></span><br><span class="line"><span class="params"><span class="function">				<span class="type">int</span> score_thershold, <span class="type">int</span> nms_thershold)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">//PCH_H</span></span></span><br></pre></td></tr></table></figure>
-<p>  此处工作基本上是按部就班地参考网上教程而来的，在声明函数前，则需要添加上<code>extern &quot;C&quot; _declspec(dllexport)</code>这样的语句，而函数的返回值为C++类型时，譬如我这里自定义的recognizedObjectLocation类型的vector容器，就可以删去<code>extern &quot;C&quot;</code>的语句，否则会产生相应的报错，此处我也不甚了解，只是找到了网上给的解决方法而已。</p>
-<p>  在<code>pch.cpp</code>中，我们需要对自己编写的函数进行实现。需要注意的是：即使函数没有实现，在编译生成时，VS并不会报错而是正常生成对应的<code>.lib</code>与<code>.dll</code>文件，直到调用dll的代码进行编译时才会产生链接过程中的错误<code>LNK 2001 无法解析的外部符号...</code>。（小插曲：这段问题是我自己在编写dll过程中所遇到的问题，由于在函数声明和编写函数时，我所写的函数设置的参数数量不一样，被编译器视作不同的函数，所以链接时才找不到函数定义。）</p>
-<details class="note info no-icon"><summary><p>函数实现代码pch.cpp</p>
-</summary>
-<figure class="highlight c++"><figcaption><span>pch.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">// pch.cpp: 与预编译标头对应的源文件</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="keyword">namespace</span>  cv_dnn &#123;</span><br><span class="line">	<span class="keyword">namespace</span></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">		<span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">bool</span> <span class="title">SortScorePairDescend</span><span class="params">(<span class="type">const</span> std::pair&lt;<span class="type">float</span>, T&gt;&amp; pair1,</span></span></span><br><span class="line"><span class="params"><span class="function">			<span class="type">const</span> std::pair&lt;<span class="type">float</span>, T&gt;&amp; pair2)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> pair1.first &gt; pair2.first;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125; <span class="comment">// namespace</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">GetMaxScoreIndex</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">float</span>&gt;&amp; scores, <span class="type">const</span> <span class="type">float</span> threshold, </span></span></span><br><span class="line"><span class="params"><span class="function">                                 <span class="type">const</span> <span class="type">int</span> top_k,std::vector&lt;std::pair&lt;<span class="type">float</span>, <span class="type">int</span>&gt; &gt;&amp; score_index_vec)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; scores.<span class="built_in">size</span>(); ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (scores[i] &gt; threshold)</span><br><span class="line">			&#123;</span><br><span class="line">				score_index_vec.<span class="built_in">push_back</span>(std::<span class="built_in">make_pair</span>(scores[i], i));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		std::<span class="built_in">stable_sort</span>(score_index_vec.<span class="built_in">begin</span>(), score_index_vec.<span class="built_in">end</span>(),</span><br><span class="line">			SortScorePairDescend&lt;<span class="type">int</span>&gt;);</span><br><span class="line">		<span class="keyword">if</span> (top_k &gt; <span class="number">0</span> &amp;&amp; top_k &lt; (<span class="type">int</span>)score_index_vec.<span class="built_in">size</span>())</span><br><span class="line">		&#123;</span><br><span class="line">			score_index_vec.<span class="built_in">resize</span>(top_k);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> BoxType&gt;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">NMSFast_</span><span class="params">(<span class="type">const</span> std::vector&lt;BoxType&gt;&amp; bboxes,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="type">const</span> std::vector&lt;<span class="type">float</span>&gt;&amp; scores, <span class="type">const</span> <span class="type">float</span> score_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="type">const</span> <span class="type">float</span> nms_threshold, <span class="type">const</span> <span class="type">float</span> eta, <span class="type">const</span> <span class="type">int</span> top_k,</span></span></span><br><span class="line"><span class="params"><span class="function">		std::vector&lt;<span class="type">int</span>&gt;&amp; indices, <span class="type">float</span> (*computeOverlap)(<span class="type">const</span> BoxType&amp;, <span class="type">const</span> BoxType&amp;))</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">CV_Assert</span>(bboxes.<span class="built_in">size</span>() == scores.<span class="built_in">size</span>());</span><br><span class="line">		std::vector&lt;std::pair&lt;<span class="type">float</span>, <span class="type">int</span>&gt; &gt; score_index_vec;</span><br><span class="line">		<span class="built_in">GetMaxScoreIndex</span>(scores, score_threshold, top_k, score_index_vec);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Do nms.</span></span><br><span class="line">		<span class="type">float</span> adaptive_threshold = nms_threshold;</span><br><span class="line">		indices.<span class="built_in">clear</span>();</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; score_index_vec.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">			<span class="type">const</span> <span class="type">int</span> idx = score_index_vec[i].second;</span><br><span class="line">			<span class="type">bool</span> keep = <span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; (<span class="type">int</span>)indices.<span class="built_in">size</span>() &amp;&amp; keep; ++k) &#123;</span><br><span class="line">				<span class="type">const</span> <span class="type">int</span> kept_idx = indices[k];</span><br><span class="line">				<span class="type">float</span> overlap = <span class="built_in">computeOverlap</span>(bboxes[idx], bboxes[kept_idx]);</span><br><span class="line">				keep = overlap &lt;= adaptive_threshold;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (keep)</span><br><span class="line">				indices.<span class="built_in">push_back</span>(idx);</span><br><span class="line">			<span class="keyword">if</span> (keep &amp;&amp; eta &lt; <span class="number">1</span> &amp;&amp; adaptive_threshold &gt; <span class="number">0.5</span>) &#123;</span><br><span class="line">				adaptive_threshold *= eta;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// copied from opencv 3.4, not exist in 3.0</span></span><br><span class="line">	<span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt; <span class="type">static</span> <span class="keyword">inline</span></span></span><br><span class="line"><span class="function">		<span class="type">double</span> <span class="title">jaccardDistance__</span><span class="params">(<span class="type">const</span> Rect_&lt;_Tp&gt;&amp; a, <span class="type">const</span> Rect_&lt;_Tp&gt;&amp; b)</span> </span>&#123;</span><br><span class="line">		_Tp Aa = a.<span class="built_in">area</span>();</span><br><span class="line">		_Tp Ab = b.<span class="built_in">area</span>();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> ((Aa + Ab) &lt;= std::numeric_limits&lt;_Tp&gt;::<span class="built_in">epsilon</span>()) &#123;</span><br><span class="line">			<span class="comment">// jaccard_index = 1 -&gt; distance = 0</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="type">double</span> Aab = (a &amp; b).<span class="built_in">area</span>();</span><br><span class="line">		<span class="comment">// distance = 1 - jaccard_index</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">1.0</span> - Aab / (Aa + Ab - Aab);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">float</span> <span class="title">rectOverlap</span><span class="params">(<span class="type">const</span> T&amp; a, <span class="type">const</span> T&amp; b)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1.f</span> - <span class="built_in">static_cast</span>&lt;<span class="type">float</span>&gt;(<span class="built_in">jaccardDistance__</span>(a, b));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">NMSBoxes</span><span class="params">(<span class="type">const</span> std::vector&lt;Rect&gt;&amp; bboxes, <span class="type">const</span> std::vector&lt;<span class="type">float</span>&gt;&amp; scores,</span></span></span><br><span class="line"><span class="params"><span class="function">		<span class="type">const</span> <span class="type">float</span> score_threshold, <span class="type">const</span> <span class="type">float</span> nms_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">		std::vector&lt;<span class="type">int</span>&gt;&amp; indices, <span class="type">const</span> <span class="type">float</span> eta = <span class="number">1</span>, <span class="type">const</span> <span class="type">int</span> top_k = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">NMSFast_</span>(bboxes, scores, score_threshold, nms_threshold, eta, top_k, indices, rectOverlap);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 当使用预编译的头时，需要使用此源文件，编译才能成功。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">train</span><span class="params">(string imgLocation, string saveTemplateDir, <span class="type">int</span> num_feature, Rect roi, <span class="type">int</span> padding, string class_id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">line2Dup::Detector <span class="title">detector</span><span class="params">(num_feature, &#123; <span class="number">4</span>, <span class="number">8</span> &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// read the img</span></span><br><span class="line">	Mat img = <span class="built_in">imread</span>(imgLocation);</span><br><span class="line">	<span class="built_in">assert</span>(!img.<span class="built_in">empty</span>() &amp;&amp; <span class="string">&quot;check your img path&quot;</span>);</span><br><span class="line">	<span class="comment">// cut the object out of img, location depends on &quot;roi&quot;</span></span><br><span class="line">	img = <span class="built_in">img</span>(roi).<span class="built_in">clone</span>();</span><br><span class="line"></span><br><span class="line">	Mat mask = <span class="built_in">Mat</span>(img.<span class="built_in">size</span>(), CV_8UC1, &#123; <span class="number">255</span> &#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// padding to avoid rotating out</span></span><br><span class="line">	cv::Mat padded_img = cv::<span class="built_in">Mat</span>(img.rows + <span class="number">2</span> * padding, img.cols + <span class="number">2</span> * padding, img.<span class="built_in">type</span>(), cv::Scalar::<span class="built_in">all</span>(<span class="number">0</span>));</span><br><span class="line">	img.<span class="built_in">copyTo</span>(<span class="built_in">padded_img</span>(<span class="built_in">Rect</span>(padding, padding, img.cols, img.rows)));</span><br><span class="line">	cv::Mat padded_mask = cv::<span class="built_in">Mat</span>(mask.rows + <span class="number">2</span> * padding, mask.cols + <span class="number">2</span> * padding, mask.<span class="built_in">type</span>(), cv::Scalar::<span class="built_in">all</span>(<span class="number">0</span>));</span><br><span class="line">	mask.<span class="built_in">copyTo</span>(<span class="built_in">padded_mask</span>(<span class="built_in">Rect</span>(padding, padding, img.cols, img.rows)));</span><br><span class="line"></span><br><span class="line">	<span class="function">shape_based_matching::shapeInfo_producer <span class="title">shapes</span><span class="params">(padded_img, padded_mask)</span></span>;</span><br><span class="line">	shapes.angle_range = &#123; <span class="number">0</span>, <span class="number">360</span> &#125;;    <span class="comment">// 模板库角度范围</span></span><br><span class="line">	shapes.angle_step = <span class="number">1</span>;  <span class="comment">// 模板库角度步长</span></span><br><span class="line">	<span class="comment">//shapes.scale_range = &#123; 0.9f, 1.1f &#125;;  // 模板库尺度范围</span></span><br><span class="line">	<span class="comment">//shapes.scale_step = 0.05f;     模板库尺度步长</span></span><br><span class="line">	shapes.scale_range = &#123; <span class="number">1.0f</span> &#125;;</span><br><span class="line">	shapes.<span class="built_in">produce_infos</span>();</span><br><span class="line">	std::vector&lt;shape_based_matching::shapeInfo_producer::Info&gt; infos_have_templ;</span><br><span class="line"></span><br><span class="line">	<span class="type">bool</span> is_first = <span class="literal">true</span>;</span><br><span class="line">	<span class="comment">// for other scales you want to re-extract points: </span></span><br><span class="line">	<span class="comment">// set shapes.scale_range then produce_infos; set is_first = false;</span></span><br><span class="line">	<span class="type">int</span> first_id = <span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> first_angle = <span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> first_scale = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span>&amp; info : shapes.infos) &#123;</span><br><span class="line">		Mat to_show = shapes.<span class="built_in">src_of</span>(info);</span><br><span class="line">		<span class="type">int</span> templ_id = detector.<span class="built_in">addTemplate</span>(shapes.<span class="built_in">src_of</span>(info), class_id, shapes.<span class="built_in">mask_of</span>(info),</span><br><span class="line">			<span class="built_in">int</span>(num_feature * info.scale));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (templ_id != <span class="number">-1</span>) &#123;</span><br><span class="line">			<span class="keyword">auto</span> templ = detector.<span class="built_in">getTemplates</span>(class_id, templ_id);</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; templ[<span class="number">0</span>].features.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">				<span class="keyword">auto</span> feat = templ[<span class="number">0</span>].features[i];</span><br><span class="line">				cv::<span class="built_in">circle</span>(to_show, &#123; feat.x + templ[<span class="number">0</span>].tl_x, feat.y + templ[<span class="number">0</span>].tl_y &#125;, <span class="number">3</span>, &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span> &#125;, <span class="number">-1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			infos_have_templ.<span class="built_in">push_back</span>(info);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">fabs</span>(info.scale - first_scale) &gt; <span class="number">0.002f</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			is_first = <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// .../class_id_templ.yaml</span></span><br><span class="line">		detector.<span class="built_in">writeClasses</span>(saveTemplateDir + class_id + <span class="string">&quot;_templ.yaml&quot;</span>);  <span class="comment">// 模板库</span></span><br><span class="line">		shapes.<span class="built_in">save_infos</span>(infos_have_templ, saveTemplateDir + class_id + <span class="string">&quot;_info.yaml&quot;</span>);   <span class="comment">// 模板信息</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;recognizedObjectLocation&gt; <span class="title">test</span><span class="params">(string testImgLocation, string loadTemplateDir, <span class="type">int</span> num_feature, </span></span></span><br><span class="line"><span class="params"><span class="function">                                      Rect train_roi, <span class="type">int</span> train_padding, string class_id, </span></span></span><br><span class="line"><span class="params"><span class="function">                                      <span class="type">int</span> score_thershold = <span class="number">90</span>, <span class="type">int</span> nms_thershold = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	vector&lt;recognizedObjectLocation&gt; ObjLocations;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	std::vector&lt;std::string&gt; ids;</span><br><span class="line">	ids.<span class="built_in">push_back</span>(class_id);</span><br><span class="line">	<span class="function">line2Dup::Detector <span class="title">detector</span><span class="params">(num_feature, &#123; <span class="number">4</span>, <span class="number">8</span> &#125;)</span></span>;</span><br><span class="line">	detector.<span class="built_in">readClasses</span>(ids, loadTemplateDir + class_id + <span class="string">&quot;_templ.yaml&quot;</span>);</span><br><span class="line">	<span class="keyword">auto</span> infos = shape_based_matching::shapeInfo_producer::<span class="built_in">load_infos</span>(loadTemplateDir + class_id + <span class="string">&quot;_info.yaml&quot;</span>);</span><br><span class="line"></span><br><span class="line">	Mat test_img = <span class="built_in">imread</span>(testImgLocation);</span><br><span class="line">	<span class="built_in">assert</span>(!test_img.<span class="built_in">empty</span>() &amp;&amp; <span class="string">&quot;check your img path&quot;</span>);</span><br><span class="line">	<span class="comment">// padding to avoid rotating out</span></span><br><span class="line">	<span class="type">int</span> padding = <span class="number">0</span>;</span><br><span class="line">	cv::Mat padded_img = cv::<span class="built_in">Mat</span>(test_img.rows + <span class="number">2</span> * padding,</span><br><span class="line">		test_img.cols + <span class="number">2</span> * padding, test_img.<span class="built_in">type</span>(), cv::Scalar::<span class="built_in">all</span>(<span class="number">0</span>));</span><br><span class="line">	test_img.<span class="built_in">copyTo</span>(<span class="built_in">padded_img</span>(<span class="built_in">Rect</span>(padding, padding, test_img.cols, test_img.rows)));</span><br><span class="line">	<span class="type">int</span> stride = <span class="number">32</span>;</span><br><span class="line">	<span class="type">int</span> n = padded_img.rows / stride;</span><br><span class="line">	<span class="type">int</span> m = padded_img.cols / stride;</span><br><span class="line">	<span class="function">Rect <span class="title">roi</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>, stride * m, stride * n)</span></span>;</span><br><span class="line">	Mat img = <span class="built_in">padded_img</span>(roi).<span class="built_in">clone</span>();</span><br><span class="line">	<span class="built_in">assert</span>(img.<span class="built_in">isContinuous</span>());</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> matches = detector.<span class="built_in">match</span>(img, score_thershold, ids);</span><br><span class="line"></span><br><span class="line">	vector&lt;Rect&gt; boxes;</span><br><span class="line">	vector&lt;<span class="type">float</span>&gt; scores;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; idxs;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> match : matches) &#123;</span><br><span class="line">		Rect box;</span><br><span class="line">		box.x = match.x;</span><br><span class="line">		box.y = match.y;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> templ = detector.<span class="built_in">getTemplates</span>(class_id, match.template_id);</span><br><span class="line"></span><br><span class="line">		box.width = templ[<span class="number">0</span>].width;</span><br><span class="line">		box.height = templ[<span class="number">0</span>].height;</span><br><span class="line">		boxes.<span class="built_in">push_back</span>(box);</span><br><span class="line">		scores.<span class="built_in">push_back</span>(match.similarity);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cv_dnn::<span class="built_in">NMSBoxes</span>(boxes, scores, score_thershold, nms_thershold, idxs);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> idx : idxs)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">auto</span> match = matches[idx];</span><br><span class="line">		<span class="keyword">auto</span> templ = detector.<span class="built_in">getTemplates</span>(class_id,  <span class="comment">// 读取训练好的模板类</span></span><br><span class="line">			match.template_id);</span><br><span class="line"></span><br><span class="line">		recognizedObjectLocation obj;</span><br><span class="line"></span><br><span class="line">		obj.topleft.x = match.x;</span><br><span class="line">		obj.topleft.y = match.y;</span><br><span class="line"><span class="comment">// Update 21/10/5 今天才发现train_roi这里写错了，应该是train_roi.weight 和 train_roi.height</span></span><br><span class="line">		<span class="type">float</span> train_img_half_width = train_roi.x / <span class="number">2.0f</span> + train_padding;</span><br><span class="line">		<span class="type">float</span> train_img_half_height = train_roi.y / <span class="number">2.0f</span> + train_padding;</span><br><span class="line">		obj.center.x = match.x - templ[<span class="number">0</span>].tl_x + train_img_half_width;</span><br><span class="line">		obj.center.y = match.y - templ[<span class="number">0</span>].tl_y + train_img_half_height;</span><br><span class="line"></span><br><span class="line">		obj.angle = <span class="number">360</span> - infos[match.template_id].angle;</span><br><span class="line">		obj.scale = infos[match.template_id].scale;</span><br><span class="line"></span><br><span class="line">		ObjLocations.<span class="built_in">push_back</span>(obj);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ObjLocations;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</details>
-<p>  另外，我把line2Dup.cpp中一些输出语句注释掉了，屏蔽掉控制台的输出。而TerryJoe学长解释了代码中各个坐标系下变换中公式的由来，现一并粘贴于此（无关信息已马赛克处理。）<br>
-<img data-src="/img/How-to-Package-a-dll/04.png" alt="说明"></p>
-<h2 id="生成dll文件"><a class="header-anchor" href="#生成dll文件"></a>生成dll文件</h2>
-<p>  点击<code>本地Windows调试器</code>，若提示错误：<code>在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include”pch.h”</code>，则点击菜单栏中的<code>项目</code>-&gt;<code>项目名属性</code>-&gt;<code>C/C++</code>-&gt;<code>预编译头</code>，将右侧的预编译头由<code>使用(/Yu)</code>调换到<code>不使用预编译头</code>，然后点击<code>应用</code>-&gt;<code>确定</code>。<br>
-  再次运行时即能正确运行，若输出显示<code>========== 生成: 成功 1 个，失败 0 个，最新 0 个，跳过 0 个 ==========</code>即为成功，此时会弹出错误框，显示<code>无法启动dll，dll不是有效的Win32应用程序。</code>我们关闭即可，dll必须由其他程序调用。此时我们在项目目录中的Debug或Release目录下即找到生成的<code>.dll</code>文件。</p>
-<h2 id="调用dll文件"><a class="header-anchor" href="#调用dll文件"></a>调用dll文件</h2>
-<p>  现在创建一个空的工程项目，创建主程序调用上述函数。</p>
-<figure class="highlight c++"><figcaption><span>test.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	string imgLocation = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/train.jpg&quot;</span>;</span><br><span class="line">	string saveTemplateDir = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/temp/&quot;</span>;</span><br><span class="line">	<span class="type">int</span> num_feature = <span class="number">16</span>;</span><br><span class="line">	<span class="function">Rect <span class="title">roi</span><span class="params">(<span class="number">90</span>, <span class="number">35</span>, <span class="number">65</span>, <span class="number">35</span>)</span></span>;</span><br><span class="line">	<span class="type">int</span> padding = <span class="number">25</span>;</span><br><span class="line">	string class_id = <span class="string">&quot;gongjian&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">train</span>(imgLocation, saveTemplateDir, num_feature, roi, padding, class_id);</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;已生成模板库文件&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">	string testImgLocation = <span class="string">&quot;D:/Work/202109/shape_match_fusion/test/case3/ori.jpg&quot;</span>;</span><br><span class="line">	vector&lt;recognizedObjectLocation&gt; ObjLocations;</span><br><span class="line">	ObjLocations = <span class="built_in">test</span>(testImgLocation, saveTemplateDir, num_feature, roi, padding, class_id);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : ObjLocations)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体左上角点横坐标：&quot;</span> &lt;&lt; i.topleft.x &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体左上角点纵坐标：&quot;</span> &lt;&lt; i.topleft.y &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体中心点横坐标：&quot;</span> &lt;&lt; i.center.x &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体中心点纵坐标：&quot;</span> &lt;&lt; i.center.y &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体顺时针旋转角度：&quot;</span> &lt;&lt; i.angle &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;物体尺度大小变化：&quot;</span> &lt;&lt; i.scale &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;-----------------------------&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  将dll项目中的各个头文件添加进测试项目之中。将第四步中生成的<code>.dll</code>、<code>.lib</code>文件粘贴于调用函数程序同一文件夹下，如图所示：</p>
-<p><img data-src="/img/How-to-Package-a-dll/05.png" alt="项目结构"></p>
-<p>  然后按照第二步里的方法，添加OpenCV库，并在<code>链接器</code>-&gt;<code>输入</code>的附加依赖项中额外添加之前生成的<code>.lib</code>文件。</p>
-<p>  最后运行程序即可：</p>
-<p><img data-src="/img/How-to-Package-a-dll/06.png" alt="项目结构"></p>
+    <title>机器学习基础#00：Intro</title>
+    <url>//posts/Machine-Learning-101-00/</url>
+    <content><![CDATA[<style>
+table
+{
+    margin: auto;
+}
+</style>
+<p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
+<span id="more"></span>
+<p>  免责声明：本人对机器学习领域所知甚少，所写博文为对前期所学知识的回顾，不确保其内容的真实性与准确性，不建议以此为基础进行学习。如有差错纰漏，欢迎指正。</p>
+<h2 id="什么是机器学习？"><a class="header-anchor" href="#什么是机器学习？"></a>什么是机器学习？</h2>
+<p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，那就是：</p>
+<blockquote><p>从已有的样本（数据）中发现规律，并能够将其泛化应用于未知的（或者说：新的）样本上。</p>
+<footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
+<br>
+<p>  譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。</p>
+<p><img data-src="/img/Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
+<div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
+<br>
+<h2 id="一个简单的例子"><a class="header-anchor" href="#一个简单的例子"></a>一个简单的例子</h2>
+<p>  现在，我们有一组$x$与$y$如表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">x</th>
+<th style="text-align:center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">?</td>
+</tr>
+</tbody>
+</table>
+<p>  对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。</p>
+<p>  基于此，我们建立一个简单的线性模型：<br>
+<img data-src="/img/Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
+<p>  此外，我们还需要一个“打分”的函数来评估模型在当前样本（所谓样本，结合这个例子来说就是上述列表里的某一行）上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。</p>
+<p>$$<br>
+loss={(\hat{y}-y)}^2<br>
+$$</p>
+<p>  大多数情况下，我们的目标是令代价函数的值尽可能的变小，即预测值接近真实值。</p>
+<p>  现在，我们随机地初始化一组$w$和$b$($w=1,b=1$)来计算损失函数loss的值：<br>
+  $x=2$时，$\hat{y}=3$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3-4)}^2=1$<br>
+  $x=3$时，$\hat{y}=4$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(4-6)}^2=4$<br>
+  在全体样本上的均方误差$cost = 5\div2=2.5$</p>
+<p>  我们把这个步骤称作“<strong>前向运算</strong>”/“<strong>前馈运算</strong>”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。<br>
+  在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。</p>
+<img data-src="/img/Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
+<p>  将其应用于我们的例子中：当我们将两个参数$w、b$沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。</p>
+<p>  根据链式求导法则：<br>
+$$<br>
+\frac{\partial{loss}}{\partial{w}}=\frac{\partial{loss}}{\partial{\hat{y}}}\cdot\frac{\partial{\hat{y}}}{\partial{w}}=2(\hat{y}-y)\cdot{x}<br>
+$$<br>
+  (对b的偏导同理)</p>
+<p>  将前向运算中计算得到的$\hat{y}$和当前样本已知的$x、y$带入上述式子可得：<br>
+  在$x=2$时，$\left.{\frac{\partial{loss}}{\partial{w}}}\right|_{x=2}=−4$，$\left.{\frac{\partial{loss}}{\partial{b}}}\right|_{x=2}=−2$<br>
+  在$x=3$时，$\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3}=-12$，$\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3}=−4$</p>
+<p>  接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。</p>
+<img data-src="/img/Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
+<p>$$<br>
+\begin{align*}<br>
+w'&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
+&amp;=w- lr\cdot(\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-4-12)\div2\\<br>
+&amp;=1.32<br>
+\end{align*}<br>
+$$</p>
+<p>  同理，$b$的值计算结果为：<br>
+$$<br>
+\begin{align*}<br>
+b'&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
+&amp;=b-lr\cdot(\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3})\div2\\<br>
+&amp;=1-0.04\times(-2-4)\div2\\<br>
+&amp;=1.12<br>
+\end{align*}<br>
+$$</p>
+<p>  如上述的这个过程，被称为“反向传播”。这样，我们便走完了神经网络训练的一个轮次（Epoch）。此时，重新计算预测值、loss与cost，更新权重后的结果为：</p>
+<p>  $x=2$时，$\hat{y}=3.76$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3.76-4)}^2=0.0576$<br>
+  $x=3$时，$\hat{y}=5.08$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(5.08-6)}^2=0.8464$<br>
+  在全体样本上的均方误差$cost' = 0.452$</p>
+<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程，在经过第二次训练后，得到$w'=1.644$，$b'=1.236$</p>
+<p>  现在，对于例子开头提出来的问题，在经过两轮训练后，神经网络给出的$x=4$时的预测结果为:<br>
+$$<br>
+ŷ = 1.644\times4+1.236 = 7.812<br>
+$$</p>
+<p>  当反复训练后，cost的值趋近于零，在某个区间内呈现波动的时候，我们称这个网络<strong>收敛</strong>，而当cost值不再变小而且和0相去较远时，则可能陷入了局部最优解，或者是学习率过大导致无法收敛于全局最优解。</p>
+<blockquote>
+<p><strong>小结</strong><br>
+神经元：网络中负责某种基础运算的单元。例如本例中建模采用的$y=kx+b$就是一个基础的神经元。<br>
+神经网络训练的步骤：正向运算求Loss，反向计算求Loss对各个参数的偏导，依赖偏导对参数进行微小的调整。在本例中，反复以样本训练较好地逼近了结果。<br>
+<strong>问题</strong>：<br>
+多个线性神经元简单叠加，如两个神经元：$y = w_1(w_2x+b_2)+b_1 = w_1w_2x+w_1b_2+b_1$ ，仍与单个神经元效果相同，需要引入<em>非线性变换</em>才能较好的拟合非线性函数。</p>
+</blockquote>
+<h2 id="更复杂的例子"><a class="header-anchor" href="#更复杂的例子"></a>更复杂的例子</h2>
+<p>  下方是某商品的评价及其人工标注的情感标签，试建立模型分析其中关系。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">评价</th>
+<th style="text-align:center">情感标签</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">“好看”</td>
+<td style="text-align:center">正面</td>
+</tr>
+<tr>
+<td style="text-align:center">“不好”</td>
+<td style="text-align:center">负面</td>
+</tr>
+<tr>
+<td style="text-align:center">“好”</td>
+<td style="text-align:center">正面</td>
+</tr>
+<tr>
+<td style="text-align:center">“不好看”</td>
+<td style="text-align:center">负面</td>
+</tr>
+<tr>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+</tr>
+</tbody>
+</table>
+<p>  由于神经网络只能接受数字化的输入并产生相对应的数字化输出，因此需要将这些样本转化成数据：</p>
+<p>  首先提取基本语素，在这个简单的任务中，共有三个字：{好，不，看}<br>
+  对这三个字进行“<strong>独热编码</strong>”：<br>
+  <strong>好 = [1, 0, 0] 不 = [0, 1, 0] 看 = [0, 0, 1]</strong><br>
+  输入样本的向量即为各个字符编码的相加，例如：<br>
+  <strong>好看 = [1, 0, 1] 不好 = [1, 1, 0] ……</strong><br>
+  对于输出，由于只存在两种标签，因此编码为：<br>
+  <strong>正面 = [1, 0] 负面 = [0, 1]</strong><br>
+  依照上述步骤，我们构造出了一个$4×3$(样本数×input size/基本语素单位)的输入矩阵$x$与$4×2$(样本数×标注类别)的标注矩阵$y$：<br>
+$$<br>
+x=\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 1\end{bmatrix} y=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}<br>
+$$</p>
+<p>  类似于第二部分中给出的例子，我们设计出一个相较于前者更为复杂的网络：<br>
+<img data-src="/img/Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/></p>
+<p>  在两个隐藏层向各个下一层神经元传输相应数字时(箭头所示位置)，需要引入非线性变换的激活函数(Activation function)，这里选用的是Sigmoid函数：$𝑆(𝑥)=\frac{1}{(1+𝑒^{−𝑥})}$，它将实数域R的数字映射至(0, 1)内。网络最后一层的Softmax函数也是一种非线性变换，它将该层所有结果都映射到(0, 1)内，不改变大小的相对位置。对于该层的各个元素$x_i$，经变换后的值计算如下：<br>
+$$<br>
+softmax\ value = \frac{e^{x_i}}{\sum_{j}e^{x_j}{}}<br>
+$$</p>
+<p>  图中实线连接的部分就是我们在反向算法过程中需要更新的权重，为简化计算，在这个例子中我们忽略bias项即偏置的影响(也就是说每一条线代表的基础运算单元仅仅是$y=kx$)，只考虑权重w构成的三个矩阵：<br>
+  $𝑤_1$为三行两列矩阵，$𝐻_1=𝑥𝑤_1$，$𝑤_2$ 、$𝑤_3$ 为两行两列的矩阵： $𝐻_2=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_1 ) 𝑤_2$，$𝑂𝑢𝑡𝑝𝑢𝑡=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_2)𝑤_3$</p>
+<p>  <strong>正向运算：</strong><br>
+  首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
+<img data-src="/img/Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
+<p>  <strong>计算Loss：</strong><br>
+  在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：<br>
+<img data-src="/img/Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/></p>
+<p>  <strong>反向传播：</strong><br>
+  这一部分公式太多，懒得用$\LaTeX$再整理一遍，直接借用之前自己做的PPT里面的推导过程（不过说起来这里面的矩阵转置当时弄得我有些晕，其实你需要弄清楚对应元素的位置就比较清楚了。）：<br>
+<img data-src="/img/Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/></p>
+<p>  <strong>更新权重：</strong><br>
+<img data-src="/img/Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/></p>
+<blockquote>
+<p><strong>小结与反思</strong><br>
+同单层模型一样，多层模型仍采用反向传播算法来进行权重的更新。<br>
+引入sigmoid、softmax等非线性变换来构筑更复杂的模型。<br>
+损失计算采用了负对数似然损失(能否采用MSE，为什么？)<br>
+对于文本序列而言，其出现的顺序对于理解其含义是至关重要的，简单向量相加丢失了字符出现顺序的信息。(改进：RNN)<br>
+层数越深，由链式法则相乘得到的梯度越来越小，可能出现梯度消失的问题(改进：ResNet)<br>
+文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分元素都是0）。②（基于前者）大部分句子的向量都分布在坐标轴附近。③（基于前者）难以衡量两个句子之间的相似度。</p>
+</blockquote>
+<h2 id="随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#随机梯度下降：引入Mini-Batch"></a>随机梯度下降：引入Mini-Batch</h2>
+<p>  对于梯度下降，有几种不同的方法对其进行实现：<br>
+  批量梯度下降：计算所有样本的loss后，再更新权重w与偏置b。<br>
+  随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。<br>
+  小批量(随机)梯度下降：将全体样本划分为若干个mini-batch，每个batch中存在若干样本，随机抽出一个mini-batch，计算该批次样本中的loss后更新权重w与偏置b，直到跑完所有mini-batch后，记作训练一个轮次。在训练完一个轮次后。对样本进行shuffle处理，即重新划分mini-batch，再次进行训练，形象化的比喻可以称作“洗牌”，这也是为什么英文叫做&quot;shuffle&quot;。</p>
+<img data-src="/img/Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
+<p>  三种不同方式的对比：<br>
+  一般来说，小批量梯度下降通过选取部分样本引入了更大噪声，使得它在解空间的“鞍点”位置更容易受噪声扰动，在一些情况下性能表现比批量梯度下降更好。而随机梯度下降更新权重只关注当前样本的梯度，所以尽管每一步使得当前样本得到最优的表现，但从整体样本考虑则不一定最优，且每一个样本前向计算时都需要依赖上一个样本反向传播后更新的权重，并行化程度不如其它两者高。<br>
+  形象化的三种方式如上图所示，红点位置即为所求的最优解，图中带箭头的线则显示了这三种方法在寻找最优解的过程。</p>
+<hr>
+&emsp;&emsp;这篇文章，笔者简要回顾了机器学习的最基础内容，虽然听起来或者推导起来比较复杂。但作为感性的认知来看，了解机器学习的工作原理并不困难，甚至完全可以只用高中的知识理解。本期的内容还未涉及到代码部分，这些工作将在下期进行介绍。
 ]]></content>
       <categories>
         <category>学习</category>
       </categories>
       <tags>
+        <tag>机器学习</tag>
         <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>品优购项目：踩坑细节记录</title>
+    <url>//posts/Project-pinyougou/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<h1 id="SEO优化"><a class="header-anchor" href="#SEO优化"></a>SEO优化</h1>
+<p>  对于一个营利性网站而言，提升其在搜索引擎中的排名至关重要。除去直接付费的竞价排名外，搜索引擎优化（Search Engine Optimization）也是不可或缺的一环。</p>
+<h2 id="TDK三大标签"><a class="header-anchor" href="#TDK三大标签"></a>TDK三大标签</h2>
+<ul>
+<li><code>&lt;title&gt;</code>标签，网站标题：内页的第一个重要标签
+<ul>
+<li>建议：<strong>网站名 - 网站的介绍（不超过30汉字）</strong></li>
+</ul>
+</li>
+<li><code>description</code> 网站说明
+<ul>
+<li><strong>简要说明网站是做什么的</strong></li>
+</ul>
+</li>
+<li><code>keywords</code> 关键字
+<ul>
+<li><strong>keywords是页面关键词，是搜索引擎的关注点之一</strong></li>
+<li><strong>最好限制为6 ~ 8个关键词，且之间用英文逗号隔开</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><figcaption><span>品优购网站的三大标签</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>品优购商城 - 网络购物最佳选择，物美价廉，免费配送，一站式服务为您提供优秀购物体验！<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">content</span>=<span class="string">&quot;品优购商城 - 专业的综合网上购物商城，销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数万个品牌优质商品。便捷、诚信的服务，为您提供愉悦的网上购物体验！&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;前端, HTML, CSS, 电商, 品优购商城, 静态界面&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Logo优化"><a class="header-anchor" href="#Logo优化"></a>Logo优化</h2>
+<ul>
+<li>logo里面首先放一个<code>&lt;h1&gt;</code>标签（<strong>用于提权</strong>）</li>
+<li><code>&lt;h1&gt;</code>标签中插入链接<code>&lt;a&gt;</code>标签，返回首页</li>
+<li>链接里面放文字（网站名称），但是为了视觉效果，文字不能显示出来（<code>font-size: 0</code>）</li>
+<li>链接给一个<code>title</code>属性，鼠标放在Logo上可显示文字</li>
+</ul>
+<span id="more"></span>
+<h2 id="注册界面"><a class="header-anchor" href="#注册界面"></a>注册界面</h2>
+<p>  按照说法，注册界面一般不需要SEO优化。</p>
+<h1 id="一行内多个列表元素-code-li-code-超宽的问题"><a class="header-anchor" href="#一行内多个列表元素-code-li-code-超宽的问题"></a>一行内多个列表元素<code>&lt;li&gt;</code>超宽的问题</h1>
+<p>  在某个页面布局时，经常会遇到列表元素宽度难以确定的问题。譬如，在宽度为1200px的版心中布置5个&lt;li&gt;元素很容易确定单个元素的宽度可以是240px，但是又要使得这些元素间插入四个外边距值margin则需要一番计算：这需要使得一行内n个&lt;li&gt;元素减少的总宽度(n的倍数，假设单个表单元素减少的宽度以1px为单位)恰好是(n-1)的倍数。<br>
+  或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑<strong>增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。</strong>，此外，还需要<strong>在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。</strong></p>
+<h1 id="层叠上下文相关"><a class="header-anchor" href="#层叠上下文相关"></a>层叠上下文相关</h1>
+<p>  z-index在定位元素上生效，需要指定position:xxx</p>
+<h1 id="tab分页栏的制作"><a class="header-anchor" href="#tab分页栏的制作"></a>tab分页栏的制作</h1>
+<p>  首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。<br>
+  对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。</p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>HTML</tag>
+        <tag>CSS</tag>
+        <tag>Javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -451,62 +704,6 @@
         <tag>编程</tag>
         <tag>Javascript</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>品优购项目：踩坑细节记录</title>
-    <url>//posts/Project-pinyougou/</url>
-    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
-</div>
-<h1 id="SEO优化"><a class="header-anchor" href="#SEO优化"></a>SEO优化</h1>
-<p>  对于一个营利性网站而言，提升其在搜索引擎中的排名至关重要。除去直接付费的竞价排名外，搜索引擎优化（Search Engine Optimization）也是不可或缺的一环。</p>
-<h2 id="TDK三大标签"><a class="header-anchor" href="#TDK三大标签"></a>TDK三大标签</h2>
-<ul>
-<li><code>&lt;title&gt;</code>标签，网站标题：内页的第一个重要标签
-<ul>
-<li>建议：<strong>网站名 - 网站的介绍（不超过30汉字）</strong></li>
-</ul>
-</li>
-<li><code>description</code> 网站说明
-<ul>
-<li><strong>简要说明网站是做什么的</strong></li>
-</ul>
-</li>
-<li><code>keywords</code> 关键字
-<ul>
-<li><strong>keywords是页面关键词，是搜索引擎的关注点之一</strong></li>
-<li><strong>最好限制为6 ~ 8个关键词，且之间用英文逗号隔开</strong></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight html"><figcaption><span>品优购网站的三大标签</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>品优购商城 - 网络购物最佳选择，物美价廉，免费配送，一站式服务为您提供优秀购物体验！<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">content</span>=<span class="string">&quot;品优购商城 - 专业的综合网上购物商城，销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数万个品牌优质商品。便捷、诚信的服务，为您提供愉悦的网上购物体验！&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;前端, HTML, CSS, 电商, 品优购商城, 静态界面&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Logo优化"><a class="header-anchor" href="#Logo优化"></a>Logo优化</h2>
-<ul>
-<li>logo里面首先放一个<code>&lt;h1&gt;</code>标签（<strong>用于提权</strong>）</li>
-<li><code>&lt;h1&gt;</code>标签中插入链接<code>&lt;a&gt;</code>标签，返回首页</li>
-<li>链接里面放文字（网站名称），但是为了视觉效果，文字不能显示出来（<code>font-size: 0</code>）</li>
-<li>链接给一个<code>title</code>属性，鼠标放在Logo上可显示文字</li>
-</ul>
-<span id="more"></span>
-<h2 id="注册界面"><a class="header-anchor" href="#注册界面"></a>注册界面</h2>
-<p>  按照说法，注册界面一般不需要SEO优化。</p>
-<h1 id="一行内多个列表元素-code-li-code-超宽的问题"><a class="header-anchor" href="#一行内多个列表元素-code-li-code-超宽的问题"></a>一行内多个列表元素<code>&lt;li&gt;</code>超宽的问题</h1>
-<p>  在某个页面布局时，经常会遇到列表元素宽度难以确定的问题。譬如，在宽度为1200px的版心中布置5个&lt;li&gt;元素很容易确定单个元素的宽度可以是240px，但是又要使得这些元素间插入四个外边距值margin则需要一番计算：这需要使得一行内n个&lt;li&gt;元素减少的总宽度(n的倍数，假设单个表单元素减少的宽度以1px为单位)恰好是(n-1)的倍数。<br>
-  或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑<strong>增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。</strong>，此外，还需要<strong>在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。</strong></p>
-<h1 id="层叠上下文相关"><a class="header-anchor" href="#层叠上下文相关"></a>层叠上下文相关</h1>
-<p>  z-index在定位元素上生效，需要指定position:xxx</p>
-<h1 id="tab分页栏的制作"><a class="header-anchor" href="#tab分页栏的制作"></a>tab分页栏的制作</h1>
-<p>  首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。<br>
-  对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。</p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>HTML</tag>
-        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
@@ -786,203 +983,6 @@ $$</p>
       </categories>
       <tags>
         <tag>信号与系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习基础#00：Intro</title>
-    <url>//posts/Machine-Learning-101-00/</url>
-    <content><![CDATA[<style>
-table
-{
-    margin: auto;
-}
-</style>
-<p>  决定对近期学习到的机器学习相关知识进行一次整理。</p>
-<span id="more"></span>
-<p>  免责声明：本人对机器学习领域所知甚少，所写博文为对前期所学知识的回顾，不确保其内容的真实性与准确性，不建议以此为基础进行学习。如有差错纰漏，欢迎指正。</p>
-<h2 id="什么是机器学习？"><a class="header-anchor" href="#什么是机器学习？"></a>什么是机器学习？</h2>
-<p>  学习，就是从已有的经验（不论是亲自动手实践获得的，还是从书本上阅读得到的或者依赖老师教育所得到的）中获取知识的过程。机器学习也是类似的。如果让我下一个粗浅直接的定义，那就是：</p>
-<blockquote><p>从已有的样本（数据）中发现规律，并能够将其泛化应用于未知的（或者说：新的）样本上。</p>
-<footer><strong>Zh某</strong><cite><a href="https://zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more">zhmou.github.io/2022/03/08/Machine-Learning-101-00/#more</a></cite></footer></blockquote>
-<br>
-<p>  譬如，从数千张形态各异的标注好数字标签的手写数字图片中发现规律，并最终能够实现识别输入数字的功能。</p>
-<p><img data-src="/img/Machine-Learning-101/Figure_1.png" alt="MNIST数据集图片识别"></p>
-<div align='center' style="font-size: 14px; color: grey">一个多分类全连接神经网络在MNIST数据集上的测试表现</div>
-<br>
-<h2 id="一个简单的例子"><a class="header-anchor" href="#一个简单的例子"></a>一个简单的例子</h2>
-<p>  现在，我们有一组$x$与$y$如表所示：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">x</th>
-<th style="text-align:center">y</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4</td>
-</tr>
-<tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center">6</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">?</td>
-</tr>
-</tbody>
-</table>
-<p>  对于这两者已知的数据，我们需要从中发现$y$与$x$的规律，并预测在$x$=4时$y$的预测值$\hat{y}$。</p>
-<p>  基于此，我们建立一个简单的线性模型：<br>
-<img data-src="/img/Machine-Learning-101/Figure_2.png" alt="线性模型"></p>
-<p>  此外，我们还需要一个“打分”的函数来评估模型在当前样本（所谓样本，结合这个例子来说就是上述列表里的某一行）上的“优劣”，称作：Loss function（损失函数）。在全体样本上（或者一个mini-batch中的所有样本，关于mini-batch，后面会详细解释），又可称作cost function（代价函数）这里，我们选择用均方误差（Mean Squared Error，MSE）来作为代价函数：即loss为模型预测值与真实值差值的平方。</p>
-<p>$$<br>
-loss={(\hat{y}-y)}^2<br>
-$$</p>
-<p>  大多数情况下，我们的目标是令代价函数的值尽可能的变小，即预测值接近真实值。</p>
-<p>  现在，我们随机地初始化一组$w$和$b$($w=1,b=1$)来计算损失函数loss的值：<br>
-  $x=2$时，$\hat{y}=3$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3-4)}^2=1$<br>
-  $x=3$时，$\hat{y}=4$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(4-6)}^2=4$<br>
-  在全体样本上的均方误差$cost = 5\div2=2.5$</p>
-<p>  我们把这个步骤称作“<strong>前向运算</strong>”/“<strong>前馈运算</strong>”，cost的值较大，表明随机初始化找到的参数并不能准确找到需要的规律。<br>
-  在高中学习里，我们就已经知道，在一个连续光滑的函数上，当自变量沿着该点导数值的负方向移动一小段距离时，函数值会变小（如下图所示）。</p>
-<img data-src="/img/Machine-Learning-101/Figure_3.png" alt="导数" style="float:center"/>
-<p>  将其应用于我们的例子中：当我们将两个参数$w、b$沿着loss函数对其各自的偏导的负方向移动一小段距离后，loss函数的值会变小，进而在整体样本上cost函数的值也会变小。</p>
-<p>  根据链式求导法则：<br>
-$$<br>
-\frac{\partial{loss}}{\partial{w}}=\frac{\partial{loss}}{\partial{\hat{y}}}\cdot\frac{\partial{\hat{y}}}{\partial{w}}=2(\hat{y}-y)\cdot{x}<br>
-$$<br>
-  (对b的偏导同理)</p>
-<p>  将前向运算中计算得到的$\hat{y}$和当前样本已知的$x、y$带入上述式子可得：<br>
-  在$x=2$时，$\left.{\frac{\partial{loss}}{\partial{w}}}\right|_{x=2}=−4$，$\left.{\frac{\partial{loss}}{\partial{b}}}\right|_{x=2}=−2$<br>
-  在$x=3$时，$\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3}=-12$，$\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3}=−4$</p>
-<p>  接下来，更新权重w与b的值，为了避免自变量变化得过大导致得不到我们想要得结果（如下图所示），我们需要控制自变量变化的步幅，即学习率（learning rate），此处设为lr = 0.04。</p>
-<img data-src="/img/Machine-Learning-101/Figure_4.png" alt="导数" style="float:center"/>
-<p>$$<br>
-\begin{align*}<br>
-w'&amp;=w-lr\cdot\frac{\partial{loss}}{\partial{w}}(avg.\ on\ all\ samples)\\<br>
-&amp;=w- lr\cdot(\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{w}}\right|_{x=3})\div2\\<br>
-&amp;=1-0.04\times(-4-12)\div2\\<br>
-&amp;=1.32<br>
-\end{align*}<br>
-$$</p>
-<p>  同理，$b$的值计算结果为：<br>
-$$<br>
-\begin{align*}<br>
-b'&amp;=b-lr\cdot\frac{\partial{loss}}{\partial{b}}(avg.\ on\ all\ samples)\\<br>
-&amp;=b-lr\cdot(\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=2}+\left.\frac{\partial{loss}}{\partial{b}}\right|_{x=3})\div2\\<br>
-&amp;=1-0.04\times(-2-4)\div2\\<br>
-&amp;=1.12<br>
-\end{align*}<br>
-$$</p>
-<p>  如上述的这个过程，被称为“反向传播”。这样，我们便走完了神经网络训练的一个轮次（Epoch）。此时，重新计算预测值、loss与cost，更新权重后的结果为：</p>
-<p>  $x=2$时，$\hat{y}=3.76$，则$\left.loss\right|_{x=2}={(\hat{y}-y)}^2={(3.76-4)}^2=0.0576$<br>
-  $x=3$时，$\hat{y}=5.08$，则$\left.loss\right|_{x=3}={(\hat{y}-y)}^2={(5.08-6)}^2=0.8464$<br>
-  在全体样本上的均方误差$cost' = 0.452$</p>
-<p>  显然，更新后的模型比其更新前能够更好地把握样本数据间的内在规律。在这一轮次的基础上，我们还可以继续重复训练的过程，在经过第二次训练后，得到$w'=1.644$，$b'=1.236$</p>
-<p>  现在，对于例子开头提出来的问题，在经过两轮训练后，神经网络给出的$x=4$时的预测结果为:<br>
-$$<br>
-ŷ = 1.644\times4+1.236 = 7.812<br>
-$$</p>
-<p>  当反复训练后，cost的值趋近于零，在某个区间内呈现波动的时候，我们称这个网络<strong>收敛</strong>，而当cost值不再变小而且和0相去较远时，则可能陷入了局部最优解，或者是学习率过大导致无法收敛于全局最优解。</p>
-<blockquote>
-<p><strong>小结</strong><br>
-神经元：网络中负责某种基础运算的单元。例如本例中建模采用的$y=kx+b$就是一个基础的神经元。<br>
-神经网络训练的步骤：正向运算求Loss，反向计算求Loss对各个参数的偏导，依赖偏导对参数进行微小的调整。在本例中，反复以样本训练较好地逼近了结果。<br>
-<strong>问题</strong>：<br>
-多个线性神经元简单叠加，如两个神经元：$y = w_1(w_2x+b_2)+b_1 = w_1w_2x+w_1b_2+b_1$ ，仍与单个神经元效果相同，需要引入<em>非线性变换</em>才能较好的拟合非线性函数。</p>
-</blockquote>
-<h2 id="更复杂的例子"><a class="header-anchor" href="#更复杂的例子"></a>更复杂的例子</h2>
-<p>  下方是某商品的评价及其人工标注的情感标签，试建立模型分析其中关系。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">评价</th>
-<th style="text-align:center">情感标签</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">“好看”</td>
-<td style="text-align:center">正面</td>
-</tr>
-<tr>
-<td style="text-align:center">“不好”</td>
-<td style="text-align:center">负面</td>
-</tr>
-<tr>
-<td style="text-align:center">“好”</td>
-<td style="text-align:center">正面</td>
-</tr>
-<tr>
-<td style="text-align:center">“不好看”</td>
-<td style="text-align:center">负面</td>
-</tr>
-<tr>
-<td style="text-align:center">……</td>
-<td style="text-align:center">……</td>
-</tr>
-</tbody>
-</table>
-<p>  由于神经网络只能接受数字化的输入并产生相对应的数字化输出，因此需要将这些样本转化成数据：</p>
-<p>  首先提取基本语素，在这个简单的任务中，共有三个字：{好，不，看}<br>
-  对这三个字进行“<strong>独热编码</strong>”：<br>
-  <strong>好 = [1, 0, 0] 不 = [0, 1, 0] 看 = [0, 0, 1]</strong><br>
-  输入样本的向量即为各个字符编码的相加，例如：<br>
-  <strong>好看 = [1, 0, 1] 不好 = [1, 1, 0] ……</strong><br>
-  对于输出，由于只存在两种标签，因此编码为：<br>
-  <strong>正面 = [1, 0] 负面 = [0, 1]</strong><br>
-  依照上述步骤，我们构造出了一个$4×3$(样本数×input size/基本语素单位)的输入矩阵$x$与$4×2$(样本数×标注类别)的标注矩阵$y$：<br>
-$$<br>
-x=\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 1\end{bmatrix} y=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}<br>
-$$</p>
-<p>  类似于第二部分中给出的例子，我们设计出一个相较于前者更为复杂的网络：<br>
-<img data-src="/img/Machine-Learning-101/Figure_5.png" alt="网络" style="float:center" width="800px"/></p>
-<p>  在两个隐藏层向各个下一层神经元传输相应数字时(箭头所示位置)，需要引入非线性变换的激活函数(Activation function)，这里选用的是Sigmoid函数：$𝑆(𝑥)=\frac{1}{(1+𝑒^{−𝑥})}$，它将实数域R的数字映射至(0, 1)内。网络最后一层的Softmax函数也是一种非线性变换，它将该层所有结果都映射到(0, 1)内，不改变大小的相对位置。对于该层的各个元素$x_i$，经变换后的值计算如下：<br>
-$$<br>
-softmax\ value = \frac{e^{x_i}}{\sum_{j}e^{x_j}{}}<br>
-$$</p>
-<p>  图中实线连接的部分就是我们在反向算法过程中需要更新的权重，为简化计算，在这个例子中我们忽略bias项即偏置的影响(也就是说每一条线代表的基础运算单元仅仅是$y=kx$)，只考虑权重w构成的三个矩阵：<br>
-  $𝑤_1$为三行两列矩阵，$𝐻_1=𝑥𝑤_1$，$𝑤_2$ 、$𝑤_3$ 为两行两列的矩阵： $𝐻_2=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_1 ) 𝑤_2$，$𝑂𝑢𝑡𝑝𝑢𝑡=𝑠𝑖𝑔𝑚𝑜𝑖𝑑(𝐻_2)𝑤_3$</p>
-<p>  <strong>正向运算：</strong><br>
-  首先初始化三个矩阵$𝑤_1$ 、$𝑤_2$ 、$𝑤_3$，这里我调用了matlab的rand()函数来随机生成这三个矩阵：<br>
-<img data-src="/img/Machine-Learning-101/Figure_6.png" alt="初始化及正向运算" style="float:center"/></p>
-<p>  <strong>计算Loss：</strong><br>
-  在二分类或者多分类问题上，我们常选用NLL loss(Negative log-likelihood loss，负对数似然损失)函数作为损失函数，该损失函数的具体计算过程如下：<br>
-<img data-src="/img/Machine-Learning-101/Figure_7.png" alt="Loss计算" style="float:center"/></p>
-<p>  <strong>反向传播：</strong><br>
-  这一部分公式太多，懒得用$\LaTeX$再整理一遍，直接借用之前自己做的PPT里面的推导过程（不过说起来这里面的矩阵转置当时弄得我有些晕，其实你需要弄清楚对应元素的位置就比较清楚了。）：<br>
-<img data-src="/img/Machine-Learning-101/Figure_8.png" alt="反向传播" style="float:center" width="800px"/></p>
-<p>  <strong>更新权重：</strong><br>
-<img data-src="/img/Machine-Learning-101/Figure_9.png" alt="反向传播" style="float:center" width="800px"/></p>
-<blockquote>
-<p><strong>小结与反思</strong><br>
-同单层模型一样，多层模型仍采用反向传播算法来进行权重的更新。<br>
-引入sigmoid、softmax等非线性变换来构筑更复杂的模型。<br>
-损失计算采用了负对数似然损失(能否采用MSE，为什么？)<br>
-对于文本序列而言，其出现的顺序对于理解其含义是至关重要的，简单向量相加丢失了字符出现顺序的信息。(改进：RNN)<br>
-层数越深，由链式法则相乘得到的梯度越来越小，可能出现梯度消失的问题(改进：ResNet)<br>
-文本的编码方式——独热编码的缺点在于①维数太高，考虑一个大型的语料库，出现的常用汉字数千，这种编码方式需要数千维的向量来表示一个句子（而且其中的大部分元素都是0）。②（基于前者）大部分句子的向量都分布在坐标轴附近。③（基于前者）难以衡量两个句子之间的相似度。</p>
-</blockquote>
-<h2 id="随机梯度下降：引入Mini-Batch"><a class="header-anchor" href="#随机梯度下降：引入Mini-Batch"></a>随机梯度下降：引入Mini-Batch</h2>
-<p>  对于梯度下降，有几种不同的方法对其进行实现：<br>
-  批量梯度下降：计算所有样本的loss后，再更新权重w与偏置b。<br>
-  随机梯度下降：从全体样本中随机抽取一个样本，计算loss后更新权重w与偏置b，直到抽取完所有样本后跑完一个轮次。<br>
-  小批量(随机)梯度下降：将全体样本划分为若干个mini-batch，每个batch中存在若干样本，随机抽出一个mini-batch，计算该批次样本中的loss后更新权重w与偏置b，直到跑完所有mini-batch后，记作训练一个轮次。在训练完一个轮次后。对样本进行shuffle处理，即重新划分mini-batch，再次进行训练，形象化的比喻可以称作“洗牌”，这也是为什么英文叫做&quot;shuffle&quot;。</p>
-<img data-src="/img/Machine-Learning-101/Figure_10.png" alt="三种方法" style="float:center" width="800px"/>
-<p>  三种不同方式的对比：<br>
-  一般来说，小批量梯度下降通过选取部分样本引入了更大噪声，使得它在解空间的“鞍点”位置更容易受噪声扰动，在一些情况下性能表现比批量梯度下降更好。而随机梯度下降更新权重只关注当前样本的梯度，所以尽管每一步使得当前样本得到最优的表现，但从整体样本考虑则不一定最优，且每一个样本前向计算时都需要依赖上一个样本反向传播后更新的权重，并行化程度不如其它两者高。<br>
-  形象化的三种方式如上图所示，红点位置即为所求的最优解，图中带箭头的线则显示了这三种方法在寻找最优解的过程。</p>
-<hr>
-&emsp;&emsp;这篇文章，笔者简要回顾了机器学习的最基础内容，虽然听起来或者推导起来比较复杂。但作为感性的认知来看，了解机器学习的工作原理并不困难，甚至完全可以只用高中的知识理解。本期的内容还未涉及到代码部分，这些工作将在下期进行介绍。
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>编程</tag>
       </tags>
   </entry>
   <entry>

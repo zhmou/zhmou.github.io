@@ -5,7 +5,7 @@ let btn = document.querySelector('button');
 
 body.addEventListener('keydown', keydown_listener);
 body.addEventListener('keyup', keyup_listener);
-body.addEventListener('click', clearAll);
+btn.addEventListener('click', clearAll);
 function keydown_listener(e) {
     e.preventDefault();
     let ele;
