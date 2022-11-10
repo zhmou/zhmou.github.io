@@ -7,6 +7,7 @@
 
 body {
     background: url(wood.png);
+    user-select: none;
 }
 
 .fontsize_12px {
@@ -174,6 +175,8 @@ body {
 #NumpadEnter {
     z-index: 2;
     height: 140px;
+    padding-top: 60px;
+    padding-left: 10px;
 }
 
 .sixth_line {
@@ -197,6 +200,7 @@ body {
 }
 
 #Keylog {
+    cursor: default;
     overflow: hidden;
     outline: none;
     resize: none;
@@ -209,4 +213,5 @@ body {
     height: 250px;
     background-color: rgba(255, 255, 255, 0.35);
     border-radius: 10px;
+    color: #000;
 }
