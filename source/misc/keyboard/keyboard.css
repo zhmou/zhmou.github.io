@@ -2,8 +2,211 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Helvetica
 }
 
 body {
     background: url(wood.png);
+}
+
+.fontsize_12px {
+    font-size: 12px !important;
+}
+
+.fontsize_14px {
+    font-size: 14px !important;
+}
+
+.keyboard {
+    margin: 150px auto 0px;
+    width: 1600px;
+    height: 500px;
+    border-radius: 10px;
+    background: linear-gradient(18deg, #fff, #990616);
+    font-size: 0;
+    overflow: hidden;
+    box-shadow: 2px 2px 0 6px #ddd;
+}
+
+.key {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #fff, #ccc);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05), 10px 20px 25px rgba(0, 0, 0, 0.2),
+        inset -8px 0 8px rgba(255, 255, 255, 0.15), inset 0 -8px 8px rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.key>.before {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    bottom: 14px;
+    right: 12px;
+    background: linear-gradient(90deg, #cdcdcd, #f9f9f9);
+    border-radius: 10px;
+    box-shadow: -10px -10px 10px rgba(0, 0, 0, 0.15), 10px 5px 10px rgba(255, 255, 255, 0.15);
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #ddd;
+}
+
+.key>i {
+    position: relative;
+    color: #333;
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.active {
+    animation: pressed 0.01s linear 0s 1 normal forwards;
+}
+
+@keyframes pressed {
+    0% {}
+
+    100% {
+        transform: translate(2px, 2px);
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05), 3px 13px 17px rgba(0, 0, 0, 0.3),
+            inset -8px 0 8px rgba(255, 255, 255, 0.05), inset 0 -8px 8px rgba(255, 255, 255, 0.05);
+    }
+}
+
+.first_line {
+    margin-top: 16px;
+    margin-left: 18px;
+    margin-bottom: 10px;
+}
+
+#Escape {
+    margin-right: 70px;
+}
+
+.margin-right_35px {
+    margin-right: 35px;
+}
+
+.margin-right_10px {
+    margin-right: 10px;
+}
+
+.second_line {
+    margin-left: 18px;
+}
+
+#Backspace {
+    width: 140px;
+    padding-top: 20px;
+}
+
+.padding-top_20px {
+    padding-top: 20px !important;
+}
+
+#num_multiply {
+    padding-top: 25px
+}
+
+.third_line {
+    margin-top: -3px;
+    margin-left: 18px;
+    height: 68px;
+}
+
+#Tab {
+    width: 105px;
+}
+
+#Backslash {
+    width: 105px;
+}
+
+#NumpadAdd {
+    height: 138px;
+    padding-top: 60px;
+    padding-left: 25px;
+    z-index: 1;
+}
+
+.forth_line {
+    margin-left: 18px;
+}
+
+#CapsLock {
+    width: 130px;
+}
+
+#Enter {
+    width: 150px;
+    margin-right: 230px;
+}
+
+.forth_line {
+    margin-left: 18px;
+    margin-top: -1px;
+}
+
+.fifth_line {
+    margin-left: 18px;
+    margin-top: -1px;
+    height: 70px;
+}
+
+#ShiftLeft {
+    width: 160px;
+}
+
+#ShiftRight {
+    width: 190px;
+    margin-right: 80px;
+}
+
+#ArrowUp {
+    margin-right: 80px;
+}
+
+#NumpadEnter {
+    z-index: 2;
+    height: 140px;
+}
+
+.sixth_line {
+    margin-left: 18px;
+}
+
+.width_80px {
+    width: 80px;
+}
+
+#Space {
+    width: 490px;
+}
+
+#Space::before {
+    background: linear-gradient(90deg, #cdcdcd, 20%, #f9f9f9);
+}
+
+#Numpad0 {
+    width: 140px;
+}
+
+#Keylog {
+    overflow: hidden;
+    outline: none;
+    resize: none;
+    display: block;
+    margin: 50px auto 0;
+    padding-top: 1em;
+    padding-left: 1em;
+    font-size: 18px;
+    width: 1600px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
 }
