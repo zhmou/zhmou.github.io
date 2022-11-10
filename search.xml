@@ -145,6 +145,108 @@
       </tags>
   </entry>
   <entry>
+    <title>配置SOLOV2_ncnn相关环境并运行Demo</title>
+    <url>//posts/Configure-a-NCNN-Project/</url>
+    <content><![CDATA[<p>  今天最开心的事情是终于在Windows环境下运行起来Github上<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">这个项目</a>的Demo，对于我一个电脑小白而言那背后的可都是泪呀TAT，因此有必要记录一下整个流程以方便其他人的需要~</p>
+<p>  简述一下相关背景：<a href="https://github.com/Tencent/ncnn">ncnn</a>是一个前向神经网络框架，由纯C++实现所实现。而<a href="https://arxiv.org/abs/2003.10152">SOLOV2</a>是一个快速的实例分割算法，关于什么是实例分割，可参考图像处理的相关文章。此外，笔者的相关环境配置一并列举于此处，方便读者参考：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">环境</th>
+<th style="text-align:center">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Windows</td>
+<td style="text-align:center">10 专业版 20H2</td>
+</tr>
+<tr>
+<td style="text-align:center">Visual Studio 2019</td>
+<td style="text-align:center">Community Edition<br>16.11.31702.278</td>
+</tr>
+<tr>
+<td style="text-align:center">OpenCV</td>
+<td style="text-align:center">3.4.5</td>
+</tr>
+<tr>
+<td style="text-align:center">CMake</td>
+<td style="text-align:center">3.21.3</td>
+</tr>
+<tr>
+<td style="text-align:center">ncnn</td>
+<td style="text-align:center"><a href="https://github.com/Tencent/ncnn/tree/2c4ae096044c816d7195476d652eb8d5aefb8379">Release 2c4ae09604</a><br>即目前的lateset release(20210720)</td>
+</tr>
+</tbody>
+</table>
+<span id="more"></span>
+<h2 id="01-ncnn编译"><a class="header-anchor" href="#01-ncnn编译"></a>01 ncnn编译</h2>
+<p>  理论上来讲，根据自身的需求直接使用release下官方的预编译静/动态库应该不会出现错误，然而笔者在实际配置项目时，添加了ncnn.lib这一附加依赖项后，在运行中依旧会产生Vulkan相关报错，如图所示：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/1.png" alt="vulkan报错"></p>
+<p>  推测可能为官方打包的库中默认调用了VulkanSDK与glslang这一submoudle，因此我们需要自己来对ncnn打包了。</p>
+<p>  在使用VS 2019命令行编译ncnn的过程中，也同样遇到了这样或那样的问题，不过所幸被Github上这条<a href="https://github.com/Tencent/ncnn/issues/2498">issue</a>解决了，大体上只要按照issue作者提示的操作就不会出现问题。</p>
+<p>  首先在开始菜单下找到Visual Studio 2019的文件夹，打开x64 Native Tools Command Prompt这个VS 2019的命令行工具。</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/2.png" alt="操作步骤"></p>
+<p>  下载 protobuf 3.4.0 的<a href="https://github.com/google/protobuf/archive/v3.4.0.zip">源码</a>（不知道其它版本是否可行），解压，编译ncnn前需要编译protobuf。</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 进入protobuf-3.4.0文件夹</span><br><span class="line"><span class="built_in">cd</span> protobuf-3.4.0</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// cmake -DCMAKE_BUILD_TYPE参数也可设为debug，但总之要前后一致</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line">    -Dprotobuf_BUILD_TESTS=OFF ^</span><br><span class="line">    -Dprotobuf_MSVC_STATIC_RUNTIME=OFF ../cmake</span><br><span class="line">    </span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即protobuf-3.4.0文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>  通过git克隆ncnn的源码并编译ncnn：</p>
+<div class="note warning"><p>提示：请务必注意路径问题！</p>
+</div>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 克隆远端仓库代码，放在ncnn文件夹下</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Tencent/ncnn.git</span><br><span class="line"></span><br><span class="line">// 进入ncnn文件夹</span><br><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line">// 拉取submodule</span><br><span class="line">git submodule update --init</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// 同上，-DCMAKE_BUILD_TYPE参数也可设为debug</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line"></span><br><span class="line">// 更改为自己电脑上Protobuf对应文件夹所在的路径，注意：请务必改为绝对路径而不是相对路径！</span><br><span class="line">    -DProtobuf_INCLUDE_DIR=E:/Project/protobuf-3.4.0/build-vs2019/install/include ^</span><br><span class="line">    -DProtobuf_LIBRARIES=E:/Project/protobuf-3.4.0/build-vs2019/install/lib/libprotobuf.lib ^</span><br><span class="line">    -DProtobuf_PROTOC_EXECUTABLE=E:/Project/protobuf-3.4.0/build-vs2019/install/bin/protoc.exe ^</span><br><span class="line">// 更改为自己电脑上OpenCV3.4.5对应文件夹所在的路径，依然是注意绝对路径的问题</span><br><span class="line">	-DOpenCV_DIR=E:/opencv/build/x64/vc15/lib ..</span><br><span class="line">	</span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即ncnn文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>  至此，运行此项目demo的环境构建工作就做好了，接下来就可以准备开始调试SOLOv2 ncnn的项目。</p>
+<h2 id="02-项目调试"><a class="header-anchor" href="#02-项目调试"></a>02 项目调试</h2>
+<p>  与上一步相同，首先需要使用获得一份源码：</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DayBreak-u/SOLOV2_ncnn.git</span><br></pre></td></tr></table></figure>
+<p>  根据<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">项目主页</a><a href="http://xn--README-ow6o.md">的README.md</a>，执行前三行代码：</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build </span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
+<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>-- Configuring done</code>、<code>-- Generating done</code>时即意味着项目解决方案的成功生成。</p>
+<p>  下载模型权重：</p>
+<blockquote>
+<p>链接: <a href="https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng">https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng</a> 密码: phh8</p>
+</blockquote>
+<p>  在Windows环境下，由于没有Linux下的GNU Make，所以我们直接用VS来编译代码：</p>
+<h3 id="VS配置ncnn和opencv环境"><a class="header-anchor" href="#VS配置ncnn和opencv环境"></a>VS配置ncnn和opencv环境</h3>
+<p>  点击<code>项目</code>-&gt;<code>属性</code>-&gt;<code>VC++目录</code>，在Release配置、x64平台下，根据自己目录的实际情况添加以下路径至<code>包含目录</code>：</p>
+<div class="note warning"><p>注意：如果前文中您将protobuf、ncnn的源码编译为debug版本，则此处也要将其改为debug配置。</p>
+</div>
+<p>  <code>E:\opencv\build\include</code><br>
+  <code>E:\opencv\build\include\opencv</code><br>
+  <code>E:\opencv\build\include\opencv2</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\include</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\include\ncnn</code></p>
+<p>  同样，在<code>库目录</code> 中根据自身情况添加以下路径：</p>
+<p>  <code>E:\opencv\build\x64\vc15\lib</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\lib</code></p>
+<p>  在<code>链接器</code>-&gt;<code>输入</code>中加入<code>ncnn.lib</code>、<code>opencv_world345.lib</code>这两个<code>附加依赖项</code>就可以进行下一步操作了。</p>
+<h3 id="修改代码"><a class="header-anchor" href="#修改代码"></a>修改代码</h3>
+<p>  为方便运行demo查看效果，我对其进行了一定修改，以solov2.cpp为例（<del>才不是我没有测试过solov2_fast.cpp的原因呢</del>，哼o(~ヘ~o#)）：</p>
+<p>  根据前文下载的模型权重存储路径修改权重读取位置：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/3.png" alt="修改代码"></p>
+<p>  注释并重写main函数：</p>
+<figure class="highlight c++"><figcaption><span>solov2.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* imagepath = <span class="string">&quot;E:/Project/SOLOV2_ncnn/imgs/horses.jpg&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cv::Mat m = cv::<span class="built_in">imread</span>(imagepath, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (m.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;cv::imread %s failed\n&quot;</span>, imagepath);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::vector &lt;Object&gt; objects;</span><br><span class="line">    <span class="built_in">detect_solov2</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_objects</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  程序生成的结果result.png默认放在项目build文件夹下，如果您想要直观地看见程序运行的效果，可以将main函数上方原作者注释掉的两行代码取消注释：<br>
+  <code>//    cv::imshow(&quot;image&quot;, image);</code><br>
+  <code>//    cv::waitKey(0);</code></p>
+<h3 id="运行代码"><a class="header-anchor" href="#运行代码"></a>运行代码</h3>
+<p>  做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/4.png" alt="修改代码"></p>
+<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
+<p>  运行窗口如图：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/5.png" alt="运行窗口"></p>
+<p>  运行效果如图：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/horses.jpg" alt="运行效果1" title="读取到的图片"></p>
+<p><img data-src="/img/Configure-a-NCNN-Project/result.png" alt="运行效果2" title="实例分割的结果"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>编程</tag>
+        <tag>SOLOv2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用VS 2019打包dll文件</title>
     <url>//posts/How-to-Package-a-dll/</url>
     <content><![CDATA[<p>  最近在看学长接手的<a href="https://sao-kirito.top/2021/09/15/shape_based_matching/">形状匹配(shape based matching)C++工程</a>，虽然看懂的不多，但是被要求将部分代码打包封装成dll，暴露简洁的接口供调用者使用。<br>
@@ -352,164 +454,6 @@
       </tags>
   </entry>
   <entry>
-    <title>品优购项目：踩坑细节记录</title>
-    <url>//posts/Project-pinyougou/</url>
-    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
-</div>
-<h1 id="SEO优化"><a class="header-anchor" href="#SEO优化"></a>SEO优化</h1>
-<p>  对于一个营利性网站而言，提升其在搜索引擎中的排名至关重要。除去直接付费的竞价排名外，搜索引擎优化（Search Engine Optimization）也是不可或缺的一环。</p>
-<h2 id="TDK三大标签"><a class="header-anchor" href="#TDK三大标签"></a>TDK三大标签</h2>
-<ul>
-<li><code>&lt;title&gt;</code>标签，网站标题：内页的第一个重要标签
-<ul>
-<li>建议：<strong>网站名 - 网站的介绍（不超过30汉字）</strong></li>
-</ul>
-</li>
-<li><code>description</code> 网站说明
-<ul>
-<li><strong>简要说明网站是做什么的</strong></li>
-</ul>
-</li>
-<li><code>keywords</code> 关键字
-<ul>
-<li><strong>keywords是页面关键词，是搜索引擎的关注点之一</strong></li>
-<li><strong>最好限制为6 ~ 8个关键词，且之间用英文逗号隔开</strong></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight html"><figcaption><span>品优购网站的三大标签</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>品优购商城 - 网络购物最佳选择，物美价廉，免费配送，一站式服务为您提供优秀购物体验！<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">content</span>=<span class="string">&quot;品优购商城 - 专业的综合网上购物商城，销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数万个品牌优质商品。便捷、诚信的服务，为您提供愉悦的网上购物体验！&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;前端, HTML, CSS, 电商, 品优购商城, 静态界面&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Logo优化"><a class="header-anchor" href="#Logo优化"></a>Logo优化</h2>
-<ul>
-<li>logo里面首先放一个<code>&lt;h1&gt;</code>标签（<strong>用于提权</strong>）</li>
-<li><code>&lt;h1&gt;</code>标签中插入链接<code>&lt;a&gt;</code>标签，返回首页</li>
-<li>链接里面放文字（网站名称），但是为了视觉效果，文字不能显示出来（<code>font-size: 0</code>）</li>
-<li>链接给一个<code>title</code>属性，鼠标放在Logo上可显示文字</li>
-</ul>
-<span id="more"></span>
-<h2 id="注册界面"><a class="header-anchor" href="#注册界面"></a>注册界面</h2>
-<p>  按照说法，注册界面一般不需要SEO优化。</p>
-<h1 id="一行内多个列表元素-code-li-code-超宽的问题"><a class="header-anchor" href="#一行内多个列表元素-code-li-code-超宽的问题"></a>一行内多个列表元素<code>&lt;li&gt;</code>超宽的问题</h1>
-<p>  在某个页面布局时，经常会遇到列表元素宽度难以确定的问题。譬如，在宽度为1200px的版心中布置5个&lt;li&gt;元素很容易确定单个元素的宽度可以是240px，但是又要使得这些元素间插入四个外边距值margin则需要一番计算：这需要使得一行内n个&lt;li&gt;元素减少的总宽度(n的倍数，假设单个表单元素减少的宽度以1px为单位)恰好是(n-1)的倍数。<br>
-  或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑<strong>增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。</strong>，此外，还需要<strong>在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。</strong></p>
-<h1 id="层叠上下文相关"><a class="header-anchor" href="#层叠上下文相关"></a>层叠上下文相关</h1>
-<p>  z-index在定位元素上生效，需要指定position:xxx</p>
-<h1 id="tab分页栏的制作"><a class="header-anchor" href="#tab分页栏的制作"></a>tab分页栏的制作</h1>
-<p>  首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。<br>
-  对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。</p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>HTML</tag>
-        <tag>CSS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>配置SOLOV2_ncnn相关环境并运行Demo</title>
-    <url>//posts/Configure-a-NCNN-Project/</url>
-    <content><![CDATA[<p>  今天最开心的事情是终于在Windows环境下运行起来Github上<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">这个项目</a>的Demo，对于我一个电脑小白而言那背后的可都是泪呀TAT，因此有必要记录一下整个流程以方便其他人的需要~</p>
-<p>  简述一下相关背景：<a href="https://github.com/Tencent/ncnn">ncnn</a>是一个前向神经网络框架，由纯C++实现所实现。而<a href="https://arxiv.org/abs/2003.10152">SOLOV2</a>是一个快速的实例分割算法，关于什么是实例分割，可参考图像处理的相关文章。此外，笔者的相关环境配置一并列举于此处，方便读者参考：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">环境</th>
-<th style="text-align:center">版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Windows</td>
-<td style="text-align:center">10 专业版 20H2</td>
-</tr>
-<tr>
-<td style="text-align:center">Visual Studio 2019</td>
-<td style="text-align:center">Community Edition<br>16.11.31702.278</td>
-</tr>
-<tr>
-<td style="text-align:center">OpenCV</td>
-<td style="text-align:center">3.4.5</td>
-</tr>
-<tr>
-<td style="text-align:center">CMake</td>
-<td style="text-align:center">3.21.3</td>
-</tr>
-<tr>
-<td style="text-align:center">ncnn</td>
-<td style="text-align:center"><a href="https://github.com/Tencent/ncnn/tree/2c4ae096044c816d7195476d652eb8d5aefb8379">Release 2c4ae09604</a><br>即目前的lateset release(20210720)</td>
-</tr>
-</tbody>
-</table>
-<span id="more"></span>
-<h2 id="01-ncnn编译"><a class="header-anchor" href="#01-ncnn编译"></a>01 ncnn编译</h2>
-<p>  理论上来讲，根据自身的需求直接使用release下官方的预编译静/动态库应该不会出现错误，然而笔者在实际配置项目时，添加了ncnn.lib这一附加依赖项后，在运行中依旧会产生Vulkan相关报错，如图所示：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/1.png" alt="vulkan报错"></p>
-<p>  推测可能为官方打包的库中默认调用了VulkanSDK与glslang这一submoudle，因此我们需要自己来对ncnn打包了。</p>
-<p>  在使用VS 2019命令行编译ncnn的过程中，也同样遇到了这样或那样的问题，不过所幸被Github上这条<a href="https://github.com/Tencent/ncnn/issues/2498">issue</a>解决了，大体上只要按照issue作者提示的操作就不会出现问题。</p>
-<p>  首先在开始菜单下找到Visual Studio 2019的文件夹，打开x64 Native Tools Command Prompt这个VS 2019的命令行工具。</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/2.png" alt="操作步骤"></p>
-<p>  下载 protobuf 3.4.0 的<a href="https://github.com/google/protobuf/archive/v3.4.0.zip">源码</a>（不知道其它版本是否可行），解压，编译ncnn前需要编译protobuf。</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 进入protobuf-3.4.0文件夹</span><br><span class="line"><span class="built_in">cd</span> protobuf-3.4.0</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// cmake -DCMAKE_BUILD_TYPE参数也可设为debug，但总之要前后一致</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line">    -Dprotobuf_BUILD_TESTS=OFF ^</span><br><span class="line">    -Dprotobuf_MSVC_STATIC_RUNTIME=OFF ../cmake</span><br><span class="line">    </span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即protobuf-3.4.0文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
-<p>  通过git克隆ncnn的源码并编译ncnn：</p>
-<div class="note warning"><p>提示：请务必注意路径问题！</p>
-</div>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 克隆远端仓库代码，放在ncnn文件夹下</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Tencent/ncnn.git</span><br><span class="line"></span><br><span class="line">// 进入ncnn文件夹</span><br><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line">// 拉取submodule</span><br><span class="line">git submodule update --init</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// 同上，-DCMAKE_BUILD_TYPE参数也可设为debug</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line"></span><br><span class="line">// 更改为自己电脑上Protobuf对应文件夹所在的路径，注意：请务必改为绝对路径而不是相对路径！</span><br><span class="line">    -DProtobuf_INCLUDE_DIR=E:/Project/protobuf-3.4.0/build-vs2019/install/include ^</span><br><span class="line">    -DProtobuf_LIBRARIES=E:/Project/protobuf-3.4.0/build-vs2019/install/lib/libprotobuf.lib ^</span><br><span class="line">    -DProtobuf_PROTOC_EXECUTABLE=E:/Project/protobuf-3.4.0/build-vs2019/install/bin/protoc.exe ^</span><br><span class="line">// 更改为自己电脑上OpenCV3.4.5对应文件夹所在的路径，依然是注意绝对路径的问题</span><br><span class="line">	-DOpenCV_DIR=E:/opencv/build/x64/vc15/lib ..</span><br><span class="line">	</span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即ncnn文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
-<p>  至此，运行此项目demo的环境构建工作就做好了，接下来就可以准备开始调试SOLOv2 ncnn的项目。</p>
-<h2 id="02-项目调试"><a class="header-anchor" href="#02-项目调试"></a>02 项目调试</h2>
-<p>  与上一步相同，首先需要使用获得一份源码：</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DayBreak-u/SOLOV2_ncnn.git</span><br></pre></td></tr></table></figure>
-<p>  根据<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">项目主页</a><a href="http://xn--README-ow6o.md">的README.md</a>，执行前三行代码：</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build </span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
-<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>-- Configuring done</code>、<code>-- Generating done</code>时即意味着项目解决方案的成功生成。</p>
-<p>  下载模型权重：</p>
-<blockquote>
-<p>链接: <a href="https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng">https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng</a> 密码: phh8</p>
-</blockquote>
-<p>  在Windows环境下，由于没有Linux下的GNU Make，所以我们直接用VS来编译代码：</p>
-<h3 id="VS配置ncnn和opencv环境"><a class="header-anchor" href="#VS配置ncnn和opencv环境"></a>VS配置ncnn和opencv环境</h3>
-<p>  点击<code>项目</code>-&gt;<code>属性</code>-&gt;<code>VC++目录</code>，在Release配置、x64平台下，根据自己目录的实际情况添加以下路径至<code>包含目录</code>：</p>
-<div class="note warning"><p>注意：如果前文中您将protobuf、ncnn的源码编译为debug版本，则此处也要将其改为debug配置。</p>
-</div>
-<p>  <code>E:\opencv\build\include</code><br>
-  <code>E:\opencv\build\include\opencv</code><br>
-  <code>E:\opencv\build\include\opencv2</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\include</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\include\ncnn</code></p>
-<p>  同样，在<code>库目录</code> 中根据自身情况添加以下路径：</p>
-<p>  <code>E:\opencv\build\x64\vc15\lib</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\lib</code></p>
-<p>  在<code>链接器</code>-&gt;<code>输入</code>中加入<code>ncnn.lib</code>、<code>opencv_world345.lib</code>这两个<code>附加依赖项</code>就可以进行下一步操作了。</p>
-<h3 id="修改代码"><a class="header-anchor" href="#修改代码"></a>修改代码</h3>
-<p>  为方便运行demo查看效果，我对其进行了一定修改，以solov2.cpp为例（<del>才不是我没有测试过solov2_fast.cpp的原因呢</del>，哼o(~ヘ~o#)）：</p>
-<p>  根据前文下载的模型权重存储路径修改权重读取位置：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/3.png" alt="修改代码"></p>
-<p>  注释并重写main函数：</p>
-<figure class="highlight c++"><figcaption><span>solov2.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* imagepath = <span class="string">&quot;E:/Project/SOLOV2_ncnn/imgs/horses.jpg&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cv::Mat m = cv::<span class="built_in">imread</span>(imagepath, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (m.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;cv::imread %s failed\n&quot;</span>, imagepath);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::vector &lt;Object&gt; objects;</span><br><span class="line">    <span class="built_in">detect_solov2</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_objects</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  程序生成的结果result.png默认放在项目build文件夹下，如果您想要直观地看见程序运行的效果，可以将main函数上方原作者注释掉的两行代码取消注释：<br>
-  <code>//    cv::imshow(&quot;image&quot;, image);</code><br>
-  <code>//    cv::waitKey(0);</code></p>
-<h3 id="运行代码"><a class="header-anchor" href="#运行代码"></a>运行代码</h3>
-<p>  做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/4.png" alt="修改代码"></p>
-<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
-<p>  运行窗口如图：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/5.png" alt="运行窗口"></p>
-<p>  运行效果如图：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/horses.jpg" alt="运行效果1" title="读取到的图片"></p>
-<p><img data-src="/img/Configure-a-NCNN-Project/result.png" alt="运行效果2" title="实例分割的结果"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>编程</tag>
-        <tag>SOLOv2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机器学习基础#00：Intro</title>
     <url>//posts/Machine-Learning-101-00/</url>
     <content><![CDATA[<style>
@@ -704,6 +648,62 @@ $$</p>
       <tags>
         <tag>机器学习</tag>
         <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>品优购项目：踩坑细节记录</title>
+    <url>//posts/Project-pinyougou/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<h1 id="SEO优化"><a class="header-anchor" href="#SEO优化"></a>SEO优化</h1>
+<p>  对于一个营利性网站而言，提升其在搜索引擎中的排名至关重要。除去直接付费的竞价排名外，搜索引擎优化（Search Engine Optimization）也是不可或缺的一环。</p>
+<h2 id="TDK三大标签"><a class="header-anchor" href="#TDK三大标签"></a>TDK三大标签</h2>
+<ul>
+<li><code>&lt;title&gt;</code>标签，网站标题：内页的第一个重要标签
+<ul>
+<li>建议：<strong>网站名 - 网站的介绍（不超过30汉字）</strong></li>
+</ul>
+</li>
+<li><code>description</code> 网站说明
+<ul>
+<li><strong>简要说明网站是做什么的</strong></li>
+</ul>
+</li>
+<li><code>keywords</code> 关键字
+<ul>
+<li><strong>keywords是页面关键词，是搜索引擎的关注点之一</strong></li>
+<li><strong>最好限制为6 ~ 8个关键词，且之间用英文逗号隔开</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><figcaption><span>品优购网站的三大标签</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>品优购商城 - 网络购物最佳选择，物美价廉，免费配送，一站式服务为您提供优秀购物体验！<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">content</span>=<span class="string">&quot;品优购商城 - 专业的综合网上购物商城，销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数万个品牌优质商品。便捷、诚信的服务，为您提供愉悦的网上购物体验！&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;前端, HTML, CSS, 电商, 品优购商城, 静态界面&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Logo优化"><a class="header-anchor" href="#Logo优化"></a>Logo优化</h2>
+<ul>
+<li>logo里面首先放一个<code>&lt;h1&gt;</code>标签（<strong>用于提权</strong>）</li>
+<li><code>&lt;h1&gt;</code>标签中插入链接<code>&lt;a&gt;</code>标签，返回首页</li>
+<li>链接里面放文字（网站名称），但是为了视觉效果，文字不能显示出来（<code>font-size: 0</code>）</li>
+<li>链接给一个<code>title</code>属性，鼠标放在Logo上可显示文字</li>
+</ul>
+<span id="more"></span>
+<h2 id="注册界面"><a class="header-anchor" href="#注册界面"></a>注册界面</h2>
+<p>  按照说法，注册界面一般不需要SEO优化。</p>
+<h1 id="一行内多个列表元素-code-li-code-超宽的问题"><a class="header-anchor" href="#一行内多个列表元素-code-li-code-超宽的问题"></a>一行内多个列表元素<code>&lt;li&gt;</code>超宽的问题</h1>
+<p>  在某个页面布局时，经常会遇到列表元素宽度难以确定的问题。譬如，在宽度为1200px的版心中布置5个&lt;li&gt;元素很容易确定单个元素的宽度可以是240px，但是又要使得这些元素间插入四个外边距值margin则需要一番计算：这需要使得一行内n个&lt;li&gt;元素减少的总宽度(n的倍数，假设单个表单元素减少的宽度以1px为单位)恰好是(n-1)的倍数。<br>
+  或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑<strong>增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。</strong>，此外，还需要<strong>在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。</strong></p>
+<h1 id="层叠上下文相关"><a class="header-anchor" href="#层叠上下文相关"></a>层叠上下文相关</h1>
+<p>  z-index在定位元素上生效，需要指定position:xxx</p>
+<h1 id="tab分页栏的制作"><a class="header-anchor" href="#tab分页栏的制作"></a>tab分页栏的制作</h1>
+<p>  首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。<br>
+  对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。</p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>Javascript</tag>
+        <tag>HTML</tag>
+        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
