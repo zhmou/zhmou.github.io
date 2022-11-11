@@ -171,6 +171,17 @@ NexT.utils = {
         // Prevent selected tab to select again.
         if (element.classList.contains('active')) return;
         const nav = element.parentNode;
+        // 获取之前处于activa状态的tab-pane的高度，加上42px(padding 20px margin 20px border 2px)，设为tab-content高度
+        for (var i = 0; i < nav.children.length; i++) {
+          if (nav.children[i].classList.contains('active')) {
+            break;
+          }
+        }
+        const tabContent = nav.nextElementSibling;
+        tabContent.style.overflow = 'hidden';
+        tabContent.style.transition = 'height 1s'
+        const prevHeight = window.getComputedStyle(tabContent.children[i]).height.replace('px', '');
+        tabContent.style.height = parseInt(prevHeight) + 42 + 'px';
         // Add & Remove active class on `nav-tabs` & `tab-content`.
         [...nav.children].forEach(target => {
           target.classList.toggle('active', target === element);
@@ -184,6 +195,26 @@ NexT.utils = {
         tActive.dispatchEvent(new Event('tabs:click', {
           bubbles: true
         }));
+        // 获取当前处于activa状态的tab-pane的高度，重设tab-content高度，实现动画效果
+        for (var j = 0; j < nav.children.length; j++) {
+          if (nav.children[j].classList.contains('active')) {
+            break;
+          }
+        }
+        const currHeight = window.getComputedStyle(tabContent.children[j]).height.replace('px', '');
+        tabContent.style.height = parseInt(currHeight) + 42 + 'px';
+        // tab-content高度变高可能导致原来没有滚动条的页面出现滚动条（或者相反） -> 页面宽度减少 -> tab-pane宽度变窄，文字重新排布导致高度变高
+        // 因此在tab-content高度过渡动画结束后再次获取tab-pane高度，重新设置。
+        setTimeout(function () {
+          tabContent.style.transition = 'height 0.25s';
+          tabContent.style.height = parseInt(window.getComputedStyle(tabContent.children[j]).height.replace('px', '')) + 42 + 'px';
+          // 过渡动画结束后，浏览器窗口可能被拖动改变大小，此时使其高度自适应。
+          setTimeout(function () {
+            tabContent.style.transition = '';
+            tabContent.style.height = '';
+          }, 250)
+        }, 1000);
+
         if (!CONFIG.stickytabs) return;
         const offset = nav.parentNode.getBoundingClientRect().top + window.scrollY + 10;
         window.anime({
