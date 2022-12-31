@@ -656,3 +656,383 @@ JS修改style样式操作，产生的是行内样式
     - <code>document.***write()***</code>  文档流执行完毕后，此语句会导致页面的重绘
     - <code>element.***innerHTML***</code>  创建大量相同元素时，不要采用字符串拼接的形式，而是采用数组join的形式（性能）。
     - <code>document.***createElement***</code>  创建大量相同元素时，此种方式比上面字符串拼接的方式更快，但是稍慢于数组join，但是语义更清晰
+
+# BOM：浏览器对象模型
+## 基础概念
+&emsp;&emsp;**BOM**即浏览器对象模型，它提供了独立于内容而与浏览器窗口进行交互的对象，其核心对象是window。
+## BOM构成
+BOM比DOM更大，它包含了DOM
+- window 浏览器的顶级对象，它是JS访问浏览器窗口的一个接口。定义在全局作用域中的变量、函数都会变成window对象的属性和方法（即var num => window.num / function fn() => window.fn()）它包含了以下内容：
+  - document
+  - location
+  - navigation
+  - screen
+  - history
+
+## window对象常见事件
+- 窗口加载事件
+<code>window.onload = function( ){ }</code> (传统注册方式)
+<code>window.addEventListener('load', function( ){ })</code> (监听注册方式)
+窗口页面加载事件，当文档内容完全加载完成会触发该事件，有了此事件就可以把JS代码写在页面元素上方。
+<code>document.addEventListener('DOMContentLoaded', function( ){ })</code>
+仅DOM加载完成，不包括样式表 / 图片 / Flash等
+
+- 调整大小事件
+<code>window.addEventListener('resize', function( ){ })</code>
+窗口大小发生变化时会触发此事件
+利用这个事件可以是实现响应式布局
+
+## 定时器
+- <code>setTimeout(回调函数, 延时时间(ms))</code>
+设置一个定时器，该定时器在到期后执行调用函数。定时器可能有很多，我们经常给定时器赋值一个标识符。
+- <code>clearTimeout(标识符))</code>
+停止定时器
+- <code>setInterval(回调函数, 间隔时间(ms))</code>
+反复调用此函数
+- <code>clearTimeout(标识符))</code>
+
+**示例：时钟**
+{% tabs clock %}
+<!-- tab HTML -->
+``` HTML
+<div class='timer'>
+    <span id='hours'>1</span>
+    <span id='minutes'>2</span>
+    <span id='seconds'>3</span>
+</div>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+```
+    .timer {
+        margin: 0 auto;
+        width: 50%;
+        text-align: center;
+    }
+    .timer>span {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        background-color: black;
+        color: white;
+        font-weight: 900;
+    }
+```
+<!-- endtab -->
+<!-- tab Javascript -->
+``` Javascript
+    let hh = document.querySelector('#hours');
+    let mm = document.querySelector('#minutes');
+    let ss = document.querySelector('#seconds');
+    let date = new Date();
+    hh.innerText = date.getHours();
+    mm.innerText = date.getMinutes();
+    ss.innerText = date.getSeconds();
+    if(hh.innerText < 10) {
+        hh.innerText = '0' + hh.innerText;
+    }
+    if(mm.innerText < 10) {
+        mm.innerText = '0' + mm.innerText;
+    }
+    if(ss.innerText < 10) {
+        ss.innerText = '0' + ss.innerText;
+    }
+    let clock = setInterval(timer, 1000);
+    function timer() {
+        date = new Date();
+        hh.innerText = date.getHours();
+        mm.innerText = date.getMinutes();
+        ss.innerText = date.getSeconds();
+        if(hh.innerText < 10) {
+        hh.innerText = '0' + hh.innerText;
+        }
+        if(mm.innerText < 10) {
+            mm.innerText = '0' + mm.innerText;
+        }
+        if(ss.innerText < 10) {
+            ss.innerText = '0' + ss.innerText;
+        }
+    }
+```
+<!-- endtab -->
+{% endtabs %}
+**效果：**
+<div class='timer'>
+    <span id='hours'>1</span>
+    <span id='minutes'>2</span>
+    <span id='seconds'>3</span>
+</div>
+<style>
+    .timer {
+        margin: 0 auto;
+        width: 50%;
+        text-align: center;
+    }
+    .timer>span {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        background-color: black;
+        color: white;
+        font-weight: 900;
+    }
+</style>
+<script>
+    let hh = document.querySelector('#hours');
+    let mm = document.querySelector('#minutes');
+    let ss = document.querySelector('#seconds');
+    let date = new Date();
+    hh.innerText = date.getHours();
+    mm.innerText = date.getMinutes();
+    ss.innerText = date.getSeconds();
+    if(hh.innerText < 10) {
+        hh.innerText = '0' + hh.innerText;
+    }
+    if(mm.innerText < 10) {
+        mm.innerText = '0' + mm.innerText;
+    }
+    if(ss.innerText < 10) {
+        ss.innerText = '0' + ss.innerText;
+    }
+    let clock = setInterval(timer, 1000);
+    function timer() {
+        date = new Date();
+        hh.innerText = date.getHours();
+        mm.innerText = date.getMinutes();
+        ss.innerText = date.getSeconds();
+        if(hh.innerText < 10) {
+        hh.innerText = '0' + hh.innerText;
+        }
+        if(mm.innerText < 10) {
+            mm.innerText = '0' + mm.innerText;
+        }
+        if(ss.innerText < 10) {
+            ss.innerText = '0' + ss.innerText;
+        }
+    }
+</script>
+
+## 事件循环
+JS主线程的执行栈优先执行同步任务，当代码中有异步任务时，会交给相应的异步进程处理，异步进程处理结束后推入异步任务队列。在主线程的执行栈完成同步任务的执行之后，会对任务队列进行轮询，从中取出一个任务，执行任务，随后再获取任务，执行任务。这个过程乘坐事件循环。
+
+## location对象
+### 常用属性
+- <code>location.href</code> 获取/设置整个url
+- <code>location.host</code> 返回主机域名
+- <code>location.port</code> 返回端口号
+- <code>location.pathname</code> 返回路径
+- <code>location.search</code> 返回参数
+- <code>location.hash</code> 返回片段 #后面内容
+<button id='baidu'>百度</button>
+<script>
+    let btn_baidu = document.querySelector('#baidu');
+    btn_baidu.addEventListener('click', ()=>{
+        location.href = 'http://baidu.com/';
+    })
+</script>
+
+### 常用方法
+- <code>location.assign()</code> 重定向页面 记录浏览历史，可以实现后退
+- <code>location.replace()</code> 替换当前页面 不记录浏览历史
+- <code>location.reload()</code> 刷新页面
+
+## navigator对象
+navigator对象包含有关浏览器的信息，它有很多属性，我们最常用的是userAgent，该属性可以返回由客户机发送服务器的user-agent头部的值。从而实现不同客户端跳转不同页面的功能。
+
+## history对象
+### 常见方法
+- <code>history.forward()</code> 前进
+- <code>history.back()</code> 返回
+- <code>history.go(n)</code> 前进 / 后退 n 步
+
+# PC端网页特效
+## 元素偏移量
+- <code>element.offsetParent</code> 返回作为该元素带有定位的父级元素如果父级都没有定位则返回body
+- <code>element.offsetTop</code> 返回元素相对带有定位父元素上方的偏移
+- <code>element.offsetLeft</code> 返回元素相对带有定位父元素左边框的偏移
+- <code>element.offsetWidth</code> 返回自身包括padding、边框、内容区的宽度，返回数值不带单位
+- <code>element.offsetHeight</code> 返回自身包括padding、边框、内容区的高度，返回数值不带单位
+
+## offset与style区别
+
+| offset                                             | style                                             |
+| -------------------------------------------------- | ------------------------------------------------- |
+| offset可以得到任意样式表中的样式值                 | style 只能得到行内样式表中的样式值                |
+| offset系列获得的数值是没有单位的                   | style.width获得的是带有单位的字符串               |
+| offsetWidth包含padding+border+width                | style.width获得不包含padding和border的值          |
+| offsetWidth等属性是只读属性，只能获取不能就值      | style.width是可读写属性，可以获取也可以赋值       |
+| **所以，我们想要获取元素大小位置，用offset更合适** | **所以，我们想要给元素更改值，则需要用style改变** |
+
+**示例：获取鼠标在盒子内坐标**
+{% tabs mouse_idx %}
+<!-- tab HTML -->
+``` HTML
+<div id='offset'></div>
+<span id='mouse_index'>鼠标不在div盒子内</span>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+```
+    #offset {
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+```
+<!-- endtab -->
+<!-- tab Javascript -->
+``` Javascript
+    let offset = document.querySelector('#offset');
+    let txt_hint = document.querySelector('#mouse_index');
+    function listener(e) {
+        txt_hint.innerText = '(' + e.offsetX + ',' + e.offsetY + ')';
+    }
+    offset.addEventListener('mouseover', function(e) {
+        offset.addEventListener('mousemove', listener);
+    });
+    offset.addEventListener('mouseout', function() {
+        offset.removeEventListener('mousemove', listener);
+        txt_hint.innerText = '鼠标不在div盒子内';
+    });
+```
+<!-- endtab -->
+{% endtabs %}
+<style>
+    #offset {
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+</style>
+**效果：**
+<div id='offset'></div>
+<span id='mouse_index'>鼠标不在div盒子内</span>
+<script>
+    let offset = document.querySelector('#offset');
+    let txt_hint = document.querySelector('#mouse_index');
+    function listener(e) {
+        txt_hint.innerText = '(' + e.offsetX + ',' + e.offsetY + ')';
+    }
+    offset.addEventListener('mouseover', function(e) {
+        offset.addEventListener('mousemove', listener);
+    });
+    offset.addEventListener('mouseout', function() {
+        offset.removeEventListener('mousemove', listener);
+        txt_hint.innerText = '鼠标不在div盒子内';
+    });
+</script>
+
+
+**案例：拖动模态框**
+<style>
+    :root {
+        --X: 0px;
+        --Y: 0px;
+    }
+    #overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: background-color 1s;
+        z-index: -1;
+    }
+
+    #modal {
+        display: none;
+        position: fixed;
+        left: calc(50% + var(--X));
+        top: calc(50% + var(--Y));
+        width: 240px;
+        height: 160px;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        z-index: 1000;
+        user-select:none;
+    }
+
+    #modal_hd {
+        height: 30px;
+        width: 100%;
+        background-color: pink;
+        cursor: move;
+    }
+
+    #close_modal {
+        user-select:none;
+    }
+</style>
+<button id='open_modal' disabled='disabled'>打开模态框</button>
+
+<script>
+    let open_button = document.getElementById('open_modal');
+    let overlay = document.createElement('div');
+    let modal = document.createElement('div');
+    let previousX;
+    let previousY;
+    let currentX = 0;
+    let currentY = 0;
+    overlay.id = 'overlay';
+    modal.id = 'modal';
+    modal.innerHTML = '<div id="modal_hd"><button id="close_modal">关闭模态框</button></div><div id="modal_bd"><p>这是一个模态框</p></div>';
+    window.addEventListener('load', overlay_display);
+    window.addEventListener('resize', ()=>{
+        document.body.removeChild(overlay);
+        overlay.style.height = document.documentElement.scrollHeight + 'px';
+        overlay.style.width = document.documentElement.scrollWidth + 'px';
+        document.body.appendChild(overlay);
+    });
+    open_button.addEventListener('click', function() {
+        open_button.disabled = true;
+        overlay.style.zIndex = '100';
+        overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        overlay.appendChild(modal);
+        let close_button = document.getElementById('close_modal');
+        let modal_hd = document.getElementById('modal_hd');
+        modal_hd.addEventListener('mousedown', (e)=>{
+            previousX = e.pageX;
+            previousY = e.pageY;
+            window.addEventListener('mousemove', modal_move);
+            modal_hd.addEventListener('mouseup', ()=>{
+                currentX = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--X').replace('px', ''));
+                currentY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--Y').replace('px', ''));
+                window.removeEventListener('mousemove', modal_move);
+        })
+        })
+
+        close_button.addEventListener('click', close_modal);
+        modal.style.display = 'block';
+    })
+    overlay.addEventListener('click', close_modal)
+    function overlay_display() {
+        overlay.style.height = document.documentElement.scrollHeight + 'px';
+        overlay.style.width = document.documentElement.scrollWidth + 'px';
+        document.body.appendChild(overlay);
+        open_button.disabled = false;
+    }
+
+    function close_modal(e) {
+        e.stopPropagation();
+        if(e.target.id === 'overlay' || e.target.id === 'close_modal'){
+            modal.style.display = '';
+            overlay.style.backgroundColor = '';
+            open_button.disabled = false;
+            document.documentElement.style.removeProperty('--X');
+            document.documentElement.style.removeProperty('--Y');
+            overlay.removeChild(modal);
+            setTimeout(()=>{
+                overlay.style.zIndex = '';            
+            }, 1000);
+        }
+    }
+    
+    function modal_move(e) {
+        let deltaX = e.pageX - previousX
+        let deltaY = e.pageY - previousY
+        document.documentElement.style.setProperty('--X', deltaX + currentX + 'px');
+        document.documentElement.style.setProperty('--Y', deltaY + currentY + 'px');
+    }
+</script>
