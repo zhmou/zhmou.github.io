@@ -87,3 +87,46 @@ categories: 学习
 - <code>order</code>
   - 定义项目的排列顺序
   - 属性值：数字(默认为0)，越小越靠前
+
+# rem适配布局
+- rem是一个相对单位，类似于em，em是父元素字体大小，rem(root em)是相对于html元素的字体大小。
+
+## 媒体查询(Media Query)
+- 使用@media查询，可以针对不同的媒体类型定义不同的样式
+- @media可以针对不用屏幕尺寸设置不同的样式
+- 重置浏览器大小，页面也会根据浏览器宽度和高度重新渲染
+### 语法
+- <code>@media mediatype and|not|only (media feature) { css code }</code>
+- mediatype: all / print / screen
+- media feature: max-width / min-width / width
+
+&emsp;&emsp; **媒体查询 + rem 能实现元素大小的动态变化。**
+
+## 引入不同的css文件
+- <code>&lt;link rel="stylesheet"media="mediatype and|not|only (media feature)" href="style.css"&gt;</code>
+
+# Less
+- 变量
+  - @变量名: 值
+- Less嵌套
+  - 直接放在父元素样式的{}中
+  - 伪类、伪元素、交集选择器，在前面加&符号
+- 可进行算数运算
+  - 单位不同以第一个为准
+
+# Flexible.js
+&emsp;&emsp;阿里的一款适配移动端的js开发框架，用于配合rem布局，在不同的页面宽度下，为html元素根节点赋予不同的font-size(默认为页面宽度的1/10)，从而控制了元素的相对大小不发生改变。
+
+# 响应式开发
+&emsp;&emsp;使用媒体查询针对不同宽度的设备进行布局和样式，从而适配不同的设备。
+| 设备划分     | 尺寸区间        | 宽度设置 |
+| ------------ | --------------- | -------- |
+| 手机         | <768px          | 100%     |
+| 平板         | >=768px <992px  | 750px    |
+| 桌面显示器   | >=992px <1200px | 970px    |
+| 大桌面显示器 | >=1200px        | 1170px   |
+
+## 响应式布局容器
+&emsp;&emsp;响应式需要一个父级做为布局容器，来配合子级元素来实现变化效果。
+&emsp;&emsp;原理就是在不同屏幕下，通过媒体查询来改变这个布局容器的大小，再改变里面子元素的排列方式和大小，从而实现不同屏幕下，看到不同的页面布褐和样式变化。
+
