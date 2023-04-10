@@ -685,11 +685,11 @@ BOM比DOM更大，它包含了DOM
 ## 定时器
 - <code>setTimeout(回调函数, 延时时间(ms))</code>
 设置一个定时器，该定时器在到期后执行调用函数。定时器可能有很多，我们经常给定时器赋值一个标识符。
-- <code>clearTimeout(标识符))</code>
+- <code>clearTimeout(标识符)</code>
 停止定时器
 - <code>setInterval(回调函数, 间隔时间(ms))</code>
 反复调用此函数
-- <code>clearTimeout(标识符))</code>
+- <code>clearTimeout(标识符)</code>
 
 **示例：时钟**
 {% tabs clock %}
@@ -965,12 +965,13 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
         user-select:none;
     }
 </style>
-<button id='open_modal' disabled='disabled'>打开模态框</button>
+<button id='open_modal' disabled>打开模态框</button>
 
 <script>
     let open_button = document.getElementById('open_modal');
     let overlay = document.createElement('div');
     let modal = document.createElement('div');
+    let mouseDown = false;
     let previousX;
     let previousY;
     let currentX = 0;
@@ -993,14 +994,18 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
         let close_button = document.getElementById('close_modal');
         let modal_hd = document.getElementById('modal_hd');
         modal_hd.addEventListener('mousedown', (e)=>{
+            isMouseDown = true;
+            e.preventDefault();
             previousX = e.pageX;
             previousY = e.pageY;
             window.addEventListener('mousemove', modal_move);
-            modal_hd.addEventListener('mouseup', ()=>{
-                currentX = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--X').replace('px', ''));
-                currentY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--Y').replace('px', ''));
-                window.removeEventListener('mousemove', modal_move);
         })
+
+        window.addEventListener('mouseup', ()=>{
+            isMouseDown = false;
+            currentX = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--X').replace('px', ''));
+            currentY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--Y').replace('px', ''));
+            window.removeEventListener('mousemove', modal_move);
         })
 
         close_button.addEventListener('click', close_modal);
@@ -1030,9 +1035,11 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
     }
     
     function modal_move(e) {
+        if (isMouseDown) {
         let deltaX = e.pageX - previousX
         let deltaY = e.pageY - previousY
         document.documentElement.style.setProperty('--X', deltaX + currentX + 'px');
         document.documentElement.style.setProperty('--Y', deltaY + currentY + 'px');
+        }
     }
 </script>
