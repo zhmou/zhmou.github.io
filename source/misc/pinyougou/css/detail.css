@@ -1,0 +1,117 @@
+.map {
+    height: 50px;
+}
+
+.map ul li {
+    float: left;
+}
+
+.map ul li a {
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 50px;
+}
+
+.product_intro {
+    height: 580px;
+}
+
+.product_intro img {
+    border: 1px solid #ccc;
+    width: 400px;
+    height: 400px;
+    float: left;
+}
+
+.product_intro .info_wrap {
+    margin-left: 85px;
+    float: left;
+}
+
+.sku_name {
+    font-size: 16px;
+    font-weight: 700;
+    padding-top: 10px;
+    line-height: 28px;
+    margin-bottom: 5px;
+}
+
+.summary {
+    margin-top: 10px;
+    width: 715px;
+
+}
+
+.info_wrap dt {
+    width: 60px;
+    height: 35px;
+    float: left;
+    margin-left: 15px;
+    font-size: 12px;
+    line-height: 35px;
+}
+
+.info_wrap dd {
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    width: 635px;
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+.summary_price {
+    background-color: #f0f0f0;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.summary_price dd span {
+    display: inline-block;
+}
+
+.summary_price dd .remark {
+    float: right;
+}
+
+.summary_price dd span:nth-child(2) {
+    font-size: 24px;
+}
+
+.summary_else {
+    border-bottom: 1px dotted #ccc;
+}
+
+.choose_attrs {
+    margin-top: 10px;
+    width: 715px;
+}
+
+.choose_attrs .item {
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 10px;
+}
+
+.item a {
+    display: block;
+    padding: 0 20px;
+    background-color: #eee;
+    height: 100%;
+}
+
+.choose_attrs .no_stock a {
+    color: #ccc;
+}
+
+.choose_attrs .item:hover {
+    border: 1px solid #c81623;
+}
+
+.choose_attrs .selected {
+    border: 1px solid #c81623;
+}
+
+.choose_attrs dl[class^='choose'] {
+    margin-bottom: 10px;
+}
