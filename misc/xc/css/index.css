@@ -1,0 +1,295 @@
+body {
+    min-width: 320px;
+    max-width: 540px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    font: normal 14px/1.5 Tahoma, "Lucida Grande", Verdana, "Microsoft Yahei", STXihei, hei;
+    color: #000;
+    background-color: #f2f2f2;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: content-box;
+    height: 2000px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #222;
+}
+
+header {
+    min-width: 320px;
+    max-width: 540px;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 44px;
+}
+
+.search {
+    position: relative;
+    flex: 1;
+    height: 26px;
+    background-color: #fff;
+    margin: 6px 8px;
+    line-height: 26px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-self: center;
+    text-indent: 20px;
+    color: #666;
+    box-shadow: 0 3px 3px #ccc
+}
+
+.search::before {
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    content: "";
+    display: block;
+    background: url(../upload/sprite.png) no-repeat -59px -279px;
+    background-size: 104px;
+    width: 15px;
+    height: 15px;
+
+}
+
+.my {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 12px;
+    color: rgb(9, 159, 222);
+}
+
+.my::before {
+    margin: 0 auto;
+    margin-top: 8px;
+    content: "";
+    display: block;
+    background: url(../images/sprite.png) no-repeat -59px -194px;
+    background-size: 104px;
+    width: 22px;
+    height: 22px;
+}
+
+.focus {
+    padding-top: 44px;
+}
+
+.focus img {
+    vertical-align: bottom;
+    width: 100%;
+}
+
+.local-nav {
+    height: 64px;
+    border-radius: 8px;
+    background-color: #fff;
+    margin: 3px 4px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.local-nav li a {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 64px;
+}
+
+.local-nav li a .local-nav-icon {
+    width: 32px;
+    height: 32px;
+    background-color: pink;
+    background: url(../images/localnav_bg.png);
+    background-size: 32px;
+}
+
+.local-nav li a .icon1 {
+    background-position: 0 0;
+}
+
+.local-nav li a .icon2 {
+    background-position: 0 -32px;
+}
+
+.local-nav li a .icon3 {
+    background-position: 0 -64px;
+}
+
+.local-nav li a .icon4 {
+    background-position: 0 -96px;
+}
+
+.local-nav li a .icon5 {
+    background-position: 0 -128px;
+}
+
+.nav {
+    margin: 3px 4px;
+    border-radius: 8px;
+    height: 270px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.nav li {
+    display: flex;
+    width: 100%;
+    height: 88px;
+    background-color: pink;
+}
+
+.nav li a {
+    padding-top: 10px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+.nav li>div {
+    display: flex;
+    flex: 1;
+}
+
+.nav li>div:first-child {
+    background: url(../images/hotel.png) no-repeat bottom center;
+    background-size: 121px;
+}
+
+.nav li>div:nth-child(n+2) {
+    border-left: 1px solid #fff;
+    flex-direction: column;
+}
+
+.nav li>div:nth-child(n+2) a {
+    flex: 1;
+}
+
+.nav li>div:nth-child(n+2) a:first-child {
+    border-bottom: 1px solid #fff;
+}
+
+.nav li>div:first-child {
+    display: flex;
+}
+
+.hotel {
+    background: -webkit-linear-gradient(left, #fa5a55, #fa994d);
+}
+
+.ticket {
+    background: -webkit-linear-gradient(left, #4b90ed, #53bced);
+}
+
+.travel {
+    background: -webkit-linear-gradient(left, #34c2a9, #6cd559);
+}
+
+.subnav-entry {
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    margin: 0 4px;
+    padding: 5px 0;
+    background-color: #fff;
+}
+
+.subnav-entry li {
+    flex: 20%;
+}
+
+.subnav-entry li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subnav-entry li a .icon {
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+    background: url(../images/subnav-bg.png) no-repeat;
+    background-size: 24px;
+}
+
+.sales-box {
+    border-top: 1px solid #bbb;
+    margin: 4px 4px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sales-hd {
+    position: relative;
+    height: 34px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.sales-hd h2 {
+    position: absolute;
+    left: 20px;
+    top: 8px;
+    width: 73px;
+    height: 16px;
+    background: url(../images/hot.png) no-repeat 0px -18px;
+    background-size: 79px;
+    font-size: 0px;
+}
+
+.sales-hd a {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    background: -webkit-linear-gradient(left, #ff506c, #ff6bc6);
+    border-radius: 8px;
+    padding: 2px 20px 2px 10px;
+    color: #fff;
+    font-weight: 900;
+}
+
+.sales-hd a::after {
+    content: "";
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotateZ(45deg);
+}
+
+.sales-bd .row {
+    display: flex;
+}
+
+.sales-bd .row a {
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+
+.sales-bd .row a:first-child {
+    border-right: 1px solid #ccc;
+}
+
+.sales-bd .row a img {
+    width: 100%;
+    vertical-align: top;
+}

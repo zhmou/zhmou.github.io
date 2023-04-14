@@ -14,10 +14,10 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"www.zhmou.xyz","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.zhmou.xyz","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="这篇文章仍处在更新当中。  JS基础 类型  基础数据类型 最新的 ECMAScript 标准定义了 8 种数据类型,分别是  string number bigint boolean null (typeof null返回结果为object) undefined symbol (ECMAScript 2016新增)     所有基本类型的值都是不可改变的。但需要注意的是，基本类型本身和一个赋值为">
 <meta property="og:type" content="article">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="这篇文章仍处在更新当中。  JS基础 类型  基础数据类型 最新的 ECMAScript 标准定义了 8 种数据类型,分别是  string number bigint boolean null (typeof null返回结果为object) undefined symbol (ECMAScript 2016新增)     所有基本类型的值都是不可改变的。但需要注意的是，基本类型本身和一个赋值为">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-13T06:42:29.000Z">
-<meta property="article:modified_time" content="2022-11-09T08:12:46.487Z">
+<meta property="article:modified_time" content="2023-04-10T08:57:06.843Z">
 <meta property="article:author" content="Zhmou">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="Javascript">
@@ -50,9 +50,7 @@
 
 
 
-  <script async defer data-website-id="" src=""></script>
 
-  <script defer data-domain="" src=""></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -84,7 +82,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -144,48 +142,48 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">JS基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">1.2.</span> <span class="nav-text">函数的参数传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.3.</span> <span class="nav-text">变量的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">局部和全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="nav-number">1.3.2.</span> <span class="nav-text">作用域链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E7%9A%84%E9%A2%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">JS的预解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM%EF%BC%9A%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">DOM：文档对象模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0"><span class="nav-number">2.2.</span> <span class="nav-text">获取元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.3.</span> <span class="nav-text">事件基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%AB%98%E7%BA%A7"><span class="nav-number">2.4.</span> <span class="nav-text">事件高级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM%E4%BA%8B%E4%BB%B6%E6%B5%81%E7%90%86%E8%AE%BA"><span class="nav-number">2.4.1.</span> <span class="nav-text">DOM事件流理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.4.2.</span> <span class="nav-text">事件对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98"><span class="nav-number">2.4.3.</span> <span class="nav-text">事件委托</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E7%9A%84%E9%BC%A0%E6%A0%87-%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.4.4.</span> <span class="nav-text">更多的鼠标 &#x2F; 键盘事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0"><span class="nav-number">2.5.</span> <span class="nav-text">操作元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%85%83%E7%B4%A0%E5%86%85%E5%AE%B9"><span class="nav-number">2.5.1.</span> <span class="nav-text">改变元素内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.2.</span> <span class="nav-text">改变元素属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E8%A1%A8%E5%8D%95%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.3.</span> <span class="nav-text">改变表单属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E6%A0%B7%E5%BC%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.4.</span> <span class="nav-text">改变样式属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E6%93%8D%E4%BD%9C"><span class="nav-number">2.5.5.</span> <span class="nav-text">节点操作</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">JS基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">1.2.</span> <span class="nav-text">函数的参数传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.3.</span> <span class="nav-text">变量的作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">局部和全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="nav-number">1.3.2.</span> <span class="nav-text">作用域链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E7%9A%84%E9%A2%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">JS的预解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM%EF%BC%9A%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">DOM：文档对象模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0"><span class="nav-number">2.2.</span> <span class="nav-text">获取元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.3.</span> <span class="nav-text">事件基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%AB%98%E7%BA%A7"><span class="nav-number">2.4.</span> <span class="nav-text">事件高级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM%E4%BA%8B%E4%BB%B6%E6%B5%81%E7%90%86%E8%AE%BA"><span class="nav-number">2.4.1.</span> <span class="nav-text">DOM事件流理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.4.2.</span> <span class="nav-text">事件对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98"><span class="nav-number">2.4.3.</span> <span class="nav-text">事件委托</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E7%9A%84%E9%BC%A0%E6%A0%87-%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.4.4.</span> <span class="nav-text">更多的鼠标 &#x2F; 键盘事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0"><span class="nav-number">2.5.</span> <span class="nav-text">操作元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%85%83%E7%B4%A0%E5%86%85%E5%AE%B9"><span class="nav-number">2.5.1.</span> <span class="nav-text">改变元素内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.2.</span> <span class="nav-text">改变元素属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E8%A1%A8%E5%8D%95%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.3.</span> <span class="nav-text">改变表单属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E6%A0%B7%E5%BC%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.4.</span> <span class="nav-text">改变样式属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E6%93%8D%E4%BD%9C"><span class="nav-number">2.5.5.</span> <span class="nav-text">节点操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BOM%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">BOM：浏览器对象模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-v2"><span class="nav-number">3.1.</span> <span class="nav-text">基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BOM%E6%9E%84%E6%88%90"><span class="nav-number">3.2.</span> <span class="nav-text">BOM构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window%E5%AF%B9%E8%B1%A1%E5%B8%B8%E8%A7%81%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">window对象常见事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">3.4.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.5.</span> <span class="nav-text">事件循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#location%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.6.</span> <span class="nav-text">location对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">3.6.1.</span> <span class="nav-text">常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.6.2.</span> <span class="nav-text">常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#navigator%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.7.</span> <span class="nav-text">navigator对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.8.</span> <span class="nav-text">history对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95"><span class="nav-number">3.8.1.</span> <span class="nav-text">常见方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PC%E7%AB%AF%E7%BD%91%E9%A1%B5%E7%89%B9%E6%95%88"><span class="nav-number">4.</span> <span class="nav-text">PC端网页特效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">元素偏移量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#offset%E4%B8%8Estyle%E5%8C%BA%E5%88%AB"><span class="nav-number">4.2.</span> <span class="nav-text">offset与style区别</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Zhmou"
       src="/img/general/avatar.jpg">
   <p class="site-author-name" itemprop="name">Zhmou</p>
   <div class="site-description" itemprop="description">不断学习 关注技术 热爱生活</div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="mailto:zezhongzhang1999@gmail.com" title="E-Mail → mailto:zezhongzhang1999@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:zezhongzhang1999@gmail.com" title="E-Mail → mailto:zezhongzhang1999@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-
-
 
         </div>
       </div>
     </div>
+
+    
   </aside>
 
 
@@ -257,14 +255,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>10k</span>
+      <span>18k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>26 分钟</span>
+      <span>46 分钟</span>
     </span>
 </div>
 
@@ -839,14 +837,329 @@ JS修改style样式操作，产生的是行内样式</p>
 </ul>
 </li>
 </ul>
+<h1 id="BOM：浏览器对象模型"><a class="header-anchor" href="#BOM：浏览器对象模型"></a>BOM：浏览器对象模型</h1>
+<h2 id="基础概念-v2"><a class="header-anchor" href="#基础概念-v2"></a>基础概念</h2>
+<p>  <strong>BOM</strong>即浏览器对象模型，它提供了独立于内容而与浏览器窗口进行交互的对象，其核心对象是window。</p>
+<h2 id="BOM构成"><a class="header-anchor" href="#BOM构成"></a>BOM构成</h2>
+<p>BOM比DOM更大，它包含了DOM</p>
+<ul>
+<li>window 浏览器的顶级对象，它是JS访问浏览器窗口的一个接口。定义在全局作用域中的变量、函数都会变成window对象的属性和方法（即var num =&gt; window.num / function fn() =&gt; window.fn()）它包含了以下内容：
+<ul>
+<li>document</li>
+<li>location</li>
+<li>navigation</li>
+<li>screen</li>
+<li>history</li>
+</ul>
+</li>
+</ul>
+<h2 id="window对象常见事件"><a class="header-anchor" href="#window对象常见事件"></a>window对象常见事件</h2>
+<ul>
+<li>
+<p>窗口加载事件<br>
+<code>window.onload = function( )&#123; &#125;</code> (传统注册方式)<br>
+<code>window.addEventListener('load', function( )&#123; &#125;)</code> (监听注册方式)<br>
+窗口页面加载事件，当文档内容完全加载完成会触发该事件，有了此事件就可以把JS代码写在页面元素上方。<br>
+<code>document.addEventListener('DOMContentLoaded', function( )&#123; &#125;)</code><br>
+仅DOM加载完成，不包括样式表 / 图片 / Flash等</p>
+</li>
+<li>
+<p>调整大小事件<br>
+<code>window.addEventListener('resize', function( )&#123; &#125;)</code><br>
+窗口大小发生变化时会触发此事件<br>
+利用这个事件可以是实现响应式布局</p>
+</li>
+</ul>
+<h2 id="定时器"><a class="header-anchor" href="#定时器"></a>定时器</h2>
+<ul>
+<li><code>setTimeout(回调函数, 延时时间(ms))</code><br>
+设置一个定时器，该定时器在到期后执行调用函数。定时器可能有很多，我们经常给定时器赋值一个标识符。</li>
+<li><code>clearTimeout(标识符)</code><br>
+停止定时器</li>
+<li><code>setInterval(回调函数, 间隔时间(ms))</code><br>
+反复调用此函数</li>
+<li><code>clearTimeout(标识符)</code></li>
+</ul>
+<p><strong>示例：时钟</strong></p>
+<div class="tabs" id="clock"><ul class="nav-tabs"><li class="tab active"><a href="#clock-1">HTML</a></li><li class="tab"><a href="#clock-2">CSS</a></li><li class="tab"><a href="#clock-3">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="clock-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;timer&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&#x27;hours&#x27;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&#x27;minutes&#x27;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&#x27;seconds&#x27;</span>&gt;</span>3<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="clock-2"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.timer &#123;</span><br><span class="line">    margin: 0 auto;</span><br><span class="line">    width: 50%;</span><br><span class="line">    text-align: center;</span><br><span class="line">&#125;</span><br><span class="line">.timer&gt;span &#123;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    height: 40px;</span><br><span class="line">    width: 40px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    background-color: black;</span><br><span class="line">    color: white;</span><br><span class="line">    font-weight: 900;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="clock-3"><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hh = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#hours&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> mm = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#minutes&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> ss = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#seconds&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> date = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">hh.<span class="property">innerText</span> = date.<span class="title function_">getHours</span>();</span><br><span class="line">mm.<span class="property">innerText</span> = date.<span class="title function_">getMinutes</span>();</span><br><span class="line">ss.<span class="property">innerText</span> = date.<span class="title function_">getSeconds</span>();</span><br><span class="line"><span class="keyword">if</span>(hh.<span class="property">innerText</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">    hh.<span class="property">innerText</span> = <span class="string">&#x27;0&#x27;</span> + hh.<span class="property">innerText</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(mm.<span class="property">innerText</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">    mm.<span class="property">innerText</span> = <span class="string">&#x27;0&#x27;</span> + mm.<span class="property">innerText</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(ss.<span class="property">innerText</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">    ss.<span class="property">innerText</span> = <span class="string">&#x27;0&#x27;</span> + ss.<span class="property">innerText</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> clock = <span class="built_in">setInterval</span>(timer, <span class="number">1000</span>);</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">timer</span>(<span class="params"></span>) &#123;</span><br><span class="line">    date = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">    hh.<span class="property">innerText</span> = date.<span class="title function_">getHours</span>();</span><br><span class="line">    mm.<span class="property">innerText</span> = date.<span class="title function_">getMinutes</span>();</span><br><span class="line">    ss.<span class="property">innerText</span> = date.<span class="title function_">getSeconds</span>();</span><br><span class="line">    <span class="keyword">if</span>(hh.<span class="property">innerText</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">    hh.<span class="property">innerText</span> = <span class="string">&#x27;0&#x27;</span> + hh.<span class="property">innerText</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(mm.<span class="property">innerText</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        mm.<span class="property">innerText</span> = <span class="string">&#x27;0&#x27;</span> + mm.<span class="property">innerText</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(ss.<span class="property">innerText</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        ss.<span class="property">innerText</span> = <span class="string">&#x27;0&#x27;</span> + ss.<span class="property">innerText</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+<p><strong>效果：</strong></p>
+<div class='timer'>
+    <span id='hours'>1</span>
+    <span id='minutes'>2</span>
+    <span id='seconds'>3</span>
+</div>
+<style>
+    .timer {
+        margin: 0 auto;
+        width: 50%;
+        text-align: center;
+    }
+    .timer>span {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        background-color: black;
+        color: white;
+        font-weight: 900;
+    }
+</style>
+<script>
+    let hh = document.querySelector('#hours');
+    let mm = document.querySelector('#minutes');
+    let ss = document.querySelector('#seconds');
+    let date = new Date();
+    hh.innerText = date.getHours();
+    mm.innerText = date.getMinutes();
+    ss.innerText = date.getSeconds();
+    if(hh.innerText < 10) {
+        hh.innerText = '0' + hh.innerText;
+    }
+    if(mm.innerText < 10) {
+        mm.innerText = '0' + mm.innerText;
+    }
+    if(ss.innerText < 10) {
+        ss.innerText = '0' + ss.innerText;
+    }
+    let clock = setInterval(timer, 1000);
+    function timer() {
+        date = new Date();
+        hh.innerText = date.getHours();
+        mm.innerText = date.getMinutes();
+        ss.innerText = date.getSeconds();
+        if(hh.innerText < 10) {
+        hh.innerText = '0' + hh.innerText;
+        }
+        if(mm.innerText < 10) {
+            mm.innerText = '0' + mm.innerText;
+        }
+        if(ss.innerText < 10) {
+            ss.innerText = '0' + ss.innerText;
+        }
+    }
+</script>
+<h2 id="事件循环"><a class="header-anchor" href="#事件循环"></a>事件循环</h2>
+<p>JS主线程的执行栈优先执行同步任务，当代码中有异步任务时，会交给相应的异步进程处理，异步进程处理结束后推入异步任务队列。在主线程的执行栈完成同步任务的执行之后，会对任务队列进行轮询，从中取出一个任务，执行任务，随后再获取任务，执行任务。这个过程乘坐事件循环。</p>
+<h2 id="location对象"><a class="header-anchor" href="#location对象"></a>location对象</h2>
+<h3 id="常用属性"><a class="header-anchor" href="#常用属性"></a>常用属性</h3>
+<ul>
+<li><code>location.href</code> 获取/设置整个url</li>
+<li><code>location.host</code> 返回主机域名</li>
+<li><code>location.port</code> 返回端口号</li>
+<li><code>location.pathname</code> 返回路径</li>
+<li><code>location.search</code> 返回参数</li>
+<li><code>location.hash</code> 返回片段 #后面内容<br>
+<button id='baidu'>百度</button></li>
+</ul>
+<script>
+    let btn_baidu = document.querySelector('#baidu');
+    btn_baidu.addEventListener('click', ()=>{
+        location.href = 'http://baidu.com/';
+    })
+</script>
+<h3 id="常用方法"><a class="header-anchor" href="#常用方法"></a>常用方法</h3>
+<ul>
+<li><code>location.assign()</code> 重定向页面 记录浏览历史，可以实现后退</li>
+<li><code>location.replace()</code> 替换当前页面 不记录浏览历史</li>
+<li><code>location.reload()</code> 刷新页面</li>
+</ul>
+<h2 id="navigator对象"><a class="header-anchor" href="#navigator对象"></a>navigator对象</h2>
+<p>navigator对象包含有关浏览器的信息，它有很多属性，我们最常用的是userAgent，该属性可以返回由客户机发送服务器的user-agent头部的值。从而实现不同客户端跳转不同页面的功能。</p>
+<h2 id="history对象"><a class="header-anchor" href="#history对象"></a>history对象</h2>
+<h3 id="常见方法"><a class="header-anchor" href="#常见方法"></a>常见方法</h3>
+<ul>
+<li><code>history.forward()</code> 前进</li>
+<li><code>history.back()</code> 返回</li>
+<li><code>history.go(n)</code> 前进 / 后退 n 步</li>
+</ul>
+<h1 id="PC端网页特效"><a class="header-anchor" href="#PC端网页特效"></a>PC端网页特效</h1>
+<h2 id="元素偏移量"><a class="header-anchor" href="#元素偏移量"></a>元素偏移量</h2>
+<ul>
+<li><code>element.offsetParent</code> 返回作为该元素带有定位的父级元素如果父级都没有定位则返回body</li>
+<li><code>element.offsetTop</code> 返回元素相对带有定位父元素上方的偏移</li>
+<li><code>element.offsetLeft</code> 返回元素相对带有定位父元素左边框的偏移</li>
+<li><code>element.offsetWidth</code> 返回自身包括padding、边框、内容区的宽度，返回数值不带单位</li>
+<li><code>element.offsetHeight</code> 返回自身包括padding、边框、内容区的高度，返回数值不带单位</li>
+</ul>
+<h2 id="offset与style区别"><a class="header-anchor" href="#offset与style区别"></a>offset与style区别</h2>
+<table>
+<thead>
+<tr>
+<th>offset</th>
+<th>style</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>offset可以得到任意样式表中的样式值</td>
+<td>style 只能得到行内样式表中的样式值</td>
+</tr>
+<tr>
+<td>offset系列获得的数值是没有单位的</td>
+<td>style.width获得的是带有单位的字符串</td>
+</tr>
+<tr>
+<td>offsetWidth包含padding+border+width</td>
+<td>style.width获得不包含padding和border的值</td>
+</tr>
+<tr>
+<td>offsetWidth等属性是只读属性，只能获取不能就值</td>
+<td>style.width是可读写属性，可以获取也可以赋值</td>
+</tr>
+<tr>
+<td><strong>所以，我们想要获取元素大小位置，用offset更合适</strong></td>
+<td><strong>所以，我们想要给元素更改值，则需要用style改变</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例：获取鼠标在盒子内坐标</strong></p>
+<div class="tabs" id="mouse_idx"><ul class="nav-tabs"><li class="tab active"><a href="#mouse_idx-1">HTML</a></li><li class="tab"><a href="#mouse_idx-2">CSS</a></li><li class="tab"><a href="#mouse_idx-3">Javascript</a></li></ul><div class="tab-content"><div class="tab-pane active" id="mouse_idx-1"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;offset&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&#x27;mouse_index&#x27;</span>&gt;</span>鼠标不在div盒子内<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="mouse_idx-2"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#offset &#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    background-color: skyblue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="mouse_idx-3"><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> offset = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#offset&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> txt_hint = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#mouse_index&#x27;</span>);</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">listener</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    txt_hint.<span class="property">innerText</span> = <span class="string">&#x27;(&#x27;</span> + e.<span class="property">offsetX</span> + <span class="string">&#x27;,&#x27;</span> + e.<span class="property">offsetY</span> + <span class="string">&#x27;)&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">offset.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mouseover&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    offset.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mousemove&#x27;</span>, listener);</span><br><span class="line">&#125;);</span><br><span class="line">offset.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mouseout&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    offset.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;mousemove&#x27;</span>, listener);</span><br><span class="line">    txt_hint.<span class="property">innerText</span> = <span class="string">&#x27;鼠标不在div盒子内&#x27;</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div></div></div>
+<style>
+    #offset {
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+    }
+</style>
+<p><strong>效果：</strong></p>
+<div id='offset'></div>
+<span id='mouse_index'>鼠标不在div盒子内</span>
+<script>
+    let offset = document.querySelector('#offset');
+    let txt_hint = document.querySelector('#mouse_index');
+    function listener(e) {
+        txt_hint.innerText = '(' + e.offsetX + ',' + e.offsetY + ')';
+    }
+    offset.addEventListener('mouseover', function(e) {
+        offset.addEventListener('mousemove', listener);
+    });
+    offset.addEventListener('mouseout', function() {
+        offset.removeEventListener('mousemove', listener);
+        txt_hint.innerText = '鼠标不在div盒子内';
+    });
+</script>
+<p><strong>案例：拖动模态框</strong></p>
+<style>
+    :root {
+        --X: 0px;
+        --Y: 0px;
+    }
+    #overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: background-color 1s;
+        z-index: -1;
+    }
 
+    #modal {
+        display: none;
+        position: fixed;
+        left: calc(50% + var(--X));
+        top: calc(50% + var(--Y));
+        width: 240px;
+        height: 160px;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        z-index: 1000;
+        user-select:none;
+    }
+
+    #modal_hd {
+        height: 30px;
+        width: 100%;
+        background-color: pink;
+        cursor: move;
+    }
+
+    #close_modal {
+        user-select:none;
+    }
+</style>
+<p><button id='open_modal' disabled>打开模态框</button></p>
+<script>
+    let open_button = document.getElementById('open_modal');
+    let overlay = document.createElement('div');
+    let modal = document.createElement('div');
+    let mouseDown = false;
+    let previousX;
+    let previousY;
+    let currentX = 0;
+    let currentY = 0;
+    overlay.id = 'overlay';
+    modal.id = 'modal';
+    modal.innerHTML = '<div id="modal_hd"><button id="close_modal">关闭模态框</button></div><div id="modal_bd"><p>这是一个模态框</p></div>';
+    window.addEventListener('load', overlay_display);
+    window.addEventListener('resize', ()=>{
+        document.body.removeChild(overlay);
+        overlay.style.height = document.documentElement.scrollHeight + 'px';
+        overlay.style.width = document.documentElement.scrollWidth + 'px';
+        document.body.appendChild(overlay);
+    });
+    open_button.addEventListener('click', function() {
+        open_button.disabled = true;
+        overlay.style.zIndex = '100';
+        overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        overlay.appendChild(modal);
+        let close_button = document.getElementById('close_modal');
+        let modal_hd = document.getElementById('modal_hd');
+        modal_hd.addEventListener('mousedown', (e)=>{
+            isMouseDown = true;
+            e.preventDefault();
+            previousX = e.pageX;
+            previousY = e.pageY;
+            window.addEventListener('mousemove', modal_move);
+        })
+
+        window.addEventListener('mouseup', ()=>{
+            isMouseDown = false;
+            currentX = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--X').replace('px', ''));
+            currentY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--Y').replace('px', ''));
+            window.removeEventListener('mousemove', modal_move);
+        })
+
+        close_button.addEventListener('click', close_modal);
+        modal.style.display = 'block';
+    })
+    overlay.addEventListener('click', close_modal)
+    function overlay_display() {
+        overlay.style.height = document.documentElement.scrollHeight + 'px';
+        overlay.style.width = document.documentElement.scrollWidth + 'px';
+        document.body.appendChild(overlay);
+        open_button.disabled = false;
+    }
+
+    function close_modal(e) {
+        e.stopPropagation();
+        if(e.target.id === 'overlay' || e.target.id === 'close_modal'){
+            modal.style.display = '';
+            overlay.style.backgroundColor = '';
+            open_button.disabled = false;
+            document.documentElement.style.removeProperty('--X');
+            document.documentElement.style.removeProperty('--Y');
+            overlay.removeChild(modal);
+            setTimeout(()=>{
+                overlay.style.zIndex = '';            
+            }, 1000);
+        }
+    }
+    
+    function modal_move(e) {
+        if (isMouseDown) {
+        let deltaX = e.pageX - previousX
+        let deltaY = e.pageY - previousY
+        document.documentElement.style.setProperty('--X', deltaX + currentX + 'px');
+        document.documentElement.style.setProperty('--Y', deltaY + currentY + 'px');
+        }
+    }
+</script>
     </div>
 
     
     
     
-      
-
 
     <footer class="post-footer">
           
@@ -861,7 +1174,7 @@ JS修改style样式操作，产生的是行内样式</p>
       <a href="https://www.zhmou.xyz/posts/js-learning/" title="JS杂项知识记录">https://www.zhmou.xyz/posts/js-learning/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> 许可协议。转载请注明出处！
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -904,7 +1217,7 @@ JS修改style样式操作，产生的是行内样式</p>
 
 <div class="copyright">
   &copy; 2020 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -915,13 +1228,13 @@ JS修改style样式操作，产生的是行内样式</p>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">91k</span>
+    <span title="站点总字数">103k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:49</span>
+    <span title="站点阅读时长">4:17</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -953,7 +1266,7 @@ JS修改style样式操作，产生的是行内样式</p>
   </div>
   <div class="reading-progress-bar"></div>
 
-  <a href="https://github.com/zhmou" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/zhmou" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -965,8 +1278,7 @@ JS修改style样式操作，产生的是行内样式</p>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
 
 
