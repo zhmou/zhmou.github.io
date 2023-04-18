@@ -848,7 +848,7 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
 - <code>history.go(n)</code> 前进 / 后退 n 步
 
 # PC端网页特效
-## 元素偏移量
+## Offset 元素偏移量
 - <code>element.offsetParent</code> 返回作为该元素带有定位的父级元素如果父级都没有定位则返回body
 - <code>element.offsetTop</code> 返回元素相对带有定位父元素上方的偏移
 - <code>element.offsetLeft</code> 返回元素相对带有定位父元素左边框的偏移
@@ -925,8 +925,16 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
 </script>
 
 
-**案例：拖动模态框**
-<style>
+**示例：拖动模态框**
+
+{% tabs modal_test %}
+<!-- tab HTML -->
+``` HTML
+<button id='open_modal' disabled>打开模态框</button>
+```
+<!-- endtab -->
+<!-- tab CSS -->
+```
     :root {
         --X: 0px;
         --Y: 0px;
@@ -964,10 +972,10 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
     #close_modal {
         user-select:none;
     }
-</style>
-<button id='open_modal' disabled>打开模态框</button>
-
-<script>
+```
+<!-- endtab -->
+<!-- tab Javascript -->
+``` Javascript
     let open_button = document.getElementById('open_modal');
     let overlay = document.createElement('div');
     let modal = document.createElement('div');
@@ -1042,4 +1050,145 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
         document.documentElement.style.setProperty('--Y', deltaY + currentY + 'px');
         }
     }
+```
+<!-- endtab -->
+{% endtabs %}
+效果：
+<style>
+    :root {
+        --X: 0px;
+        --Y: 0px;
+    }
+    #overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: background-color 1s;
+        z-index: -1;
+    }
+
+    #modal {
+        display: none;
+        position: fixed;
+        left: calc(50% + var(--X));
+        top: calc(50% + var(--Y));
+        width: 240px;
+        height: 160px;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        z-index: 1000;
+        user-select:none;
+    }
+
+    #modal_hd {
+        height: 30px;
+        width: 100%;
+        background-color: pink;
+        cursor: move;
+    }
+
+    #close_modal {
+        user-select:none;
+    }
+</style>
+<button id='open_modal' disabled>打开模态框</button>
+
+<script>
+    let open_button = document.getElementById('open_modal');
+    let overlay = document.createElement('div');
+    let modal = document.createElement('div');
+    let mouseDown = false;
+    let previousX;
+    let previousY;
+    let currentX = 0;
+    let currentY = 0;
+    overlay.id = 'overlay';
+    modal.id = 'modal';
+    modal.innerHTML = '<div id="modal_hd"><button id="close_modal">关闭模态框</button></div><div id="modal_bd"><p>这是一个模态框</p></div>';
+    window.addEventListener('DOMContentLoaded', overlay_display);
+    window.addEventListener('resize', ()=>{
+        if (overlay) {
+            document.body.removeChild(overlay);
+        }
+        overlay.style.height = document.documentElement.scrollHeight + 'px';
+        overlay.style.width = document.documentElement.scrollWidth + 'px';
+        document.body.appendChild(overlay);
+    });
+    open_button.addEventListener('click', function() {
+        open_button.disabled = true;
+        overlay.style.zIndex = '100';
+        overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        overlay.appendChild(modal);
+        let close_button = document.getElementById('close_modal');
+        let modal_hd = document.getElementById('modal_hd');
+        modal_hd.addEventListener('mousedown', (e)=>{
+            isMouseDown = true;
+            e.preventDefault();
+            previousX = e.pageX;
+            previousY = e.pageY;
+            window.addEventListener('mousemove', modal_move);
+        })
+
+        window.addEventListener('mouseup', ()=>{
+            isMouseDown = false;
+            currentX = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--X').replace('px', ''));
+            currentY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--Y').replace('px', ''));
+            window.removeEventListener('mousemove', modal_move);
+        })
+
+        close_button.addEventListener('click', close_modal);
+        modal.style.display = 'block';
+    })
+    overlay.addEventListener('click', close_modal)
+    function overlay_display() {
+        overlay.style.height = document.documentElement.scrollHeight + 'px';
+        overlay.style.width = document.documentElement.scrollWidth + 'px';
+        document.body.appendChild(overlay);
+        open_button.disabled = false;
+    }
+
+    function close_modal(e) {
+        e.stopPropagation();
+        if(e.target.id === 'overlay' || e.target.id === 'close_modal'){
+            modal.style.display = '';
+            overlay.style.backgroundColor = '';
+            open_button.disabled = false;
+            document.documentElement.style.removeProperty('--X');
+            document.documentElement.style.removeProperty('--Y');
+            overlay.removeChild(modal);
+            setTimeout(()=>{
+                overlay.style.zIndex = '';            
+            }, 1000);
+        }
+    }
+    
+    function modal_move(e) {
+        if (isMouseDown) {
+        let deltaX = e.pageX - previousX
+        let deltaY = e.pageY - previousY
+        document.documentElement.style.setProperty('--X', deltaX + currentX + 'px');
+        document.documentElement.style.setProperty('--Y', deltaY + currentY + 'px');
+        }
+    }
 </script>
+
+**示例：电商平台放大镜**
+[链接](zhmou.xyz/source/misc/pinyougou/detail.html)
+
+## Client 元素可视区
+| 属性        | 作用         |
+| -------------------- | ------------- |
+| <code>element.clientWidth</code> | 返回自身包括Padding、内容区的宽度，不包括边框，返回数值        |
+| <code>element.clientHeight</code> | 返回自身包括Padding、内容区的高度，不包括边框，返回数值        |
+| <code>element.clientTop</code> | 上边框大小     |
+| <code>element.clientLeft</code> | 左边框大小     |
+
+
+## 立即执行函数
+- 定义：不需要调用，能够立即执行的函数
+- 写法：
+    - <code>(function () {}) ()</code>
+    - <code>(function(){}())</code>
+- 特点：独立创建了一个作用域，避免变量命名冲突问题
