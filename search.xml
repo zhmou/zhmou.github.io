@@ -2906,7 +2906,8 @@ JS修改style样式操作，产生的是行内样式</p>
 </li>
 <li>特点：独立创建了一个作用域，避免变量命名冲突问题</li>
 </ul>
-]]></content>
+<h2 id="Scroll-元素滚动"><a class="header-anchor" href="#Scroll-元素滚动"></a>Scroll 元素滚动</h2>
+<img data-src='../../img/js-learning/scroll.png' />]]></content>
       <categories>
         <category>学习</category>
       </categories>

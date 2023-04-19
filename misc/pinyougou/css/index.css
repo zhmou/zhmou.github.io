@@ -214,17 +214,56 @@
 }
 
 .focus {
+    position: relative;
     float: left;
     width: 700px;
     height: 455px;
-    background-color: skyblue;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-.focus ul li {
+.focus .dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 7.5px;
+}
+
+.focus .dots .dot {
+    float: left;
+    width: 10px;
+    height: 10px;
+    margin: 5px 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.focus .dots .selected {
+    background-color: #c81625;
+}
+
+.focus .wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 455px;
+}
+
+.focus .wrapper li {
+    float: left;
     position: relative;
+    width: 700px;
+    height: 455px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.focus ul li button {
+.focus .wrapper li .page_1 {
     position: absolute;
     border: 1px solid skyblue;
     border-radius: 18px;
@@ -234,18 +273,44 @@
     transition: all 0.4s;
 }
 
-.focus ul li button:hover {
+.focus > button {
+    display: none;
+}
+
+.focus:hover > button {
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;
+    padding: 0 10px;
+    line-height: 40px;
+    background-color: rgba(173, 43, 200, 0.3);
+    color: white;
+}
+
+.focus .prev {
+    border-radius: 0 10px 10px 0;
+    left: 0;
+}
+
+.focus .next {
+    right: 0;
+    border-radius: 10px 0 0 10px;
+}
+
+.focus .wrapper li button:hover {
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.8);
 }
 
-.focus ul li button::after {
+.focus .wrapper li button::after {
     font-family: 'icomoon' !important;
     content: '\e920';
     font-size: 24px;
     line-height: 36px;
 }
 
-.focus ul li button a {
+.focus .wrapper li button a {
     display: block;
     height: 36px;
     line-height: 36px;
