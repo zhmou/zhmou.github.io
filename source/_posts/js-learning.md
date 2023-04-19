@@ -1192,3 +1192,6 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
     - <code>(function () {}) ()</code>
     - <code>(function(){}())</code>
 - 特点：独立创建了一个作用域，避免变量命名冲突问题
+
+## Scroll 元素滚动
+<img src='../../img/js-learning/scroll.png' />
