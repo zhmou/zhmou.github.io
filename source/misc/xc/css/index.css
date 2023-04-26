@@ -29,6 +29,7 @@ header {
     display: flex;
     width: 100%;
     height: 44px;
+    z-index: 10;
 }
 
 .search {
@@ -43,7 +44,8 @@ header {
     align-self: center;
     text-indent: 20px;
     color: #666;
-    box-shadow: 0 3px 3px #ccc
+    box-shadow: 0 3px 3px #ccc;
+
 }
 
 .search::before {

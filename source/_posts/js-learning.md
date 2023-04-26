@@ -1195,3 +1195,6 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
 
 ## Scroll 元素滚动
 <img src='../../img/js-learning/scroll.png' />
+
+# 移动端网页特效
+参见[移动端开发](../Mobile-Dev/)
