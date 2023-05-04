@@ -11,6 +11,10 @@ body {
     height: 2000px;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 ul {
     list-style: none;
     margin: 0;
@@ -116,6 +120,7 @@ header {
     height: 5px;
     background-color: #fff;
     border-radius: 2px;
+    transition: all 0.3s;
 }
 
 .focus .dots .current {
@@ -186,6 +191,19 @@ header {
     width: 100%;
     height: 88px;
     background-color: pink;
+}
+
+.goBack {
+    cursor: pointer;
+    display: none;
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    width: 38px;
+    height: 38px;
+    background-image: url(../images/back.png);
+    background-repeat: no-repeat;
+    background-size: 38px;
 }
 
 .nav li a {
