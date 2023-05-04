@@ -54,7 +54,7 @@ header {
     left: 3px;
     content: "";
     display: block;
-    background: url(../upload/sprite.png) no-repeat -59px -279px;
+    background: url(../images/sprite.png) no-repeat -59px -279px;
     background-size: 104px;
     width: 15px;
     height: 15px;
@@ -83,13 +83,46 @@ header {
 }
 
 .focus {
+    position: relative;
     padding-top: 44px;
+    overflow: hidden;
+}
+
+.focus .banner_img {
+    width: 500%;
+    overflow: hidden;
+    margin-left: -100%;
+}
+
+.focus .banner_img li {
+    float: left;
+    width: 20%;
 }
 
 .focus img {
     vertical-align: bottom;
     width: 100%;
 }
+
+.focus .dots {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.focus .dots li {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.focus .dots .current {
+    background-color: red;
+    width: 15px;
+}
+
 
 .local-nav {
     height: 64px;
