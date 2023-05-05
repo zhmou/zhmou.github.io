@@ -1198,3 +1198,20 @@ navigator对象包含有关浏览器的信息，它有很多属性，我们最�
 
 # 移动端网页特效
 参见[移动端开发](../Mobile-Dev/)
+
+# 数据存储
+## sessionStorage
+- 特点：
+    - 生命周期为关闭浏览器窗口
+    - 在同一个页面下数据可以共享
+    - 以键值对的形式存储使用
+- 方法：
+    - <code>sessionStorage.setItem(key, value)</code>
+    - <code>sessionStorage.getItem(key)</code>
+    - <code>sessionStorage.removeItem(key)</code>
+    - <code>sessionStorage.clear()</code>
+
+## localStorage
+- 特点：
+    - 永久，除非手动删除
+    - 多窗口共享

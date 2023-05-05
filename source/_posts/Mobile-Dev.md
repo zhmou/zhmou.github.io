@@ -141,3 +141,6 @@ categories: 学习
   - targetTouches 触摸当前元素的所有触点的列表
   - changedTouches 触点发生了改变状态的列表
 
+## 移动端click事件的300ms延迟
+&emsp;&emsp;原因：部分浏览器在第一次点击之后会等待300ms判断用户是否是双击（以执行页面放大的行为）
+&emsp;&emsp;解决：1. user-scalable设置为no 2.css属性touch-action设置为manipulation（https://developer.mozilla.org/zh-CN/docs/Web/CSS/touch-action）

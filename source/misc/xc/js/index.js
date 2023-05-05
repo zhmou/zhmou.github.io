@@ -71,7 +71,7 @@ window.addEventListener('load', function () {
         }
     });
 
-    goBack.addEventListener('click', function () {
+    goBack.addEventListener('touchstart', function () {
         window.scroll(0, 0);
     })
 })
