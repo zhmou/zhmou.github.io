@@ -145,157 +145,105 @@
       </tags>
   </entry>
   <entry>
-    <title>力扣刷题小录</title>
-    <url>//posts/Leetcode-log/</url>
-    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
-</div>
-<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
-<h2 id="只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a><a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
-<p><strong>简述：</strong><br>
-  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
-  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
-<strong>思路：</strong><br>
-  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
-  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
+    <title>配置SOLOV2_ncnn相关环境并运行Demo</title>
+    <url>//posts/Configure-a-NCNN-Project/</url>
+    <content><![CDATA[<p>  今天最开心的事情是终于在Windows环境下运行起来Github上<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">这个项目</a>的Demo，对于我一个电脑小白而言那背后的可都是泪呀TAT，因此有必要记录一下整个流程以方便其他人的需要~</p>
+<p>  简述一下相关背景：<a href="https://github.com/Tencent/ncnn">ncnn</a>是一个前向神经网络框架，由纯C++实现所实现。而<a href="https://arxiv.org/abs/2003.10152">SOLOV2</a>是一个快速的实例分割算法，关于什么是实例分割，可参考图像处理的相关文章。此外，笔者的相关环境配置一并列举于此处，方便读者参考：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">环境</th>
+<th style="text-align:center">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Windows</td>
+<td style="text-align:center">10 专业版 20H2</td>
+</tr>
+<tr>
+<td style="text-align:center">Visual Studio 2019</td>
+<td style="text-align:center">Community Edition<br>16.11.31702.278</td>
+</tr>
+<tr>
+<td style="text-align:center">OpenCV</td>
+<td style="text-align:center">3.4.5</td>
+</tr>
+<tr>
+<td style="text-align:center">CMake</td>
+<td style="text-align:center">3.21.3</td>
+</tr>
+<tr>
+<td style="text-align:center">ncnn</td>
+<td style="text-align:center"><a href="https://github.com/Tencent/ncnn/tree/2c4ae096044c816d7195476d652eb8d5aefb8379">Release 2c4ae09604</a><br>即目前的lateset release(20210720)</td>
+</tr>
+</tbody>
+</table>
 <span id="more"></span>
-<p><strong>题解：</strong><br></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.<span class="property">length</span> ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.<span class="property">length</span>; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
+<h2 id="01-ncnn编译"><a class="header-anchor" href="#01-ncnn编译"></a>01 ncnn编译</h2>
+<p>  理论上来讲，根据自身的需求直接使用release下官方的预编译静/动态库应该不会出现错误，然而笔者在实际配置项目时，添加了ncnn.lib这一附加依赖项后，在运行中依旧会产生Vulkan相关报错，如图所示：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/1.png" alt="vulkan报错"></p>
+<p>  推测可能为官方打包的库中默认调用了VulkanSDK与glslang这一submoudle，因此我们需要自己来对ncnn打包了。</p>
+<p>  在使用VS 2019命令行编译ncnn的过程中，也同样遇到了这样或那样的问题，不过所幸被Github上这条<a href="https://github.com/Tencent/ncnn/issues/2498">issue</a>解决了，大体上只要按照issue作者提示的操作就不会出现问题。</p>
+<p>  首先在开始菜单下找到Visual Studio 2019的文件夹，打开x64 Native Tools Command Prompt这个VS 2019的命令行工具。</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/2.png" alt="操作步骤"></p>
+<p>  下载 protobuf 3.4.0 的<a href="https://github.com/google/protobuf/archive/v3.4.0.zip">源码</a>（不知道其它版本是否可行），解压，编译ncnn前需要编译protobuf。</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 进入protobuf-3.4.0文件夹</span><br><span class="line"><span class="built_in">cd</span> protobuf-3.4.0</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// cmake -DCMAKE_BUILD_TYPE参数也可设为debug，但总之要前后一致</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line">    -Dprotobuf_BUILD_TESTS=OFF ^</span><br><span class="line">    -Dprotobuf_MSVC_STATIC_RUNTIME=OFF ../cmake</span><br><span class="line">    </span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即protobuf-3.4.0文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>  通过git克隆ncnn的源码并编译ncnn：</p>
+<div class="note warning"><p>提示：请务必注意路径问题！</p>
 </div>
-<h2 id="汉明重量-汉明距离"><a class="header-anchor" href="#汉明重量-汉明距离"></a><a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
-<p><strong>简述：</strong><br>
-  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。<br>
-  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
-<strong>思路：</strong><br>
-  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
-  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
-<strong>题解：</strong></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 克隆远端仓库代码，放在ncnn文件夹下</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Tencent/ncnn.git</span><br><span class="line"></span><br><span class="line">// 进入ncnn文件夹</span><br><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line">// 拉取submodule</span><br><span class="line">git submodule update --init</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// 同上，-DCMAKE_BUILD_TYPE参数也可设为debug</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line"></span><br><span class="line">// 更改为自己电脑上Protobuf对应文件夹所在的路径，注意：请务必改为绝对路径而不是相对路径！</span><br><span class="line">    -DProtobuf_INCLUDE_DIR=E:/Project/protobuf-3.4.0/build-vs2019/install/include ^</span><br><span class="line">    -DProtobuf_LIBRARIES=E:/Project/protobuf-3.4.0/build-vs2019/install/lib/libprotobuf.lib ^</span><br><span class="line">    -DProtobuf_PROTOC_EXECUTABLE=E:/Project/protobuf-3.4.0/build-vs2019/install/bin/protoc.exe ^</span><br><span class="line">// 更改为自己电脑上OpenCV3.4.5对应文件夹所在的路径，依然是注意绝对路径的问题</span><br><span class="line">	-DOpenCV_DIR=E:/opencv/build/x64/vc15/lib ..</span><br><span class="line">	</span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即ncnn文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>  至此，运行此项目demo的环境构建工作就做好了，接下来就可以准备开始调试SOLOv2 ncnn的项目。</p>
+<h2 id="02-项目调试"><a class="header-anchor" href="#02-项目调试"></a>02 项目调试</h2>
+<p>  与上一步相同，首先需要使用获得一份源码：</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DayBreak-u/SOLOV2_ncnn.git</span><br></pre></td></tr></table></figure>
+<p>  根据<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">项目主页</a><a href="http://xn--README-ow6o.md">的README.md</a>，执行前三行代码：</p>
+<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build </span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
+<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>-- Configuring done</code>、<code>-- Generating done</code>时即意味着项目解决方案的成功生成。</p>
+<p>  下载模型权重：</p>
+<blockquote>
+<p>链接: <a href="https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng">https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng</a> 密码: phh8</p>
+</blockquote>
+<p>  在Windows环境下，由于没有Linux下的GNU Make，所以我们直接用VS来编译代码：</p>
+<h3 id="VS配置ncnn和opencv环境"><a class="header-anchor" href="#VS配置ncnn和opencv环境"></a>VS配置ncnn和opencv环境</h3>
+<p>  点击<code>项目</code>-&gt;<code>属性</code>-&gt;<code>VC++目录</code>，在Release配置、x64平台下，根据自己目录的实际情况添加以下路径至<code>包含目录</code>：</p>
+<div class="note warning"><p>注意：如果前文中您将protobuf、ncnn的源码编译为debug版本，则此处也要将其改为debug配置。</p>
 </div>
-<div class="note warning"><p>题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充。<br>
-具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a><br>
-否则在范例中，32位有符号数的最高位为1时，循环不会终止。</p>
-</div>
-<h2 id="进制转换-K进制表示下的各位数字总和-数字转换为16进制数"><a class="header-anchor" href="#进制转换-K进制表示下的各位数字总和-数字转换为16进制数"></a>进制转换 / <a href="https://leetcode.cn/problems/sum-of-digits-in-base-k/">K进制表示下的各位数字总和</a> / <a href="https://leetcode.cn/problems/convert-a-number-to-hexadecimal/">数字转换为16进制数</a></h2>
-<p><strong>简述：</strong><br>
-  ①给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。（K进制表示下的各位数字总和）<br>
-  ②给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 <i>补码运算</i> 方法。</p>
-<div class="note info"><p>注意:<br>
-十六进制中所有字母(a-f)都必须是小写。<br>
-十六进制字符串中不能包含多余的前导零。如果要转化的数为0，那么以单个字符'0'，来表示；对于其他情况，十六进制字符串中的第一个字符将不会是0字符。 <br>
-给定的数确保在32位有符号整数范围内。<br>
-不能使用任何由库提供的将数字直接转换或格式化为十六进制的方法。</p>
-</div>
-<p><strong>思路：</strong><br>
-  10进制转 k 进制：10进制的数字 除以 k，得到的余数就是目标待转换的数字的最后一位，再拿刚刚所得到的商继续除以k，如此循环，直到所得的商为0。<br>
-  对于题目②。特别地，对于32位有符号整数的表示，比如 -1 在32位有符号整数的表示，与无符号数下2<sup>32</sup>-1是一致的。<br>
-  此外，由于16进制数中存在a~f，余数为10即对应a、11对应b……可利用这种方式将对应字符保存起来：<code>String.fromCharCode(余数-10 + 'a'.charCodeAt() //即a对应的ascii码)</code><br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n, k</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        ret += <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">        n = -n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(n % k);</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> k = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true则说明该函数功能正确</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(n.<span class="title function_">toString</span>(k) == <span class="title class_">BaseChange</span>(n, k));</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>十六进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> toHex = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(num &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>,<span class="number">32</span>) + num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">BaseChange</span>(num);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n % <span class="number">16</span>&gt;= <span class="number">10</span>)&#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>() + n % <span class="number">16</span> - <span class="number">10</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(n % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="有效的完全平方数-x的平方根"><a class="header-anchor" href="#有效的完全平方数-x的平方根"></a><a href="https://leetcode.cn/problems/valid-perfect-square/">有效的完全平方数</a> / <a href="https://leetcode.cn/problems/sqrtx/">x的平方根</a></h2>
-<p><strong>简述：</strong><br>
-  ①判断一个数是否是完全平方数<br>
-  ②返回非负整数x的算术平方根(取整)<br>
-<strong>思路：</strong><br>
-  两者皆可用双指针二分查找的方式进行。设左指针l指向0，右指针r指向输入的数字。判断有效的完全平方数就是看[0, nums]里是否有一个数target使得target<sup>2</sup>=nums; 计算平方根则是找到满足target<sup>2</sup>&lt;=nums的最大target。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='left'> 
-<figure class="highlight javascript"><figcaption><span>有效的完全平方数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isPerfectSquare = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = num;</span><br><span class="line">    <span class="keyword">var</span> ans;</span><br><span class="line">    <span class="keyword">var</span> center;</span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &lt;= num)&#123;</span><br><span class="line">            <span class="comment">//每次满足条件的时候，ans都需要更新</span></span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            r = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans * ans == num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='right'> 
-<figure class="highlight javascript"><figcaption><span>x的平方根</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">x</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> mySqrt = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = x;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        <span class="keyword">var</span> center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &gt; x)&#123;</span><br><span class="line">            r = center - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div> 
-</div>
-<h2 id="双指针"><a class="header-anchor" href="#双指针"></a>双指针</h2>
-<h3 id="排序数组中两个数字之和"><a class="header-anchor" href="#排序数组中两个数字之和"></a><a href="https://leetcode.cn/problems/kLl5u1/">排序数组中两个数字之和</a></h3>
-<p><strong>简述：</strong><br>
-  给定一个已按照 <strong>升序排列</strong>  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。<br>
-  函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 &lt;= answer[0] &lt; answer[1] &lt; numbers.length。<br>
-  假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。<br>
-<strong>思路：</strong><br>
-  一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。<br>
-  为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 &lt;= i &lt;= j &lt;= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">numbers</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">target</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoSum = <span class="keyword">function</span>(<span class="params">numbers, target</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = numbers.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>( l&lt;=r ) &#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers[l] + numbers[r] &lt; target) &#123;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (numbers[l] + numbers[r] &gt; target) &#123; </span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> [l, r]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="动态规划"><a class="header-anchor" href="#动态规划"></a>动态规划</h2>
-<h3 id="路径的数目"><a class="header-anchor" href="#路径的数目"></a><a href="https://leetcode.cn/problems/2AoeFn/">路径的数目</a></h3>
-<p><strong>简述：</strong><br>
-  一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？<br>
-<strong>思路：</strong><br>
-  建立一个二维数组记录从顶点到达当前位置的路径数，对于如题所述的二维网格来说，位于中间的某个格子只能从上方的相邻格子或者左边的相邻格子走过来。因此当前格子的路径数等于左边格子的路径数 + 上边格子的路径数。而对于第一行或者第一列的格子，只能由左边或者上边格子走过来，因此这些格子的路径数都是1。<br>
-  而更简单的解法是利用组合数学（杨辉三角）：从(1,1)行进到(m,n)共要移动(m + n - 2)次，其中有(m-1)次是向右移动：所需次数为C(m+n-2, m-1) = (m+n-2)!/((n-1)!*(m-1)!)<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>路径数目</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">m</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> uniquePaths = <span class="keyword">function</span>(<span class="params">m, n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> path = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">        path.<span class="title function_">push</span>([]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; n; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j] + path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h3 id="爬楼梯的最少成本"><a class="header-anchor" href="#爬楼梯的最少成本"></a><a href="https://leetcode.cn/problems/GzCJIP/">爬楼梯的最少成本</a></h3>
-<p><strong>简述：</strong><br>
-  数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>
-  示例：<br>
-    <strong>输入</strong>：cost = [10, 15, 20]<br>
-    <strong>输出</strong>：15<br>
-    <strong>解释</strong>：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。<br>
-<strong>思路：</strong><br>
-  登到某级台阶所花费的总体力有两种可能，要么是从前一级一步登上来，要么是从前两级两步登上来。取两者中较小的体力耗费即可。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; cost</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var minCostClimbingStairs = function(cost) &#123;</span><br><span class="line">    var costTotalArray = [];</span><br><span class="line">    costTotalArray[0] = 0;</span><br><span class="line">    costTotalArray[1] = 0;</span><br><span class="line">    for (var i = 2; i &lt;= cost.length; i++)&#123;</span><br><span class="line">        costTotalArray.push(Math.min(cost[i-1] + costTotalArray[i-1], costTotalArray[i-2] + cost[i-2]))</span><br><span class="line">    &#125;</span><br><span class="line">    return costTotalArray[cost.length]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'>
-</div>
-<h2 id="可被-5-整除的二进制前缀"><a class="header-anchor" href="#可被-5-整除的二进制前缀"></a><a href="https://leetcode.cn/problems/binary-prefix-divisible-by-5/">可被 5 整除的二进制前缀</a></h2>
-<p><strong>简述：</strong><br>
-  给定一个二进制数组 nums ( 索引从0开始 )。我们将xi 定义为其二进制表示形式为子数组 nums[0..i] (从最高有效位到最低有效位)。<br>
-  例如，如果 nums =[1,0,1] ，那么 x0 = 1, x1 = 2, 和 x2 = 5。返回布尔值列表 answer，只有当 xi 可以被 5 整除时，答案 answer[i] 为 true，否则为 false。<br>
-<strong>思路：</strong><br>
-  定义一个xi，每读一位数字二进制数字就是左移一位（相当于乘以2）+ 该位数字，然后除以五取余，最后<strong>令xi等于该余数</strong>（这是一个比较巧妙的思路，这样xi就不会溢出），若所得余数为0，可以向answer中压入true，反之则压入false。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;boolean[]&#125;</span><br><span class="line"> */</span><br><span class="line">var prefixesDivBy5 = function(nums) &#123;</span><br><span class="line">    var ret = []</span><br><span class="line">    var number = 0;</span><br><span class="line">    for (var i = 0; i &lt; nums.length; i++)&#123;</span><br><span class="line">        number = number * 2 + nums[i];</span><br><span class="line">        number %= 5</span><br><span class="line">        if (!number)&#123;</span><br><span class="line">            ret.push(true);</span><br><span class="line">        &#125;</span><br><span class="line">        else ret.push(false);</span><br><span class="line">    &#125;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'>
-</div>]]></content>
+<p>  <code>E:\opencv\build\include</code><br>
+  <code>E:\opencv\build\include\opencv</code><br>
+  <code>E:\opencv\build\include\opencv2</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\include</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\include\ncnn</code></p>
+<p>  同样，在<code>库目录</code> 中根据自身情况添加以下路径：</p>
+<p>  <code>E:\opencv\build\x64\vc15\lib</code><br>
+  <code>E:\Project\ncnn\build-vs2019\install\lib</code></p>
+<p>  在<code>链接器</code>-&gt;<code>输入</code>中加入<code>ncnn.lib</code>、<code>opencv_world345.lib</code>这两个<code>附加依赖项</code>就可以进行下一步操作了。</p>
+<h3 id="修改代码"><a class="header-anchor" href="#修改代码"></a>修改代码</h3>
+<p>  为方便运行demo查看效果，我对其进行了一定修改，以solov2.cpp为例（<del>才不是我没有测试过solov2_fast.cpp的原因呢</del>，哼o(~ヘ~o#)）：</p>
+<p>  根据前文下载的模型权重存储路径修改权重读取位置：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/3.png" alt="修改代码"></p>
+<p>  注释并重写main函数：</p>
+<figure class="highlight c++"><figcaption><span>solov2.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* imagepath = <span class="string">&quot;E:/Project/SOLOV2_ncnn/imgs/horses.jpg&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cv::Mat m = cv::<span class="built_in">imread</span>(imagepath, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (m.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;cv::imread %s failed\n&quot;</span>, imagepath);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::vector &lt;Object&gt; objects;</span><br><span class="line">    <span class="built_in">detect_solov2</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_objects</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  程序生成的结果result.png默认放在项目build文件夹下，如果您想要直观地看见程序运行的效果，可以将main函数上方原作者注释掉的两行代码取消注释：<br>
+  <code>//    cv::imshow(&quot;image&quot;, image);</code><br>
+  <code>//    cv::waitKey(0);</code></p>
+<h3 id="运行代码"><a class="header-anchor" href="#运行代码"></a>运行代码</h3>
+<p>  做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/4.png" alt="修改代码"></p>
+<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
+<p>  运行窗口如图：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/5.png" alt="运行窗口"></p>
+<p>  运行效果如图：</p>
+<p><img data-src="/img/Configure-a-NCNN-Project/horses.jpg" alt="运行效果1" title="读取到的图片"></p>
+<p><img data-src="/img/Configure-a-NCNN-Project/result.png" alt="运行效果2" title="实例分割的结果"></p>
+]]></content>
       <categories>
         <category>学习</category>
       </categories>
       <tags>
+        <tag>机器学习</tag>
         <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>算法</tag>
+        <tag>SOLOv2</tag>
       </tags>
   </entry>
   <entry>
@@ -349,62 +297,6 @@
       </categories>
       <tags>
         <tag>编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>品优购项目：踩坑细节记录</title>
-    <url>//posts/Project-pinyougou/</url>
-    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
-</div>
-<h1 id="SEO优化"><a class="header-anchor" href="#SEO优化"></a>SEO优化</h1>
-<p>  对于一个营利性网站而言，提升其在搜索引擎中的排名至关重要。除去直接付费的竞价排名外，搜索引擎优化（Search Engine Optimization）也是不可或缺的一环。</p>
-<h2 id="TDK三大标签"><a class="header-anchor" href="#TDK三大标签"></a>TDK三大标签</h2>
-<ul>
-<li><code>&lt;title&gt;</code>标签，网站标题：内页的第一个重要标签
-<ul>
-<li>建议：<strong>网站名 - 网站的介绍（不超过30汉字）</strong></li>
-</ul>
-</li>
-<li><code>description</code> 网站说明
-<ul>
-<li><strong>简要说明网站是做什么的</strong></li>
-</ul>
-</li>
-<li><code>keywords</code> 关键字
-<ul>
-<li><strong>keywords是页面关键词，是搜索引擎的关注点之一</strong></li>
-<li><strong>最好限制为6 ~ 8个关键词，且之间用英文逗号隔开</strong></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight html"><figcaption><span>品优购网站的三大标签</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>品优购商城 - 网络购物最佳选择，物美价廉，免费配送，一站式服务为您提供优秀购物体验！<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">content</span>=<span class="string">&quot;品优购商城 - 专业的综合网上购物商城，销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数万个品牌优质商品。便捷、诚信的服务，为您提供愉悦的网上购物体验！&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;前端, HTML, CSS, 电商, 品优购商城, 静态界面&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Logo优化"><a class="header-anchor" href="#Logo优化"></a>Logo优化</h2>
-<ul>
-<li>logo里面首先放一个<code>&lt;h1&gt;</code>标签（<strong>用于提权</strong>）</li>
-<li><code>&lt;h1&gt;</code>标签中插入链接<code>&lt;a&gt;</code>标签，返回首页</li>
-<li>链接里面放文字（网站名称），但是为了视觉效果，文字不能显示出来（<code>font-size: 0</code>）</li>
-<li>链接给一个<code>title</code>属性，鼠标放在Logo上可显示文字</li>
-</ul>
-<span id="more"></span>
-<h2 id="注册界面"><a class="header-anchor" href="#注册界面"></a>注册界面</h2>
-<p>  按照说法，注册界面一般不需要SEO优化。</p>
-<h1 id="一行内多个列表元素-code-li-code-超宽的问题"><a class="header-anchor" href="#一行内多个列表元素-code-li-code-超宽的问题"></a>一行内多个列表元素<code>&lt;li&gt;</code>超宽的问题</h1>
-<p>  在某个页面布局时，经常会遇到列表元素宽度难以确定的问题。譬如，在宽度为1200px的版心中布置5个&lt;li&gt;元素很容易确定单个元素的宽度可以是240px，但是又要使得这些元素间插入四个外边距值margin则需要一番计算：这需要使得一行内n个&lt;li&gt;元素减少的总宽度(n的倍数，假设单个表单元素减少的宽度以1px为单位)恰好是(n-1)的倍数。<br>
-  或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑<strong>增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。</strong>，此外，还需要<strong>在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。</strong></p>
-<h1 id="层叠上下文相关"><a class="header-anchor" href="#层叠上下文相关"></a>层叠上下文相关</h1>
-<p>  z-index在定位元素上生效，需要指定position:xxx</p>
-<h1 id="tab分页栏的制作"><a class="header-anchor" href="#tab分页栏的制作"></a>tab分页栏的制作</h1>
-<p>  首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。<br>
-  对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。</p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>HTML</tag>
-        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
@@ -602,6 +494,452 @@ $$</p>
       <tags>
         <tag>机器学习</tag>
         <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>矩阵论复习</title>
+    <url>//posts/Matrix/</url>
+    <content><![CDATA[<h1 id="内积"><a class="header-anchor" href="#内积"></a>内积</h1>
+<h2 id="性质"><a class="header-anchor" href="#性质"></a>性质</h2>
+<ul>
+<li>交换律
+<ul>
+<li>$\left\langle\alpha,\beta\right\rangle = \left\langle\beta,\alpha\right\rangle$</li>
+</ul>
+</li>
+<li>非负性
+<ul>
+<li>$\left \langle \alpha,\alpha  \right \rangle \ge 0; \left \langle \alpha,\alpha  \right \rangle=0\Leftrightarrow \alpha =0$</li>
+</ul>
+</li>
+<li>齐次性
+<ul>
+<li>$\left \langle \alpha,k\beta  \right \rangle = \overline{k}\left \langle\alpha,\beta\right \rangle$</li>
+</ul>
+</li>
+<li>分配律
+<ul>
+<li>$\langle\alpha+\gamma,\beta\rangle = \langle\alpha,\beta\rangle + \langle\gamma,\beta\rangle$</li>
+</ul>
+</li>
+</ul>
+<h1 id="Jordan标准形"><a class="header-anchor" href="#Jordan标准形"></a>Jordan标准形</h1>
+<h2 id="定义"><a class="header-anchor" href="#定义"></a>定义</h2>
+<ul>
+<li>
+<p>形如下列形式的矩阵称之为n阶Jordan块<br>
+$$<br>
+J_i=\begin{bmatrix} \lambda_i &amp; 1 &amp;  &amp;  &amp; \\<br>
+&amp; \lambda_i &amp; 1 &amp; &amp; \\<br>
+&amp; &amp; \lambda_i &amp; \ddots &amp; \\<br>
+&amp; &amp; &amp; \ddots &amp; 1 \\<br>
+&amp; &amp; &amp; &amp; \lambda_i<br>
+\end{bmatrix}_{n_i \times n_i}<br>
+$$</p>
+</li>
+<li>
+<p>形如下列形式的矩阵称之为n阶Jordan型矩阵<br>
+$$<br>
+J=\begin{bmatrix}<br>
+J_1 &amp; &amp; &amp; \\<br>
+&amp; J_2 &amp; &amp; \\<br>
+&amp; &amp; \ddots &amp; \\<br>
+&amp; &amp; &amp; J_t<br>
+\end{bmatrix}<br>
+$$</p>
+<ul>
+<li>其中$J_i$为$n_i$阶Jordan块，且$n_1+\cdots+n_t=n$</li>
+</ul>
+</li>
+</ul>
+<h2 id="定理"><a class="header-anchor" href="#定理"></a>定理</h2>
+<ul>
+<li>每一个n阶复方阵𝑨都和一个Jordan型矩阵𝑱相似。即存在可逆阵𝑷, 使$P^{-1}AP = J$
+<ul>
+<li>计算方法：$A \rightarrow A(\lambda)=\lambda E - A \rightarrow 行列式因子 \rightarrow 不变因子 \rightarrow 初级因子 \rightarrow Jordan块 \rightarrow J$</li>
+<li>示例：求矩阵$A=\begin{bmatrix}-1&amp;-2&amp;6\\-1&amp;0&amp;3\\-1&amp;-1&amp;4\end{bmatrix}$的Jordan标准型
+<ul>
+<li>step1: 特征矩阵$A(\lambda)=\lambda E-A=\begin{bmatrix}\lambda+1&amp;2&amp;-6\\1&amp;\lambda&amp;-3\\1&amp;1&amp;\lambda-4\end{bmatrix}$</li>
+<li>step2: 求行列式因子，$A(\lambda)$中所有k阶子式首项系数是1的最大公因式称为k级<b>行列式因子</b>，记作$D_k(\lambda), k=1,\cdots,n.$
+<ul>
+<li>上述$A(\lambda)$，一阶子式为各个元素，$D_1(\lambda)=1$；</li>
+<li>二阶子式中，取第一二行、一二列的$\begin{vmatrix}\lambda+1&amp;2\\1&amp;\lambda\end{vmatrix}=\lambda^2+\lambda-2=(\lambda+2)(\lambda-1)$；第一二行、二三列的$\begin{vmatrix}2&amp;-6\\\lambda&amp;-3\end{vmatrix}=-6+6\lambda=6(\lambda-1)$，依次计算，可得$D_2(\lambda)=\lambda-1$；</li>
+<li>三阶子式$D_3(\lambda)=(\lambda+1)\lambda(\lambda-4)-6-6+3(\lambda+1)-2(\lambda-4)+6\lambda={(\lambda-1)}^3$</li>
+</ul>
+</li>
+<li>step3: 求不变因子：即$d_1(\lambda)=D_1(\lambda),d_n(\lambda)=\frac{D_n(\lambda)}{D_{n-1}(\lambda)}$
+<ul>
+<li>$d_1=1,d_2=\lambda-1,d_3=(\lambda-1)^2$</li>
+</ul>
+</li>
+<li>step4: 将𝑨(𝝀)的所有的次数大于零的不变因子分解为互不相同的一次因式的方幂的乘积，这些一次因式方幂称为𝑨(𝝀)的初级因子。来自于不同的不变因子的一次因子的方幂不能合并
+<ul>
+<li>$d_1$次数为0，没有初级因子，$d_2$只有一个一次因式$\lambda-1$为其初等因子，$d_3$只有一个一次因式的二次方幂${\lambda-1}^2$为其初等因子</li>
+</ul>
+</li>
+<li>step5: 初级因子和Jordan块对应
+<ul>
+<li>$\lambda-1 \leftrightarrow [1], (\lambda-1)^2 \leftrightarrow \begin{bmatrix}1&amp;1\\0&amp;1\end{bmatrix}$</li>
+</ul>
+</li>
+<li>step6: Jordan块按对角线排列起来得到Jordan标准型J，<b>Jordan标准形与Jordan块的顺序无关</b>。
+<ul>
+<li>$J=\begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;1\\0&amp;0&amp;1\end{bmatrix}$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="lambda-矩阵"><a class="header-anchor" href="#lambda-矩阵"></a>$\lambda$-矩阵</h1>
+<h2 id="定义-v2"><a class="header-anchor" href="#定义-v2"></a>定义</h2>
+<ul>
+<li>位置元$a_{ij}(\lambda)$为多项式的矩阵</li>
+<li>𝝀-矩阵的运算，行列式，子式，余子式，伴随矩阵等概念和数字矩阵一致</li>
+<li>𝝀-矩阵𝑨(𝝀)的不恒为零多项式的子式的最高阶数称为𝑨(𝝀)的秩(rank), 记为rank𝑨(𝝀)
+<ul>
+<li>设𝑨为n阶数字矩阵, 其特征矩阵𝑨(𝝀)=𝝀𝑬−𝑨为𝝀-矩阵，且$rankA(\lambda) = n$</li>
+</ul>
+</li>
+</ul>
+<h1 id="Smith标准型"><a class="header-anchor" href="#Smith标准型"></a>Smith标准型</h1>
+<h2 id="定理-v2"><a class="header-anchor" href="#定理-v2"></a>定理</h2>
+<ul>
+<li>$\lambda$-矩阵都可经若干次初等变换化为Smith标准形，即若$A(\lambda)$为秩为$r$的$m\times n$的$\lambda$-矩阵，则$A(\lambda)$与矩阵$J(\lambda)=\begin{bmatrix}d_1(\lambda)&amp; &amp; &amp;0&amp;\cdots&amp;0\\<br>
+\ &amp;\ddots &amp; &amp;\vdots &amp; &amp;\vdots\\<br>
+\ &amp;\ &amp;d_r(\lambda) &amp;0 &amp;\cdots &amp;0 \\<br>
+0 &amp;\cdots &amp;0 &amp;0 &amp;\cdots &amp;0 \\<br>
+\vdots &amp; &amp;\vdots &amp;\vdots &amp; &amp;\vdots \\<br>
+0 &amp;\cdots &amp;0 &amp;0 &amp;\cdots &amp;0<br>
+\end{bmatrix}$等价。矩阵$J(\lambda)$称之为$A(\lambda)$的Smith标准形.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>移动端开发学习</title>
+    <url>//posts/Mobile-Dev/</url>
+    <content><![CDATA[<h1 id="视口"><a class="header-anchor" href="#视口"></a>视口</h1>
+<ul>
+<li>视口就是浏览器显示页面内容的屏幕区域</li>
+<li>视口分为布局视口、视觉视口和理想视口</li>
+<li>我们移动端布局想要的是理想视口就是手机屏幕有多宽，我们的布局视口就有多宽</li>
+<li>想要理想视口，我们需要给我们的移动端页面添加meta视口标签</li>
+</ul>
+<h2 id="meta视口标签"><a class="header-anchor" href="#meta视口标签"></a>meta视口标签</h2>
+<p><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0&quot;&gt;</code></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td>viewport宽度，可以设置device-width等特殊值</td>
+</tr>
+<tr>
+<td>initial-scale</td>
+<td>初始缩放比</td>
+</tr>
+<tr>
+<td>maximum-scale</td>
+<td>最大缩放比</td>
+</tr>
+<tr>
+<td>minimum-scale</td>
+<td>最小缩放比</td>
+</tr>
+<tr>
+<td>user-scalable</td>
+<td>用户是否可缩放，yes no</td>
+</tr>
+</tbody>
+</table>
+<h1 id="像素"><a class="header-anchor" href="#像素"></a>像素</h1>
+<ul>
+<li>物理像素：屏幕的最小单位。屏幕上用于显示颜色的“点”</li>
+<li>逻辑像素：计算机系统中用到的坐标，CSS中的px。逻辑像素的标准控制了在不同设备上的1px有相似的长度。譬如WPF中1px等于1/96英寸，而安卓端1px等于1/160英寸。</li>
+<li>DPR：设备像素比，CSS中的1px最终会渲染成多少屏幕上的物理像素。</li>
+</ul>
+<h2 id="两倍图"><a class="header-anchor" href="#两倍图"></a>两倍图</h2>
+<p>  在电脑端1px等于1物理像素，即dpr=1；在手机端通常为了更细腻的显示效果，1px会渲染成多个物理像素。对于一张指定px大小的图片，在手机端会按照DPR放大造成模糊。因此，我们需要在移动端设备上使用二倍图。</p>
+<h3 id="CSS属性：background-size"><a class="header-anchor" href="#CSS属性：background-size"></a>CSS属性：background-size</h3>
+<p>可选参数：</p>
+<ul>
+<li>cover：拉伸至完全覆盖区域</li>
+<li>contain：高度宽度等比例拉伸，当宽度、高度等于盒子的宽度、高度时不再拉伸了</li>
+<li>百分比，以父盒子的百分比来缩放</li>
+<li>只填入一个值一定是宽度，高度值省略，按照等比例缩放。</li>
+</ul>
+<h1 id="移动端开发选择"><a class="header-anchor" href="#移动端开发选择"></a>移动端开发选择</h1>
+<ul>
+<li>单独制作移动端页面
+<ul>
+<li>通过判断设备，如果是移动端设备打开，就跳转到移动端界面</li>
+</ul>
+</li>
+<li>响应式兼容PC移动端
+<ul>
+<li>通过判断页面宽度去决定布局</li>
+<li>缺点：兼容性问题</li>
+</ul>
+</li>
+</ul>
+<h1 id="移动端技术解决方案"><a class="header-anchor" href="#移动端技术解决方案"></a>移动端技术解决方案</h1>
+<ul>
+<li>CSS初始化 <code>normalize.css</code></li>
+<li>特殊样式
+<ul>
+<li><code>-webkit-tap-highlight-color: transparent</code> 去除点击高亮</li>
+<li><code>-webkit-apperance: none</code> 按钮和输入框的自定义样式</li>
+<li><code>-webkit-touch-callout: none</code>禁用长按页面时的弹出菜单</li>
+</ul>
+</li>
+</ul>
+<h1 id="流式布局（百分比布局）"><a class="header-anchor" href="#流式布局（百分比布局）"></a>流式布局（百分比布局）</h1>
+<ul>
+<li>通过盒子的宽度设置成百分比来根据屏幕的宽度伸缩，不受固定像素的限制，内容向两侧填充</li>
+<li>是移动端web开发比较常见的布局方式</li>
+<li>用max/min-width/hight确保盒子伸缩在合理范围内。</li>
+</ul>
+<h1 id="flex布局"><a class="header-anchor" href="#flex布局"></a>flex布局</h1>
+<p>  flex是flexible box的缩写，意为弹性布局，用来为盒装模型最大的灵活性，任何一个容易都可以指定为flex布局。<code>display: flex</code></p>
+<ul>
+<li>当我们为父盒子设置为flex布局以后，子元素的float、clear和vertical-align属性将失效</li>
+<li>采用flex布局的元素，称为Flex容器(flex container)简称为容器，他得所有子容器成员，称为flex项目(flex item)，简称为“项目”</li>
+</ul>
+<h2 id="常见父项属性"><a class="header-anchor" href="#常见父项属性"></a>常见父项属性</h2>
+<ul>
+<li><code>flex-direction</code>
+<ul>
+<li>设置主轴方向，默认的主轴方向就是x轴方向，默认侧轴方向就是y轴方向</li>
+<li>属性值：row(默认)、row-reverse(从右到左)、column(从上到下)、column-reverse(从下到上)</li>
+</ul>
+</li>
+<li><code>justify-content</code>
+<ul>
+<li>定义了项目在<strong>主轴</strong>上的对齐方式</li>
+<li>属性值：flex-start(从头开始)、flex-end(从尾部开始)、center(在主轴居中对齐)、space-around(平分剩余空间)、space-between(先两边贴边，再平分剩余空间)</li>
+</ul>
+</li>
+<li><code>flex-wrap</code>
+<ul>
+<li>默认情况下，flex布局不换行</li>
+<li>属性值：no-warp(不换行)、wrap(换行)</li>
+</ul>
+</li>
+<li><code>align-content(换行)</code>
+<ul>
+<li>控制子项在<strong>侧轴</strong>上的对齐方式，<strong>单行下没有效果</strong></li>
+<li>属性值：参见justify-content</li>
+</ul>
+</li>
+<li><code>align-items(单行)</code>
+<ul>
+<li>控制子项在<strong>侧轴</strong>上的对齐方式</li>
+<li>属性值：参见justify-content</li>
+</ul>
+</li>
+<li><code>flex-flow</code>
+<ul>
+<li>flex-direction和flex-wrap的复合写法</li>
+</ul>
+</li>
+</ul>
+<h2 id="常见子项属性"><a class="header-anchor" href="#常见子项属性"></a>常见子项属性</h2>
+<ul>
+<li><code>flex</code>
+<ul>
+<li>分配子项目的<strong>剩余空间</strong>，表示子项占多少份数</li>
+<li>属性值：数字(默认为0)</li>
+</ul>
+</li>
+<li><code>align-self</code>
+<ul>
+<li>单独控制某个项目沿侧轴上的对齐方式</li>
+</ul>
+</li>
+<li><code>order</code>
+<ul>
+<li>定义项目的排列顺序</li>
+<li>属性值：数字(默认为0)，越小越靠前</li>
+</ul>
+</li>
+</ul>
+<h1 id="rem适配布局"><a class="header-anchor" href="#rem适配布局"></a>rem适配布局</h1>
+<ul>
+<li>rem是一个相对单位，类似于em，em是父元素字体大小，rem(root em)是相对于html元素的字体大小。</li>
+</ul>
+<h2 id="媒体查询-Media-Query"><a class="header-anchor" href="#媒体查询-Media-Query"></a>媒体查询(Media Query)</h2>
+<ul>
+<li>使用@media查询，可以针对不同的媒体类型定义不同的样式</li>
+<li>@media可以针对不用屏幕尺寸设置不同的样式</li>
+<li>重置浏览器大小，页面也会根据浏览器宽度和高度重新渲染</li>
+</ul>
+<h3 id="语法"><a class="header-anchor" href="#语法"></a>语法</h3>
+<ul>
+<li><code>@media mediatype and|not|only (media feature) &#123; css code &#125;</code></li>
+<li>mediatype: all / print / screen</li>
+<li>media feature: max-width / min-width / width</li>
+</ul>
+<p>   <strong>媒体查询 + rem 能实现元素大小的动态变化。</strong></p>
+<h2 id="引入不同的css文件"><a class="header-anchor" href="#引入不同的css文件"></a>引入不同的css文件</h2>
+<ul>
+<li><code>&lt;link rel=&quot;stylesheet&quot;media=&quot;mediatype and|not|only (media feature)&quot; href=&quot;style.css&quot;&gt;</code></li>
+</ul>
+<h1 id="Less"><a class="header-anchor" href="#Less"></a>Less</h1>
+<ul>
+<li>变量
+<ul>
+<li>@变量名: 值</li>
+</ul>
+</li>
+<li>Less嵌套
+<ul>
+<li>直接放在父元素样式的{}中</li>
+<li>伪类、伪元素、交集选择器，在前面加&amp;符号</li>
+</ul>
+</li>
+<li>可进行算数运算
+<ul>
+<li>单位不同以第一个为准</li>
+</ul>
+</li>
+</ul>
+<h1 id="Flexible-js"><a class="header-anchor" href="#Flexible-js"></a>Flexible.js</h1>
+<p>  阿里的一款适配移动端的js开发框架，用于配合rem布局，在不同的页面宽度下，为html元素根节点赋予不同的font-size(默认为页面宽度的1/10)，从而控制了元素的相对大小不发生改变。</p>
+<h1 id="响应式开发"><a class="header-anchor" href="#响应式开发"></a>响应式开发</h1>
+<p>  使用媒体查询针对不同宽度的设备进行布局和样式，从而适配不同的设备。</p>
+<table>
+<thead>
+<tr>
+<th>设备划分</th>
+<th>尺寸区间</th>
+<th>宽度设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>手机</td>
+<td>&lt;768px</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>平板</td>
+<td>&gt;=768px &lt;992px</td>
+<td>750px</td>
+</tr>
+<tr>
+<td>桌面显示器</td>
+<td>&gt;=992px &lt;1200px</td>
+<td>970px</td>
+</tr>
+<tr>
+<td>大桌面显示器</td>
+<td>&gt;=1200px</td>
+<td>1170px</td>
+</tr>
+</tbody>
+</table>
+<h2 id="响应式布局容器"><a class="header-anchor" href="#响应式布局容器"></a>响应式布局容器</h2>
+<p>  响应式需要一个父级做为布局容器，来配合子级元素来实现变化效果。<br>
+  原理就是在不同屏幕下，通过媒体查询来改变这个布局容器的大小，再改变里面子元素的排列方式和大小，从而实现不同屏幕下，看到不同的页面布局和样式变化。</p>
+<h1 id="JS移动端特效"><a class="header-anchor" href="#JS移动端特效"></a>JS移动端特效</h1>
+<h2 id="touch触摸"><a class="header-anchor" href="#touch触摸"></a>touch触摸</h2>
+<ul>
+<li>触摸事件
+<ul>
+<li>touchstart 触摸</li>
+<li>touchmove 按住不动滑动</li>
+<li>touchend 结束触摸</li>
+</ul>
+</li>
+<li>事件对象
+<ul>
+<li>touches 触摸屏幕的所有触点的列表</li>
+<li>targetTouches 触摸当前元素的所有触点的列表</li>
+<li>changedTouches 触点发生了改变状态的列表</li>
+</ul>
+</li>
+</ul>
+<h2 id="移动端click事件的300ms延迟"><a class="header-anchor" href="#移动端click事件的300ms延迟"></a>移动端click事件的300ms延迟</h2>
+<p>  原因：部分浏览器在第一次点击之后会等待300ms判断用户是否是双击（以执行页面放大的行为）<br>
+  解决：1. user-scalable设置为no 2.css属性touch-action设置为manipulation（<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/touch-action%EF%BC%89">https://developer.mozilla.org/zh-CN/docs/Web/CSS/touch-action）</a></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>HTML</tag>
+        <tag>CSS</tag>
+        <tag>前端</tag>
+        <tag>移动端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>品优购项目：踩坑细节记录</title>
+    <url>//posts/Project-pinyougou/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<h1 id="SEO优化"><a class="header-anchor" href="#SEO优化"></a>SEO优化</h1>
+<p>  对于一个营利性网站而言，提升其在搜索引擎中的排名至关重要。除去直接付费的竞价排名外，搜索引擎优化（Search Engine Optimization）也是不可或缺的一环。</p>
+<h2 id="TDK三大标签"><a class="header-anchor" href="#TDK三大标签"></a>TDK三大标签</h2>
+<ul>
+<li><code>&lt;title&gt;</code>标签，网站标题：内页的第一个重要标签
+<ul>
+<li>建议：<strong>网站名 - 网站的介绍（不超过30汉字）</strong></li>
+</ul>
+</li>
+<li><code>description</code> 网站说明
+<ul>
+<li><strong>简要说明网站是做什么的</strong></li>
+</ul>
+</li>
+<li><code>keywords</code> 关键字
+<ul>
+<li><strong>keywords是页面关键词，是搜索引擎的关注点之一</strong></li>
+<li><strong>最好限制为6 ~ 8个关键词，且之间用英文逗号隔开</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><figcaption><span>品优购网站的三大标签</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>品优购商城 - 网络购物最佳选择，物美价廉，免费配送，一站式服务为您提供优秀购物体验！<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">content</span>=<span class="string">&quot;品优购商城 - 专业的综合网上购物商城，销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数万个品牌优质商品。便捷、诚信的服务，为您提供愉悦的网上购物体验！&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;前端, HTML, CSS, 电商, 品优购商城, 静态界面&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Logo优化"><a class="header-anchor" href="#Logo优化"></a>Logo优化</h2>
+<ul>
+<li>logo里面首先放一个<code>&lt;h1&gt;</code>标签（<strong>用于提权</strong>）</li>
+<li><code>&lt;h1&gt;</code>标签中插入链接<code>&lt;a&gt;</code>标签，返回首页</li>
+<li>链接里面放文字（网站名称），但是为了视觉效果，文字不能显示出来（<code>font-size: 0</code>）</li>
+<li>链接给一个<code>title</code>属性，鼠标放在Logo上可显示文字</li>
+</ul>
+<span id="more"></span>
+<h2 id="注册界面"><a class="header-anchor" href="#注册界面"></a>注册界面</h2>
+<p>  按照说法，注册界面一般不需要SEO优化。</p>
+<h1 id="一行内多个列表元素-code-li-code-超宽的问题"><a class="header-anchor" href="#一行内多个列表元素-code-li-code-超宽的问题"></a>一行内多个列表元素<code>&lt;li&gt;</code>超宽的问题</h1>
+<p>  在某个页面布局时，经常会遇到列表元素宽度难以确定的问题。譬如，在宽度为1200px的版心中布置5个&lt;li&gt;元素很容易确定单个元素的宽度可以是240px，但是又要使得这些元素间插入四个外边距值margin则需要一番计算：这需要使得一行内n个&lt;li&gt;元素减少的总宽度(n的倍数，假设单个表单元素减少的宽度以1px为单位)恰好是(n-1)的倍数。<br>
+  或者也可以控制一行的最后一个&lt;li&gt;元素，减少其宽度。当然这也需要一定的计算。但是，在实践中，对于一些对宽度不是那么敏感的&lt;li&gt;元素，可以考虑<strong>增大其父级元素&lt;ul&gt;的宽度，直到对应数量的&lt;li&gt;元素可以在一行显示。</strong>，此外，还需要<strong>在&lt;ul&gt;的父级元素上设置<code>overflow: hidden</code>来隐藏列表中超宽的部分。</strong></p>
+<h1 id="层叠上下文相关"><a class="header-anchor" href="#层叠上下文相关"></a>层叠上下文相关</h1>
+<p>  z-index在定位元素上生效，需要指定position:xxx</p>
+<h1 id="tab分页栏的制作"><a class="header-anchor" href="#tab分页栏的制作"></a>tab分页栏的制作</h1>
+<p>  首先，创建分页选项卡和对应数量的分页栏内容，我用&lt;li&gt;标签中的&lt;a&gt;元素作为选项卡，tab_list_item作为对应的分栏内容。首先，由于默认第一个选项卡激活，显示为红色。因此一开始显示第一个分栏的内容，其它分栏应用样式<code>display: none</code>来进行隐藏，其它选项卡文字颜色为灰色，代表未激活状态。<br>
+  对于各个tab内的选项卡，我利用JS将它们赋予两个属性<code>setAttribute('which_tab / which_page')</code>，这样为这些选项卡绑定onclick事件时可以读取这些属性判断究竟是哪个tab内的选项卡被选中，再利用循环清除所有选项卡的红色样式，将被点击的选项卡添加红色样式。同时，也用循环为所有分栏设置<code>display: none</code>，根据读取到的which_page属性决定哪一页正常显示。</p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>HTML</tag>
+        <tag>CSS</tag>
+        <tag>Javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -881,6 +1219,69 @@ $$</p>
       </categories>
       <tags>
         <tag>信号与系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Python读写XML文件</title>
+    <url>//posts/Use-Python-to-Read-and-Write-XML-files/</url>
+    <content><![CDATA[<div class="note warning"><p>2022 / 10 / 19 说明：本文仍为未完成状态，且后续很长一段时间内将不会进一步完善此文。请谨慎阅读这篇文章。</p>
+</div>
+<p>  因学长所用的<a href="https://sao-kirito.top/2021/10/09/yolov5-dota-obb/">某个针对yolov5的修改版训练网络</a>针对<strong>宽高不等的图片无法作为数据正常送入网络进行训练</strong>，而先期使用labelimg2标注工具所截取的图片往往都不是正方形，所以我要对之前处理的图片进行padding处理使之成为正方形。同时padding操作改变了图片的坐标系位置以及图片宽高属性，因此要对标签(XML文件)进行更新操作，而这涉及到对XML文件的读写，在网上查询相关资料后，我成功实现了预期目标。</p>
+<span id="more"></span>
+<h2 id="01-XML文件的结构"><a class="header-anchor" href="#01-XML文件的结构"></a>01 XML文件的结构</h2>
+<p>  XML文件作为一种被设计为传输、存储结构化数据信息的文件结构，其语法简洁清晰，没有其它的预定义标签，以一个简单的XML文档为例：</p>
+<figure class="highlight xml"><figcaption><span>testfile.xml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">addressbook</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">person</span> <span class="attr">gender</span> = <span class="string">&quot;male&quot;</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">name</span>&gt;</span>Jack<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">id</span>&gt;</span>01<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tel</span>&gt;</span>10000<span class="tag">&lt;/<span class="name">tel</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">address</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">province</span>&gt;</span>Jiangsu<span class="tag">&lt;/<span class="name">province</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">city</span>&gt;</span>Nanking<span class="tag">&lt;/<span class="name">city</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">person</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">person</span> <span class="attr">gender</span> = <span class="string">&quot;female&quot;</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">name</span>&gt;</span>Maria<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">id</span>&gt;</span>02<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tel</span>&gt;</span>10001<span class="tag">&lt;/<span class="name">tel</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">address</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">province</span>&gt;</span>Anhui<span class="tag">&lt;/<span class="name">province</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">city</span>&gt;</span>Hefei<span class="tag">&lt;/<span class="name">city</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">person</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">addressbook</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  其中第一行<strong>必须</strong>是<strong>XML声明</strong>，在文件的前面不能有其它元素或者注释，它定义 XML 的版本和所使用的编码方式，第二行开始是一个<strong>根元素</strong>，在这个例子中，根元素是<code>&lt;addressbook&gt;</code>...<code>&lt;/addressbook&gt;</code>。接下来的<code>&lt;person&gt;</code>标签是根元素的<strong>子元素</strong>，而对应的，根元素为所有子元素的父元素。所有元素都有对应的子元素，都可以拥有文本内容和<strong>属性</strong>，例如<code>&lt;person&gt;</code>标签的属性名<code>gender</code>，其对应的属性值由双引号<code>&quot;</code>括起来。</p>
+<p>  其它需要注意的内容诸如标签名大小写敏感、注释格式等可以参考其它网络文章：<br>
+  <a href="https://www.w3school.com.cn/xml/xml_tree.asp">XML 树结构 (w3school.com.cn)</a><br>
+  <a href="https://www.cnblogs.com/klb561/p/9196515.html">XML文件结构和基本语法 - konglingbin - 博客园 (cnblogs.com)</a><br>
+  <a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017784095418144">XML - 廖雪峰的官方网站 (liaoxuefeng.com)</a></p>
+<h2 id="02-DOM解析XML文件"><a class="header-anchor" href="#02-DOM解析XML文件"></a>02 DOM解析XML文件</h2>
+<blockquote>
+<p>文件对象模型（Document Object Model，简称DOM），是W3C组织推荐的处理可扩展置标语言的标准编程接口。一个 DOM 的解析器在解析一个XML文档时，一次性读取整个文档，把文档中所有元素保存在内存中的一个树结构里，之后你可以利用DOM 提供的不同的函数来读取或修改文档的内容和结构，也可以把修改过的内容写入xml文件。python中用xml.dom.minidom来解析xml文件。</p>
+</blockquote>
+<p>  参考了几篇网络教程，废话不多说，直接上手开干！</p>
+<h3 id="读取"><a class="header-anchor" href="#读取"></a>读取</h3>
+<div>
+	<div class="left">
+<figure class="highlight python"><figcaption><span>Python代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.dom.minidom <span class="keyword">as</span> minidom</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">filepath = os.path.abspath(<span class="string">&quot;testfile.xml&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;读取文件路径:&quot;</span>, filepath)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立DOM对象</span></span><br><span class="line">objectTree = minidom.parse(filepath)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取根元素(addressbook)</span></span><br><span class="line">rootElement = objectTree.documentElement</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;变量类型:&quot;</span>, <span class="built_in">type</span>(rootElement))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;根元素名:&quot;</span>, rootElement.nodeName)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以名字获得子元素(person)</span></span><br><span class="line">persons = rootElement.getElementsByTagName(<span class="string">&quot;person&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取到的子元素以节点列表方式存储</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;变量类型:&quot;</span>, <span class="built_in">type</span>(persons))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用索引号，可获取指定的某一个元素</span></span><br><span class="line">Jack = persons[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;节点列表中某一个元素的类型:&quot;</span>, <span class="built_in">type</span>(Jack))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 元素属性的读取</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jack性别:&quot;</span>, Jack.getAttribute(<span class="string">&quot;gender&quot;</span>))</span><br><span class="line"><span class="comment"># 通过节点获取属性</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jack性别:&quot;</span>, Jack.getAttributeNode(<span class="string">&quot;gender&quot;</span>).nodeValue)</span><br><span class="line"><span class="comment"># 文本内容的读取</span></span><br><span class="line">tel = Jack.getElementsByTagName(<span class="string">&quot;tel&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;tel:&quot;</span>, tel[<span class="number">0</span>].childNodes[<span class="number">0</span>].data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按照索引号获取元素</span></span><br><span class="line"><span class="comment"># childNodes[0]存储的内容为当前元素的文本节点</span></span><br><span class="line"><span class="comment"># 文本节点也被DOM视作某个元素的子元素</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(Jack.childNodes[<span class="number">0</span>]))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(Jack.childNodes[<span class="number">1</span>]))</span><br><span class="line"><span class="built_in">print</span>(Jack.childNodes[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只有Text类型才具有.data方法，获得文本内容</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(Jack.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>]))</span><br><span class="line"><span class="built_in">print</span>(Jack.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>].data)</span><br><span class="line"><span class="comment"># 或者通过.nodeValue方法获得元素的文本，两者应该等价</span></span><br><span class="line"><span class="built_in">print</span>(Jack.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>].nodeValue)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以通过for来遍历节点列表中的各个元素</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n遍历各个元素:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> person <span class="keyword">in</span> persons:</span><br><span class="line">    name = person.getElementsByTagName(<span class="string">&quot;name&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    gender = person.getAttribute(<span class="string">&quot;gender&quot;</span>)</span><br><span class="line">    id_number = person.getElementsByTagName(<span class="string">&quot;id&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    tel = person.getElementsByTagName(<span class="string">&quot;tel&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    address = person.getElementsByTagName(<span class="string">&quot;address&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">    province = address.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    city = address.getElementsByTagName(<span class="string">&quot;city&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;姓名: %s\t性别: %s\tid: %s\t电话: %s\t地址: %s省%s市&quot;</span></span><br><span class="line">          % (name, gender, id_number, tel, province, city))</span><br></pre></td></tr></table></figure>
+	</div>
+<div class="right">
+<figure class="highlight bash"><figcaption><span>控制台输出</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">读取文件路径: C:\Users\*****\Desktop\xmltest\testfile.xml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">变量类型: &lt;class <span class="string">&#x27;xml.dom.minidom.Element&#x27;</span>&gt;</span><br><span class="line">根元素名: addressbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">变量类型: &lt;class <span class="string">&#x27;xml.dom.minicompat.NodeList&#x27;</span>&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">节点列表中某一个元素的类型: &lt;class <span class="string">&#x27;xml.dom.minidom.Element&#x27;</span>&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Jack性别: male</span><br><span class="line"></span><br><span class="line">Jack性别: male</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tel: 10000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;class <span class="string">&#x27;xml.dom.minidom.Text&#x27;</span>&gt;</span><br><span class="line">&lt;class <span class="string">&#x27;xml.dom.minidom.Element&#x27;</span>&gt;</span><br><span class="line">&lt;DOM Element: name at 0x21cca71a700&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;class <span class="string">&#x27;xml.dom.minidom.Text&#x27;</span>&gt;</span><br><span class="line">Jack</span><br><span class="line"></span><br><span class="line">Jack</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">遍历各个元素:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">姓名: Jack	性别: male	<span class="built_in">id</span>: 01	电话: 10000	地址: Jiangsu省Nanking市</span><br><span class="line">姓名: Maria	性别: female	<span class="built_in">id</span>: 02	电话: 10001	地址: Anhui省Hefei市</span><br></pre></td></tr></table></figure>
+	</div>
+    <div class='clear'></div>
+</div>
+<div class="note warning"><p>警告：在笔者所用的环境下，<code>.childNodes</code>方法会将子元素与子元素之间生成的空格与换行当作空白文本节点并入节点列表，以至于得不到预期的获取元素的效果。个人认为还是最好用<code>.getElementsByTagName</code>获取元素节点列表再通过索引获得元素。</p>
+</div>
+<h3 id="写入-更新-追加、删除"><a class="header-anchor" href="#写入-更新-追加、删除"></a>写入/更新(追加、删除)</h3>
+<p>  对于第一种情况，你需要调用<code>xml.dom.minidom.Document()</code>新建一个DOM对象。而在其他情况下，你只需要建立、删除或者更新元素节点或者文本内容节点的值，并挂在到对应的父元素上即可，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.dom.minidom <span class="keyword">as</span> minidom</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">filepath = os.path.abspath(<span class="string">&quot;testfile.xml&quot;</span>)</span><br><span class="line">objectTree = minidom.parse(filepath)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取根元素(addressbook)</span></span><br><span class="line">rootElement = objectTree.documentElement</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建person元素并赋属性</span></span><br><span class="line">person = objectTree.createElement(<span class="string">&quot;person&quot;</span>)</span><br><span class="line">person.setAttribute(<span class="string">&quot;gender&quot;</span>, <span class="string">&quot;male&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建各个元素并设置文本内容</span></span><br><span class="line"><span class="comment"># 创建元素</span></span><br><span class="line">name = objectTree.createElement(<span class="string">&quot;name&quot;</span>)</span><br><span class="line"><span class="comment"># 创建文本节点</span></span><br><span class="line">name_text = objectTree.createTextNode(<span class="string">&quot;Xiaoming&quot;</span>)</span><br><span class="line"><span class="comment"># 将文本挂载在其元素之下</span></span><br><span class="line">name.appendChild(name_text)</span><br><span class="line"></span><br><span class="line">id_number = objectTree.createElement(<span class="string">&quot;id&quot;</span>)</span><br><span class="line">id_text = objectTree.createTextNode(<span class="string">&quot;03&quot;</span>)</span><br><span class="line">id_number.appendChild(id_text)</span><br><span class="line"></span><br><span class="line">tel = objectTree.createElement(<span class="string">&quot;tel&quot;</span>)</span><br><span class="line">tel_text = objectTree.createTextNode(<span class="string">&quot;10002&quot;</span>)</span><br><span class="line">tel.appendChild(tel_text)</span><br><span class="line"></span><br><span class="line">address = objectTree.createElement(<span class="string">&quot;address&quot;</span>)</span><br><span class="line">province = objectTree.createElement(<span class="string">&quot;province&quot;</span>)</span><br><span class="line">province_text = objectTree.createTextNode(<span class="string">&quot;Hubei&quot;</span>)</span><br><span class="line">city = objectTree.createElement(<span class="string">&quot;city&quot;</span>)</span><br><span class="line">city_text = objectTree.createTextNode(<span class="string">&quot;Wuhan&quot;</span>)</span><br><span class="line">address.appendChild(province)</span><br><span class="line">address.appendChild(city)</span><br><span class="line">province.appendChild(province_text)</span><br><span class="line">city.appendChild(city_text)</span><br><span class="line"></span><br><span class="line">person.appendChild(name)</span><br><span class="line">person.appendChild(id_number)</span><br><span class="line">person.appendChild(tel)</span><br><span class="line">person.appendChild(address)</span><br><span class="line"></span><br><span class="line">rootElement.appendChild(person)</span><br><span class="line"></span><br><span class="line">persons = rootElement.getElementsByTagName(<span class="string">&quot;person&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n遍历各个元素:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> persons:</span><br><span class="line">    name = p.getElementsByTagName(<span class="string">&quot;name&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    gender = p.getAttribute(<span class="string">&quot;gender&quot;</span>)</span><br><span class="line">    id_number = p.getElementsByTagName(<span class="string">&quot;id&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    tel = p.getElementsByTagName(<span class="string">&quot;tel&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    address = p.getElementsByTagName(<span class="string">&quot;address&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">    province = address.getElementsByTagName(<span class="string">&quot;province&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    city = address.getElementsByTagName(<span class="string">&quot;city&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;姓名: %s\t性别: %s\tid: %s\t电话: %s\t地址: %s省%s市&quot;</span></span><br><span class="line">          % (name, gender, id_number, tel, province, city))</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;modified.xml&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="comment"># 参数列表：文件 - 子元素缩进 - 编码 - 同级子元素之间插入的元素</span></span><br><span class="line">    objectTree.writexml(f, addindent=<span class="string">&#x27;  &#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>, newl=’\n’)</span><br></pre></td></tr></table></figure>
+<p>  根据笔者测试，其能生成对应的元素，逻辑结构虽然没有发生错误：</p>
+<figure class="highlight bash"><figcaption><span>控制台输出</span></figcaption><table><tr><td class="code"><pre><span class="line">遍历各个元素:</span><br><span class="line">姓名: Jack	性别: male	<span class="built_in">id</span>: 01	电话: 10000	地址: Jiangsu省Nanking市</span><br><span class="line">姓名: Maria	性别: female	<span class="built_in">id</span>: 02	电话: 10001	地址: Anhui省Hefei市</span><br><span class="line">姓名: Xiaoming	性别: male	<span class="built_in">id</span>: 03	电话: 10002	地址: Hubei省Wuhan市</span><br></pre></td></tr></table></figure>
+<p>  但仍存在其问题，由于读取XML文件时，元素之间的换行符与空格被当作文本内容(在DOM下同样被视作元素)，从而<code>.writexml</code>参数中的换行、缩进同样对其生效，导致新加的元素格式正常，而原来排版工整的元素出现了格式问题：</p>
+<p><img data-src="/img/Use-Python-to-Read-and-Write-XML-files/01.png" alt="换行" title="换行问题"></p>
+<div align="center">换行问题</div>
+<br>
+<p><img data-src="/img/Use-Python-to-Read-and-Write-XML-files/02.png" alt="正常" title="正常效果"></p>
+<div align="center">正常效果</div>
+<h2 id="03-SAX解析XML文件"><a class="header-anchor" href="#03-SAX解析XML文件"></a>03 SAX解析XML文件</h2>
+<p>  SAX，全称为Simple API for XML，它并非W3C官方所指定的一种标准，但是凭着其独特的事件处理模型，支持它的XML解析器也不在少数。与DOM相比，它的优势在于边解析边进行操作，不用像DOM一样将XML文件的整个对象树映射进内存中，占用资源较少。但缺陷在于需要用户自己动手重写回调函数（handler）以实现指定的操作，且根据我自己搜索到的资料，似乎SAX对于修改文件的数据——特别是指定位置的数据比较困难，中文资料可供参考的不多，而且大多是给的例子一模一样……</p>
+<p>  SAX包括readers、handlers以及input sources三个部分。readers负责读取sources里的内容，并在遇到标签开始/结束/内容时向handler发送对应的事件。而handler负责处理对应的事件，相关代码可以在<code>.\Python\Python[版本号]\Lib\xml\sax\handler.py</code>中看到。</p>
+<p>  SAX定义了四种handler，即content handler、DTD handler、error handler以及entity handler。笔者所学尚浅，只需要对xml文件中的内容进行处理即可。因此我们只需要重写content handler的类方法以执行我们需要的操作。</p>
+<figure class="highlight python"><figcaption><span>重写回调函数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># 重写Handler类，继承自xml.sax.ContentHandler</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">XmlHandler</span>(xml.sax.ContentHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.currentData = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.gender = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.name = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.<span class="built_in">id</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.province = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.city = <span class="string">&quot;&quot;</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 遇到元素的开始标签&lt;...&gt;时调用，tag是标签名字，attribute是属性值字典    </span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">startElement</span>(<span class="params">self, tag, attribute</span>):</span><br><span class="line">        self.currentData = tag</span><br><span class="line">        <span class="keyword">if</span> tag == <span class="string">&quot;person&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;******&quot;</span>)</span><br><span class="line">            self.gender = attribute[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">            <span class="keyword">if</span> self.gender == <span class="string">&quot;male&quot;</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;男性:&quot;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;女性:&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line">	<span class="comment"># 遇到元素的结束标签&lt;/...&gt;时调用</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">endElement</span>(<span class="params">self, tag</span>):</span><br><span class="line">        <span class="keyword">if</span> tag == <span class="string">&quot;name&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;姓名:&quot;</span>, self.name)</span><br><span class="line">        <span class="keyword">elif</span> tag == <span class="string">&quot;id&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;id:&quot;</span>, self.<span class="built_in">id</span>)</span><br><span class="line">        <span class="keyword">elif</span> tag == <span class="string">&quot;province&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;省份:&quot;</span>, self.province)</span><br><span class="line">        <span class="keyword">elif</span> tag == <span class="string">&quot;city&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;市区:&quot;</span>, self.city)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">        self.currentData = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 遇到元素的内容时调用</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">characters</span>(<span class="params">self, content</span>):</span><br><span class="line">        <span class="keyword">if</span> self.currentData == <span class="string">&quot;name&quot;</span>:</span><br><span class="line">            self.name = content</span><br><span class="line">        <span class="keyword">elif</span> self.currentData == <span class="string">&quot;id&quot;</span>:</span><br><span class="line">            self.<span class="built_in">id</span> = content</span><br><span class="line">        <span class="keyword">elif</span> self.currentData == <span class="string">&quot;province&quot;</span>:</span><br><span class="line">            self.province = content</span><br><span class="line">        <span class="keyword">elif</span> self.currentData == <span class="string">&quot;city&quot;</span>:</span><br><span class="line">            self.city = content</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>  然后我们来实战验证一下我们的代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.sax</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">XmlHandler</span>(xml.sax.ContentHandler):</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 创建并返回一个解析器对象(SAX XMLReader)</span></span><br><span class="line">parser = xml.sax.make_parser()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭namespaces模式，即取消对xml文件中命名空间的处理</span></span><br><span class="line">parser.setFeature(xml.sax.handler.feature_namespaces, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置当前的ContentHandler为自己重写的Handler</span></span><br><span class="line">handler = XmlHandler()</span><br><span class="line">parser.setContentHandler(handler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始解析xml文件</span></span><br><span class="line">parser.parse(<span class="string">&quot;testfile.xml&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>效果展示：</p>
+<figure class="highlight bash"><figcaption><span>控制台输出</span></figcaption><table><tr><td class="code"><pre><span class="line">******</span><br><span class="line">男性:</span><br><span class="line">姓名: Jack</span><br><span class="line"><span class="built_in">id</span>: 01</span><br><span class="line">省份: Jiangsu</span><br><span class="line">市区: Nanking</span><br><span class="line">******</span><br><span class="line">女性:</span><br><span class="line">姓名: Maria</span><br><span class="line"><span class="built_in">id</span>: 02</span><br><span class="line">省份: Anhui</span><br><span class="line">市区: Hefei</span><br></pre></td></tr></table></figure>
+<h2 id="04-ElementTree解析XML文件"><a class="header-anchor" href="#04-ElementTree解析XML文件"></a>04 ElementTree解析XML文件</h2>
+<h3 id="施工中。。。"><a class="header-anchor" href="#施工中。。。"></a>施工中。。。</h3>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1813,171 +2214,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>使用Python读写XML文件</title>
-    <url>//posts/Use-Python-to-Read-and-Write-XML-files/</url>
-    <content><![CDATA[<div class="note warning"><p>2022 / 10 / 19 说明：本文仍为未完成状态，且后续很长一段时间内将不会进一步完善此文。请谨慎阅读这篇文章。</p>
-</div>
-<p>  因学长所用的<a href="https://sao-kirito.top/2021/10/09/yolov5-dota-obb/">某个针对yolov5的修改版训练网络</a>针对<strong>宽高不等的图片无法作为数据正常送入网络进行训练</strong>，而先期使用labelimg2标注工具所截取的图片往往都不是正方形，所以我要对之前处理的图片进行padding处理使之成为正方形。同时padding操作改变了图片的坐标系位置以及图片宽高属性，因此要对标签(XML文件)进行更新操作，而这涉及到对XML文件的读写，在网上查询相关资料后，我成功实现了预期目标。</p>
-<span id="more"></span>
-<h2 id="01-XML文件的结构"><a class="header-anchor" href="#01-XML文件的结构"></a>01 XML文件的结构</h2>
-<p>  XML文件作为一种被设计为传输、存储结构化数据信息的文件结构，其语法简洁清晰，没有其它的预定义标签，以一个简单的XML文档为例：</p>
-<figure class="highlight xml"><figcaption><span>testfile.xml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">addressbook</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">person</span> <span class="attr">gender</span> = <span class="string">&quot;male&quot;</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">name</span>&gt;</span>Jack<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">id</span>&gt;</span>01<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tel</span>&gt;</span>10000<span class="tag">&lt;/<span class="name">tel</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">address</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">province</span>&gt;</span>Jiangsu<span class="tag">&lt;/<span class="name">province</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">city</span>&gt;</span>Nanking<span class="tag">&lt;/<span class="name">city</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">person</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">person</span> <span class="attr">gender</span> = <span class="string">&quot;female&quot;</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">name</span>&gt;</span>Maria<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">id</span>&gt;</span>02<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tel</span>&gt;</span>10001<span class="tag">&lt;/<span class="name">tel</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">address</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">province</span>&gt;</span>Anhui<span class="tag">&lt;/<span class="name">province</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">city</span>&gt;</span>Hefei<span class="tag">&lt;/<span class="name">city</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">person</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">addressbook</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>  其中第一行<strong>必须</strong>是<strong>XML声明</strong>，在文件的前面不能有其它元素或者注释，它定义 XML 的版本和所使用的编码方式，第二行开始是一个<strong>根元素</strong>，在这个例子中，根元素是<code>&lt;addressbook&gt;</code>...<code>&lt;/addressbook&gt;</code>。接下来的<code>&lt;person&gt;</code>标签是根元素的<strong>子元素</strong>，而对应的，根元素为所有子元素的父元素。所有元素都有对应的子元素，都可以拥有文本内容和<strong>属性</strong>，例如<code>&lt;person&gt;</code>标签的属性名<code>gender</code>，其对应的属性值由双引号<code>&quot;</code>括起来。</p>
-<p>  其它需要注意的内容诸如标签名大小写敏感、注释格式等可以参考其它网络文章：<br>
-  <a href="https://www.w3school.com.cn/xml/xml_tree.asp">XML 树结构 (w3school.com.cn)</a><br>
-  <a href="https://www.cnblogs.com/klb561/p/9196515.html">XML文件结构和基本语法 - konglingbin - 博客园 (cnblogs.com)</a><br>
-  <a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017784095418144">XML - 廖雪峰的官方网站 (liaoxuefeng.com)</a></p>
-<h2 id="02-DOM解析XML文件"><a class="header-anchor" href="#02-DOM解析XML文件"></a>02 DOM解析XML文件</h2>
-<blockquote>
-<p>文件对象模型（Document Object Model，简称DOM），是W3C组织推荐的处理可扩展置标语言的标准编程接口。一个 DOM 的解析器在解析一个XML文档时，一次性读取整个文档，把文档中所有元素保存在内存中的一个树结构里，之后你可以利用DOM 提供的不同的函数来读取或修改文档的内容和结构，也可以把修改过的内容写入xml文件。python中用xml.dom.minidom来解析xml文件。</p>
-</blockquote>
-<p>  参考了几篇网络教程，废话不多说，直接上手开干！</p>
-<h3 id="读取"><a class="header-anchor" href="#读取"></a>读取</h3>
-<div>
-	<div class="left">
-<figure class="highlight python"><figcaption><span>Python代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.dom.minidom <span class="keyword">as</span> minidom</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">filepath = os.path.abspath(<span class="string">&quot;testfile.xml&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;读取文件路径:&quot;</span>, filepath)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立DOM对象</span></span><br><span class="line">objectTree = minidom.parse(filepath)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取根元素(addressbook)</span></span><br><span class="line">rootElement = objectTree.documentElement</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;变量类型:&quot;</span>, <span class="built_in">type</span>(rootElement))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;根元素名:&quot;</span>, rootElement.nodeName)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以名字获得子元素(person)</span></span><br><span class="line">persons = rootElement.getElementsByTagName(<span class="string">&quot;person&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取到的子元素以节点列表方式存储</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;变量类型:&quot;</span>, <span class="built_in">type</span>(persons))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用索引号，可获取指定的某一个元素</span></span><br><span class="line">Jack = persons[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;节点列表中某一个元素的类型:&quot;</span>, <span class="built_in">type</span>(Jack))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 元素属性的读取</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jack性别:&quot;</span>, Jack.getAttribute(<span class="string">&quot;gender&quot;</span>))</span><br><span class="line"><span class="comment"># 通过节点获取属性</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Jack性别:&quot;</span>, Jack.getAttributeNode(<span class="string">&quot;gender&quot;</span>).nodeValue)</span><br><span class="line"><span class="comment"># 文本内容的读取</span></span><br><span class="line">tel = Jack.getElementsByTagName(<span class="string">&quot;tel&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;tel:&quot;</span>, tel[<span class="number">0</span>].childNodes[<span class="number">0</span>].data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按照索引号获取元素</span></span><br><span class="line"><span class="comment"># childNodes[0]存储的内容为当前元素的文本节点</span></span><br><span class="line"><span class="comment"># 文本节点也被DOM视作某个元素的子元素</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(Jack.childNodes[<span class="number">0</span>]))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(Jack.childNodes[<span class="number">1</span>]))</span><br><span class="line"><span class="built_in">print</span>(Jack.childNodes[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只有Text类型才具有.data方法，获得文本内容</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(Jack.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>]))</span><br><span class="line"><span class="built_in">print</span>(Jack.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>].data)</span><br><span class="line"><span class="comment"># 或者通过.nodeValue方法获得元素的文本，两者应该等价</span></span><br><span class="line"><span class="built_in">print</span>(Jack.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>].nodeValue)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以通过for来遍历节点列表中的各个元素</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n遍历各个元素:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> person <span class="keyword">in</span> persons:</span><br><span class="line">    name = person.getElementsByTagName(<span class="string">&quot;name&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    gender = person.getAttribute(<span class="string">&quot;gender&quot;</span>)</span><br><span class="line">    id_number = person.getElementsByTagName(<span class="string">&quot;id&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    tel = person.getElementsByTagName(<span class="string">&quot;tel&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    address = person.getElementsByTagName(<span class="string">&quot;address&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">    province = address.childNodes[<span class="number">1</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    city = address.getElementsByTagName(<span class="string">&quot;city&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;姓名: %s\t性别: %s\tid: %s\t电话: %s\t地址: %s省%s市&quot;</span></span><br><span class="line">          % (name, gender, id_number, tel, province, city))</span><br></pre></td></tr></table></figure>
-	</div>
-<div class="right">
-<figure class="highlight bash"><figcaption><span>控制台输出</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">读取文件路径: C:\Users\*****\Desktop\xmltest\testfile.xml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">变量类型: &lt;class <span class="string">&#x27;xml.dom.minidom.Element&#x27;</span>&gt;</span><br><span class="line">根元素名: addressbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">变量类型: &lt;class <span class="string">&#x27;xml.dom.minicompat.NodeList&#x27;</span>&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">节点列表中某一个元素的类型: &lt;class <span class="string">&#x27;xml.dom.minidom.Element&#x27;</span>&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Jack性别: male</span><br><span class="line"></span><br><span class="line">Jack性别: male</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tel: 10000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;class <span class="string">&#x27;xml.dom.minidom.Text&#x27;</span>&gt;</span><br><span class="line">&lt;class <span class="string">&#x27;xml.dom.minidom.Element&#x27;</span>&gt;</span><br><span class="line">&lt;DOM Element: name at 0x21cca71a700&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;class <span class="string">&#x27;xml.dom.minidom.Text&#x27;</span>&gt;</span><br><span class="line">Jack</span><br><span class="line"></span><br><span class="line">Jack</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">遍历各个元素:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">姓名: Jack	性别: male	<span class="built_in">id</span>: 01	电话: 10000	地址: Jiangsu省Nanking市</span><br><span class="line">姓名: Maria	性别: female	<span class="built_in">id</span>: 02	电话: 10001	地址: Anhui省Hefei市</span><br></pre></td></tr></table></figure>
-	</div>
-    <div class='clear'></div>
-</div>
-<div class="note warning"><p>警告：在笔者所用的环境下，<code>.childNodes</code>方法会将子元素与子元素之间生成的空格与换行当作空白文本节点并入节点列表，以至于得不到预期的获取元素的效果。个人认为还是最好用<code>.getElementsByTagName</code>获取元素节点列表再通过索引获得元素。</p>
-</div>
-<h3 id="写入-更新-追加、删除"><a class="header-anchor" href="#写入-更新-追加、删除"></a>写入/更新(追加、删除)</h3>
-<p>  对于第一种情况，你需要调用<code>xml.dom.minidom.Document()</code>新建一个DOM对象。而在其他情况下，你只需要建立、删除或者更新元素节点或者文本内容节点的值，并挂在到对应的父元素上即可，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.dom.minidom <span class="keyword">as</span> minidom</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">filepath = os.path.abspath(<span class="string">&quot;testfile.xml&quot;</span>)</span><br><span class="line">objectTree = minidom.parse(filepath)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取根元素(addressbook)</span></span><br><span class="line">rootElement = objectTree.documentElement</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建person元素并赋属性</span></span><br><span class="line">person = objectTree.createElement(<span class="string">&quot;person&quot;</span>)</span><br><span class="line">person.setAttribute(<span class="string">&quot;gender&quot;</span>, <span class="string">&quot;male&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建各个元素并设置文本内容</span></span><br><span class="line"><span class="comment"># 创建元素</span></span><br><span class="line">name = objectTree.createElement(<span class="string">&quot;name&quot;</span>)</span><br><span class="line"><span class="comment"># 创建文本节点</span></span><br><span class="line">name_text = objectTree.createTextNode(<span class="string">&quot;Xiaoming&quot;</span>)</span><br><span class="line"><span class="comment"># 将文本挂载在其元素之下</span></span><br><span class="line">name.appendChild(name_text)</span><br><span class="line"></span><br><span class="line">id_number = objectTree.createElement(<span class="string">&quot;id&quot;</span>)</span><br><span class="line">id_text = objectTree.createTextNode(<span class="string">&quot;03&quot;</span>)</span><br><span class="line">id_number.appendChild(id_text)</span><br><span class="line"></span><br><span class="line">tel = objectTree.createElement(<span class="string">&quot;tel&quot;</span>)</span><br><span class="line">tel_text = objectTree.createTextNode(<span class="string">&quot;10002&quot;</span>)</span><br><span class="line">tel.appendChild(tel_text)</span><br><span class="line"></span><br><span class="line">address = objectTree.createElement(<span class="string">&quot;address&quot;</span>)</span><br><span class="line">province = objectTree.createElement(<span class="string">&quot;province&quot;</span>)</span><br><span class="line">province_text = objectTree.createTextNode(<span class="string">&quot;Hubei&quot;</span>)</span><br><span class="line">city = objectTree.createElement(<span class="string">&quot;city&quot;</span>)</span><br><span class="line">city_text = objectTree.createTextNode(<span class="string">&quot;Wuhan&quot;</span>)</span><br><span class="line">address.appendChild(province)</span><br><span class="line">address.appendChild(city)</span><br><span class="line">province.appendChild(province_text)</span><br><span class="line">city.appendChild(city_text)</span><br><span class="line"></span><br><span class="line">person.appendChild(name)</span><br><span class="line">person.appendChild(id_number)</span><br><span class="line">person.appendChild(tel)</span><br><span class="line">person.appendChild(address)</span><br><span class="line"></span><br><span class="line">rootElement.appendChild(person)</span><br><span class="line"></span><br><span class="line">persons = rootElement.getElementsByTagName(<span class="string">&quot;person&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n遍历各个元素:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> persons:</span><br><span class="line">    name = p.getElementsByTagName(<span class="string">&quot;name&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    gender = p.getAttribute(<span class="string">&quot;gender&quot;</span>)</span><br><span class="line">    id_number = p.getElementsByTagName(<span class="string">&quot;id&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    tel = p.getElementsByTagName(<span class="string">&quot;tel&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue</span><br><span class="line">    address = p.getElementsByTagName(<span class="string">&quot;address&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">    province = address.getElementsByTagName(<span class="string">&quot;province&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    city = address.getElementsByTagName(<span class="string">&quot;city&quot;</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].data</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;姓名: %s\t性别: %s\tid: %s\t电话: %s\t地址: %s省%s市&quot;</span></span><br><span class="line">          % (name, gender, id_number, tel, province, city))</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;modified.xml&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="comment"># 参数列表：文件 - 子元素缩进 - 编码 - 同级子元素之间插入的元素</span></span><br><span class="line">    objectTree.writexml(f, addindent=<span class="string">&#x27;  &#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>, newl=’\n’)</span><br></pre></td></tr></table></figure>
-<p>  根据笔者测试，其能生成对应的元素，逻辑结构虽然没有发生错误：</p>
-<figure class="highlight bash"><figcaption><span>控制台输出</span></figcaption><table><tr><td class="code"><pre><span class="line">遍历各个元素:</span><br><span class="line">姓名: Jack	性别: male	<span class="built_in">id</span>: 01	电话: 10000	地址: Jiangsu省Nanking市</span><br><span class="line">姓名: Maria	性别: female	<span class="built_in">id</span>: 02	电话: 10001	地址: Anhui省Hefei市</span><br><span class="line">姓名: Xiaoming	性别: male	<span class="built_in">id</span>: 03	电话: 10002	地址: Hubei省Wuhan市</span><br></pre></td></tr></table></figure>
-<p>  但仍存在其问题，由于读取XML文件时，元素之间的换行符与空格被当作文本内容(在DOM下同样被视作元素)，从而<code>.writexml</code>参数中的换行、缩进同样对其生效，导致新加的元素格式正常，而原来排版工整的元素出现了格式问题：</p>
-<p><img data-src="/img/Use-Python-to-Read-and-Write-XML-files/01.png" alt="换行" title="换行问题"></p>
-<div align="center">换行问题</div>
-<br>
-<p><img data-src="/img/Use-Python-to-Read-and-Write-XML-files/02.png" alt="正常" title="正常效果"></p>
-<div align="center">正常效果</div>
-<h2 id="03-SAX解析XML文件"><a class="header-anchor" href="#03-SAX解析XML文件"></a>03 SAX解析XML文件</h2>
-<p>  SAX，全称为Simple API for XML，它并非W3C官方所指定的一种标准，但是凭着其独特的事件处理模型，支持它的XML解析器也不在少数。与DOM相比，它的优势在于边解析边进行操作，不用像DOM一样将XML文件的整个对象树映射进内存中，占用资源较少。但缺陷在于需要用户自己动手重写回调函数（handler）以实现指定的操作，且根据我自己搜索到的资料，似乎SAX对于修改文件的数据——特别是指定位置的数据比较困难，中文资料可供参考的不多，而且大多是给的例子一模一样……</p>
-<p>  SAX包括readers、handlers以及input sources三个部分。readers负责读取sources里的内容，并在遇到标签开始/结束/内容时向handler发送对应的事件。而handler负责处理对应的事件，相关代码可以在<code>.\Python\Python[版本号]\Lib\xml\sax\handler.py</code>中看到。</p>
-<p>  SAX定义了四种handler，即content handler、DTD handler、error handler以及entity handler。笔者所学尚浅，只需要对xml文件中的内容进行处理即可。因此我们只需要重写content handler的类方法以执行我们需要的操作。</p>
-<figure class="highlight python"><figcaption><span>重写回调函数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># 重写Handler类，继承自xml.sax.ContentHandler</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">XmlHandler</span>(xml.sax.ContentHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.currentData = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.gender = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.name = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.<span class="built_in">id</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.province = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.city = <span class="string">&quot;&quot;</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 遇到元素的开始标签&lt;...&gt;时调用，tag是标签名字，attribute是属性值字典    </span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">startElement</span>(<span class="params">self, tag, attribute</span>):</span><br><span class="line">        self.currentData = tag</span><br><span class="line">        <span class="keyword">if</span> tag == <span class="string">&quot;person&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;******&quot;</span>)</span><br><span class="line">            self.gender = attribute[<span class="string">&quot;gender&quot;</span>]</span><br><span class="line">            <span class="keyword">if</span> self.gender == <span class="string">&quot;male&quot;</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;男性:&quot;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;女性:&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line">	<span class="comment"># 遇到元素的结束标签&lt;/...&gt;时调用</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">endElement</span>(<span class="params">self, tag</span>):</span><br><span class="line">        <span class="keyword">if</span> tag == <span class="string">&quot;name&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;姓名:&quot;</span>, self.name)</span><br><span class="line">        <span class="keyword">elif</span> tag == <span class="string">&quot;id&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;id:&quot;</span>, self.<span class="built_in">id</span>)</span><br><span class="line">        <span class="keyword">elif</span> tag == <span class="string">&quot;province&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;省份:&quot;</span>, self.province)</span><br><span class="line">        <span class="keyword">elif</span> tag == <span class="string">&quot;city&quot;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;市区:&quot;</span>, self.city)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">        self.currentData = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 遇到元素的内容时调用</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">characters</span>(<span class="params">self, content</span>):</span><br><span class="line">        <span class="keyword">if</span> self.currentData == <span class="string">&quot;name&quot;</span>:</span><br><span class="line">            self.name = content</span><br><span class="line">        <span class="keyword">elif</span> self.currentData == <span class="string">&quot;id&quot;</span>:</span><br><span class="line">            self.<span class="built_in">id</span> = content</span><br><span class="line">        <span class="keyword">elif</span> self.currentData == <span class="string">&quot;province&quot;</span>:</span><br><span class="line">            self.province = content</span><br><span class="line">        <span class="keyword">elif</span> self.currentData == <span class="string">&quot;city&quot;</span>:</span><br><span class="line">            self.city = content</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>  然后我们来实战验证一下我们的代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.sax</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">XmlHandler</span>(xml.sax.ContentHandler):</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 创建并返回一个解析器对象(SAX XMLReader)</span></span><br><span class="line">parser = xml.sax.make_parser()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭namespaces模式，即取消对xml文件中命名空间的处理</span></span><br><span class="line">parser.setFeature(xml.sax.handler.feature_namespaces, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置当前的ContentHandler为自己重写的Handler</span></span><br><span class="line">handler = XmlHandler()</span><br><span class="line">parser.setContentHandler(handler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始解析xml文件</span></span><br><span class="line">parser.parse(<span class="string">&quot;testfile.xml&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>效果展示：</p>
-<figure class="highlight bash"><figcaption><span>控制台输出</span></figcaption><table><tr><td class="code"><pre><span class="line">******</span><br><span class="line">男性:</span><br><span class="line">姓名: Jack</span><br><span class="line"><span class="built_in">id</span>: 01</span><br><span class="line">省份: Jiangsu</span><br><span class="line">市区: Nanking</span><br><span class="line">******</span><br><span class="line">女性:</span><br><span class="line">姓名: Maria</span><br><span class="line"><span class="built_in">id</span>: 02</span><br><span class="line">省份: Anhui</span><br><span class="line">市区: Hefei</span><br></pre></td></tr></table></figure>
-<h2 id="04-ElementTree解析XML文件"><a class="header-anchor" href="#04-ElementTree解析XML文件"></a>04 ElementTree解析XML文件</h2>
-<h3 id="施工中。。。"><a class="header-anchor" href="#施工中。。。"></a>施工中。。。</h3>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>配置SOLOV2_ncnn相关环境并运行Demo</title>
-    <url>//posts/Configure-a-NCNN-Project/</url>
-    <content><![CDATA[<p>  今天最开心的事情是终于在Windows环境下运行起来Github上<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">这个项目</a>的Demo，对于我一个电脑小白而言那背后的可都是泪呀TAT，因此有必要记录一下整个流程以方便其他人的需要~</p>
-<p>  简述一下相关背景：<a href="https://github.com/Tencent/ncnn">ncnn</a>是一个前向神经网络框架，由纯C++实现所实现。而<a href="https://arxiv.org/abs/2003.10152">SOLOV2</a>是一个快速的实例分割算法，关于什么是实例分割，可参考图像处理的相关文章。此外，笔者的相关环境配置一并列举于此处，方便读者参考：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">环境</th>
-<th style="text-align:center">版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Windows</td>
-<td style="text-align:center">10 专业版 20H2</td>
-</tr>
-<tr>
-<td style="text-align:center">Visual Studio 2019</td>
-<td style="text-align:center">Community Edition<br>16.11.31702.278</td>
-</tr>
-<tr>
-<td style="text-align:center">OpenCV</td>
-<td style="text-align:center">3.4.5</td>
-</tr>
-<tr>
-<td style="text-align:center">CMake</td>
-<td style="text-align:center">3.21.3</td>
-</tr>
-<tr>
-<td style="text-align:center">ncnn</td>
-<td style="text-align:center"><a href="https://github.com/Tencent/ncnn/tree/2c4ae096044c816d7195476d652eb8d5aefb8379">Release 2c4ae09604</a><br>即目前的lateset release(20210720)</td>
-</tr>
-</tbody>
-</table>
-<span id="more"></span>
-<h2 id="01-ncnn编译"><a class="header-anchor" href="#01-ncnn编译"></a>01 ncnn编译</h2>
-<p>  理论上来讲，根据自身的需求直接使用release下官方的预编译静/动态库应该不会出现错误，然而笔者在实际配置项目时，添加了ncnn.lib这一附加依赖项后，在运行中依旧会产生Vulkan相关报错，如图所示：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/1.png" alt="vulkan报错"></p>
-<p>  推测可能为官方打包的库中默认调用了VulkanSDK与glslang这一submoudle，因此我们需要自己来对ncnn打包了。</p>
-<p>  在使用VS 2019命令行编译ncnn的过程中，也同样遇到了这样或那样的问题，不过所幸被Github上这条<a href="https://github.com/Tencent/ncnn/issues/2498">issue</a>解决了，大体上只要按照issue作者提示的操作就不会出现问题。</p>
-<p>  首先在开始菜单下找到Visual Studio 2019的文件夹，打开x64 Native Tools Command Prompt这个VS 2019的命令行工具。</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/2.png" alt="操作步骤"></p>
-<p>  下载 protobuf 3.4.0 的<a href="https://github.com/google/protobuf/archive/v3.4.0.zip">源码</a>（不知道其它版本是否可行），解压，编译ncnn前需要编译protobuf。</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 进入protobuf-3.4.0文件夹</span><br><span class="line"><span class="built_in">cd</span> protobuf-3.4.0</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// cmake -DCMAKE_BUILD_TYPE参数也可设为debug，但总之要前后一致</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line">    -Dprotobuf_BUILD_TESTS=OFF ^</span><br><span class="line">    -Dprotobuf_MSVC_STATIC_RUNTIME=OFF ../cmake</span><br><span class="line">    </span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即protobuf-3.4.0文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
-<p>  通过git克隆ncnn的源码并编译ncnn：</p>
-<div class="note warning"><p>提示：请务必注意路径问题！</p>
-</div>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">// 克隆远端仓库代码，放在ncnn文件夹下</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Tencent/ncnn.git</span><br><span class="line"></span><br><span class="line">// 进入ncnn文件夹</span><br><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line">// 拉取submodule</span><br><span class="line">git submodule update --init</span><br><span class="line"></span><br><span class="line">// 新建build-vs2019文件夹并跳转进入</span><br><span class="line"><span class="built_in">mkdir</span> build-vs2019</span><br><span class="line"><span class="built_in">cd</span> build-vs2019</span><br><span class="line"></span><br><span class="line">// 同上，-DCMAKE_BUILD_TYPE参数也可设为debug</span><br><span class="line">cmake -G<span class="string">&quot;NMake Makefiles&quot;</span> -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%<span class="built_in">cd</span>%/install ^</span><br><span class="line"></span><br><span class="line">// 更改为自己电脑上Protobuf对应文件夹所在的路径，注意：请务必改为绝对路径而不是相对路径！</span><br><span class="line">    -DProtobuf_INCLUDE_DIR=E:/Project/protobuf-3.4.0/build-vs2019/install/include ^</span><br><span class="line">    -DProtobuf_LIBRARIES=E:/Project/protobuf-3.4.0/build-vs2019/install/lib/libprotobuf.lib ^</span><br><span class="line">    -DProtobuf_PROTOC_EXECUTABLE=E:/Project/protobuf-3.4.0/build-vs2019/install/bin/protoc.exe ^</span><br><span class="line">// 更改为自己电脑上OpenCV3.4.5对应文件夹所在的路径，依然是注意绝对路径的问题</span><br><span class="line">	-DOpenCV_DIR=E:/opencv/build/x64/vc15/lib ..</span><br><span class="line">	</span><br><span class="line">nmake</span><br><span class="line">nmake install</span><br><span class="line"></span><br><span class="line">// 返回上级文件夹，即ncnn文件夹之外</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
-<p>  至此，运行此项目demo的环境构建工作就做好了，接下来就可以准备开始调试SOLOv2 ncnn的项目。</p>
-<h2 id="02-项目调试"><a class="header-anchor" href="#02-项目调试"></a>02 项目调试</h2>
-<p>  与上一步相同，首先需要使用获得一份源码：</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/DayBreak-u/SOLOV2_ncnn.git</span><br></pre></td></tr></table></figure>
-<p>  根据<a href="https://github.com/DayBreak-u/SOLOV2_ncnn">项目主页</a><a href="http://xn--README-ow6o.md">的README.md</a>，执行前三行代码：</p>
-<figure class="highlight bash"><figcaption><span>Command Prompt</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ncnn</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build </span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
-<p>  如果存在报错信息如<code>CMake Error at CMakeLists.txt:xx (find_package):Could not find module FindOpenCV.cmake or a configuration file for package OpenCV.</code>则是没有寻找到OpenCV的CMake文件，可在文件中添加一行<code>set(OpenCV_DIR E:/opencv/build/x64/vc15/lib)</code> （请替换为自己OpenCV的路径）或者是配置OpenCV_DIR这一环境变量即可。提示<code>-- Configuring done</code>、<code>-- Generating done</code>时即意味着项目解决方案的成功生成。</p>
-<p>  下载模型权重：</p>
-<blockquote>
-<p>链接: <a href="https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng">https://pan.baidu.com/s/1W1AiKdI4JJq2LW50uGOVng</a> 密码: phh8</p>
-</blockquote>
-<p>  在Windows环境下，由于没有Linux下的GNU Make，所以我们直接用VS来编译代码：</p>
-<h3 id="VS配置ncnn和opencv环境"><a class="header-anchor" href="#VS配置ncnn和opencv环境"></a>VS配置ncnn和opencv环境</h3>
-<p>  点击<code>项目</code>-&gt;<code>属性</code>-&gt;<code>VC++目录</code>，在Release配置、x64平台下，根据自己目录的实际情况添加以下路径至<code>包含目录</code>：</p>
-<div class="note warning"><p>注意：如果前文中您将protobuf、ncnn的源码编译为debug版本，则此处也要将其改为debug配置。</p>
-</div>
-<p>  <code>E:\opencv\build\include</code><br>
-  <code>E:\opencv\build\include\opencv</code><br>
-  <code>E:\opencv\build\include\opencv2</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\include</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\include\ncnn</code></p>
-<p>  同样，在<code>库目录</code> 中根据自身情况添加以下路径：</p>
-<p>  <code>E:\opencv\build\x64\vc15\lib</code><br>
-  <code>E:\Project\ncnn\build-vs2019\install\lib</code></p>
-<p>  在<code>链接器</code>-&gt;<code>输入</code>中加入<code>ncnn.lib</code>、<code>opencv_world345.lib</code>这两个<code>附加依赖项</code>就可以进行下一步操作了。</p>
-<h3 id="修改代码"><a class="header-anchor" href="#修改代码"></a>修改代码</h3>
-<p>  为方便运行demo查看效果，我对其进行了一定修改，以solov2.cpp为例（<del>才不是我没有测试过solov2_fast.cpp的原因呢</del>，哼o(~ヘ~o#)）：</p>
-<p>  根据前文下载的模型权重存储路径修改权重读取位置：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/3.png" alt="修改代码"></p>
-<p>  注释并重写main函数：</p>
-<figure class="highlight c++"><figcaption><span>solov2.cpp</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* imagepath = <span class="string">&quot;E:/Project/SOLOV2_ncnn/imgs/horses.jpg&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cv::Mat m = cv::<span class="built_in">imread</span>(imagepath, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (m.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;cv::imread %s failed\n&quot;</span>, imagepath);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::vector &lt;Object&gt; objects;</span><br><span class="line">    <span class="built_in">detect_solov2</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">draw_objects</span>(m, objects);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  程序生成的结果result.png默认放在项目build文件夹下，如果您想要直观地看见程序运行的效果，可以将main函数上方原作者注释掉的两行代码取消注释：<br>
-  <code>//    cv::imshow(&quot;image&quot;, image);</code><br>
-  <code>//    cv::waitKey(0);</code></p>
-<h3 id="运行代码"><a class="header-anchor" href="#运行代码"></a>运行代码</h3>
-<p>  做完上述操作后，在<code>解决方案资源管理器</code>中右键我们修改代码后的<code>solov2</code>并设为启动项目：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/4.png" alt="修改代码"></p>
-<p>  然后点击<code>本地Windows调试器</code>编译并运行程序。一般情况下，我们的<code>solov2.exe</code>就成功生成了。如果控制台打开提示找不到 <code>opencv_world345.dll</code>，就在<code>../opencv/build/x64/vc15/bin</code>文件夹下拷贝一份放在<code>../SOLOv2_ncnn/build/Release</code>下，该文件夹也是<code>solov2.exe</code>所在的地方。</p>
-<p>  运行窗口如图：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/5.png" alt="运行窗口"></p>
-<p>  运行效果如图：</p>
-<p><img data-src="/img/Configure-a-NCNN-Project/horses.jpg" alt="运行效果1" title="读取到的图片"></p>
-<p><img data-src="/img/Configure-a-NCNN-Project/result.png" alt="运行效果2" title="实例分割的结果"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>编程</tag>
-        <tag>SOLOv2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JS杂项知识记录</title>
     <url>//posts/js-learning/</url>
     <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
@@ -2907,7 +3143,38 @@ JS修改style样式操作，产生的是行内样式</p>
 <li>特点：独立创建了一个作用域，避免变量命名冲突问题</li>
 </ul>
 <h2 id="Scroll-元素滚动"><a class="header-anchor" href="#Scroll-元素滚动"></a>Scroll 元素滚动</h2>
-<img data-src='../../img/js-learning/scroll.png' />]]></content>
+<img data-src='../../img/js-learning/scroll.png' />
+<h1 id="移动端网页特效"><a class="header-anchor" href="#移动端网页特效"></a>移动端网页特效</h1>
+<p>参见<a href="../Mobile-Dev/">移动端开发</a></p>
+<h1 id="数据存储"><a class="header-anchor" href="#数据存储"></a>数据存储</h1>
+<h2 id="sessionStorage"><a class="header-anchor" href="#sessionStorage"></a>sessionStorage</h2>
+<ul>
+<li>特点：
+<ul>
+<li>生命周期为关闭浏览器窗口</li>
+<li>在同一个页面下数据可以共享</li>
+<li>以键值对的形式存储使用</li>
+</ul>
+</li>
+<li>方法：
+<ul>
+<li><code>sessionStorage.setItem(key, value)</code></li>
+<li><code>sessionStorage.getItem(key)</code></li>
+<li><code>sessionStorage.removeItem(key)</code></li>
+<li><code>sessionStorage.clear()</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="localStorage"><a class="header-anchor" href="#localStorage"></a>localStorage</h2>
+<ul>
+<li>特点：
+<ul>
+<li>永久，除非手动删除</li>
+<li>多窗口共享</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>学习</category>
       </categories>
@@ -2918,372 +3185,157 @@ JS修改style样式操作，产生的是行内样式</p>
       </tags>
   </entry>
   <entry>
-    <title>矩阵论复习</title>
-    <url>//posts/Matrix/</url>
-    <content><![CDATA[<h1 id="内积"><a class="header-anchor" href="#内积"></a>内积</h1>
-<h2 id="性质"><a class="header-anchor" href="#性质"></a>性质</h2>
-<ul>
-<li>交换律
-<ul>
-<li>$\left\langle\alpha,\beta\right\rangle = \left\langle\beta,\alpha\right\rangle$</li>
-</ul>
-</li>
-<li>非负性
-<ul>
-<li>$\left \langle \alpha,\alpha  \right \rangle \ge 0; \left \langle \alpha,\alpha  \right \rangle=0\Leftrightarrow \alpha =0$</li>
-</ul>
-</li>
-<li>齐次性
-<ul>
-<li>$\left \langle \alpha,k\beta  \right \rangle = \overline{k}\left \langle\alpha,\beta\right \rangle$</li>
-</ul>
-</li>
-<li>分配律
-<ul>
-<li>$\langle\alpha+\gamma,\beta\rangle = \langle\alpha,\beta\rangle + \langle\gamma,\beta\rangle$</li>
-</ul>
-</li>
-</ul>
-<h1 id="Jordan标准形"><a class="header-anchor" href="#Jordan标准形"></a>Jordan标准形</h1>
-<h2 id="定义"><a class="header-anchor" href="#定义"></a>定义</h2>
-<ul>
-<li>
-<p>形如下列形式的矩阵称之为n阶Jordan块<br>
-$$<br>
-J_i=\begin{bmatrix} \lambda_i &amp; 1 &amp;  &amp;  &amp; \\<br>
-&amp; \lambda_i &amp; 1 &amp; &amp; \\<br>
-&amp; &amp; \lambda_i &amp; \ddots &amp; \\<br>
-&amp; &amp; &amp; \ddots &amp; 1 \\<br>
-&amp; &amp; &amp; &amp; \lambda_i<br>
-\end{bmatrix}_{n_i \times n_i}<br>
-$$</p>
-</li>
-<li>
-<p>形如下列形式的矩阵称之为n阶Jordan型矩阵<br>
-$$<br>
-J=\begin{bmatrix}<br>
-J_1 &amp; &amp; &amp; \\<br>
-&amp; J_2 &amp; &amp; \\<br>
-&amp; &amp; \ddots &amp; \\<br>
-&amp; &amp; &amp; J_t<br>
-\end{bmatrix}<br>
-$$</p>
-<ul>
-<li>其中$J_i$为$n_i$阶Jordan块，且$n_1+\cdots+n_t=n$</li>
-</ul>
-</li>
-</ul>
-<h2 id="定理"><a class="header-anchor" href="#定理"></a>定理</h2>
-<ul>
-<li>每一个n阶复方阵𝑨都和一个Jordan型矩阵𝑱相似。即存在可逆阵𝑷, 使$P^{-1}AP = J$
-<ul>
-<li>计算方法：$A \rightarrow A(\lambda)=\lambda E - A \rightarrow 行列式因子 \rightarrow 不变因子 \rightarrow 初级因子 \rightarrow Jordan块 \rightarrow J$</li>
-<li>示例：求矩阵$A=\begin{bmatrix}-1&amp;-2&amp;6\\-1&amp;0&amp;3\\-1&amp;-1&amp;4\end{bmatrix}$的Jordan标准型
-<ul>
-<li>step1: 特征矩阵$A(\lambda)=\lambda E-A=\begin{bmatrix}\lambda+1&amp;2&amp;-6\\1&amp;\lambda&amp;-3\\1&amp;1&amp;\lambda-4\end{bmatrix}$</li>
-<li>step2: 求行列式因子，$A(\lambda)$中所有k阶子式首项系数是1的最大公因式称为k级<b>行列式因子</b>，记作$D_k(\lambda), k=1,\cdots,n.$
-<ul>
-<li>上述$A(\lambda)$，一阶子式为各个元素，$D_1(\lambda)=1$；</li>
-<li>二阶子式中，取第一二行、一二列的$\begin{vmatrix}\lambda+1&amp;2\\1&amp;\lambda\end{vmatrix}=\lambda^2+\lambda-2=(\lambda+2)(\lambda-1)$；第一二行、二三列的$\begin{vmatrix}2&amp;-6\\\lambda&amp;-3\end{vmatrix}=-6+6\lambda=6(\lambda-1)$，依次计算，可得$D_2(\lambda)=\lambda-1$；</li>
-<li>三阶子式$D_3(\lambda)=(\lambda+1)\lambda(\lambda-4)-6-6+3(\lambda+1)-2(\lambda-4)+6\lambda={(\lambda-1)}^3$</li>
-</ul>
-</li>
-<li>step3: 求不变因子：即$d_1(\lambda)=D_1(\lambda),d_n(\lambda)=\frac{D_n(\lambda)}{D_{n-1}(\lambda)}$
-<ul>
-<li>$d_1=1,d_2=\lambda-1,d_3=(\lambda-1)^2$</li>
-</ul>
-</li>
-<li>step4: 将𝑨(𝝀)的所有的次数大于零的不变因子分解为互不相同的一次因式的方幂的乘积，这些一次因式方幂称为𝑨(𝝀)的初级因子。来自于不同的不变因子的一次因子的方幂不能合并
-<ul>
-<li>$d_1$次数为0，没有初级因子，$d_2$只有一个一次因式$\lambda-1$为其初等因子，$d_3$只有一个一次因式的二次方幂${\lambda-1}^2$为其初等因子</li>
-</ul>
-</li>
-<li>step5: 初级因子和Jordan块对应
-<ul>
-<li>$\lambda-1 \leftrightarrow [1], (\lambda-1)^2 \leftrightarrow \begin{bmatrix}1&amp;1\\0&amp;1\end{bmatrix}$</li>
-</ul>
-</li>
-<li>step6: Jordan块按对角线排列起来得到Jordan标准型J，<b>Jordan标准形与Jordan块的顺序无关</b>。
-<ul>
-<li>$J=\begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;1\\0&amp;0&amp;1\end{bmatrix}$</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="lambda-矩阵"><a class="header-anchor" href="#lambda-矩阵"></a>$\lambda$-矩阵</h1>
-<h2 id="定义-v2"><a class="header-anchor" href="#定义-v2"></a>定义</h2>
-<ul>
-<li>位置元$a_{ij}(\lambda)$为多项式的矩阵</li>
-<li>𝝀-矩阵的运算，行列式，子式，余子式，伴随矩阵等概念和数字矩阵一致</li>
-<li>𝝀-矩阵𝑨(𝝀)的不恒为零多项式的子式的最高阶数称为𝑨(𝝀)的秩(rank), 记为rank𝑨(𝝀)
-<ul>
-<li>设𝑨为n阶数字矩阵, 其特征矩阵𝑨(𝝀)=𝝀𝑬−𝑨为𝝀-矩阵，且$rankA(\lambda) = n$</li>
-</ul>
-</li>
-</ul>
-<h1 id="Smith标准型"><a class="header-anchor" href="#Smith标准型"></a>Smith标准型</h1>
-<h2 id="定理-v2"><a class="header-anchor" href="#定理-v2"></a>定理</h2>
-<ul>
-<li>$\lambda$-矩阵都可经若干次初等变换化为Smith标准形，即若$A(\lambda)$为秩为$r$的$m\times n$的$\lambda$-矩阵，则$A(\lambda)$与矩阵$J(\lambda)=\begin{bmatrix}d_1(\lambda)&amp; &amp; &amp;0&amp;\cdots&amp;0\\<br>
-\ &amp;\ddots &amp; &amp;\vdots &amp; &amp;\vdots\\<br>
-\ &amp;\ &amp;d_r(\lambda) &amp;0 &amp;\cdots &amp;0 \\<br>
-0 &amp;\cdots &amp;0 &amp;0 &amp;\cdots &amp;0 \\<br>
-\vdots &amp; &amp;\vdots &amp;\vdots &amp; &amp;\vdots \\<br>
-0 &amp;\cdots &amp;0 &amp;0 &amp;\cdots &amp;0<br>
-\end{bmatrix}$等价。矩阵$J(\lambda)$称之为$A(\lambda)$的Smith标准形.</li>
-</ul>
-]]></content>
+    <title>力扣刷题小录</title>
+    <url>//posts/Leetcode-log/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
+<h2 id="只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a><a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
+<p><strong>简述：</strong><br>
+  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
+  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
+<strong>思路：</strong><br>
+  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
+  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
+<span id="more"></span>
+<p><strong>题解：</strong><br></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.<span class="property">length</span> ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.<span class="property">length</span>; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<h2 id="汉明重量-汉明距离"><a class="header-anchor" href="#汉明重量-汉明距离"></a><a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
+<p><strong>简述：</strong><br>
+  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。<br>
+  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
+<strong>思路：</strong><br>
+  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
+  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
+<strong>题解：</strong></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<div class="note warning"><p>题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充。<br>
+具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a><br>
+否则在范例中，32位有符号数的最高位为1时，循环不会终止。</p>
+</div>
+<h2 id="进制转换-K进制表示下的各位数字总和-数字转换为16进制数"><a class="header-anchor" href="#进制转换-K进制表示下的各位数字总和-数字转换为16进制数"></a>进制转换 / <a href="https://leetcode.cn/problems/sum-of-digits-in-base-k/">K进制表示下的各位数字总和</a> / <a href="https://leetcode.cn/problems/convert-a-number-to-hexadecimal/">数字转换为16进制数</a></h2>
+<p><strong>简述：</strong><br>
+  ①给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。（K进制表示下的各位数字总和）<br>
+  ②给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 <i>补码运算</i> 方法。</p>
+<div class="note info"><p>注意:<br>
+十六进制中所有字母(a-f)都必须是小写。<br>
+十六进制字符串中不能包含多余的前导零。如果要转化的数为0，那么以单个字符'0'，来表示；对于其他情况，十六进制字符串中的第一个字符将不会是0字符。 <br>
+给定的数确保在32位有符号整数范围内。<br>
+不能使用任何由库提供的将数字直接转换或格式化为十六进制的方法。</p>
+</div>
+<p><strong>思路：</strong><br>
+  10进制转 k 进制：10进制的数字 除以 k，得到的余数就是目标待转换的数字的最后一位，再拿刚刚所得到的商继续除以k，如此循环，直到所得的商为0。<br>
+  对于题目②。特别地，对于32位有符号整数的表示，比如 -1 在32位有符号整数的表示，与无符号数下2<sup>32</sup>-1是一致的。<br>
+  此外，由于16进制数中存在a~f，余数为10即对应a、11对应b……可利用这种方式将对应字符保存起来：<code>String.fromCharCode(余数-10 + 'a'.charCodeAt() //即a对应的ascii码)</code><br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n, k</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        ret += <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">        n = -n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(n % k);</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> k = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true则说明该函数功能正确</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(n.<span class="title function_">toString</span>(k) == <span class="title class_">BaseChange</span>(n, k));</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>十六进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> toHex = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(num &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>,<span class="number">32</span>) + num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">BaseChange</span>(num);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n % <span class="number">16</span>&gt;= <span class="number">10</span>)&#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>() + n % <span class="number">16</span> - <span class="number">10</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(n % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h2 id="有效的完全平方数-x的平方根"><a class="header-anchor" href="#有效的完全平方数-x的平方根"></a><a href="https://leetcode.cn/problems/valid-perfect-square/">有效的完全平方数</a> / <a href="https://leetcode.cn/problems/sqrtx/">x的平方根</a></h2>
+<p><strong>简述：</strong><br>
+  ①判断一个数是否是完全平方数<br>
+  ②返回非负整数x的算术平方根(取整)<br>
+<strong>思路：</strong><br>
+  两者皆可用双指针二分查找的方式进行。设左指针l指向0，右指针r指向输入的数字。判断有效的完全平方数就是看[0, nums]里是否有一个数target使得target<sup>2</sup>=nums; 计算平方根则是找到满足target<sup>2</sup>&lt;=nums的最大target。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='left'> 
+<figure class="highlight javascript"><figcaption><span>有效的完全平方数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isPerfectSquare = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = num;</span><br><span class="line">    <span class="keyword">var</span> ans;</span><br><span class="line">    <span class="keyword">var</span> center;</span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &lt;= num)&#123;</span><br><span class="line">            <span class="comment">//每次满足条件的时候，ans都需要更新</span></span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            r = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans * ans == num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='right'> 
+<figure class="highlight javascript"><figcaption><span>x的平方根</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">x</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> mySqrt = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = x;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        <span class="keyword">var</span> center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &gt; x)&#123;</span><br><span class="line">            r = center - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div> 
+</div>
+<h2 id="双指针"><a class="header-anchor" href="#双指针"></a>双指针</h2>
+<h3 id="排序数组中两个数字之和"><a class="header-anchor" href="#排序数组中两个数字之和"></a><a href="https://leetcode.cn/problems/kLl5u1/">排序数组中两个数字之和</a></h3>
+<p><strong>简述：</strong><br>
+  给定一个已按照 <strong>升序排列</strong>  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。<br>
+  函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 &lt;= answer[0] &lt; answer[1] &lt; numbers.length。<br>
+  假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。<br>
+<strong>思路：</strong><br>
+  一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。<br>
+  为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 &lt;= i &lt;= j &lt;= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">numbers</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">target</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoSum = <span class="keyword">function</span>(<span class="params">numbers, target</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = numbers.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>( l&lt;=r ) &#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers[l] + numbers[r] &lt; target) &#123;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (numbers[l] + numbers[r] &gt; target) &#123; </span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> [l, r]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h2 id="动态规划"><a class="header-anchor" href="#动态规划"></a>动态规划</h2>
+<h3 id="路径的数目"><a class="header-anchor" href="#路径的数目"></a><a href="https://leetcode.cn/problems/2AoeFn/">路径的数目</a></h3>
+<p><strong>简述：</strong><br>
+  一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？<br>
+<strong>思路：</strong><br>
+  建立一个二维数组记录从顶点到达当前位置的路径数，对于如题所述的二维网格来说，位于中间的某个格子只能从上方的相邻格子或者左边的相邻格子走过来。因此当前格子的路径数等于左边格子的路径数 + 上边格子的路径数。而对于第一行或者第一列的格子，只能由左边或者上边格子走过来，因此这些格子的路径数都是1。<br>
+  而更简单的解法是利用组合数学（杨辉三角）：从(1,1)行进到(m,n)共要移动(m + n - 2)次，其中有(m-1)次是向右移动：所需次数为C(m+n-2, m-1) = (m+n-2)!/((n-1)!*(m-1)!)<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>路径数目</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">m</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> uniquePaths = <span class="keyword">function</span>(<span class="params">m, n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> path = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">        path.<span class="title function_">push</span>([]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; n; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j] + path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h3 id="爬楼梯的最少成本"><a class="header-anchor" href="#爬楼梯的最少成本"></a><a href="https://leetcode.cn/problems/GzCJIP/">爬楼梯的最少成本</a></h3>
+<p><strong>简述：</strong><br>
+  数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>
+  示例：<br>
+    <strong>输入</strong>：cost = [10, 15, 20]<br>
+    <strong>输出</strong>：15<br>
+    <strong>解释</strong>：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。<br>
+<strong>思路：</strong><br>
+  登到某级台阶所花费的总体力有两种可能，要么是从前一级一步登上来，要么是从前两级两步登上来。取两者中较小的体力耗费即可。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; cost</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var minCostClimbingStairs = function(cost) &#123;</span><br><span class="line">    var costTotalArray = [];</span><br><span class="line">    costTotalArray[0] = 0;</span><br><span class="line">    costTotalArray[1] = 0;</span><br><span class="line">    for (var i = 2; i &lt;= cost.length; i++)&#123;</span><br><span class="line">        costTotalArray.push(Math.min(cost[i-1] + costTotalArray[i-1], costTotalArray[i-2] + cost[i-2]))</span><br><span class="line">    &#125;</span><br><span class="line">    return costTotalArray[cost.length]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'>
+</div>
+<h2 id="可被-5-整除的二进制前缀"><a class="header-anchor" href="#可被-5-整除的二进制前缀"></a><a href="https://leetcode.cn/problems/binary-prefix-divisible-by-5/">可被 5 整除的二进制前缀</a></h2>
+<p><strong>简述：</strong><br>
+  给定一个二进制数组 nums ( 索引从0开始 )。我们将xi 定义为其二进制表示形式为子数组 nums[0..i] (从最高有效位到最低有效位)。<br>
+  例如，如果 nums =[1,0,1] ，那么 x0 = 1, x1 = 2, 和 x2 = 5。返回布尔值列表 answer，只有当 xi 可以被 5 整除时，答案 answer[i] 为 true，否则为 false。<br>
+<strong>思路：</strong><br>
+  定义一个xi，每读一位数字二进制数字就是左移一位（相当于乘以2）+ 该位数字，然后除以五取余，最后<strong>令xi等于该余数</strong>（这是一个比较巧妙的思路，这样xi就不会溢出），若所得余数为0，可以向answer中压入true，反之则压入false。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;boolean[]&#125;</span><br><span class="line"> */</span><br><span class="line">var prefixesDivBy5 = function(nums) &#123;</span><br><span class="line">    var ret = []</span><br><span class="line">    var number = 0;</span><br><span class="line">    for (var i = 0; i &lt; nums.length; i++)&#123;</span><br><span class="line">        number = number * 2 + nums[i];</span><br><span class="line">        number %= 5</span><br><span class="line">        if (!number)&#123;</span><br><span class="line">            ret.push(true);</span><br><span class="line">        &#125;</span><br><span class="line">        else ret.push(false);</span><br><span class="line">    &#125;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'>
+</div>]]></content>
       <categories>
         <category>学习</category>
       </categories>
       <tags>
-        <tag>学习</tag>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>移动端开发学习</title>
-    <url>//posts/Mobile-Dev/</url>
-    <content><![CDATA[<h1 id="视口"><a class="header-anchor" href="#视口"></a>视口</h1>
-<ul>
-<li>视口就是浏览器显示页面内容的屏幕区域</li>
-<li>视口分为布局视口、视觉视口和理想视口</li>
-<li>我们移动端布局想要的是理想视口就是手机屏幕有多宽，我们的布局视口就有多宽</li>
-<li>想要理想视口，我们需要给我们的移动端页面添加meta视口标签</li>
-</ul>
-<h2 id="meta视口标签"><a class="header-anchor" href="#meta视口标签"></a>meta视口标签</h2>
-<p><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0&quot;&gt;</code></p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>width</td>
-<td>viewport宽度，可以设置device-width等特殊值</td>
-</tr>
-<tr>
-<td>initial-scale</td>
-<td>初始缩放比</td>
-</tr>
-<tr>
-<td>maximum-scale</td>
-<td>最大缩放比</td>
-</tr>
-<tr>
-<td>minimum-scale</td>
-<td>最小缩放比</td>
-</tr>
-<tr>
-<td>user-scalable</td>
-<td>用户是否可缩放，yes no</td>
-</tr>
-</tbody>
-</table>
-<h1 id="像素"><a class="header-anchor" href="#像素"></a>像素</h1>
-<ul>
-<li>物理像素：屏幕的最小单位。屏幕上用于显示颜色的“点”</li>
-<li>逻辑像素：计算机系统中用到的坐标，CSS中的px。逻辑像素的标准控制了在不同设备上的1px有相似的长度。譬如WPF中1px等于1/96英寸，而安卓端1px等于1/160英寸。</li>
-<li>DPR：设备像素比，CSS中的1px最终会渲染成多少屏幕上的物理像素。</li>
-</ul>
-<h2 id="两倍图"><a class="header-anchor" href="#两倍图"></a>两倍图</h2>
-<p>  在电脑端1px等于1物理像素，即dpr=1；在手机端通常为了更细腻的显示效果，1px会渲染成多个物理像素。对于一张指定px大小的图片，在手机端会按照DPR放大造成模糊。因此，我们需要在移动端设备上使用二倍图。</p>
-<h3 id="CSS属性：background-size"><a class="header-anchor" href="#CSS属性：background-size"></a>CSS属性：background-size</h3>
-<p>可选参数：</p>
-<ul>
-<li>cover：拉伸至完全覆盖区域</li>
-<li>contain：高度宽度等比例拉伸，当宽度、高度等于盒子的宽度、高度时不再拉伸了</li>
-<li>百分比，以父盒子的百分比来缩放</li>
-<li>只填入一个值一定是宽度，高度值省略，按照等比例缩放。</li>
-</ul>
-<h1 id="移动端开发选择"><a class="header-anchor" href="#移动端开发选择"></a>移动端开发选择</h1>
-<ul>
-<li>单独制作移动端页面
-<ul>
-<li>通过判断设备，如果是移动端设备打开，就跳转到移动端界面</li>
-</ul>
-</li>
-<li>响应式兼容PC移动端
-<ul>
-<li>通过判断页面宽度去决定布局</li>
-<li>缺点：兼容性问题</li>
-</ul>
-</li>
-</ul>
-<h1 id="移动端技术解决方案"><a class="header-anchor" href="#移动端技术解决方案"></a>移动端技术解决方案</h1>
-<ul>
-<li>CSS初始化 <code>normalize.css</code></li>
-<li>特殊样式
-<ul>
-<li><code>-webkit-tap-highlight-color: transparent</code> 去除点击高亮</li>
-<li><code>-webkit-apperance: none</code> 按钮和输入框的自定义样式</li>
-<li><code>-webkit-touch-callout: none</code>禁用长按页面时的弹出菜单</li>
-</ul>
-</li>
-</ul>
-<h1 id="流式布局（百分比布局）"><a class="header-anchor" href="#流式布局（百分比布局）"></a>流式布局（百分比布局）</h1>
-<ul>
-<li>通过盒子的宽度设置成百分比来根据屏幕的宽度伸缩，不受固定像素的限制，内容向两侧填充</li>
-<li>是移动端web开发比较常见的布局方式</li>
-<li>用max/min-width/hight确保盒子伸缩在合理范围内。</li>
-</ul>
-<h1 id="flex布局"><a class="header-anchor" href="#flex布局"></a>flex布局</h1>
-<p>  flex是flexible box的缩写，意为弹性布局，用来为盒装模型最大的灵活性，任何一个容易都可以指定为flex布局。<code>display: flex</code></p>
-<ul>
-<li>当我们为父盒子设置为flex布局以后，子元素的float、clear和vertical-align属性将失效</li>
-<li>采用flex布局的元素，称为Flex容器(flex container)简称为容器，他得所有子容器成员，称为flex项目(flex item)，简称为“项目”</li>
-</ul>
-<h2 id="常见父项属性"><a class="header-anchor" href="#常见父项属性"></a>常见父项属性</h2>
-<ul>
-<li><code>flex-direction</code>
-<ul>
-<li>设置主轴方向，默认的主轴方向就是x轴方向，默认侧轴方向就是y轴方向</li>
-<li>属性值：row(默认)、row-reverse(从右到左)、column(从上到下)、column-reverse(从下到上)</li>
-</ul>
-</li>
-<li><code>justify-content</code>
-<ul>
-<li>定义了项目在<strong>主轴</strong>上的对齐方式</li>
-<li>属性值：flex-start(从头开始)、flex-end(从尾部开始)、center(在主轴居中对齐)、space-around(平分剩余空间)、space-between(先两边贴边，再平分剩余空间)</li>
-</ul>
-</li>
-<li><code>flex-wrap</code>
-<ul>
-<li>默认情况下，flex布局不换行</li>
-<li>属性值：no-warp(不换行)、wrap(换行)</li>
-</ul>
-</li>
-<li><code>align-content(换行)</code>
-<ul>
-<li>控制子项在<strong>侧轴</strong>上的对齐方式，<strong>单行下没有效果</strong></li>
-<li>属性值：参见justify-content</li>
-</ul>
-</li>
-<li><code>align-items(单行)</code>
-<ul>
-<li>控制子项在<strong>侧轴</strong>上的对齐方式</li>
-<li>属性值：参见justify-content</li>
-</ul>
-</li>
-<li><code>flex-flow</code>
-<ul>
-<li>flex-direction和flex-wrap的复合写法</li>
-</ul>
-</li>
-</ul>
-<h2 id="常见子项属性"><a class="header-anchor" href="#常见子项属性"></a>常见子项属性</h2>
-<ul>
-<li><code>flex</code>
-<ul>
-<li>分配子项目的<strong>剩余空间</strong>，表示子项占多少份数</li>
-<li>属性值：数字(默认为0)</li>
-</ul>
-</li>
-<li><code>align-self</code>
-<ul>
-<li>单独控制某个项目沿侧轴上的对齐方式</li>
-</ul>
-</li>
-<li><code>order</code>
-<ul>
-<li>定义项目的排列顺序</li>
-<li>属性值：数字(默认为0)，越小越靠前</li>
-</ul>
-</li>
-</ul>
-<h1 id="rem适配布局"><a class="header-anchor" href="#rem适配布局"></a>rem适配布局</h1>
-<ul>
-<li>rem是一个相对单位，类似于em，em是父元素字体大小，rem(root em)是相对于html元素的字体大小。</li>
-</ul>
-<h2 id="媒体查询-Media-Query"><a class="header-anchor" href="#媒体查询-Media-Query"></a>媒体查询(Media Query)</h2>
-<ul>
-<li>使用@media查询，可以针对不同的媒体类型定义不同的样式</li>
-<li>@media可以针对不用屏幕尺寸设置不同的样式</li>
-<li>重置浏览器大小，页面也会根据浏览器宽度和高度重新渲染</li>
-</ul>
-<h3 id="语法"><a class="header-anchor" href="#语法"></a>语法</h3>
-<ul>
-<li><code>@media mediatype and|not|only (media feature) &#123; css code &#125;</code></li>
-<li>mediatype: all / print / screen</li>
-<li>media feature: max-width / min-width / width</li>
-</ul>
-<p>   <strong>媒体查询 + rem 能实现元素大小的动态变化。</strong></p>
-<h2 id="引入不同的css文件"><a class="header-anchor" href="#引入不同的css文件"></a>引入不同的css文件</h2>
-<ul>
-<li><code>&lt;link rel=&quot;stylesheet&quot;media=&quot;mediatype and|not|only (media feature)&quot; href=&quot;style.css&quot;&gt;</code></li>
-</ul>
-<h1 id="Less"><a class="header-anchor" href="#Less"></a>Less</h1>
-<ul>
-<li>变量
-<ul>
-<li>@变量名: 值</li>
-</ul>
-</li>
-<li>Less嵌套
-<ul>
-<li>直接放在父元素样式的{}中</li>
-<li>伪类、伪元素、交集选择器，在前面加&amp;符号</li>
-</ul>
-</li>
-<li>可进行算数运算
-<ul>
-<li>单位不同以第一个为准</li>
-</ul>
-</li>
-</ul>
-<h1 id="Flexible-js"><a class="header-anchor" href="#Flexible-js"></a>Flexible.js</h1>
-<p>  阿里的一款适配移动端的js开发框架，用于配合rem布局，在不同的页面宽度下，为html元素根节点赋予不同的font-size(默认为页面宽度的1/10)，从而控制了元素的相对大小不发生改变。</p>
-<h1 id="响应式开发"><a class="header-anchor" href="#响应式开发"></a>响应式开发</h1>
-<p>  使用媒体查询针对不同宽度的设备进行布局和样式，从而适配不同的设备。</p>
-<table>
-<thead>
-<tr>
-<th>设备划分</th>
-<th>尺寸区间</th>
-<th>宽度设置</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>手机</td>
-<td>&lt;768px</td>
-<td>100%</td>
-</tr>
-<tr>
-<td>平板</td>
-<td>&gt;=768px &lt;992px</td>
-<td>750px</td>
-</tr>
-<tr>
-<td>桌面显示器</td>
-<td>&gt;=992px &lt;1200px</td>
-<td>970px</td>
-</tr>
-<tr>
-<td>大桌面显示器</td>
-<td>&gt;=1200px</td>
-<td>1170px</td>
-</tr>
-</tbody>
-</table>
-<h2 id="响应式布局容器"><a class="header-anchor" href="#响应式布局容器"></a>响应式布局容器</h2>
-<p>  响应式需要一个父级做为布局容器，来配合子级元素来实现变化效果。<br>
-  原理就是在不同屏幕下，通过媒体查询来改变这个布局容器的大小，再改变里面子元素的排列方式和大小，从而实现不同屏幕下，看到不同的页面布褐和样式变化。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>HTML</tag>
-        <tag>CSS</tag>
-        <tag>前端</tag>
-        <tag>移动端</tag>
+        <tag>编程</tag>
+        <tag>Javascript</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>

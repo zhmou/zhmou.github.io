@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>携程</title>
     <link rel="stylesheet" href="../normalize.css">
     <link rel="stylesheet" href="css/index.css">
+    <script src="js/index.js"></script>
 </head>
 
 <body>
@@ -18,7 +19,18 @@
         <a class="my" href="#">我 的</a>
     </header>
     <div class="focus">
-        <img src="upload/focus.jpg" alt="">
+        <ul class="banner_img">
+            <li><img src="upload/focus3.jpg" alt=""></li>
+            <li><img src="upload/focus1.jpg" alt=""></li>
+            <li><img src="upload/focus2.jpg" alt=""></li>
+            <li><img src="upload/focus3.jpg" alt=""></li>
+            <li><img src="upload/focus1.jpg" alt=""></li>
+        </ul>
+        <ul class="dots">
+            <li class="current"></li>
+            <li></li>
+            <li></li>
+        </ul>
     </div>
     <ul class="local-nav">
         <li><a href="#"><span class="local-nav-icon icon1"></span><span>景点·玩乐</span></a></li>
@@ -109,7 +121,7 @@
             </div>
         </div>
     </div>
-
+    <div class="goBack"></div>
 </body>
 
 </html>

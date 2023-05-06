@@ -448,14 +448,14 @@ $$</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.7k</span>
+      <span>3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -693,7 +693,28 @@ $$</p>
 </table>
 <h2 id="响应式布局容器"><a class="header-anchor" href="#响应式布局容器"></a>响应式布局容器</h2>
 <p>  响应式需要一个父级做为布局容器，来配合子级元素来实现变化效果。<br>
-  原理就是在不同屏幕下，通过媒体查询来改变这个布局容器的大小，再改变里面子元素的排列方式和大小，从而实现不同屏幕下，看到不同的页面布褐和样式变化。</p>
+  原理就是在不同屏幕下，通过媒体查询来改变这个布局容器的大小，再改变里面子元素的排列方式和大小，从而实现不同屏幕下，看到不同的页面布局和样式变化。</p>
+<h1 id="JS移动端特效"><a class="header-anchor" href="#JS移动端特效"></a>JS移动端特效</h1>
+<h2 id="touch触摸"><a class="header-anchor" href="#touch触摸"></a>touch触摸</h2>
+<ul>
+<li>触摸事件
+<ul>
+<li>touchstart 触摸</li>
+<li>touchmove 按住不动滑动</li>
+<li>touchend 结束触摸</li>
+</ul>
+</li>
+<li>事件对象
+<ul>
+<li>touches 触摸屏幕的所有触点的列表</li>
+<li>targetTouches 触摸当前元素的所有触点的列表</li>
+<li>changedTouches 触点发生了改变状态的列表</li>
+</ul>
+</li>
+</ul>
+<h2 id="移动端click事件的300ms延迟"><a class="header-anchor" href="#移动端click事件的300ms延迟"></a>移动端click事件的300ms延迟</h2>
+<p>  原因：部分浏览器在第一次点击之后会等待300ms判断用户是否是双击（以执行页面放大的行为）<br>
+  解决：1. user-scalable设置为no 2.css属性touch-action设置为manipulation（<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/touch-action%EF%BC%89">https://developer.mozilla.org/zh-CN/docs/Web/CSS/touch-action）</a></p>
 
       
     </div>
@@ -1075,7 +1096,7 @@ $$</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>22k</span>
+      <span>23k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1702,7 +1723,7 @@ table
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:27</span>
+    <span title="站点阅读时长">4:28</span>
   </span>
 </div>
 <div class="busuanzi-count">
