@@ -50,3 +50,25 @@ function insertionSort(arr) {
     }
 }
 ```
+# 归并排序
+- 将数组递<strong>归</strong>不断拆分，最后合<strong>并</strong>两个有序数组为一个
+``` Javascript
+function Merge(arr1, arr2) {
+    let arr = [];
+    while(arr1.length || arr2.length) {
+        if (arr1[0] < arr2[0]) {
+            arr.push(arr1.shift());
+        } else {
+            arr.push(arr2.shift());
+        }
+    }
+    return arr;
+}
+
+function mergeSort(arr) {
+    if (arr.length == 1) {
+        return arr
+    }
+    return Merge(mergeSort(arr.slice(0, Math.floor(arr.length / 2))), mergeSort(arr.slice(Math.floor(arr.length / 2), arr.length)));
+}
+```
