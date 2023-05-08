@@ -72,3 +72,20 @@ function mergeSort(arr) {
     return Merge(mergeSort(arr.slice(0, Math.floor(arr.length / 2))), mergeSort(arr.slice(Math.floor(arr.length / 2), arr.length)));
 }
 ```
+
+# 桶排序
+将数组放到n个桶中，确保后面的桶中的元素比前面大，进行排序，然后合并
+``` Javascript
+function bucketSort(arr) {
+    buckets = [[], [], []];
+    perBucket = Math.floor((Math.max(...arr) - Math.min(...arr) + buckets.length) / buckets.length);
+    arr.forEach(num => {
+        let idx = Math.floor((num - Math.min(...arr)) / perBucket);
+        buckets[idx].push(num);
+    });
+    buckets.forEach(bucket => selectionSort(bucket));
+    arr.length = 0;
+    arr.push(...buckets.flat());
+}
+```
+
