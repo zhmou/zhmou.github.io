@@ -77,7 +77,7 @@ function mergeSort(arr) {
 将数组放到n个桶中，确保后面的桶中的元素比前面大，进行排序，然后合并
 ``` Javascript
 function bucketSort(arr) {
-    buckets = [[], [], []];
+    let buckets = [[], [], []];
     perBucket = Math.floor((Math.max(...arr) - Math.min(...arr) + buckets.length) / buckets.length);
     arr.forEach(num => {
         let idx = Math.floor((num - Math.min(...arr)) / perBucket);
@@ -89,3 +89,88 @@ function bucketSort(arr) {
 }
 ```
 
+# 计数排序
+创建一个从小到大的数组，然后遍历原数组，在对应位置计数+1
+``` Javascript
+function countSort(arr) {
+    let max = Math.max(...arr);
+    let min = Math.min(...arr);
+    let tmp = new Array(max - min + 1).fill(0);
+    arr.forEach(num => tmp[num - min] += 1);
+    arr.length = 0;
+    tmp.forEach((count, index) => {
+        arr.push(...new Array(count).fill(index + min));
+    })
+}
+```
+
+# 基数排序
+变种桶排序
+``` Javascript
+function radixSort(arr) {
+    let base = 1;
+    let max = Math.max(...arr);
+    while(base <= max) {
+        let buckets = [];
+        for (let i = 0; i < 10; i++) {
+            buckets.push([]);
+        }
+        arr.forEach(num => {
+            let idx = Math.floor(num / base) % 10;
+            buckets[idx].push(num);
+        })
+        arr.length = 0;
+        buckets.forEach(bucket => {
+            arr.push(...bucket);
+        })
+        base = base * 10;
+    }
+}
+```
+# 快速排序
+``` Javascript
+function quickSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+    let left = [], right = [];
+    let pivot = arr.splice(0, 1);
+    arr.forEach(num => num > pivot ? right.push(num) : left.push(num));
+    return quickSort(left).concat(pivot, quickSort(right));
+}
+
+```
+
+# 随机快速排序
+
+``` Javascript
+function randQuickSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+    let left = [], right = [];
+    let pivot = arr.splice(parseInt(Math.random() * arr.length), 1);
+    arr.forEach(num => num > pivot ? right.push(num) : left.push(num));
+    return randQuickSort(left).concat(pivot, randQuickSort(right));
+}
+```
+
+# 希尔排序
+
+``` Javascript
+function shellSort(arr) {
+  const n = arr.length;
+  let gap = Math.floor(n / 2); 
+  while (gap > 0) {
+    // 插入排序，与普通的插入排序的区别就在于步长为 gap
+    for (let i = gap; i < n; i++) {
+      // 从 i 开始向前遍历，间隔为 gap
+      for (let j = i; j >= gap && arr[j - gap] > arr[j]; j -= gap) {
+        [arr[j - gap], arr[j]] = [arr[j], arr[j - gap]];
+      }
+    }
+    gap = Math.floor(gap / 2);
+  }
+  return arr;
+}
+```
