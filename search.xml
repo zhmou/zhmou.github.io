@@ -300,6 +300,160 @@
       </tags>
   </entry>
   <entry>
+    <title>力扣刷题小录</title>
+    <url>//posts/Leetcode-log/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
+<h2 id="只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a><a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
+<p><strong>简述：</strong><br>
+  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
+  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
+<strong>思路：</strong><br>
+  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
+  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
+<span id="more"></span>
+<p><strong>题解：</strong><br></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.<span class="property">length</span> ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.<span class="property">length</span>; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<h2 id="汉明重量-汉明距离"><a class="header-anchor" href="#汉明重量-汉明距离"></a><a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
+<p><strong>简述：</strong><br>
+  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。<br>
+  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
+<strong>思路：</strong><br>
+  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
+  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
+<strong>题解：</strong></p>
+<div>
+    <div class='left'>
+<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='right'>
+<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+    <div class='clear'></div>
+</div>
+<div class="note warning"><p>题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充。<br>
+具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a><br>
+否则在范例中，32位有符号数的最高位为1时，循环不会终止。</p>
+</div>
+<h2 id="进制转换-K进制表示下的各位数字总和-数字转换为16进制数"><a class="header-anchor" href="#进制转换-K进制表示下的各位数字总和-数字转换为16进制数"></a>进制转换 / <a href="https://leetcode.cn/problems/sum-of-digits-in-base-k/">K进制表示下的各位数字总和</a> / <a href="https://leetcode.cn/problems/convert-a-number-to-hexadecimal/">数字转换为16进制数</a></h2>
+<p><strong>简述：</strong><br>
+  ①给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。（K进制表示下的各位数字总和）<br>
+  ②给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 <i>补码运算</i> 方法。</p>
+<div class="note info"><p>注意:<br>
+十六进制中所有字母(a-f)都必须是小写。<br>
+十六进制字符串中不能包含多余的前导零。如果要转化的数为0，那么以单个字符'0'，来表示；对于其他情况，十六进制字符串中的第一个字符将不会是0字符。 <br>
+给定的数确保在32位有符号整数范围内。<br>
+不能使用任何由库提供的将数字直接转换或格式化为十六进制的方法。</p>
+</div>
+<p><strong>思路：</strong><br>
+  10进制转 k 进制：10进制的数字 除以 k，得到的余数就是目标待转换的数字的最后一位，再拿刚刚所得到的商继续除以k，如此循环，直到所得的商为0。<br>
+  对于题目②。特别地，对于32位有符号整数的表示，比如 -1 在32位有符号整数的表示，与无符号数下2<sup>32</sup>-1是一致的。<br>
+  此外，由于16进制数中存在a~f，余数为10即对应a、11对应b……可利用这种方式将对应字符保存起来：<code>String.fromCharCode(余数-10 + 'a'.charCodeAt() //即a对应的ascii码)</code><br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n, k</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        ret += <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">        n = -n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(n % k);</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> k = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true则说明该函数功能正确</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(n.<span class="title function_">toString</span>(k) == <span class="title class_">BaseChange</span>(n, k));</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>十六进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> toHex = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(num &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>,<span class="number">32</span>) + num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">BaseChange</span>(num);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n % <span class="number">16</span>&gt;= <span class="number">10</span>)&#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>() + n % <span class="number">16</span> - <span class="number">10</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(n % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h2 id="有效的完全平方数-x的平方根"><a class="header-anchor" href="#有效的完全平方数-x的平方根"></a><a href="https://leetcode.cn/problems/valid-perfect-square/">有效的完全平方数</a> / <a href="https://leetcode.cn/problems/sqrtx/">x的平方根</a></h2>
+<p><strong>简述：</strong><br>
+  ①判断一个数是否是完全平方数<br>
+  ②返回非负整数x的算术平方根(取整)<br>
+<strong>思路：</strong><br>
+  两者皆可用双指针二分查找的方式进行。设左指针l指向0，右指针r指向输入的数字。判断有效的完全平方数就是看[0, nums]里是否有一个数target使得target<sup>2</sup>=nums; 计算平方根则是找到满足target<sup>2</sup>&lt;=nums的最大target。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='left'> 
+<figure class="highlight javascript"><figcaption><span>有效的完全平方数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isPerfectSquare = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = num;</span><br><span class="line">    <span class="keyword">var</span> ans;</span><br><span class="line">    <span class="keyword">var</span> center;</span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &lt;= num)&#123;</span><br><span class="line">            <span class="comment">//每次满足条件的时候，ans都需要更新</span></span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            r = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans * ans == num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='right'> 
+<figure class="highlight javascript"><figcaption><span>x的平方根</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">x</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> mySqrt = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = x;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        <span class="keyword">var</span> center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &gt; x)&#123;</span><br><span class="line">            r = center - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div> 
+</div>
+<h2 id="双指针"><a class="header-anchor" href="#双指针"></a>双指针</h2>
+<h3 id="排序数组中两个数字之和"><a class="header-anchor" href="#排序数组中两个数字之和"></a><a href="https://leetcode.cn/problems/kLl5u1/">排序数组中两个数字之和</a></h3>
+<p><strong>简述：</strong><br>
+  给定一个已按照 <strong>升序排列</strong>  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。<br>
+  函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 &lt;= answer[0] &lt; answer[1] &lt; numbers.length。<br>
+  假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。<br>
+<strong>思路：</strong><br>
+  一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。<br>
+  为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 &lt;= i &lt;= j &lt;= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">numbers</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">target</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoSum = <span class="keyword">function</span>(<span class="params">numbers, target</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = numbers.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>( l&lt;=r ) &#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers[l] + numbers[r] &lt; target) &#123;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (numbers[l] + numbers[r] &gt; target) &#123; </span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> [l, r]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h2 id="动态规划"><a class="header-anchor" href="#动态规划"></a>动态规划</h2>
+<h3 id="路径的数目"><a class="header-anchor" href="#路径的数目"></a><a href="https://leetcode.cn/problems/2AoeFn/">路径的数目</a></h3>
+<p><strong>简述：</strong><br>
+  一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？<br>
+<strong>思路：</strong><br>
+  建立一个二维数组记录从顶点到达当前位置的路径数，对于如题所述的二维网格来说，位于中间的某个格子只能从上方的相邻格子或者左边的相邻格子走过来。因此当前格子的路径数等于左边格子的路径数 + 上边格子的路径数。而对于第一行或者第一列的格子，只能由左边或者上边格子走过来，因此这些格子的路径数都是1。<br>
+  而更简单的解法是利用组合数学（杨辉三角）：从(1,1)行进到(m,n)共要移动(m + n - 2)次，其中有(m-1)次是向右移动：所需次数为C(m+n-2, m-1) = (m+n-2)!/((n-1)!*(m-1)!)<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight javascript"><figcaption><span>路径数目</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">m</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> uniquePaths = <span class="keyword">function</span>(<span class="params">m, n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> path = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">        path.<span class="title function_">push</span>([]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; n; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j] + path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'></div>
+</div>
+<h3 id="爬楼梯的最少成本"><a class="header-anchor" href="#爬楼梯的最少成本"></a><a href="https://leetcode.cn/problems/GzCJIP/">爬楼梯的最少成本</a></h3>
+<p><strong>简述：</strong><br>
+  数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>
+  示例：<br>
+    <strong>输入</strong>：cost = [10, 15, 20]<br>
+    <strong>输出</strong>：15<br>
+    <strong>解释</strong>：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。<br>
+<strong>思路：</strong><br>
+  登到某级台阶所花费的总体力有两种可能，要么是从前一级一步登上来，要么是从前两级两步登上来。取两者中较小的体力耗费即可。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; cost</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var minCostClimbingStairs = function(cost) &#123;</span><br><span class="line">    var costTotalArray = [];</span><br><span class="line">    costTotalArray[0] = 0;</span><br><span class="line">    costTotalArray[1] = 0;</span><br><span class="line">    for (var i = 2; i &lt;= cost.length; i++)&#123;</span><br><span class="line">        costTotalArray.push(Math.min(cost[i-1] + costTotalArray[i-1], costTotalArray[i-2] + cost[i-2]))</span><br><span class="line">    &#125;</span><br><span class="line">    return costTotalArray[cost.length]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'>
+</div>
+<h2 id="可被-5-整除的二进制前缀"><a class="header-anchor" href="#可被-5-整除的二进制前缀"></a><a href="https://leetcode.cn/problems/binary-prefix-divisible-by-5/">可被 5 整除的二进制前缀</a></h2>
+<p><strong>简述：</strong><br>
+  给定一个二进制数组 nums ( 索引从0开始 )。我们将xi 定义为其二进制表示形式为子数组 nums[0..i] (从最高有效位到最低有效位)。<br>
+  例如，如果 nums =[1,0,1] ，那么 x0 = 1, x1 = 2, 和 x2 = 5。返回布尔值列表 answer，只有当 xi 可以被 5 整除时，答案 answer[i] 为 true，否则为 false。<br>
+<strong>思路：</strong><br>
+  定义一个xi，每读一位数字二进制数字就是左移一位（相当于乘以2）+ 该位数字，然后除以五取余，最后<strong>令xi等于该余数</strong>（这是一个比较巧妙的思路，这样xi就不会溢出），若所得余数为0，可以向answer中压入true，反之则压入false。<br>
+<strong>题解：</strong></p>
+<div>
+<div class='center'>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;boolean[]&#125;</span><br><span class="line"> */</span><br><span class="line">var prefixesDivBy5 = function(nums) &#123;</span><br><span class="line">    var ret = []</span><br><span class="line">    var number = 0;</span><br><span class="line">    for (var i = 0; i &lt; nums.length; i++)&#123;</span><br><span class="line">        number = number * 2 + nums[i];</span><br><span class="line">        number %= 5</span><br><span class="line">        if (!number)&#123;</span><br><span class="line">            ret.push(true);</span><br><span class="line">        &#125;</span><br><span class="line">        else ret.push(false);</span><br><span class="line">    &#125;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div>
+<div class='clear'>
+</div>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>Javascript</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习基础#00：Intro</title>
     <url>//posts/Machine-Learning-101-00/</url>
     <content><![CDATA[<style>
@@ -937,9 +1091,9 @@ $$</p>
       </categories>
       <tags>
         <tag>编程</tag>
+        <tag>Javascript</tag>
         <tag>HTML</tag>
         <tag>CSS</tag>
-        <tag>Javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -1219,6 +1373,55 @@ $$</p>
       </categories>
       <tags>
         <tag>信号与系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>来排个序吧</title>
+    <url>//posts/Sort/</url>
+    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
+</div>
+<p>本文中所有排序算法均使用<code>Javascript</code>实现，且均为升序排序</p>
+<h1 id="选择排序"><a class="header-anchor" href="#选择排序"></a>选择排序</h1>
+<ul>
+<li>遍历数组元素（忽略已经排序过的），找到最小的放到最前面</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">selectionSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.<span class="property">length</span> - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> min = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = i; j &lt; arr.<span class="property">length</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[min]) &#123;</span><br><span class="line">                min = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        [arr[i], arr[min]] = [arr[min], arr[i]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="冒泡排序"><a class="header-anchor" href="#冒泡排序"></a>冒泡排序</h1>
+<ul>
+<li>遍历数组元素，比较相邻元素，大的“冒泡”到后面</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bubbleSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.<span class="property">length</span> - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; arr.<span class="property">length</span> - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                [arr[j], arr[j + <span class="number">1</span>]] = [arr[j + <span class="number">1</span>], arr[j]];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="插入排序"><a class="header-anchor" href="#插入排序"></a>插入排序</h1>
+<ul>
+<li>将第n个数插入前n-1个有序的数组中</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">insertionSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; arr.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = i; (arr[j] &lt; arr[j - <span class="number">1</span>]) &amp;&amp; (j &gt;= <span class="number">0</span>); j--) &#123;</span><br><span class="line">            [arr[j - <span class="number">1</span>], arr[j]] = [arr[j], arr[j-<span class="number">1</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="归并排序"><a class="header-anchor" href="#归并排序"></a>归并排序</h1>
+<ul>
+<li>将数组递<strong>归</strong>不断拆分，最后合<strong>并</strong>两个有序数组为一个</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Merge</span>(<span class="params">arr1, arr2</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span>(arr1.<span class="property">length</span> || arr2.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr1[<span class="number">0</span>] &lt; arr2[<span class="number">0</span>]) &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(arr1.<span class="title function_">shift</span>());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(arr2.<span class="title function_">shift</span>());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mergeSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr.<span class="property">length</span> == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Merge</span>(<span class="title function_">mergeSort</span>(arr.<span class="title function_">slice</span>(<span class="number">0</span>, <span class="title class_">Math</span>.<span class="title function_">floor</span>(arr.<span class="property">length</span> / <span class="number">2</span>))), <span class="title function_">mergeSort</span>(arr.<span class="title function_">slice</span>(<span class="title class_">Math</span>.<span class="title function_">floor</span>(arr.<span class="property">length</span> / <span class="number">2</span>), arr.<span class="property">length</span>)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="桶排序"><a class="header-anchor" href="#桶排序"></a>桶排序</h1>
+<p>将数组放到n个桶中，确保后面的桶中的元素比前面大，进行排序，然后合并</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bucketSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> buckets = [[], [], []];</span><br><span class="line">    perBucket = <span class="title class_">Math</span>.<span class="title function_">floor</span>((<span class="title class_">Math</span>.<span class="title function_">max</span>(...arr) - <span class="title class_">Math</span>.<span class="title function_">min</span>(...arr) + buckets.<span class="property">length</span>) / buckets.<span class="property">length</span>);</span><br><span class="line">    arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">num</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> idx = <span class="title class_">Math</span>.<span class="title function_">floor</span>((num - <span class="title class_">Math</span>.<span class="title function_">min</span>(...arr)) / perBucket);</span><br><span class="line">        buckets[idx].<span class="title function_">push</span>(num);</span><br><span class="line">    &#125;);</span><br><span class="line">    buckets.<span class="title function_">forEach</span>(<span class="function"><span class="params">bucket</span> =&gt;</span> <span class="title function_">selectionSort</span>(bucket));</span><br><span class="line">    arr.<span class="property">length</span> = <span class="number">0</span>;</span><br><span class="line">    arr.<span class="title function_">push</span>(...buckets.<span class="title function_">flat</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="计数排序"><a class="header-anchor" href="#计数排序"></a>计数排序</h1>
+<p>创建一个从小到大的数组，然后遍历原数组，在对应位置计数+1</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">countSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> max = <span class="title class_">Math</span>.<span class="title function_">max</span>(...arr);</span><br><span class="line">    <span class="keyword">let</span> min = <span class="title class_">Math</span>.<span class="title function_">min</span>(...arr);</span><br><span class="line">    <span class="keyword">let</span> tmp = <span class="keyword">new</span> <span class="title class_">Array</span>(max - min + <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">num</span> =&gt;</span> tmp[num - min] += <span class="number">1</span>);</span><br><span class="line">    arr.<span class="property">length</span> = <span class="number">0</span>;</span><br><span class="line">    tmp.<span class="title function_">forEach</span>(<span class="function">(<span class="params">count, index</span>) =&gt;</span> &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(...<span class="keyword">new</span> <span class="title class_">Array</span>(count).<span class="title function_">fill</span>(index + min));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="基数排序"><a class="header-anchor" href="#基数排序"></a>基数排序</h1>
+<p>变种桶排序</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">radixSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> base = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> max = <span class="title class_">Math</span>.<span class="title function_">max</span>(...arr);</span><br><span class="line">    <span class="keyword">while</span>(base &lt;= max) &#123;</span><br><span class="line">        <span class="keyword">let</span> buckets = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            buckets.<span class="title function_">push</span>([]);</span><br><span class="line">        &#125;</span><br><span class="line">        arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">num</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> idx = <span class="title class_">Math</span>.<span class="title function_">floor</span>(num / base) % <span class="number">10</span>;</span><br><span class="line">            buckets[idx].<span class="title function_">push</span>(num);</span><br><span class="line">        &#125;)</span><br><span class="line">        arr.<span class="property">length</span> = <span class="number">0</span>;</span><br><span class="line">        buckets.<span class="title function_">forEach</span>(<span class="function"><span class="params">bucket</span> =&gt;</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(...bucket);</span><br><span class="line">        &#125;)</span><br><span class="line">        base = base * <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="快速排序"><a class="header-anchor" href="#快速排序"></a>快速排序</h1>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">quickSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr.<span class="property">length</span> &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> left = [], right = [];</span><br><span class="line">    <span class="keyword">let</span> pivot = arr.<span class="title function_">splice</span>(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">num</span> =&gt;</span> num &gt; pivot ? right.<span class="title function_">push</span>(num) : left.<span class="title function_">push</span>(num));</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">quickSort</span>(left).<span class="title function_">concat</span>(pivot, <span class="title function_">quickSort</span>(right));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="随机快速排序"><a class="header-anchor" href="#随机快速排序"></a>随机快速排序</h1>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">randQuickSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr.<span class="property">length</span> &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> left = [], right = [];</span><br><span class="line">    <span class="keyword">let</span> pivot = arr.<span class="title function_">splice</span>(<span class="built_in">parseInt</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * arr.<span class="property">length</span>), <span class="number">1</span>);</span><br><span class="line">    arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">num</span> =&gt;</span> num &gt; pivot ? right.<span class="title function_">push</span>(num) : left.<span class="title function_">push</span>(num));</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">randQuickSort</span>(left).<span class="title function_">concat</span>(pivot, <span class="title function_">randQuickSort</span>(right));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="希尔排序"><a class="header-anchor" href="#希尔排序"></a>希尔排序</h1>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">shellSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> n = arr.<span class="property">length</span>;</span><br><span class="line">  <span class="keyword">let</span> gap = <span class="title class_">Math</span>.<span class="title function_">floor</span>(n / <span class="number">2</span>); </span><br><span class="line">  <span class="keyword">while</span> (gap &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 插入排序，与普通的插入排序的区别就在于步长为 gap</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = gap; i &lt; n; i++) &#123;</span><br><span class="line">      <span class="comment">// 从 i 开始向前遍历，间隔为 gap</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = i; j &gt;= gap &amp;&amp; arr[j - gap] &gt; arr[j]; j -= gap) &#123;</span><br><span class="line">        [arr[j - gap], arr[j]] = [arr[j], arr[j - gap]];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    gap = <span class="title class_">Math</span>.<span class="title function_">floor</span>(gap / <span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>Javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -3182,160 +3385,6 @@ JS修改style样式操作，产生的是行内样式</p>
         <tag>编程</tag>
         <tag>Javascript</tag>
         <tag>语法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>力扣刷题小录</title>
-    <url>//posts/Leetcode-log/</url>
-    <content><![CDATA[<div class="note info"><p>这篇文章仍处在更新当中。</p>
-</div>
-<h1 id="基础"><a class="header-anchor" href="#基础"></a>基础</h1>
-<h2 id="只出现一次的数字-丢失的数字-0-n-1中缺失的数字"><a class="header-anchor" href="#只出现一次的数字-丢失的数字-0-n-1中缺失的数字"></a><a href="https://leetcode.cn/problems/single-number/">只出现一次的数字</a> / <a href="https://leetcode.cn/problems/missing-number/">丢失的数字</a> / <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">0 ~ n-1中缺失的数字</a></h2>
-<p><strong>简述：</strong><br>
-  ①给定一个包含 [0, n] 中 n 个数的数组 nums，找出 [0, n] 这个范围内没有出现在数组中的那个数。(缺失的数字)<br>
-  ②给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。(只出现一次的数字)<br>
-<strong>思路：</strong><br>
-  一个数字与它自身异或的结果为0，譬如3(011) ^ 3(011) = 0(000)，而0与任何数字异或的结果均为其自身。对于②而言，遍历数组，所有数字按位异或即可得到只出现过一次的数字。<br>
-  而对于①来说，考虑一个长度为 2n+1 的数组，其中包含了一个nums数组（长度为n），另一部分则是 [0, n] 这 n+1 个数。很显然该数组中只有nums数组缺失的那一个数只出现过一次，剩余数字均出现过两次，因此此题可以转化为 <i>只出现一次的数字</i> 的做法。</p>
-<span id="more"></span>
-<p><strong>题解：</strong><br></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>①缺失的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> missingNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; nums.<span class="property">length</span> ; i++)&#123;</span><br><span class="line">        ans ^= i;</span><br><span class="line">        ans ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    ans ^= nums.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>②只出现一次的数字</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> singleNumber = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nums.<span class="property">length</span>; i ++)&#123;</span><br><span class="line">        ret ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
-</div>
-<h2 id="汉明重量-汉明距离"><a class="header-anchor" href="#汉明重量-汉明距离"></a><a href="https://leetcode.cn/problems/number-of-1-bits/">汉明重量</a> / <a href="https://leetcode.cn/problems/hamming-distance/">汉明距离</a></h2>
-<p><strong>简述：</strong><br>
-  ①编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。<br>
-  ②两个整数之间的 <i>汉明距离</i> 指的是这两个数字对应二进制位不同的位置的数目。给你两个整数 x 和 y，计算并返回它们之间的汉明距离。<br>
-<strong>思路：</strong><br>
-  ①当单个bit和1进行与运算的时候，该bit为1时结果为1，为0时则结果为0。则例如 11010 和 10000、01000、00100、00010、00001 进行 &amp;运算 时，结果为1时，计数变量 + 1，最后返回该计数变量即可。<br>
-  ②两个数字异或运算结果的汉明重量即为汉明距离。<br>
-<strong>题解：</strong></p>
-<div>
-    <div class='left'>
-<figure class="highlight javascript"><figcaption><span>题解一</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((n &amp; (<span class="number">1</span> &lt;&lt; i)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='right'>
-<figure class="highlight javascript"><figcaption><span>题解二</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span> - a positive integer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> hammingWeight = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span>)&#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-    </div>
-    <div class='clear'></div>
-</div>
-<div class="note warning"><p>题解二中用到的 <code>&gt;&gt;&gt;</code> 是 <i>无符号右移运算符</i>，左边空出位将用0填充。<br>
-具体参见MDN：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators</a><br>
-否则在范例中，32位有符号数的最高位为1时，循环不会终止。</p>
-</div>
-<h2 id="进制转换-K进制表示下的各位数字总和-数字转换为16进制数"><a class="header-anchor" href="#进制转换-K进制表示下的各位数字总和-数字转换为16进制数"></a>进制转换 / <a href="https://leetcode.cn/problems/sum-of-digits-in-base-k/">K进制表示下的各位数字总和</a> / <a href="https://leetcode.cn/problems/convert-a-number-to-hexadecimal/">数字转换为16进制数</a></h2>
-<p><strong>简述：</strong><br>
-  ①给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。（K进制表示下的各位数字总和）<br>
-  ②给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 <i>补码运算</i> 方法。</p>
-<div class="note info"><p>注意:<br>
-十六进制中所有字母(a-f)都必须是小写。<br>
-十六进制字符串中不能包含多余的前导零。如果要转化的数为0，那么以单个字符'0'，来表示；对于其他情况，十六进制字符串中的第一个字符将不会是0字符。 <br>
-给定的数确保在32位有符号整数范围内。<br>
-不能使用任何由库提供的将数字直接转换或格式化为十六进制的方法。</p>
-</div>
-<p><strong>思路：</strong><br>
-  10进制转 k 进制：10进制的数字 除以 k，得到的余数就是目标待转换的数字的最后一位，再拿刚刚所得到的商继续除以k，如此循环，直到所得的商为0。<br>
-  对于题目②。特别地，对于32位有符号整数的表示，比如 -1 在32位有符号整数的表示，与无符号数下2<sup>32</sup>-1是一致的。<br>
-  此外，由于16进制数中存在a~f，余数为10即对应a、11对应b……可利用这种方式将对应字符保存起来：<code>String.fromCharCode(余数-10 + 'a'.charCodeAt() //即a对应的ascii码)</code><br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n, k</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        ret += <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">        n = -n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(n % k);</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> k = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true则说明该函数功能正确</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(n.<span class="title function_">toString</span>(k) == <span class="title class_">BaseChange</span>(n, k));</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>十六进制转换</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> toHex = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(num &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="number">2</span>,<span class="number">32</span>) + num;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">BaseChange</span>(num);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">BaseChange</span> = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ret = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">while</span> (n) &#123;</span><br><span class="line">        <span class="keyword">if</span>(n % <span class="number">16</span>&gt;= <span class="number">10</span>)&#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(<span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>() + n % <span class="number">16</span> - <span class="number">10</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr.<span class="title function_">push</span>(n % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        n = <span class="built_in">parseInt</span>(n / <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (arr.<span class="property">length</span>) &#123;</span><br><span class="line">        ret += arr.<span class="title function_">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="有效的完全平方数-x的平方根"><a class="header-anchor" href="#有效的完全平方数-x的平方根"></a><a href="https://leetcode.cn/problems/valid-perfect-square/">有效的完全平方数</a> / <a href="https://leetcode.cn/problems/sqrtx/">x的平方根</a></h2>
-<p><strong>简述：</strong><br>
-  ①判断一个数是否是完全平方数<br>
-  ②返回非负整数x的算术平方根(取整)<br>
-<strong>思路：</strong><br>
-  两者皆可用双指针二分查找的方式进行。设左指针l指向0，右指针r指向输入的数字。判断有效的完全平方数就是看[0, nums]里是否有一个数target使得target<sup>2</sup>=nums; 计算平方根则是找到满足target<sup>2</sup>&lt;=nums的最大target。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='left'> 
-<figure class="highlight javascript"><figcaption><span>有效的完全平方数</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">num</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isPerfectSquare = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = num;</span><br><span class="line">    <span class="keyword">var</span> ans;</span><br><span class="line">    <span class="keyword">var</span> center;</span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &lt;= num)&#123;</span><br><span class="line">            <span class="comment">//每次满足条件的时候，ans都需要更新</span></span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            r = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans * ans == num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='right'> 
-<figure class="highlight javascript"><figcaption><span>x的平方根</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">x</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> mySqrt = <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = x;</span><br><span class="line">    <span class="keyword">var</span> ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">        <span class="keyword">var</span> center = <span class="built_in">parseInt</span>((l+r)/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span>(center * center &gt; x)&#123;</span><br><span class="line">            r = center - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            ans = center;</span><br><span class="line">            l = center + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div> 
-</div>
-<h2 id="双指针"><a class="header-anchor" href="#双指针"></a>双指针</h2>
-<h3 id="排序数组中两个数字之和"><a class="header-anchor" href="#排序数组中两个数字之和"></a><a href="https://leetcode.cn/problems/kLl5u1/">排序数组中两个数字之和</a></h3>
-<p><strong>简述：</strong><br>
-  给定一个已按照 <strong>升序排列</strong>  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。<br>
-  函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。numbers 的下标 从 0 开始计数 ，所以答案数组应当满足 0 &lt;= answer[0] &lt; answer[1] &lt; numbers.length。<br>
-  假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。<br>
-<strong>思路：</strong><br>
-  一开始我的想法是遍历第一个数，第二个数(target - 第一个数)则采用二分查找的方式在大于第一个数的位置寻找。后来看题解才发现双指针的巧妙方式：定义左指针指向第一个数，右指针指向最后一个数。求和，若结果小于target，则说明左指针的数小了，左指针++；反之，若结果大于target，则说明右指针的数大了，右指针--。<br>
-  为什么这种方式不会漏掉解？因为最后返回的结果(numbers[i], numbers[j])中必然是 0 &lt;= i &lt;= j &lt;= numbers.length - 1; 而在移动过程中，不会有任意一个指针移动到[i, j]的范围内。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">numbers</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">target</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoSum = <span class="keyword">function</span>(<span class="params">numbers, target</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> l = <span class="number">0</span>, r = numbers.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>( l&lt;=r ) &#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers[l] + numbers[r] &lt; target) &#123;</span><br><span class="line">            l++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (numbers[l] + numbers[r] &gt; target) &#123; </span><br><span class="line">            r--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> [l, r]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h2 id="动态规划"><a class="header-anchor" href="#动态规划"></a>动态规划</h2>
-<h3 id="路径的数目"><a class="header-anchor" href="#路径的数目"></a><a href="https://leetcode.cn/problems/2AoeFn/">路径的数目</a></h3>
-<p><strong>简述：</strong><br>
-  一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？<br>
-<strong>思路：</strong><br>
-  建立一个二维数组记录从顶点到达当前位置的路径数，对于如题所述的二维网格来说，位于中间的某个格子只能从上方的相邻格子或者左边的相邻格子走过来。因此当前格子的路径数等于左边格子的路径数 + 上边格子的路径数。而对于第一行或者第一列的格子，只能由左边或者上边格子走过来，因此这些格子的路径数都是1。<br>
-  而更简单的解法是利用组合数学（杨辉三角）：从(1,1)行进到(m,n)共要移动(m + n - 2)次，其中有(m-1)次是向右移动：所需次数为C(m+n-2, m-1) = (m+n-2)!/((n-1)!*(m-1)!)<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight javascript"><figcaption><span>路径数目</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">m</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> uniquePaths = <span class="keyword">function</span>(<span class="params">m, n</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> path = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">        path.<span class="title function_">push</span>([]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; n; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                path[i][j] = path[i-<span class="number">1</span>][j] + path[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'></div>
-</div>
-<h3 id="爬楼梯的最少成本"><a class="header-anchor" href="#爬楼梯的最少成本"></a><a href="https://leetcode.cn/problems/GzCJIP/">爬楼梯的最少成本</a></h3>
-<p><strong>简述：</strong><br>
-  数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>
-  示例：<br>
-    <strong>输入</strong>：cost = [10, 15, 20]<br>
-    <strong>输出</strong>：15<br>
-    <strong>解释</strong>：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。<br>
-<strong>思路：</strong><br>
-  登到某级台阶所花费的总体力有两种可能，要么是从前一级一步登上来，要么是从前两级两步登上来。取两者中较小的体力耗费即可。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; cost</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var minCostClimbingStairs = function(cost) &#123;</span><br><span class="line">    var costTotalArray = [];</span><br><span class="line">    costTotalArray[0] = 0;</span><br><span class="line">    costTotalArray[1] = 0;</span><br><span class="line">    for (var i = 2; i &lt;= cost.length; i++)&#123;</span><br><span class="line">        costTotalArray.push(Math.min(cost[i-1] + costTotalArray[i-1], costTotalArray[i-2] + cost[i-2]))</span><br><span class="line">    &#125;</span><br><span class="line">    return costTotalArray[cost.length]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'>
-</div>
-<h2 id="可被-5-整除的二进制前缀"><a class="header-anchor" href="#可被-5-整除的二进制前缀"></a><a href="https://leetcode.cn/problems/binary-prefix-divisible-by-5/">可被 5 整除的二进制前缀</a></h2>
-<p><strong>简述：</strong><br>
-  给定一个二进制数组 nums ( 索引从0开始 )。我们将xi 定义为其二进制表示形式为子数组 nums[0..i] (从最高有效位到最低有效位)。<br>
-  例如，如果 nums =[1,0,1] ，那么 x0 = 1, x1 = 2, 和 x2 = 5。返回布尔值列表 answer，只有当 xi 可以被 5 整除时，答案 answer[i] 为 true，否则为 false。<br>
-<strong>思路：</strong><br>
-  定义一个xi，每读一位数字二进制数字就是左移一位（相当于乘以2）+ 该位数字，然后除以五取余，最后<strong>令xi等于该余数</strong>（这是一个比较巧妙的思路，这样xi就不会溢出），若所得余数为0，可以向answer中压入true，反之则压入false。<br>
-<strong>题解：</strong></p>
-<div>
-<div class='center'>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;boolean[]&#125;</span><br><span class="line"> */</span><br><span class="line">var prefixesDivBy5 = function(nums) &#123;</span><br><span class="line">    var ret = []</span><br><span class="line">    var number = 0;</span><br><span class="line">    for (var i = 0; i &lt; nums.length; i++)&#123;</span><br><span class="line">        number = number * 2 + nums[i];</span><br><span class="line">        number %= 5</span><br><span class="line">        if (!number)&#123;</span><br><span class="line">            ret.push(true);</span><br><span class="line">        &#125;</span><br><span class="line">        else ret.push(false);</span><br><span class="line">    &#125;</span><br><span class="line">    return ret;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</div>
-<div class='clear'>
-</div>]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>Javascript</tag>
-        <tag>算法</tag>
       </tags>
   </entry>
 </search>
