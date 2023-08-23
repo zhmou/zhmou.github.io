@@ -15,14 +15,10 @@ jobs:
       with:
         ref: blog_src_code  # 检出 blog_src_code 分支的代码
 
-    - name: Setup git
-      run: |
-        git config --global url."https://x-access-token:${{ secrets.ACTION_TOKEN }}@github.com/".insteadOf "https://github.com/"
-
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'  # 设置 Node.js 版本
+        node-version: '12'  # 设置 Node.js 版本
 
     - name: Cache dependencies
       uses: actions/cache@v2
@@ -44,4 +40,4 @@ jobs:
         branch: main  # 部署到 main 分支
         folder: public  # 静态文件存放的目录
         repository: zhmou/zhmou.github.io  # 仓库地址
-        token: ${{ secrets.ACTION_TOKEN }}  # GitHub Token
+        ssh-key: ${{ secrets.PubKey }}
