@@ -9,7 +9,7 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "5.4.2"
+    "version": "7.0.0-rc2"
   },
   "dependencies": {
     "hexo": "^7.0.0-rc2",
@@ -23,6 +23,7 @@
     "hexo-renderer-markdown-it": "git+https://github.com/hexojs/hexo-renderer-markdown-it.git",
     "hexo-renderer-stylus": "^3.0.0",
     "hexo-server": "^3.0.0",
+    "hexo-theme-next": "^8.18.0",
     "hexo-word-counter": "0.1.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-container": "^3.0.0",
