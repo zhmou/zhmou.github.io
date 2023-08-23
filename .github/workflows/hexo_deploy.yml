@@ -1,0 +1,43 @@
+name: Hexo Deploy
+
+on:
+  push:
+    branches:
+      - blog_src_code  # 当 blog_src_code 分支有新的提交时触发
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout blog source
+      uses: actions/checkout@v2
+      with:
+        ref: blog_src_code  # 检出 blog_src_code 分支的代码
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # 设置 Node.js 版本
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.yarn
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install Dependencies
+      run: yarn install  # 使用 yarn 安装依赖
+
+    - name: Build
+      run: hexo generate  # 生成静态文件
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: main  # 部署到 main 分支
+        folder: public  # 静态文件存放的目录
+        repository: zhmou/zhmou.github.io  # 仓库地址
+        token: ${{ secrets.GITHUB_TOKEN }}  # GitHub Token
